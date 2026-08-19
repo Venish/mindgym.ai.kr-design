@@ -78,7 +78,7 @@ function DashboardContent() {
               8월 1일 토요일
             </p>
             <h2 className="text-2xl font-black text-gray-900 leading-tight mt-1">
-              <span className="text-[#00C474]">{userName || "보노보노"}</span>님, 오늘 하루도 <br />
+              <AuroraText className="font-black text-[#00C474] inline-block">{userName || "보노보노"}</AuroraText>님, 오늘 하루도 <br />
               함께해요
             </h2>
           </div>
@@ -88,17 +88,21 @@ function DashboardContent() {
           </div>
         </div>
 
-        {/* 가로로 길게 확장된 [이달의 나] 뱃지 카드 (수평 밸런스 정돈) */}
-        <div className="w-full flex items-center justify-between bg-emerald-50/70 border border-emerald-100/80 p-4 rounded-2xl shadow-2xs gap-3">
+        {/* 가로로 길게 확장된 [이달의 나] NeumorphCard 뱃지 카드 */}
+        <NeumorphCard className="w-full flex items-center justify-between p-4 rounded-2xl gap-3">
           {/* 좌측: 이달의 나 지향점 & 실천일 */}
           <div className="flex flex-col gap-0.5 flex-1 text-left">
             <span className="text-xs font-bold text-emerald-800 tracking-tight flex items-center gap-1">
               <Sparkle size={12} weight="fill" className="text-[#00C474]" />
               이달의 나
             </span>
-            <span className="text-lg font-black text-gray-900 tracking-tight">
-              차분한 <span className="text-[var(--color-brand-green)]">8월</span> · <span className="text-[var(--color-brand-green)] tabular-nums">14일</span>째
-            </span>
+            <div className="text-lg font-black text-gray-900 tracking-tight flex items-center gap-1">
+              <span>차분한 <span className="text-[var(--color-brand-green)]">8월</span> ·</span>
+              <span className="text-[var(--color-brand-green)] inline-flex items-center">
+                <NumberTicker value={14} />일
+              </span>
+              <span>째</span>
+            </div>
           </div>
 
           {/* 우측: 정갈하게 연동된 시그니처 덤벨 뱃지 */}
@@ -106,7 +110,7 @@ function DashboardContent() {
             <Barbell size={20} weight="fill" className="text-[#00C474]" />
             <span className="text-xs font-mono font-black text-gray-900">Lv.2</span>
           </div>
-        </div>
+        </NeumorphCard>
       </div>
 
       {/* Framer Motion 물리 엔진 기반 내가 추가한 이달의 리추얼 드래그 칩 바 (드래그 클릭 오작동 완벽 방어) */}
