@@ -166,6 +166,70 @@ export function TypographySection() {
           </div>
         </div>
 
+        {/* 6종 전역 타이포그래피 실전 통합 조합 샘플 카드 */}
+        <div>
+          <h3 className="text-sm font-black text-[#191F28] uppercase tracking-wider mb-3 text-left flex items-center gap-1.5">
+            <Sparkle size={16} weight="fill" className="text-[#00C474]" />
+            <span>6종 전역 타이포그래피 실전 통합 조합 샘플 (Integrated Live Showcase)</span>
+          </h3>
+
+          <div className="bg-gradient-to-br from-emerald-50/60 via-white to-teal-50/40 border border-emerald-200/80 rounded-3xl p-6 shadow-soft flex flex-col gap-5 text-left relative overflow-hidden">
+            {/* 1. txt-title-main */}
+            <div className="flex flex-col gap-1 border-b border-emerald-100/80 pb-4">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded">.txt-title-main</span>
+                <span className="txt-micro-main text-emerald-600">Lv.2 마음운동가</span>
+              </div>
+              <h2 className="txt-title-main text-gray-900 mt-1">
+                보노보노님, 오늘 하루도 마음의 근육을 키워볼까요? 🧘
+              </h2>
+            </div>
+
+            {/* 2. txt-title-section */}
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded">.txt-title-section</span>
+                <span className="text-[10px] font-mono text-gray-400">Section Header</span>
+              </div>
+              <h3 className="txt-title-section text-gray-900">
+                8월 추천 자율 리추얼 & 스트레스 케어
+              </h3>
+            </div>
+
+            {/* 3. txt-title-card & 4. txt-body-main & 5. txt-caption-main & 6. txt-micro-main */}
+            <div className="bg-white border border-emerald-100 p-5 rounded-2xl shadow-2xs flex flex-col gap-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-100/70 px-1.5 py-0.5 rounded">.txt-title-card</span>
+                  <h4 className="txt-title-card text-gray-900">
+                    "번아웃 시대, 나를 다독이는 자기자비의 기술"
+                  </h4>
+                </div>
+                <span className="txt-micro-main text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/60">
+                  .txt-micro-main (3분)
+                </span>
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <span className="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-100/70 px-1.5 py-0.5 rounded self-start">.txt-body-main</span>
+                <p className="txt-body-main text-gray-700">
+                  남에게는 한없이 친절하면서 왜 나에게는 엄격할까요? 오늘 하루 지친 내 마음속 다정한 변호인을 깨워보는 심리학 아티클입니다.
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-1.5 pt-2 border-t border-gray-100">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-100/70 px-1.5 py-0.5 rounded">.txt-caption-main</span>
+                  <span className="txt-micro-main text-gray-400">REF: MG-2026-0819</span>
+                </div>
+                <p className="txt-caption-main text-gray-500">
+                  💡 가이드: 이 아티클을 읽고 3분 마음일기를 작성하면 덤벨 15개가 즉시 적립됩니다.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* 폰트 및 CDN 레퍼런스 카드 */}
         <div>
           <h3 className="text-sm font-black text-[#191F28] uppercase tracking-wider mb-3 text-left flex items-center gap-1.5">
