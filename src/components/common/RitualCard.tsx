@@ -82,14 +82,15 @@ function GradientRitualIcon({
 
 export interface RitualCardProps {
   id?: string;
-  title: string;
+  title?: string;
   dailyTime?: string;
   level?: string;
   duration?: string;
   reward?: string;
   description?: string;
   icon?: RitualIconType;
-  variant?: "detailed" | "compact" | "icon-only" | "pure-icon" | "icon-pure";
+  variant?: "detailed" | "compact" | "icon-only" | "pure-icon" | "icon-pure" | "raw-icon" | "icon-raw";
+  size?: number;
   selected?: boolean;
   badge?: string;
   categoryTag?: string;
@@ -98,7 +99,7 @@ export interface RitualCardProps {
 }
 
 export function RitualCard({
-  title,
+  title = "",
   dailyTime = "하루 5분",
   level = "중급",
   duration = "한달 지속",
@@ -106,6 +107,7 @@ export function RitualCard({
   description,
   icon = "notebook",
   variant = "detailed",
+  size,
   selected = false,
   badge,
   categoryTag,
@@ -114,7 +116,19 @@ export function RitualCard({
 }: RitualCardProps) {
   const IconComponent = iconMap[icon] || Notebook;
 
-  // 0. 박스가 없는 순수 아이콘 전용 버전 (pure-icon / icon-pure)
+  // 0-A. hover/아래텍스트/테두리가 완전히 없는 순수 단독 그래픽 아이콘 버전 (raw-icon / icon-raw)
+  if (variant === "raw-icon" || variant === "icon-raw") {
+    return (
+      <div
+        onClick={onClick}
+        className={`inline-flex items-center justify-center shrink-0 select-none ${onClick ? "cursor-pointer" : ""} ${className}`}
+      >
+        <GradientRitualIcon icon={IconComponent} size={size || 44} iconType={icon} />
+      </div>
+    );
+  }
+
+  // 0-B. 박스가 없는 순수 아이콘 버전을 버튼 형태로 지원 (pure-icon / icon-pure)
   if (variant === "pure-icon" || variant === "icon-pure") {
     return (
       <motion.button
@@ -124,7 +138,7 @@ export function RitualCard({
         className={`relative inline-flex flex-col items-center justify-center p-2 rounded-2xl transition-all duration-200 shrink-0 hover:bg-emerald-50/50 active:bg-emerald-100/50 outline-none ${className}`}
         title={title}
       >
-        <GradientRitualIcon icon={IconComponent} size={44} iconType={icon} />
+        <GradientRitualIcon icon={IconComponent} size={size || 44} iconType={icon} />
         {title && (
           <span className="text-xs font-bold text-gray-800 tracking-tight mt-1 line-clamp-1">
             {title}
