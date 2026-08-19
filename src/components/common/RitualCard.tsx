@@ -188,10 +188,10 @@ export function RitualCard({
         } ${className}`}
       >
         <div className="flex items-center gap-3">
-          <GradientRitualIcon icon={IconComponent} size={32} iconType={icon} />
+          <GradientRitualIcon icon={IconComponent} size={36} iconType={icon} />
           <div className="flex flex-col text-left">
-            <span className="text-xs font-black text-gray-900 leading-tight">{title}</span>
-            <span className="text-[10px] font-bold text-[#005A34] mt-0.5">
+            <span className="text-sm font-black text-gray-900 leading-tight">{title}</span>
+            <span className="text-[11px] font-bold text-[#005A34] mt-0.5">
               {dailyTime} · {level} · {duration}
             </span>
           </div>
