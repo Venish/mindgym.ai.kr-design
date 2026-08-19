@@ -1,0 +1,462 @@
+@import url("https://hangeul.pstatic.net/hangeul_static/css/NanumBarunGothicYetHangul.css");
+
+/* -------------------------------------------------------------
+ * 🔤 Pretendard 수치형 (font-weight 100 ~ 900) 로컬 WOFF2 매핑
+ * ------------------------------------------------------------- */
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Pretendard/Pretendard-Thin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Pretendard/Pretendard-ExtraLight.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Pretendard/Pretendard-Light.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Pretendard/Pretendard-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Pretendard/Pretendard-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Pretendard/Pretendard-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Pretendard/Pretendard-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Pretendard/Pretendard-ExtraBold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Pretendard/Pretendard-Black.woff2') format('woff2');
+}
+
+/* -------------------------------------------------------------
+ * 🔤 NanumSquareRound 수치형 (font-weight 300 / 400 / 700 / 800) WOFF2 전용 최적화
+ * ------------------------------------------------------------- */
+@font-face {
+  font-family: 'NanumSquareRound';
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/NanumSquareRound/NanumSquareRoundL.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'NanumSquareRound';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/NanumSquareRound/NanumSquareRoundR.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'NanumSquareRound';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/NanumSquareRound/NanumSquareRoundB.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'NanumSquareRound';
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/NanumSquareRound/NanumSquareRoundEB.woff2') format('woff2');
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  *,
+  html,
+  body {
+    letter-spacing: -0.56px !important;
+  }
+
+  html,
+  body {
+    font-family: var(--font-nanum-round), 'NanumSquareRound', 'NanumBarunGothicYetHangul', var(--font-pretendard), 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif !important;
+    letter-spacing: -0.56px !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* 아이콘 박스 1:1 정방형 비율 유지 보정 규칙 */
+  .icon-box-sq {
+    aspect-ratio: 1 / 1 !important;
+    flex-shrink: 0 !important;
+  }
+}
+
+html {
+  font-size: clamp(13px, 3.72vw, 16px);
+}
+
+@media (min-width: 430px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+:root {
+  --font-nanum-round: 'NanumSquareRound', sans-serif;
+  --font-nanum: 'NanumBarunGothicYetHangul', 'NanumBarunGothic', sans-serif;
+  --font-pretendard: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+
+  /* -------------------------------------------------------------
+   * 🎨 Flexible Root REM 기반 전역 타이포그래피 (430px Base 1:1 정비례)
+   * ------------------------------------------------------------- */
+  --fs-title-main: 1.625rem;
+  /* 430px 모바일 기준 26px (화면 축소 시 정비례 줄어듦) */
+  --fs-title-section: 1.375rem;
+  /* 430px 모바일 기준 22px */
+  --fs-title-card: 1.25rem;
+  /* 430px 모바일 기준 20px */
+  --fs-body-main: 1.125rem;
+  /* 430px 모바일 기준 18px */
+  --fs-caption-main: 1.0rem;
+  /* 430px 모바일 기준 16px */
+  --fs-micro-main: 0.875rem;
+  /* 430px 모바일 기준 14px */
+
+  /* 브랜드 시그니처 텍스트 컬러 및 Neutral Scale (OKLCH 1:1 지각적 인지 보정 토큰) */
+  --color-signature-green: oklch(0.72 0.19 155);
+  --color-brand-green: oklch(0.72 0.19 155);
+  --color-forest-green: oklch(0.42 0.12 155);
+  --color-mint-tint: oklch(0.97 0.03 155);
+
+  --color-neutral-ink: oklch(0.22 0.02 260);
+  --color-neutral-gray-700: oklch(0.42 0.03 260);
+  --color-neutral-gray-500: oklch(0.64 0.03 260);
+  --color-neutral-gray-400: oklch(0.76 0.02 260);
+  --color-neutral-gray-200: oklch(0.94 0.01 260);
+  --color-neutral-surface: oklch(0.985 0.005 260);
+
+  /* -------------------------------------------------------------
+   * 📐 Concentric & Proportional Border-Radius Scale (동심원 곡률 규격)
+   * ------------------------------------------------------------- */
+  --radius-xl: 1.5rem;
+  /* 24px - 메인 카드 패널, 모달 컨테이너 (rounded-3xl) */
+  --radius-lg: 1.0rem;
+  /* 16px - Form Input, Select, 중형 버튼 (rounded-2xl) */
+  --radius-md: 0.75rem;
+  /* 12px - 소형 버튼, 아이콘 박스, 팝오버 (rounded-xl) */
+  --radius-sm: 0.5rem;
+  /* 8px - 체크박스, 태그, 소형 칩 (rounded-lg) */
+  --radius-full: 9999px;
+  /* Pill - 뱃지, 아바타, 라운드 버튼 (rounded-full) */
+
+  /* -------------------------------------------------------------
+   * 🎨 파스텔 톤앤매너 10종 전역 CSS 디자인 토큰 (OKLCH 1:1 보정)
+   * ------------------------------------------------------------- */
+  --color-pastel-mint-bg: oklch(0.97 0.03 155);
+  --color-pastel-mint-text: oklch(0.42 0.12 155);
+  --color-pastel-olive-bg: oklch(0.92 0.03 125);
+  --color-pastel-olive-text: oklch(0.32 0.04 125);
+  --color-pastel-sky-bg: oklch(0.94 0.03 230);
+  --color-pastel-sky-text: oklch(0.35 0.05 230);
+  --color-pastel-yellow-bg: oklch(0.96 0.04 85);
+  --color-pastel-yellow-text: oklch(0.40 0.06 85);
+  --color-pastel-rose-bg: oklch(0.93 0.04 25);
+  --color-pastel-rose-text: oklch(0.40 0.06 25);
+  --color-pastel-lavender-bg: oklch(0.94 0.03 295);
+  --color-pastel-lavender-text: oklch(0.32 0.05 295);
+  --color-pastel-peach-bg: oklch(0.95 0.04 55);
+  --color-pastel-peach-text: oklch(0.42 0.06 55);
+  --color-pastel-mist-bg: oklch(0.93 0.02 230);
+  --color-pastel-mist-text: oklch(0.32 0.03 230);
+  --color-pastel-sand-bg: oklch(0.95 0.01 80);
+  --color-pastel-sand-text: oklch(0.35 0.02 80);
+
+  /* 3단계 Neutral Scale 우측 3종 1:1 매칭 카드 토큰 (Surface / Gray 200 / Gray 400) */
+  --color-pastel-gray-light-bg: oklch(0.985 0.005 260);
+  /* Surface (#F9FAFB) */
+  --color-pastel-gray-light-text: oklch(0.22 0.02 260);
+  /* Neutral Ink (#191F28) */
+
+  --color-pastel-gray-mid-bg: oklch(0.94 0.01 260);
+  /* Gray 200 (#EDEFF2) */
+  --color-pastel-gray-mid-text: oklch(0.22 0.02 260);
+  /* Neutral Ink (#191F28) */
+
+  --color-pastel-gray-dark-bg: oklch(0.76 0.02 260);
+  /* Gray 400 (#B0B8C1) */
+  --color-pastel-gray-dark-text: oklch(0.22 0.02 260);
+  /* Neutral Ink (#191F28) */
+}
+
+@supports (color: oklch(0 0 0)) and (color-gamut: p3) {
+  :root {
+    --color-brand-green: oklch(0.72 0.22 155);
+  }
+}
+
+* {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+body {
+  background-color: #ffffff;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-nanum-round), 'NanumSquareRound', 'NanumBarunGothicYetHangul', var(--font-pretendard), 'Pretendard', sans-serif !important;
+  letter-spacing: -0.56px !important;
+  color: var(--color-brand-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* -------------------------------------------------------------
+ * 🛠️ 공통 타이포그래피 & 시그니처 컬러 전역 유틸리티 클래스
+ * ------------------------------------------------------------- */
+@layer utilities {
+
+  /* 1. 타이포그래피 크기 및 행간 유틸리티 */
+  .txt-title-main {
+    font-size: var(--fs-title-main);
+    font-weight: 800;
+    line-height: 1.375;
+    letter-spacing: -0.025em;
+  }
+
+  .txt-title-section {
+    font-size: var(--fs-title-section);
+    font-weight: 900;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+  }
+
+  .txt-title-card {
+    font-size: var(--fs-title-card);
+    font-weight: 700;
+    line-height: 1.375;
+  }
+
+  .txt-body-main {
+    font-size: var(--fs-body-main);
+    font-weight: 500;
+    line-height: 1.625;
+  }
+
+  .txt-caption-main {
+    font-size: var(--fs-caption-main);
+    font-weight: 300;
+    line-height: 1.4;
+  }
+
+  .txt-koss-progress {
+    font-size: var(--fs-body-main);
+    font-weight: 400;
+    color: var(--color-brand-ink);
+    line-height: 1.4;
+  }
+
+  .txt-micro-main {
+    font-size: var(--fs-micro-main);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  /* 2. 전역 시그니처 컬러 클래스 */
+  .txt-brand-green {
+    color: var(--color-brand-green);
+  }
+
+  .txt-brand-mint {
+    color: var(--color-brand-mint);
+  }
+
+  .txt-brand-tea {
+    color: var(--color-brand-tea);
+  }
+
+  .txt-brand-clay {
+    color: var(--color-brand-clay);
+  }
+
+  .txt-brand-ink {
+    color: var(--color-brand-ink);
+  }
+
+  .bg-brand-green {
+    background-color: var(--color-brand-green);
+  }
+
+  .bg-brand-mint-light {
+    background-color: var(--color-brand-mint-light);
+  }
+
+  /* 3. 무테 그림자 & 아웃라인 글로우 */
+  .shadow-soft {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.02);
+  }
+
+  .shadow-soft-depth {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.02);
+  }
+
+  .active-ring-glow {
+    box-shadow: 0 0 0 4px rgba(0, 196, 115, 0.15);
+    transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .rest-ring-glow {
+    box-shadow: 0 0 0 4px rgba(160, 174, 192, 0.12);
+    transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* 4. 마이크로 인터랙션 및 이미지 아웃라인 유틸리티 (make-interfaces-feel-better) */
+  .btn-press-scale {
+    transition-property: transform, opacity, box-shadow;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .btn-press-scale:active {
+    transform: scale(0.96);
+  }
+
+  .img-outline-subtle {
+    outline: 1px solid rgba(0, 0, 0, 0.08);
+    outline-offset: -1px;
+  }
+
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* -------------------------------------------------------------
+   * 🎯 역할별 3단계 인터랙션 디자인 시스템 전역 유틸리티
+   * ------------------------------------------------------------- */
+  /* 1) 폼 필드 입력 포커스 표준 (Inputs & Selects) */
+  .ui-input-focus {
+    transition: border-color 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .ui-input-focus:hover {
+    border-color: oklch(0.76 0.02 260);
+  }
+
+  .ui-input-focus:focus,
+  .ui-input-focus:focus-within {
+    border-color: var(--color-brand-green) !important;
+    box-shadow: 0 0 0 3px rgba(0, 196, 115, 0.18) !important;
+    background-color: #ffffff !important;
+  }
+
+  /* 2) 실행 버튼 햅틱 & 키보드 접근성 링 (Buttons & CTAs) */
+  .ui-btn-action {
+    transition: transform 150ms cubic-bezier(0.2, 0, 0, 1), filter 150ms cubic-bezier(0.2, 0, 0, 1), box-shadow 150ms cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .ui-btn-action:hover {
+    filter: brightness(0.96);
+  }
+
+  .ui-btn-action:active {
+    transform: scale(0.96);
+  }
+
+  .ui-btn-action:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--color-brand-green);
+  }
+
+  /* 3) 컨테이너 및 카드 호버 표준 (Box Cards) - 배경 1단계 딥 + 톤 조화형 강조 Border */
+  .ui-card-accent-hover {
+    transition: border-color 200ms cubic-bezier(0.2, 0, 0, 1), background-color 200ms cubic-bezier(0.2, 0, 0, 1), box-shadow 200ms cubic-bezier(0.2, 0, 0, 1), transform 150ms cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .ui-card-accent-hover:hover {
+    filter: brightness(0.97);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.02);
+  }
+
+  .ui-card-accent-hover:active {
+    transform: scale(0.96);
+  }
+}
+
+/* -------------------------------------------------------------
+ * 🔒 절대 최우선 전역 자간 (-0.56px) 100% 강제 고정 규칙
+ * ------------------------------------------------------------- */
+*,
+*::before,
+*::after,
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+div,
+a,
+button,
+input,
+select,
+textarea,
+label,
+li {
+  letter-spacing: -0.56px !important;
+}
