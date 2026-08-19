@@ -153,20 +153,15 @@ html {
   --font-pretendard: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
 
   /* -------------------------------------------------------------
-   * 🎨 Flexible Root REM 기반 전역 타이포그래피 (360px 모바일 ~ 430px+ 대형 디바이스 반응형 스케일)
+   * 🎨 폰트 획 뭉개짐/깨짐 100% 방지 정수 REM Step 타이포그래피 Scale
+   * (clamp 소수점 픽셀 대신 모바일/데스크톱 뚜렷한 정수 픽셀 힌팅 적용)
    * ------------------------------------------------------------- */
-  --fs-title-main: clamp(1.375rem, 5vw, 1.625rem);
-  /* 22px ~ 26px 반응형 */
-  --fs-title-section: clamp(1.25rem, 4.5vw, 1.375rem);
-  /* 20px ~ 22px 반응형 */
-  --fs-title-card: clamp(1.125rem, 4vw, 1.25rem);
-  /* 18px ~ 20px 반응형 */
-  --fs-body-main: clamp(1.0rem, 3.5vw, 1.125rem);
-  /* 16px ~ 18px 반응형 */
-  --fs-caption-main: clamp(0.875rem, 3vw, 1.0rem);
-  /* 14px ~ 16px 반응형 */
-  --fs-micro-main: clamp(0.75rem, 2.5vw, 0.875rem);
-  /* 12px ~ 14px 반응형 */
+  --fs-title-main: 1.5rem;      /* 모바일 24px */
+  --fs-title-section: 1.25rem;  /* 모바일 20px */
+  --fs-title-card: 1.125rem;   /* 모바일 18px */
+  --fs-body-main: 1.0rem;      /* 모바일 16px */
+  --fs-caption-main: 0.875rem; /* 모바일 14px */
+  --fs-micro-main: 0.75rem;    /* 모바일 12px */
 
   /* 브랜드 시그니처 텍스트 컬러 및 Neutral Scale (OKLCH 1:1 지각적 인지 보정 토큰) */
   --color-signature-green: oklch(0.72 0.19 155);
