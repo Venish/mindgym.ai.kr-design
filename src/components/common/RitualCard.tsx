@@ -217,7 +217,7 @@ export function RitualCard({
   return (
     <div
       onClick={onClick}
-      className={`p-5 bg-white rounded-2xl flex flex-col gap-3.5 relative overflow-hidden text-left cursor-pointer transition-all duration-200 ${
+      className={`p-5 rounded-2xl flex flex-col gap-3.5 relative overflow-hidden text-left cursor-pointer transition-all duration-200 ${
         selected
           ? "bg-[var(--color-pastel-mint-bg)]"
           : "bg-white border-2 border-gray-200 hover:border-[var(--color-forest-green)] active:border-[var(--color-forest-green)]"

@@ -112,6 +112,8 @@
 
 @tailwind base;
 @tailwind components;
+@tailwind utilities;
+
 /* -------------------------------------------------------------
  * 🎨 Non-White Container Borderless Principle (비흰색 박스 무경계 지침)
  * - 순수 흰색(bg-white) 박스에만 섬세한 hairline border (border border-gray-100/200) 허용
