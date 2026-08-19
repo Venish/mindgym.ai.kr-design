@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { MagnifyingGlass, FlowerLotus, Heart, Play, Clock, Sparkle } from "@phosphor-icons/react";
 import { ritualsData, Ritual } from "@/data/rituals";
 import { NeumorphCard } from "@/components/godui/NeumorphCard";
+import { SegmentedControl } from "@/components/godui/SegmentedControl";
 import { RitualDetailDrawer } from "@/components/modals/RitualDetailDrawer";
 import { useMindGym } from "@/context/MindGymContext";
 
@@ -49,21 +50,19 @@ export function RitualPage() {
         />
       </div>
 
-      {/* 카테고리 필터 칩 */}
-      <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setSelectedCategory(cat)}
-            className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap active:scale-[0.96] transition-all ${
-              selectedCategory === cat
-                ? "bg-[var(--color-brand-green)] text-white shadow-sm"
-                : "bg-gray-100/80 text-gray-600 hover:bg-gray-200/80"
-            }`}
-          >
-            {cat === "즐겨찾기" ? `❤️ 즐겨찾기 (${favorites.length})` : cat}
-          </button>
-        ))}
+      {/* 카테고리 필터 & 정렬 드롭다운 */}
+      <div className="flex flex-col gap-3">
+        <div className="overflow-x-auto pb-1 no-scrollbar">
+          <SegmentedControl
+            items={categories.map((cat) => ({
+              id: cat,
+              label: cat === "즐겨찾기" ? "❤️ 즐겨찾기" : cat,
+              count: cat === "즐겨찾기" ? favorites.length : undefined,
+            }))}
+            activeId={selectedCategory}
+            onChange={(id) => setSelectedCategory(id)}
+          />
+        </div>
       </div>
 
       {/* 3열 그리드 아이콘 시스템 */}

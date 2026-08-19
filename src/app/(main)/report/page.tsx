@@ -1,8 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { ChartBar, CalendarCheck, Sparkle, Trophy, ArrowRight, Gear } from "@phosphor-icons/react";
+import { ChartBar, CalendarCheck, Sparkle, Trophy, ArrowRight, Gear, Info } from "@phosphor-icons/react";
 import { NeumorphCard } from "@/components/godui/NeumorphCard";
+import { SpotlightCard } from "@/components/godui/SpotlightCard";
+import { NumberTicker } from "@/components/godui/NumberTicker";
+import { AnimatedTooltip } from "@/components/godui/AnimatedTooltip";
 import { IntentionWizardModal } from "@/components/modals/IntentionWizardModal";
 import { useMindGym } from "@/context/MindGymContext";
 
@@ -39,28 +42,42 @@ export function ReportPage() {
         </p>
       </div>
 
-      {/* 종합 명예 서재 스탯 카드 */}
-      <NeumorphCard className="bg-gradient-to-r from-emerald-600 to-teal-700 text-white flex flex-col gap-3">
+      {/* 종합 명예 서재 스탯 카드 (SpotlightCard 적용) */}
+      <SpotlightCard
+        spotlightColor="rgba(255, 255, 255, 0.25)"
+        className="bg-gradient-to-r from-emerald-600 to-teal-700 text-white flex flex-col gap-3 p-5 rounded-3xl"
+      >
         <div className="flex justify-between items-center text-xs font-bold opacity-90">
           <span>{userName}님의 마음 명예 트로피</span>
-          <span className="bg-white/20 px-2.5 py-0.5 rounded-full">Lv.{levelNum} {levelName}</span>
+          <div className="flex items-center gap-1.5 bg-white/20 px-2.5 py-0.5 rounded-full">
+            <span>Lv.{levelNum} {levelName}</span>
+            <AnimatedTooltip content={`다음 승급까지 덤벨 5개 필요`}>
+              <Info size={14} className="cursor-pointer text-white/80 hover:text-white" />
+            </AnimatedTooltip>
+          </div>
         </div>
 
         <div className="grid grid-cols-3 gap-2 text-center py-2 bg-white/10 rounded-2xl">
           <div>
             <p className="text-[10px] opacity-80 font-bold">누적 실천일</p>
-            <p className="text-lg font-black text-white tabular-nums">{completedDays.length}일</p>
+            <p className="text-lg font-black text-white tabular-nums flex items-center justify-center">
+              <NumberTicker value={completedDays.length} />일
+            </p>
           </div>
           <div className="border-x border-white/20">
             <p className="text-[10px] opacity-80 font-bold">자연스러운 쉼</p>
-            <p className="text-lg font-black text-emerald-200 tabular-nums">{restDays.length}일</p>
+            <p className="text-lg font-black text-emerald-200 tabular-nums flex items-center justify-center">
+              <NumberTicker value={restDays.length} />일
+            </p>
           </div>
           <div>
             <p className="text-[10px] opacity-80 font-bold">보유 덤벨</p>
-            <p className="text-lg font-black text-amber-300 tabular-nums">{totalDumbbells}개</p>
+            <p className="text-lg font-black text-amber-300 tabular-nums flex items-center justify-center">
+              <NumberTicker value={totalDumbbells} />개
+            </p>
           </div>
         </div>
-      </NeumorphCard>
+      </SpotlightCard>
 
       {/* 이달의 나 지향 감정어 관리 */}
       <NeumorphCard className="flex items-center justify-between border border-emerald-100">
@@ -79,15 +96,27 @@ export function ReportPage() {
 
       {/* KOSS 8대 영역 수치 바 */}
       <div className="flex flex-col gap-3">
-        <h3 className="text-sm font-extrabold text-gray-900">🎯 KOSS 8대 영역 정밀 진단</h3>
+        <h3 className="text-sm font-extrabold text-gray-900 flex items-center gap-1.5">
+          <span>🎯 KOSS 8대 영역 정밀 진단</span>
+          <AnimatedTooltip content="한국인 직무 스트레스 측정 도구 8개 하부 요인 점수">
+            <Info size={16} className="text-gray-400 cursor-pointer hover:text-gray-600" />
+          </AnimatedTooltip>
+        </h3>
 
         <div className="grid grid-cols-1 gap-2.5">
           {domainScores.map((d) => (
             <div key={d.name} className="bg-gray-50 p-3 rounded-2xl flex flex-col gap-1.5">
               <div className="flex justify-between items-center text-xs font-bold">
-                <span className="text-gray-800">{d.name}</span>
+                <span className="text-gray-800 flex items-center gap-1">
+                  {d.name}
+                  <AnimatedTooltip content={`${d.name} 평가 지수: ${d.score}점 (${d.status})`}>
+                    <Info size={12} className="text-gray-400 cursor-pointer" />
+                  </AnimatedTooltip>
+                </span>
                 <div className="flex items-center gap-2">
-                  <span className="text-gray-500 tabular-nums">{d.score}점</span>
+                  <span className="text-gray-500 tabular-nums flex items-center gap-0.5">
+                    <NumberTicker value={d.score} />점
+                  </span>
                   <span
                     className="px-2 py-0.5 rounded text-[10px] font-black text-white"
                     style={{ backgroundColor: d.color }}
