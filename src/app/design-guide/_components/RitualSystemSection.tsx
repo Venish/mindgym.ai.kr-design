@@ -14,11 +14,11 @@ export function RitualSystemSection() {
           5. Ritual Component System (`RitualCard`)
         </h2>
         <p className="text-xs text-gray-500 mt-1">
-          <code className="font-mono bg-gray-100 px-1 py-0.5 rounded text-emerald-600">RitualCard</code> 공통 컴포넌트 3가지 변형 스펙 샘플 (<code className="font-mono text-gray-700">detailed</code>, <code className="font-mono text-gray-700">compact</code>, <code className="font-mono text-gray-700">icon-only</code>)
+          <code className="font-mono bg-gray-100 px-1 py-0.5 rounded text-emerald-600">RitualCard</code> 공통 컴포넌트 4가지 변형 스펙 샘플 (<code className="font-mono text-gray-700">detailed</code>, <code className="font-mono text-gray-700">compact</code>, <code className="font-mono text-gray-700">icon-only</code>, <code className="font-mono text-emerald-600 font-bold">pure-icon</code>)
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* 1. Detailed Variant */}
         <div className="bg-white border border-gray-200 rounded-3xl p-5 shadow-xs flex flex-col gap-3">
           <div className="flex justify-between items-center border-b border-gray-100 pb-2">
@@ -70,14 +70,14 @@ export function RitualSystemSection() {
           </div>
         </div>
 
-        {/* 3. Icon-Only Variant */}
+        {/* 3. Icon-Only Variant (박스 포함) */}
         <div className="bg-white border border-gray-200 rounded-3xl p-5 shadow-xs flex flex-col gap-3">
           <div className="flex justify-between items-center border-b border-gray-100 pb-2">
             <span className="text-xs font-black text-gray-900 font-mono">3. variant="icon-only"</span>
-            <span className="text-[10px] text-gray-400 font-bold">Phosphor Icons 칩</span>
+            <span className="text-[10px] text-gray-400 font-bold">박스 포함 아이콘 칩</span>
           </div>
-          <div className="flex flex-wrap gap-2.5">
-            {(["notebook", "sun", "brain", "book", "sparkle", "feather", "heart", "flame"] as RitualIconType[]).map(
+          <div className="flex flex-wrap gap-2">
+            {(["notebook", "sun", "brain", "book", "sparkle", "feather"] as RitualIconType[]).map(
               (iconType, idx) => (
                 <RitualCard
                   key={idx}
@@ -89,6 +89,22 @@ export function RitualSystemSection() {
                 />
               )
             )}
+          </div>
+        </div>
+
+        {/* 4. Pure-Icon Variant (박스 없음 순수 아이콘) */}
+        <div className="bg-white border border-gray-200 rounded-3xl p-5 shadow-xs flex flex-col gap-3">
+          <div className="flex justify-between items-center border-b border-gray-100 pb-2">
+            <span className="text-xs font-black text-[#00C474] font-mono">4. variant="pure-icon" ✨</span>
+            <span className="text-[10px] text-emerald-600 font-bold">박스 없는 순수 아이콘</span>
+          </div>
+          <div className="flex flex-wrap gap-3 items-center justify-start">
+            <RitualCard variant="pure-icon" title="미소명상" icon="smiley" badge="신규" />
+            <RitualCard variant="pure-icon" title="마음일기" icon="notebook" />
+            <RitualCard variant="pure-icon" title="햇살산책" icon="sun" />
+            <RitualCard variant="pure-icon" title="자기자비" icon="heart" />
+            <RitualCard variant="pure-icon" title="불안계산" icon="brain" />
+            <RitualCard variant="pure-icon" title="열정루틴" icon="flame" />
           </div>
         </div>
       </div>
