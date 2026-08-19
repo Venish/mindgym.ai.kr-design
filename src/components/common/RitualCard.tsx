@@ -89,7 +89,7 @@ export interface RitualCardProps {
   reward?: string;
   description?: string;
   icon?: RitualIconType;
-  variant?: "detailed" | "compact" | "icon-only";
+  variant?: "detailed" | "compact" | "icon-only" | "pure-icon" | "icon-pure";
   selected?: boolean;
   badge?: string;
   categoryTag?: string;
@@ -113,6 +113,31 @@ export function RitualCard({
   className = "",
 }: RitualCardProps) {
   const IconComponent = iconMap[icon] || Notebook;
+
+  // 0. 박스가 없는 순수 아이콘 전용 버전 (pure-icon / icon-pure)
+  if (variant === "pure-icon" || variant === "icon-pure") {
+    return (
+      <motion.button
+        type="button"
+        whileTap={{ scale: 0.96 }}
+        onClick={onClick}
+        className={`relative inline-flex flex-col items-center justify-center p-2 rounded-2xl transition-all duration-200 shrink-0 hover:bg-emerald-50/50 active:bg-emerald-100/50 outline-none ${className}`}
+        title={title}
+      >
+        <GradientRitualIcon icon={IconComponent} size={44} iconType={icon} />
+        {title && (
+          <span className="text-xs font-bold text-gray-800 tracking-tight mt-1 line-clamp-1">
+            {title}
+          </span>
+        )}
+        {badge && (
+          <span className="absolute -top-1 -right-1 text-[9px] font-black bg-[#00C473] text-white px-1.5 py-0.5 rounded-full shadow-xs">
+            {badge}
+          </span>
+        )}
+      </motion.button>
+    );
+  }
 
   // 1. 아이콘 전용 컴팩트 미니 버전 (icon-only - 2px border & Forest Green hover/active)
   if (variant === "icon-only") {
