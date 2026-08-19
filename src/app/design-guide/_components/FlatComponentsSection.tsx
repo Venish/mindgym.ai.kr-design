@@ -14,6 +14,7 @@ import {
 } from "@phosphor-icons/react";
 import { Badge } from "@/components/ui/Badge";
 import { EmotionChip } from "@/components/ui/EmotionChip";
+import { MagicButton } from "@/components/godui/MagicButton";
 
 export function FlatComponentsSection() {
   const [activeTab, setActiveTab] = useState<string>("v1");
@@ -230,9 +231,9 @@ export function FlatComponentsSection() {
                 생각을 정리하고 마음의 그릇을 비우는 시간
               </p>
 
-              <button className="w-full bg-[#005A34] hover:bg-[#005A34]/90 text-white font-extrabold text-xs py-3 rounded-xl transition-all shadow-2xs">
+              <MagicButton className="w-full bg-[#005A34] text-white font-extrabold text-xs py-3 rounded-xl">
                 지금 5분 시작하기
-              </button>
+              </MagicButton>
             </div>
 
             {/* 자기자비 안심 카드 */}

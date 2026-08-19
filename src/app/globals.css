@@ -153,20 +153,20 @@ html {
   --font-pretendard: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
 
   /* -------------------------------------------------------------
-   * 🎨 Flexible Root REM 기반 전역 타이포그래피 (430px Base 1:1 정비례)
+   * 🎨 Flexible Root REM 기반 전역 타이포그래피 (360px 모바일 ~ 430px+ 대형 디바이스 반응형 스케일)
    * ------------------------------------------------------------- */
-  --fs-title-main: 1.625rem;
-  /* 430px 모바일 기준 26px (화면 축소 시 정비례 줄어듦) */
-  --fs-title-section: 1.375rem;
-  /* 430px 모바일 기준 22px */
-  --fs-title-card: 1.25rem;
-  /* 430px 모바일 기준 20px */
-  --fs-body-main: 1.125rem;
-  /* 430px 모바일 기준 18px */
-  --fs-caption-main: 1.0rem;
-  /* 430px 모바일 기준 16px */
-  --fs-micro-main: 0.875rem;
-  /* 430px 모바일 기준 14px */
+  --fs-title-main: clamp(1.375rem, 5vw, 1.625rem);
+  /* 22px ~ 26px 반응형 */
+  --fs-title-section: clamp(1.25rem, 4.5vw, 1.375rem);
+  /* 20px ~ 22px 반응형 */
+  --fs-title-card: clamp(1.125rem, 4vw, 1.25rem);
+  /* 18px ~ 20px 반응형 */
+  --fs-body-main: clamp(1.0rem, 3.5vw, 1.125rem);
+  /* 16px ~ 18px 반응형 */
+  --fs-caption-main: clamp(0.875rem, 3vw, 1.0rem);
+  /* 14px ~ 16px 반응형 */
+  --fs-micro-main: clamp(0.75rem, 2.5vw, 0.875rem);
+  /* 12px ~ 14px 반응형 */
 
   /* 브랜드 시그니처 텍스트 컬러 및 Neutral Scale (OKLCH 1:1 지각적 인지 보정 토큰) */
   --color-signature-green: oklch(0.72 0.19 155);
@@ -268,37 +268,47 @@ textarea {
  * ------------------------------------------------------------- */
 @layer utilities {
 
-  /* 1. 타이포그래피 크기 및 행간 유틸리티 */
+  /* 1. 타이포그래피 크기 및 행간 유틸리티 (모바일 가독성 튜닝) */
   .txt-title-main {
     font-size: var(--fs-title-main);
     font-weight: 800;
-    line-height: 1.375;
-    letter-spacing: -0.025em;
+    line-height: 1.35;
+    letter-spacing: -0.56px;
+    text-wrap: balance;
+    word-break: keep-all;
   }
 
   .txt-title-section {
     font-size: var(--fs-title-section);
     font-weight: 900;
     line-height: 1.35;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.56px;
+    text-wrap: balance;
+    word-break: keep-all;
   }
 
   .txt-title-card {
     font-size: var(--fs-title-card);
     font-weight: 700;
     line-height: 1.375;
+    letter-spacing: -0.56px;
+    word-break: keep-all;
   }
 
   .txt-body-main {
     font-size: var(--fs-body-main);
     font-weight: 500;
-    line-height: 1.625;
+    line-height: 1.6;
+    letter-spacing: -0.56px;
+    word-break: keep-all;
   }
 
   .txt-caption-main {
     font-size: var(--fs-caption-main);
-    font-weight: 300;
-    line-height: 1.4;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: -0.56px;
+    word-break: keep-all;
   }
 
   .txt-koss-progress {
@@ -306,12 +316,14 @@ textarea {
     font-weight: 400;
     color: var(--color-brand-ink);
     line-height: 1.4;
+    letter-spacing: -0.56px;
   }
 
   .txt-micro-main {
     font-size: var(--fs-micro-main);
     font-weight: 700;
-    line-height: 1.2;
+    line-height: 1.3;
+    letter-spacing: -0.56px;
   }
 
   /* 2. 전역 시그니처 컬러 클래스 */
