@@ -25,13 +25,13 @@ export function DesignGuideHeader() {
           <div className="h-4 w-px bg-gray-200" />
           <div className="flex items-center gap-2">
             <BrandLogo className="h-6 w-auto" />
-            <span className="text-sm font-black text-[#191F28] tracking-tight">
+            <span className="text-sm font-black txt-brand-ink tracking-tight">
               Design System Guide
             </span>
           </div>
         </div>
 
-        <span className="text-[11px] font-mono font-black text-[#00C473] bg-[#E9F8F0] border border-[#00C473]/30 px-3 py-1 rounded-full shadow-2xs">
+        <span className="txt-caption-sub font-mono font-black txt-brand-green bg-[var(--color-pastel-mint-bg)] border border-[#00C473]/30 px-3 py-1 rounded-full shadow-2xs">
           v1.1.0 Spec (70:20:10)
         </span>
       </div>

@@ -9,8 +9,8 @@ export function RitualSystemSection() {
   return (
     <section id="rituals" className="scroll-mt-24">
       <div className="border-b border-gray-200 pb-3 mb-6">
-        <h2 className="text-xl font-black text-[#191F28] flex items-center gap-2">
-          <span className="w-2.5 h-6 bg-[#00C474] rounded-full inline-block" />
+        <h2 className="text-xl font-black txt-brand-ink flex items-center gap-2">
+          <span className="w-2.5 h-6 bg-brand-green rounded-full inline-block" />
           5. Ritual Component System (`RitualCard`)
         </h2>
         <p className="text-xs text-gray-500 mt-1">
@@ -25,7 +25,7 @@ export function RitualSystemSection() {
           <div className="bg-white border border-gray-200 rounded-3xl p-5 shadow-xs flex flex-col gap-3">
             <div className="flex justify-between items-center border-b border-gray-100 pb-2">
               <span className="text-xs font-black text-gray-900 font-mono">1. variant="detailed"</span>
-              <span className="text-[10px] text-gray-400 font-bold">메인 추천 카드</span>
+              <span className="txt-caption-compact text-gray-400 font-bold">메인 추천 카드</span>
             </div>
             <RitualCard
               variant="detailed"
@@ -46,7 +46,7 @@ export function RitualSystemSection() {
           <div className="bg-white border border-gray-200 rounded-3xl p-5 shadow-xs flex flex-col gap-3">
             <div className="flex justify-between items-center border-b border-gray-100 pb-2">
               <span className="text-xs font-black text-gray-900 font-mono">2. variant="compact"</span>
-              <span className="text-[10px] text-gray-400 font-bold">목록/선택형 리스트</span>
+              <span className="txt-caption-compact text-gray-400 font-bold">목록/선택형 리스트</span>
             </div>
             <div className="flex flex-col gap-2.5">
               <RitualCard
@@ -76,7 +76,7 @@ export function RitualSystemSection() {
           <div className="bg-white border border-gray-200 rounded-3xl p-5 shadow-xs flex flex-col gap-3">
             <div className="flex justify-between items-center border-b border-gray-100 pb-2">
               <span className="text-xs font-black text-gray-900 font-mono">3. variant="icon-only"</span>
-              <span className="text-[10px] text-gray-400 font-bold">박스 포함 아이콘 칩</span>
+              <span className="txt-caption-compact text-gray-400 font-bold">박스 포함 아이콘 칩</span>
             </div>
             <div className="flex flex-wrap gap-2.5">
               {(["notebook", "sun", "brain", "book", "sparkle", "feather", "heart", "flame"] as RitualIconType[]).map(
@@ -101,7 +101,7 @@ export function RitualSystemSection() {
           <div className="bg-white border border-gray-200 rounded-3xl p-5 shadow-xs flex flex-col gap-3">
             <div className="flex justify-between items-center border-b border-gray-100 pb-2">
               <span className="text-xs font-black text-gray-900 font-mono">4. variant="pure-icon" ✨</span>
-              <span className="text-[10px] text-emerald-600 font-bold">박스 없는 버튼형 라벨 아이콘</span>
+              <span className="txt-caption-compact text-emerald-600 font-bold">박스 없는 버튼형 라벨 아이콘</span>
             </div>
             <div className="flex flex-wrap gap-4 items-center justify-start py-2">
               <RitualCard variant="pure-icon" title="미소명상" icon="smiley" badge="신규" />
@@ -116,13 +116,13 @@ export function RitualSystemSection() {
           {/* 5. Raw-Icon Variant (카드 대입용 순수 그래픽) */}
           <div className="bg-white border border-gray-200 rounded-3xl p-5 shadow-xs flex flex-col gap-3">
             <div className="flex justify-between items-center border-b border-gray-100 pb-2">
-              <span className="text-xs font-black text-[#00C474] font-mono">5. variant="raw-icon" ✨</span>
-              <span className="text-[10px] text-emerald-600 font-bold">카드 대입용 순수 그래픽 (No Hover / No Box / No Text)</span>
+              <span className="text-xs font-black txt-brand-green-accent font-mono">5. variant="raw-icon" ✨</span>
+              <span className="txt-caption-compact text-emerald-600 font-bold">카드 대입용 순수 그래픽 (No Hover / No Box / No Text)</span>
             </div>
             <p className="text-xs text-gray-500 font-medium">
               hover/박스/텍스트가 완전히 제거된 순수 그래픽으로, 벤토 그리드나 커스텀 카드 내부 요소 대입용입니다.
             </p>
-            <div className="flex flex-wrap gap-5 items-center justify-center p-4 bg-gray-50/80 rounded-2xl border border-dashed border-gray-200">
+            <div className="flex flex-wrap gap-5 items-center justify-center p-4 bg-gray-50/80 rounded-2xl">
               <RitualCard variant="raw-icon" icon="smiley" size={40} />
               <RitualCard variant="raw-icon" icon="notebook" size={40} />
               <RitualCard variant="raw-icon" icon="sun" size={40} />

@@ -18,6 +18,8 @@ import { EveningCheckinDrawer } from "@/components/modals/EveningCheckinDrawer";
 import { MagazineViewerModal } from "@/components/modals/MagazineViewerModal";
 import { magazinesData } from "@/data/magazines";
 
+import { BrandLogo } from "@/components/ui/BrandLogo";
+
 export default function DashboardFlatV2Page() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<"home" | "ritual" | "magazine" | "my">("home");
@@ -26,22 +28,15 @@ export default function DashboardFlatV2Page() {
   const [isMagazineOpen, setIsMagazineOpen] = useState(false);
 
   return (
-    <main className="min-h-screen bg-white text-[#191F28] font-sans flex flex-col items-center justify-start relative pb-24">
+    <main className="min-h-screen bg-white txt-brand-ink font-sans flex flex-col items-center justify-start relative pb-24">
       {/* 430px 모바일 화면 프레임 레이아웃 (순백색 배경) */}
       <div className="w-full max-w-[430px] min-h-screen bg-white flex flex-col relative border-x border-gray-200/60 shadow-xs">
         
         {/* 1. 상단 고정 헤더 (* mindgym + Bell Icon) */}
         <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md px-5 py-4 flex items-center justify-between">
           {/* 브랜드 시그니처 로고 (* mindgym) */}
-          <div className="flex items-center gap-1.5 cursor-pointer" onClick={() => router.push("/dashboard")}>
-            <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M16 4V28" stroke="#00C473" strokeWidth="4" strokeLinecap="round" />
-              <path d="M6 10L26 22" stroke="#00C473" strokeWidth="4" strokeLinecap="round" />
-              <path d="M6 22L26 10" stroke="#00C473" strokeWidth="4" strokeLinecap="round" />
-            </svg>
-            <span className="text-xl font-black tracking-tight text-[#191F28] lowercase font-sans">
-              mindgym
-            </span>
+          <div onClick={() => router.push("/dashboard")}>
+            <BrandLogo size="md" />
           </div>
 
           {/* 알림 종 아이콘 */}
@@ -68,7 +63,7 @@ export default function DashboardFlatV2Page() {
           {/* 3. 첫번째 마음 컨디션 체크인 배너 (옅은 회색 #F9FAFB 박스) */}
           <section
             onClick={() => setIsMorningOpen(true)}
-            className="cursor-pointer bg-[#F9FAFB] border border-gray-100/90 rounded-2xl p-4 shadow-2xs flex items-center justify-between transition-all hover:border-[#00C473] active:scale-98"
+            className="cursor-pointer bg-[#F9FAFB] rounded-2xl p-4 shadow-2xs flex items-center justify-between transition-all active:scale-98"
           >
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-full bg-emerald-50 text-[#00C473] flex items-center justify-center shrink-0">
@@ -104,7 +99,7 @@ export default function DashboardFlatV2Page() {
               {/* 리추얼 1: 오프먼트 (완료됨) */}
               <div
                 onClick={() => router.push("/player/RT-001")}
-                className="cursor-pointer bg-[#F9FAFB] border border-gray-100/90 rounded-2xl p-4 flex items-center justify-between transition-all hover:border-[#00C473] active:scale-98"
+                className="cursor-pointer bg-[#F9FAFB] rounded-2xl p-4 flex items-center justify-between transition-all active:scale-98"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-2xl bg-emerald-50 text-[#00C473] flex items-center justify-center shrink-0">
@@ -125,10 +120,10 @@ export default function DashboardFlatV2Page() {
               {/* 리추얼 2: 한 칸 완벽주의 (진행 중 - 3분 뱃지) */}
               <div
                 onClick={() => router.push("/player/RT-012")}
-                className="cursor-pointer bg-[#F9FAFB] border border-gray-100/90 rounded-2xl p-4 flex items-center justify-between transition-all hover:border-[#00C473] active:scale-98"
+                className="cursor-pointer bg-[#F9FAFB] rounded-2xl p-4 flex items-center justify-between transition-all active:scale-98"
               >
                 <div className="flex items-center gap-3">
-                  <div className="px-2.5 py-1.5 rounded-xl bg-sky-50 text-sky-600 border border-sky-200/60 text-xs font-black shrink-0">
+                  <div className="px-2.5 py-1.5 rounded-xl bg-sky-50 text-sky-600 text-xs font-black shrink-0">
                     3분
                   </div>
                   <div className="flex flex-col text-left">
@@ -146,10 +141,10 @@ export default function DashboardFlatV2Page() {
               {/* 리추얼 3: 빈손산책 (미완료 - 10분 뱃지) */}
               <div
                 onClick={() => router.push("/player/RT-004")}
-                className="cursor-pointer bg-[#F9FAFB] border border-gray-100/90 rounded-2xl p-4 flex items-center justify-between transition-all hover:border-[#00C473] active:scale-98"
+                className="cursor-pointer bg-[#F9FAFB] rounded-2xl p-4 flex items-center justify-between transition-all active:scale-98"
               >
                 <div className="flex items-center gap-3">
-                  <div className="px-2.5 py-1.5 rounded-xl bg-amber-50 text-amber-600 border border-amber-200/60 text-xs font-black shrink-0">
+                  <div className="px-2.5 py-1.5 rounded-xl bg-amber-50 text-amber-600 text-xs font-black shrink-0">
                     10분
                   </div>
                   <div className="flex flex-col text-left">
@@ -167,7 +162,7 @@ export default function DashboardFlatV2Page() {
           </section>
 
           {/* 5. 덤벨 성장 프로그레스 카드 (철 덤벨 · 12회째) */}
-          <section className="bg-[#F9FAFB] border border-gray-100/90 rounded-2xl p-4 flex flex-col gap-3 shadow-2xs">
+          <section className="bg-[#F9FAFB] rounded-2xl p-4 flex flex-col gap-3 shadow-2xs">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-white border border-gray-200/60 flex items-center justify-center text-gray-500 shrink-0 shadow-2xs">
@@ -182,7 +177,7 @@ export default function DashboardFlatV2Page() {
                   </p>
                 </div>
               </div>
-              <span className="text-xs font-bold text-[#00C473]">
+              <span className="text-xs font-bold txt-brand-green-accent">
                 동까지 9회
               </span>
             </div>
@@ -196,7 +191,7 @@ export default function DashboardFlatV2Page() {
           {/* 6. 매거진 아티클 카드 (VOL.11 잠시멈춤) */}
           <section
             onClick={() => setIsMagazineOpen(true)}
-            className="cursor-pointer bg-[#F9FAFB] border border-gray-100/90 rounded-2xl p-4 shadow-2xs flex items-center justify-between transition-all hover:border-[#00C473] active:scale-98"
+            className="cursor-pointer bg-[#F9FAFB] rounded-2xl p-4 shadow-2xs flex items-center justify-between transition-all active:scale-98"
           >
             <div className="flex items-center gap-3.5">
               {/* 초록 매거진 썸네일 커버 (VOL.11) */}
@@ -205,7 +200,7 @@ export default function DashboardFlatV2Page() {
                 <BookBookmark size={16} weight="fill" className="mt-1" />
               </div>
               <div className="flex flex-col text-left">
-                <span className="text-[10px] font-bold text-[#00C473]">
+                <span className="text-[10px] font-bold txt-brand-green-accent">
                   지금 나에게 맞는 이야기
                 </span>
                 <h2 className="txt-title-section text-gray-900 tracking-tight leading-snug">
@@ -243,11 +238,11 @@ export default function DashboardFlatV2Page() {
                 <IconComp
                   size={22}
                   weight={isActive ? "fill" : "regular"}
-                  className={isActive ? "text-[#191F28]" : "text-gray-400"}
+                  className={isActive ? "txt-brand-ink" : "text-gray-400"}
                 />
                 <span
                   className={`text-[10px] font-bold ${
-                    isActive ? "text-[#191F28]" : "text-gray-400"
+                    isActive ? "txt-brand-ink" : "text-gray-400"
                   }`}
                 >
                   {tab.label}

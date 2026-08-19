@@ -140,12 +140,12 @@ export function RitualCard({
       >
         <GradientRitualIcon icon={IconComponent} size={size || 44} iconType={icon} />
         {title && (
-          <span className="text-xs font-bold text-gray-800 tracking-tight mt-1 line-clamp-1">
+          <span className="txt-micro-main text-gray-800 tracking-tight mt-1 line-clamp-1">
             {title}
           </span>
         )}
         {badge && (
-          <span className="absolute -top-1 -right-1 text-[9px] font-black bg-[#00C473] text-white px-1.5 py-0.5 rounded-full shadow-xs">
+          <span className="absolute -top-1 -right-1 txt-micro-main font-black bg-brand-green text-white px-1.5 py-0.5 rounded-full shadow-xs">
             {badge}
           </span>
         )}
@@ -153,21 +153,21 @@ export function RitualCard({
     );
   }
 
-  // 1. 아이콘 전용 컴팩트 미니 버전 (icon-only - 2px border & Forest Green hover/active)
+  // 1. 아이콘 전용 컴팩트 미니 버전 (icon-only - Non-white selection borderless)
   if (variant === "icon-only") {
     return (
       <motion.button
         whileTap={{ scale: 0.96 }}
         onClick={onClick}
-        className={`relative flex items-center justify-center p-4 rounded-2xl transition-all duration-200 shrink-0 border-2 ${
+        className={`relative flex items-center justify-center p-4 rounded-2xl transition-all duration-200 shrink-0 ${
           selected
-            ? "bg-[#E9F8F0] border-[#005A34]"
-            : "bg-white border-gray-200 hover:border-[#005A34] active:border-[#005A34]"
+            ? "bg-[var(--color-pastel-mint-bg)]"
+            : "bg-white border-2 border-gray-200 hover:border-[var(--color-forest-green)] active:border-[var(--color-forest-green)]"
         } ${className}`}
       >
         <GradientRitualIcon icon={IconComponent} size={42} iconType={icon} />
         {badge && (
-          <span className="absolute -top-1.5 -right-1.5 text-[9px] font-black bg-[#00C473] text-white px-1.5 py-0.5 rounded-full shadow-xs">
+          <span className="absolute -top-1.5 -right-1.5 txt-micro-main font-black bg-brand-green text-white px-1.5 py-0.5 rounded-full shadow-xs">
             {badge}
           </span>
         )}
@@ -175,23 +175,23 @@ export function RitualCard({
     );
   }
 
-  // 2. 한 줄 컴팩트 칩 형태 (compact - 1px border & Forest Green hover/active)
+  // 2. 한 줄 컴팩트 칩 형태 (compact - Non-white selection borderless)
   if (variant === "compact") {
     return (
       <motion.div
         whileTap={{ scale: 0.98 }}
         onClick={onClick}
-        className={`cursor-pointer p-3.5 rounded-2xl flex items-center justify-between transition-all duration-200 border ${
+        className={`cursor-pointer p-3.5 rounded-2xl flex items-center justify-between transition-all duration-200 ${
           selected
-            ? "bg-[#E9F8F0] border-[#005A34]"
-            : "bg-white border-gray-200 hover:border-[#005A34] active:border-[#005A34]"
+            ? "bg-[var(--color-pastel-mint-bg)]"
+            : "bg-white border border-gray-200 hover:border-[var(--color-forest-green)] active:border-[var(--color-forest-green)]"
         } ${className}`}
       >
         <div className="flex items-center gap-3">
-          <GradientRitualIcon icon={IconComponent} size={36} iconType={icon} />
+          <GradientRitualIcon icon={IconComponent} size={32} iconType={icon} />
           <div className="flex flex-col text-left">
-            <span className="text-sm font-black text-gray-900 leading-tight">{title}</span>
-            <span className="text-[11px] font-bold text-[#005A34] mt-0.5">
+            <span className="txt-title-compact text-gray-900 leading-tight">{title}</span>
+            <span className="txt-caption-compact txt-brand-forest mt-0.5">
               {dailyTime} · {level} · {duration}
             </span>
           </div>
@@ -199,12 +199,12 @@ export function RitualCard({
 
         <div className="flex items-center gap-2">
           {reward && (
-            <span className="text-[10px] font-extrabold text-[#005A34] bg-[#E9F8F0] px-2 py-0.5 rounded-md border border-[#00C473]/30">
+            <span className="txt-caption-compact font-extrabold txt-brand-forest bg-[var(--color-pastel-mint-bg)] px-2 py-0.5 rounded-md">
               {reward}
             </span>
           )}
           {selected ? (
-            <CheckCircle size={18} className="text-[#00C473]" weight="fill" />
+            <CheckCircle size={18} className="txt-brand-green" weight="fill" />
           ) : (
             <CaretRight size={16} className="text-gray-400" />
           )}
@@ -213,20 +213,20 @@ export function RitualCard({
     );
   }
 
-  // 3. 상세 정보가 포함된 대표 리추얼 카드 (detailed - 2px border & Forest Green hover/active)
+  // 3. 상세 정보가 포함된 대표 리추얼 카드 (detailed - Non-white selection borderless)
   return (
     <div
       onClick={onClick}
-      className={`p-5 bg-white rounded-2xl flex flex-col gap-3.5 relative overflow-hidden text-left cursor-pointer transition-all duration-200 border-2 ${
+      className={`p-5 bg-white rounded-2xl flex flex-col gap-3.5 relative overflow-hidden text-left cursor-pointer transition-all duration-200 ${
         selected
-          ? "bg-[#E9F8F0] border-[#005A34]"
-          : "border-gray-200 hover:border-[#005A34] active:border-[#005A34]"
+          ? "bg-[var(--color-pastel-mint-bg)]"
+          : "bg-white border-2 border-gray-200 hover:border-[var(--color-forest-green)] active:border-[var(--color-forest-green)]"
       } ${className}`}
     >
       {/* 상단 태그 헤더 */}
       {categoryTag && (
         <div className="flex justify-between items-center z-10 mb-0.5">
-          <span className="text-sm font-bold text-[#00C474] flex items-center gap-1.5">
+          <span className="text-sm font-bold txt-brand-green-accent flex items-center gap-1.5">
             <Sparkle size={16} weight="fill" />
             {categoryTag}
           </span>
@@ -244,32 +244,32 @@ export function RitualCard({
         <div className="flex items-center gap-3">
           <GradientRitualIcon icon={IconComponent} size={44} iconType={icon} />
           <span className="text-xl font-bold text-gray-900 tracking-tight flex-1">{title}</span>
-          {selected && <CheckCircle size={24} className="text-[#00C474] shrink-0" weight="fill" />}
+          {selected && <CheckCircle size={24} className="txt-brand-green-accent shrink-0" weight="fill" />}
         </div>
 
         {/* 4개 개별 멀티컬러 정사각형 칩 (radius: rounded-xl) */}
         <div className="flex items-center justify-start gap-1.5">
           {dailyTime && (
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-amber-100/90 border border-amber-300/60 text-center shadow-2xs shrink-0">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-amber-100/90 text-center shadow-2xs shrink-0">
               <span className="text-xs font-bold text-gray-900">
                 {dailyTime.replace("하루 ", "")}
               </span>
             </div>
           )}
           {level && (
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-purple-100/90 border border-purple-300/60 text-center shrink-0">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-purple-100/90 text-center shrink-0">
               <span className="text-xs font-bold text-gray-900">{level}</span>
             </div>
           )}
           {duration && (
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-sky-100/90 border border-sky-300/60 text-center shrink-0">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-sky-100/90 text-center shrink-0">
               <span className="text-xs font-bold text-gray-900">
                 {duration.replace(" 지속", "")}
               </span>
             </div>
           )}
           {reward && (
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-rose-200/90 border border-rose-300/60 text-center shadow-xs shrink-0">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-rose-200/90 text-center shadow-xs shrink-0">
               <span className="text-xs font-bold text-gray-900">
                 {reward.replace(" 덤벨", "").replace("/월", "")}
               </span>
@@ -277,11 +277,11 @@ export function RitualCard({
           )}
         </div>
 
-        {/* 상세 설명 가이드 (Phosphor Lightbulb & text-sm 폰트 확대) */}
+        {/* 상세 설명 가이드 */}
         {description && (
-          <div className="flex items-start gap-2.5 bg-white/95 p-3.5 rounded-xl border border-emerald-100/60 shadow-2xs">
-            <Lightbulb size={20} className="text-[#00C474] shrink-0 mt-0.5" weight="fill" />
-            <p className="text-sm text-gray-700 leading-relaxed font-medium">
+          <div className="flex items-start gap-2 pt-2.5 mt-1">
+            <Lightbulb size={18} className="txt-brand-green-accent shrink-0 mt-0.5" weight="fill" />
+            <p className="text-sm text-gray-600 leading-relaxed font-medium">
               {description}
             </p>
           </div>

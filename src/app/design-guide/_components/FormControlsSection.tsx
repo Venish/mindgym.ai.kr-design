@@ -19,12 +19,12 @@ export function FormControlsSection() {
   return (
     <section id="forms" className="scroll-mt-24">
       <div className="border-b border-gray-200 pb-3 mb-6">
-        <h2 className="text-xl font-black text-[#191F28] flex items-center gap-2">
-          <span className="w-2.5 h-6 bg-[#00C474] rounded-full inline-block" />
+        <h2 className="text-xl font-black txt-brand-ink flex items-center gap-2">
+          <span className="w-2.5 h-6 bg-[#00C473] rounded-full inline-block" />
           6. Forms & Input Controls (GodUI Dropdown Menu)
         </h2>
         <p className="text-xs text-gray-500 mt-1">
-          닉네임/이메일 텍스트 필드, GodUI 모션 드롭다운 커스텀 메뉴(<code className="font-mono text-[var(--color-brand-green)] font-bold">GodSelect.tsx</code>) 및 Selectable Card controls
+          닉네임/이메일 텍스트 필드, GodUI 모션 드롭다운 커스텀 메뉴(<code className="font-mono txt-brand-green font-bold">GodSelect.tsx</code>) 및 Selectable Card controls
         </p>
       </div>
 
@@ -67,23 +67,23 @@ export function FormControlsSection() {
           </label>
           <div
             onClick={() => setCheckboxChecked(!checkboxChecked)}
-            className={`cursor-pointer p-4 rounded-2xl border transition-all flex items-center justify-between ui-card-accent-hover ${
+            className={`cursor-pointer p-4 rounded-2xl transition-all flex items-center justify-between active:scale-[0.98] ${
               checkboxChecked
-                ? "bg-[var(--color-pastel-mint-bg)] border-[var(--color-brand-green)] shadow-2xs"
-                : "bg-gray-50 border-gray-200/90"
+                ? "bg-[var(--color-pastel-mint-bg)] shadow-2xs"
+                : "bg-gray-50"
             }`}
           >
             <div className="flex items-center gap-3">
               <div
                 className={`w-5 h-5 rounded-lg flex items-center justify-center transition-colors ${
-                  checkboxChecked ? "bg-[#00C473] text-white" : "border border-gray-300 bg-white"
+                  checkboxChecked ? "bg-brand-green text-white" : "border border-gray-300 bg-white"
                 }`}
               >
                 {checkboxChecked && <Check size={14} weight="bold" />}
               </div>
               <div>
                 <span className="text-xs font-black text-gray-900 block">매일 아침 푸시 알림 받기</span>
-                <span className="text-[11px] text-gray-500">설정한 체크인 시간에 상쾌한 알림이 발송됩니다.</span>
+                <span className="txt-caption-sub text-gray-500">설정한 체크인 시간에 상쾌한 알림이 발송됩니다.</span>
               </div>
             </div>
           </div>

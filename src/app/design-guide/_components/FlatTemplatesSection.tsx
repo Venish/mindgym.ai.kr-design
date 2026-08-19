@@ -36,12 +36,12 @@ export function FlatTemplatesSection() {
   return (
     <section id="templates" className="scroll-mt-24">
       <div className="border-b border-gray-200 pb-3 mb-6">
-        <h2 className="text-xl font-black text-[#191F28] flex items-center gap-2">
+        <h2 className="text-xl font-black txt-brand-ink flex items-center gap-2">
           <span className="w-2.5 h-6 bg-[#00C473] rounded-full inline-block" />
           7. Flat Dashboard Template Architecture (공통 대시보드 레이아웃)
         </h2>
         <p className="text-xs text-gray-500 mt-1">
-          공통 컴포넌트(<code className="font-mono text-[#005A34] font-bold">RitualCard</code>, <code className="font-mono text-[#005A34] font-bold">Badge</code>, <code className="font-mono text-[#005A34] font-bold">BrandLogo</code>) 조립 레이아웃 스펙 3종
+          공통 컴포넌트(<code className="font-mono txt-brand-forest font-bold">RitualCard</code>, <code className="font-mono txt-brand-forest font-bold">Badge</code>, <code className="font-mono txt-brand-forest font-bold">BrandLogo</code>) 조립 레이아웃 스펙 3종
         </p>
       </div>
 
@@ -51,11 +51,11 @@ export function FlatTemplatesSection() {
           return (
             <div
               key={tpl.id}
-              className="bg-white border border-gray-200 hover:border-[#005A34] active:border-[#005A34] rounded-3xl p-6 shadow-xs flex flex-col justify-between transition-all text-left"
+              className="bg-white border border-gray-200 hover:border-[var(--color-forest-green)] active:border-[var(--color-forest-green)] rounded-3xl p-6 shadow-xs flex flex-col justify-between transition-all text-left"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-10 h-10 rounded-2xl bg-[#E9F8F0] border border-[#00C473]/30 flex items-center justify-center text-[#005A34]">
+                  <div className="w-10 h-10 rounded-2xl bg-[var(--color-pastel-mint-bg)] txt-brand-forest flex items-center justify-center">
                     <IconComp size={22} weight="bold" />
                   </div>
                   <Badge variant="mint" size="sm">
@@ -63,7 +63,7 @@ export function FlatTemplatesSection() {
                   </Badge>
                 </div>
 
-                <h3 className="text-base font-black text-[#191F28] tracking-tight mb-2">
+                <h3 className="text-base font-black txt-brand-ink tracking-tight mb-2">
                   {tpl.title}
                 </h3>
                 <p className="text-xs text-gray-500 leading-relaxed font-medium mb-6">
@@ -74,7 +74,7 @@ export function FlatTemplatesSection() {
               <Link
                 href={tpl.route}
                 target="_blank"
-                className="w-full inline-flex items-center justify-center gap-2 bg-[#F9FAFB] hover:bg-[#005A34] text-[#191F28] hover:text-white border border-gray-200 hover:border-[#005A34] font-extrabold text-xs py-3 rounded-2xl transition-all"
+                className="w-full inline-flex items-center justify-center gap-2 bg-[#F9FAFB] hover:bg-[#005A34] txt-brand-ink hover:text-white font-extrabold text-xs py-3 rounded-2xl transition-all"
               >
                 <span>실제 대시보드 데모 보기</span>
                 <ArrowSquareOut size={16} weight="bold" />

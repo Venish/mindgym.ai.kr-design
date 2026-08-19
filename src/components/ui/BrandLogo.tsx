@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 interface BrandLogoProps {
@@ -23,19 +24,15 @@ export function BrandLogo({ className = "", size = "md" }: BrandLogoProps) {
 
   return (
     <div className={cn("inline-flex items-center gap-1.5 select-none cursor-pointer", className)}>
-      <svg
+      <Image
+        src="/images/logo_icon.svg"
+        alt="MindGym Logo Icon"
         width={iconSizes[size]}
         height={iconSizes[size]}
-        viewBox="0 0 32 32"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
         className="shrink-0"
-      >
-        <path d="M16 4V28" stroke="#00C473" strokeWidth="4" strokeLinecap="round" />
-        <path d="M6 10L26 22" stroke="#00C473" strokeWidth="4" strokeLinecap="round" />
-        <path d="M6 22L26 10" stroke="#00C473" strokeWidth="4" strokeLinecap="round" />
-      </svg>
-      <span className={cn("font-black tracking-tight text-[#191F28] lowercase leading-none", textClasses[size])}>
+        priority
+      />
+      <span className={cn("font-black tracking-tight txt-brand-ink lowercase leading-none", textClasses[size])}>
         mindgym
       </span>
     </div>

@@ -113,12 +113,12 @@ export function TypographySection() {
   return (
     <section id="typography" className="scroll-mt-24">
       <div className="border-b border-gray-200 pb-3 mb-6">
-        <h2 className="text-xl font-black text-[#191F28] flex items-center gap-2">
+        <h2 className="text-xl font-black txt-brand-ink flex items-center gap-2">
           <span className="w-2.5 h-6 bg-[#00C473] rounded-full inline-block" />
           2. Typography Standard Specification (CSS 전역 타입별 명세)
         </h2>
         <p className="text-xs text-gray-500 mt-1">
-          <code className="font-mono text-[#005A34] font-bold">globals.css</code>에 선언된 6가지 전역 클래스만 부여하면 폰트 크기, 굵기, 행간, 자간(-0.56px)이 전역에서 일괄 반영됩니다.
+          <code className="font-mono txt-brand-forest font-bold">globals.css</code>에 선언된 6가지 전역 클래스만 부여하면 폰트 크기, 굵기, 행간, 자간(-0.56px)이 전역에서 일괄 반영됩니다.
         </p>
       </div>
 
@@ -127,8 +127,8 @@ export function TypographySection() {
             CSS GLOBAL TYPOGRAPHY UTILITY CLASSES (globals.css 선언 6종 클래스 스펙)
            ========================================================================= */}
         <div>
-          <h3 className="text-sm font-black text-[#191F28] uppercase tracking-wider mb-3 text-left flex items-center gap-1.5">
-            <Sparkle size={16} weight="fill" className="text-[#00C473]" />
+          <h3 className="text-sm font-black txt-brand-ink uppercase tracking-wider mb-3 text-left flex items-center gap-1.5">
+            <Sparkle size={16} weight="fill" className="txt-brand-green" />
             <span>CSS Global Typography Classes (globals.css 선언 6종 타입)</span>
           </h3>
 
@@ -140,10 +140,10 @@ export function TypographySection() {
               >
                 <div className="flex flex-wrap justify-between items-center text-xs font-mono text-gray-400 mb-2 gap-2">
                   <div className="flex items-center gap-2">
-                    <span className="font-black text-[#005A34] bg-[#E9F8F0] px-2 py-0.5 rounded-lg border border-[#00C473]/30">
+                    <span className="font-black txt-brand-forest bg-[var(--color-pastel-mint-bg)] px-2 py-0.5 rounded-lg">
                       {item.className}
                     </span>
-                    <span className="font-extrabold text-[#191F28]">{item.name}</span>
+                    <span className="font-extrabold txt-brand-ink">{item.name}</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <span>크기: {item.size}</span>
@@ -153,12 +153,12 @@ export function TypographySection() {
                 </div>
 
                 {/* 실제 클래스 적용 실시간 프리뷰 */}
-                <div className="bg-[#FAFBFB] border border-gray-200/80 p-4 rounded-2xl">
-                  <p className={`${item.className.substring(1)} text-[#191F28]`}>
+                <div className="bg-[#FAFBFB] p-4 rounded-2xl">
+                  <p className={`${item.className.substring(1)} txt-brand-ink`}>
                     {item.sample}
                   </p>
                 </div>
-                <p className="text-[11px] text-gray-500 mt-1.5 font-medium">
+                <p className="txt-caption-sub text-gray-500 mt-1.5 font-medium">
                   💡 용도: {item.desc}
                 </p>
               </div>
@@ -168,16 +168,16 @@ export function TypographySection() {
 
         {/* 6종 전역 타이포그래피 실전 통합 조합 샘플 카드 */}
         <div>
-          <h3 className="text-sm font-black text-[#191F28] uppercase tracking-wider mb-3 text-left flex items-center gap-1.5">
-            <Sparkle size={16} weight="fill" className="text-[#00C474]" />
+          <h3 className="text-sm font-black txt-brand-ink uppercase tracking-wider mb-3 text-left flex items-center gap-1.5">
+            <Sparkle size={16} weight="fill" className="txt-brand-green-accent" />
             <span>6종 전역 타이포그래피 실전 통합 조합 샘플 (Integrated Live Showcase)</span>
           </h3>
 
-          <div className="bg-gradient-to-br from-emerald-50/60 via-white to-teal-50/40 border border-emerald-200/80 rounded-3xl p-6 shadow-soft flex flex-col gap-5 text-left relative overflow-hidden">
+          <div className="bg-gradient-to-br from-emerald-50/60 via-white to-teal-50/40 rounded-3xl p-6 shadow-soft flex flex-col gap-5 text-left relative overflow-hidden">
             {/* 1. txt-title-main */}
             <div className="flex flex-col gap-1 border-b border-emerald-100/80 pb-4">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded">.txt-title-main</span>
+                <span className="txt-caption-compact font-mono font-bold text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded">.txt-title-main</span>
                 <span className="txt-micro-main text-emerald-600">Lv.2 마음운동가</span>
               </div>
               <h2 className="txt-title-main text-gray-900 mt-1">
@@ -188,8 +188,8 @@ export function TypographySection() {
             {/* 2. txt-title-section */}
             <div className="flex flex-col gap-2">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded">.txt-title-section</span>
-                <span className="text-[10px] font-mono text-gray-400">Section Header</span>
+                <span className="txt-caption-compact font-mono font-bold text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded">.txt-title-section</span>
+                <span className="txt-caption-compact font-mono text-gray-400">Section Header</span>
               </div>
               <h3 className="txt-title-section text-gray-900">
                 8월 추천 자율 리추얼 & 스트레스 케어
@@ -200,18 +200,18 @@ export function TypographySection() {
             <div className="bg-white border border-emerald-100 p-5 rounded-2xl shadow-2xs flex flex-col gap-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-100/70 px-1.5 py-0.5 rounded">.txt-title-card</span>
+                  <span className="txt-caption-compact font-mono font-bold text-emerald-700 bg-emerald-100/70 px-1.5 py-0.5 rounded">.txt-title-card</span>
                   <h4 className="txt-title-card text-gray-900">
                     "번아웃 시대, 나를 다독이는 자기자비의 기술"
                   </h4>
                 </div>
-                <span className="txt-micro-main text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/60">
+                <span className="txt-micro-main text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
                   .txt-micro-main (3분)
                 </span>
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <span className="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-100/70 px-1.5 py-0.5 rounded self-start">.txt-body-main</span>
+                <span className="txt-caption-compact font-mono font-bold text-emerald-700 bg-emerald-100/70 px-1.5 py-0.5 rounded self-start">.txt-body-main</span>
                 <p className="txt-body-main text-gray-700">
                   남에게는 한없이 친절하면서 왜 나에게는 엄격할까요? 오늘 하루 지친 내 마음속 다정한 변호인을 깨워보는 심리학 아티클입니다.
                 </p>
@@ -219,7 +219,7 @@ export function TypographySection() {
 
               <div className="flex flex-col gap-1.5 pt-2 border-t border-gray-100">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-100/70 px-1.5 py-0.5 rounded">.txt-caption-main</span>
+                  <span className="txt-caption-compact font-mono font-bold text-emerald-700 bg-emerald-100/70 px-1.5 py-0.5 rounded">.txt-caption-main</span>
                   <span className="txt-micro-main text-gray-400">REF: MG-2026-0819</span>
                 </div>
                 <p className="txt-caption-main text-gray-500">
@@ -232,8 +232,8 @@ export function TypographySection() {
 
         {/* 폰트 및 CDN 레퍼런스 카드 */}
         <div>
-          <h3 className="text-sm font-black text-[#191F28] uppercase tracking-wider mb-3 text-left flex items-center gap-1.5">
-            <TextAa size={16} weight="fill" className="text-[#00C473]" />
+          <h3 className="text-sm font-black txt-brand-ink uppercase tracking-wider mb-3 text-left flex items-center gap-1.5">
+            <TextAa size={16} weight="fill" className="txt-brand-green" />
             <span>Font Spec & Webfont CDN Links</span>
           </h3>
 
@@ -245,21 +245,21 @@ export function TypographySection() {
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[11px] font-mono font-bold text-gray-400">{font.type}</span>
+                    <span className="txt-caption-sub font-mono font-bold text-gray-400">{font.type}</span>
                     <Badge variant={font.badgeVariant} size="sm">
                       {font.badge}
                     </Badge>
                   </div>
 
-                  <h4 className="text-base font-black text-[#191F28] tracking-tight mb-1">
+                  <h4 className="text-base font-black txt-brand-ink tracking-tight mb-1">
                     {font.name}
                   </h4>
                   <p className="text-xs text-gray-600 leading-relaxed font-medium mb-3">
                     {font.desc}
                   </p>
 
-                  <div className="bg-[#F9FAFB] border border-gray-200/80 p-2.5 rounded-xl mb-4 text-[11px] text-gray-500 font-mono">
-                    <span className="font-bold text-[#005A34] block mb-0.5">CSS `@import` 구문:</span>
+                  <div className="bg-[#F9FAFB] p-2.5 rounded-xl mb-4 txt-caption-sub text-gray-500 font-mono">
+                    <span className="font-bold txt-brand-forest block mb-0.5">CSS `@import` 구문:</span>
                     <span className="truncate block">{font.cdnUrl}</span>
                   </div>
                 </div>
@@ -269,7 +269,7 @@ export function TypographySection() {
                     href={font.officialUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-bold text-[#005A34] hover:underline"
+                    className="inline-flex items-center gap-1 text-xs font-bold txt-brand-forest hover:underline"
                   >
                     <span>공식 페이지 / CDN</span>
                     <ArrowSquareOut size={13} weight="bold" />
@@ -280,7 +280,7 @@ export function TypographySection() {
                       navigator.clipboard.writeText(font.cdnUrl);
                       alert(`[${font.name}] CDN 구문이 복사되었습니다!\n${font.cdnUrl}`);
                     }}
-                    className="inline-flex items-center gap-1 bg-[#E9F8F0] hover:bg-[#005A34] text-[#005A34] hover:text-white border border-[#00C473]/30 px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all"
+                    className="inline-flex items-center gap-1 bg-[var(--color-pastel-mint-bg)] hover:bg-[#005A34] txt-brand-forest hover:text-white px-2.5 py-1 rounded-lg txt-caption-sub font-bold transition-all"
                   >
                     <LinkIcon size={12} weight="bold" />
                     <span>구문 복사</span>

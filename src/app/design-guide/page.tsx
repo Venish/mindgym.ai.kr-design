@@ -62,7 +62,7 @@ export default function DesignGuidePage() {
   }, []);
 
   return (
-    <main className="fixed inset-0 z-[9999] bg-white text-[#191F28] font-sans flex flex-col w-screen h-screen overflow-hidden">
+    <main className="fixed inset-0 z-[9999] bg-white txt-brand-ink font-sans flex flex-col w-screen h-screen overflow-hidden">
       {/* 1. 최상단 고정 헤더 (상단 탭 제거 및 깔끔한 로고/Hero 보존) */}
       <DesignGuideHeader />
 

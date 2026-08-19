@@ -37,16 +37,16 @@ export function BadgeChipSection() {
   return (
     <section id="badges" className="scroll-mt-24">
       <div className="border-b border-gray-200 pb-3 mb-6">
-        <h2 className="text-xl font-black text-[#191F28] flex items-center gap-2">
-          <span className="w-2.5 h-6 bg-[#00C473] rounded-full inline-block" />
+        <h2 className="text-xl font-black txt-brand-ink flex items-center gap-2">
+          <span className="w-2.5 h-6 bg-brand-green rounded-full inline-block" />
           4. Badges, Tags & Emotion Chips (Pastel Tone Suite)
         </h2>
         <p className="text-xs text-gray-500 mt-1">
-          카드 팔레트와 1:1로 매칭되는 10종 파스텔 톤 뱃지(<code className="font-mono text-[#005A34] font-bold">Badge.tsx</code>) 및 인터랙티브 칩 명세
+          카드 팔레트와 1:1로 매칭되는 10종 파스텔 톤 뱃지(<code className="font-mono txt-brand-forest font-bold">Badge.tsx</code>) 및 인터랙티브 칩 명세
         </p>
       </div>
 
-      <div className="bg-[#F9FAFB] border border-gray-200 rounded-3xl p-6 shadow-2xs flex flex-col gap-8">
+      <div className="bg-[#F9FAFB] rounded-3xl p-6 shadow-2xs flex flex-col gap-8">
         
         {/* 1. Harmonized Pastel Badges */}
         <div className="bg-white border border-gray-200 rounded-2xl p-5 text-left">
@@ -54,7 +54,7 @@ export function BadgeChipSection() {
             <span className="text-xs font-mono text-gray-500 font-bold uppercase tracking-wider">
               1. Pastel Tone Badges (12 Color Variants)
             </span>
-            <span className="text-[10px] text-gray-400 font-bold">No Border / Soft Fill</span>
+            <span className="txt-caption-compact text-gray-400 font-bold">No Border / Soft Fill</span>
           </div>
           <div className="flex flex-wrap items-center gap-2.5">
             {pastelBadgeList.map((item) => (
@@ -69,9 +69,9 @@ export function BadgeChipSection() {
         <div className="bg-white border border-gray-200 rounded-2xl p-5 text-left">
           <div className="flex justify-between items-center mb-3">
             <span className="text-xs font-mono text-gray-500 font-bold uppercase tracking-wider">
-              2. Emotion Intention Chips (<code className="text-[#005A34]">EmotionChip.tsx</code>)
+              2. Emotion Intention Chips (<code className="txt-brand-forest">EmotionChip.tsx</code>)
             </span>
-            <span className="text-[10px] text-gray-400 font-bold">Interactive Selection</span>
+            <span className="txt-caption-compact text-gray-400 font-bold">Interactive Selection</span>
           </div>
           <div className="flex flex-wrap gap-2.5">
             {emotionList.map((item) => (
@@ -93,7 +93,7 @@ export function BadgeChipSection() {
             <span className="text-xs font-mono text-gray-500 font-bold uppercase tracking-wider">
               3. Ritual Time Selector Chips (시간 선택 칩)
             </span>
-            <span className="text-[10px] text-gray-400 font-bold">Flat Time Capsule</span>
+            <span className="txt-caption-compact text-gray-400 font-bold">Flat Time Capsule</span>
           </div>
           <div className="flex flex-wrap gap-2">
             {timeList.map((time) => (

@@ -64,21 +64,13 @@ export function GodSelect({
 
   return (
     <div ref={containerRef} className={cn("relative w-full text-left", className)}>
-      {/* Glow Backdrop Accent */}
-      <div
-        className={cn(
-          "absolute -inset-0.5 bg-gradient-to-r from-[#00C474]/25 to-teal-400/25 rounded-2xl blur opacity-0 transition-opacity duration-300 pointer-events-none",
-          isOpen && "opacity-100"
-        )}
-      />
-
       {/* Select Trigger Control */}
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
           "relative flex items-center justify-between w-full px-4 py-3.5 bg-white border border-gray-200/90 rounded-2xl shadow-2xs font-extrabold text-sm text-gray-900 transition-all duration-200 active:scale-[0.98]",
-          isOpen && "border-[var(--color-brand-green)] ring-2 ring-[#00C474]/20"
+          isOpen && "border-[var(--color-brand-green)]"
         )}
       >
         <div className="flex items-center gap-2.5 overflow-hidden">

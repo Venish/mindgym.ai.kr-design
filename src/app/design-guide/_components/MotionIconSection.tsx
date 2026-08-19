@@ -18,8 +18,8 @@ export function MotionIconSection() {
   return (
     <section id="motion" className="scroll-mt-24">
       <div className="border-b border-gray-200 pb-3 mb-6">
-        <h2 className="text-xl font-black text-[#191F28] flex items-center gap-2">
-          <span className="w-2.5 h-6 bg-[#00C474] rounded-full inline-block" />
+        <h2 className="text-xl font-black txt-brand-ink flex items-center gap-2">
+          <span className="w-2.5 h-6 bg-brand-green rounded-full inline-block" />
           8. Motion & Icon Elements
         </h2>
         <p className="text-xs text-gray-500 mt-1">
@@ -30,7 +30,7 @@ export function MotionIconSection() {
       <div className="bg-white border border-gray-200 rounded-3xl p-6 shadow-xs flex flex-col gap-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* 1. 낮/아침 체크인 헤더 아이콘 */}
-          <div className="flex items-center gap-4 bg-emerald-50/50 p-5 rounded-2xl border border-emerald-100 text-left">
+          <div className="flex items-center gap-4 bg-emerald-50/50 p-5 rounded-2xl text-left">
             <AnimatedMorningSun className="w-16 h-16 shrink-0" />
             <div>
               <span className="text-xs font-black text-emerald-800 block">`AnimatedMorningSun` Component</span>
@@ -41,7 +41,7 @@ export function MotionIconSection() {
           </div>
 
           {/* 2. 밤/저녁 체크인 헤더 아이콘 */}
-          <div className="flex items-center gap-4 bg-indigo-50/50 p-5 rounded-2xl border border-indigo-100 text-left">
+          <div className="flex items-center gap-4 bg-indigo-50/50 p-5 rounded-2xl text-left">
             <AnimatedEveningMoon className="w-16 h-16 shrink-0" />
             <div>
               <span className="text-xs font-black text-indigo-900 block">`AnimatedEveningMoon` Component</span>
@@ -52,7 +52,7 @@ export function MotionIconSection() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-4 justify-center bg-gray-50 p-5 rounded-2xl border border-gray-200">
+        <div className="flex flex-wrap items-center gap-4 justify-center bg-gray-50 p-5 rounded-2xl">
           {phosphorIcons.map((item, idx) => {
             const IconComponent = item.icon;
             return (
@@ -60,7 +60,7 @@ export function MotionIconSection() {
                 <div className="p-3 bg-white rounded-xl shadow-xs border border-gray-200">
                   <IconComponent size={24} weight="duotone" className={item.color} />
                 </div>
-                <span className="text-[10px] font-mono text-gray-500">{item.label}</span>
+                <span className="txt-caption-compact font-mono text-gray-500">{item.label}</span>
               </div>
             );
           })}

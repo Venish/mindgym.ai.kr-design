@@ -31,7 +31,7 @@ export default function DashboardFlatPage() {
   const [isMagazineOpen, setIsMagazineOpen] = useState(false);
 
   return (
-    <main className="min-h-screen bg-white text-[#191F28] font-sans flex flex-col items-center justify-start relative pb-24">
+    <main className="min-h-screen bg-white txt-brand-ink font-sans flex flex-col items-center justify-start relative pb-24">
       {/* 430px 모바일 화면 프레임 레이아웃 (순백색 배경) */}
       <div className="w-full max-w-[430px] min-h-screen bg-white flex flex-col relative border-x border-gray-200/60 shadow-xs">
         
@@ -53,15 +53,15 @@ export default function DashboardFlatPage() {
         <div className="flex-1 flex flex-col gap-6 px-5 pt-2 pb-6">
 
           {/* 2. Hero Dumbbell Growth Section (옅은 회색 #F9FAFB 박스) */}
-          <section className="bg-[#F9FAFB] rounded-3xl p-6 border border-gray-100/90 shadow-2xs flex flex-col items-center text-center relative overflow-hidden">
+          <section className="bg-[#F9FAFB] rounded-3xl p-6 shadow-2xs flex flex-col items-center text-center relative overflow-hidden">
             {/* 상단 캡슐 뱃지: [ 철 덤벨 · 12회차 ] (공통 Badge 컴포넌트) */}
             <div className="flex items-center gap-1.5 mb-4">
               <Badge variant="mint" size="md">
-                철 덤벨 · <span className="font-extrabold text-[#00C473]">12회차</span>
+                철 덤벨 · <span className="font-extrabold txt-brand-green-accent">12회차</span>
               </Badge>
             </div>
 
-            {/* 중앙 덤벨 엠블럼 (순백색 원형 뱃지: aspect-square 1:1 정방형 고정) */}
+            {/* 중앙 덤벨 엠블렘 (순백색 원형 뱃지: aspect-square 1:1 정방형 고정) */}
             <div className="relative mb-3 flex items-center justify-center p-2">
               <div className="w-[6rem] h-[6rem] aspect-square shrink-0 bg-white rounded-full flex items-center justify-center border border-gray-100 shadow-2xs">
                 <Barbell size={56} weight="fill" className="text-gray-400 filter drop-shadow-2xs" />
@@ -103,9 +103,9 @@ export default function DashboardFlatPage() {
               {/* 카드 1: 오프먼트 (완료됨 - 옅은 회색 #F9FAFB 박스) */}
               <div
                 onClick={() => router.push("/player/RT-001")}
-                className="cursor-pointer bg-[#F9FAFB] border border-gray-100/90 rounded-2xl p-3.5 flex flex-col justify-between h-[120px] transition-all hover:border-[#00C473] shadow-2xs active:scale-97"
+                className="cursor-pointer bg-[#F9FAFB] rounded-2xl p-3.5 flex flex-col justify-between h-[120px] transition-all shadow-2xs active:scale-97"
               >
-                <div className="w-5 h-5 rounded-full bg-white text-[#00C473] border border-gray-200/60 flex items-center justify-center shadow-2xs">
+                <div className="w-5 h-5 rounded-full bg-white txt-brand-green-accent border border-gray-200/60 flex items-center justify-center shadow-2xs">
                   <Check size={12} weight="bold" />
                 </div>
                 <div>
@@ -121,16 +121,16 @@ export default function DashboardFlatPage() {
               {/* 카드 2: 한 칸 완벽주의 (진행 중 - Mint Tint 배경 #E9F8F0) */}
               <div
                 onClick={() => router.push("/player/RT-012")}
-                className="cursor-pointer bg-[#E9F8F0] border border-[#00C473]/30 rounded-2xl p-3.5 flex flex-col justify-between h-[120px] transition-all hover:shadow-xs active:scale-97"
+                className="cursor-pointer bg-[#E9F8F0] rounded-2xl p-3.5 flex flex-col justify-between h-[120px] transition-all hover:shadow-xs active:scale-97"
               >
-                <span className="self-start px-2 py-0.5 bg-white text-[#00C473] text-[10px] font-black rounded-full border border-[#00C473]/20 shadow-2xs">
+                <span className="self-start px-2 py-0.5 bg-white txt-brand-green-accent text-[10px] font-black rounded-full border border-[#00C473]/20 shadow-2xs">
                   3분
                 </span>
                 <div>
-                  <h4 className="text-xs font-black text-[#005A34] tracking-tight leading-tight">
+                  <h4 className="text-xs font-black txt-brand-forest tracking-tight leading-tight">
                     한 칸 완벽주의
                   </h4>
-                  <p className="text-[10px] text-[#005A34]/80 font-medium mt-0.5 truncate">
+                  <p className="text-[10px] txt-brand-forest font-medium mt-0.5 truncate">
                     서랍 한 칸 정리
                   </p>
                 </div>
@@ -139,7 +139,7 @@ export default function DashboardFlatPage() {
               {/* 카드 3: 빈손산책 (미완료 - 옅은 회색 #F9FAFB 박스) */}
               <div
                 onClick={() => router.push("/player/RT-004")}
-                className="cursor-pointer bg-[#F9FAFB] border border-gray-100/90 rounded-2xl p-3.5 flex flex-col justify-between h-[120px] transition-all hover:border-gray-300 shadow-2xs active:scale-97"
+                className="cursor-pointer bg-[#F9FAFB] rounded-2xl p-3.5 flex flex-col justify-between h-[120px] transition-all shadow-2xs active:scale-97"
               >
                 <span className="self-start px-2 py-0.5 bg-white text-amber-600 text-[10px] font-black rounded-full border border-amber-200/80 shadow-2xs">
                   10분
@@ -159,7 +159,7 @@ export default function DashboardFlatPage() {
           {/* 4. 매거진 아티클 배너 (정시명증 - 옅은 회색 #F9FAFB 박스) */}
           <section
             onClick={() => setIsMagazineOpen(true)}
-            className="cursor-pointer bg-[#F9FAFB] border border-gray-100/90 rounded-2xl p-4 shadow-2xs flex items-center justify-between transition-all hover:border-[#00C473] active:scale-98"
+            className="cursor-pointer bg-[#F9FAFB] rounded-2xl p-4 shadow-2xs flex items-center justify-between transition-all active:scale-98"
           >
             <div className="flex items-center gap-3.5">
               {/* 초록 매거진 썸네일 커버 */}
@@ -182,13 +182,13 @@ export default function DashboardFlatPage() {
           {/* 5. 마음 컨디션 체크인 배너 (옅은 회색 #F9FAFB 박스) */}
           <section
             onClick={() => setIsMorningOpen(true)}
-            className="cursor-pointer bg-[#F9FAFB] border border-gray-100/90 rounded-2xl p-4 shadow-2xs flex items-center justify-between transition-all hover:border-[#00C473] active:scale-98"
+            className="cursor-pointer bg-[#F9FAFB] rounded-2xl p-4 shadow-2xs flex items-center justify-between transition-all active:scale-98"
           >
             <div className="flex items-center gap-2 text-xs font-bold text-gray-800">
-              <Sparkle size={16} weight="fill" className="text-[#00C474]" />
+              <Sparkle size={16} weight="fill" className="txt-brand-green-accent" />
               <span>지금 마음 컨디션은 어때요?</span>
             </div>
-            <span className="text-[11px] font-black text-[#00C474] bg-white px-2.5 py-0.5 rounded-full border border-[#00C473]/30 shadow-2xs">
+            <span className="text-[11px] font-black txt-brand-green-accent bg-white px-2.5 py-0.5 rounded-full border border-[#00C473]/30 shadow-2xs">
               30초
             </span>
           </section>
@@ -217,11 +217,11 @@ export default function DashboardFlatPage() {
                 <IconComp
                   size={22}
                   weight={isActive ? "fill" : "regular"}
-                  className={isActive ? "text-[#191F28]" : "text-gray-400"}
+                  className={isActive ? "txt-brand-ink" : "text-gray-400"}
                 />
                 <span
                   className={`text-[10px] font-bold ${
-                    isActive ? "text-[#191F28]" : "text-gray-400"
+                    isActive ? "txt-brand-ink" : "text-gray-400"
                   }`}
                 >
                   {tab.label}

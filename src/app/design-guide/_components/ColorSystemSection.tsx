@@ -33,8 +33,8 @@ const BRAND_COLORS: ColorToken[] = [
   { name: "Signature Green", hex: "#00C473", class: "bg-[#00C473]", desc: "메인 시그니처 엠블럼 & CTA 버튼", textColor: "text-white" },
   { name: "Brand Hover", hex: "#009859", class: "bg-[#009859]", desc: "버튼 호버 & 클릭 인터랙션 틴트", textColor: "text-white" },
   { name: "Forest", hex: "#005A34", class: "bg-[#005A34]", desc: "다크 그린 강조 서체 & 텍스트", textColor: "text-white" },
-  { name: "Mint Tint", hex: "#E9F8F0", class: "bg-[#E9F8F0] border border-[#00C473]/30", desc: "배경 틴트 & 진행중 패널", textColor: "text-[#005A34]" },
-  { name: "White", hex: "#E9F8F0", class: "bg-white border border-gray-200", desc: "순백색 캔버스 및 카드 스펙", textColor: "text-gray-900" },
+  { name: "Mint Tint", hex: "#E9F8F0", class: "bg-[#E9F8F0]", desc: "배경 틴트 & 진행중 패널", textColor: "text-[#005A34]" },
+  { name: "White", hex: "#FFFFFF", class: "bg-white border border-[#e8e8e8]", desc: "순백색 캔버스 및 카드 스펙", textColor: "text-gray-900" },
 ];
 
 const NEUTRAL_COLORS: ColorToken[] = [
@@ -43,7 +43,7 @@ const NEUTRAL_COLORS: ColorToken[] = [
   { name: "Gray 500", hex: "#8B95A1", class: "bg-[#8B95A1]", desc: "보조 설명 & 캡션 서체", textColor: "text-white" },
   { name: "Gray 400", hex: "#B0B8C1", class: "bg-[#B0B8C1]", desc: "Placeholder 및 비활성 서체", textColor: "text-white" },
   { name: "Gray 200", hex: "#EDEFF2", class: "bg-[#EDEFF2]", desc: "디바인더 & 테두리 라인", textColor: "text-gray-900" },
-  { name: "Surface", hex: "#F9FAFB", class: "bg-[#F9FAFB] border border-gray-200", desc: "카드 패널 & 옅은 회색 배경", textColor: "text-gray-900" },
+  { name: "Surface", hex: "#F9FAFB", class: "bg-[#F9FAFB]", desc: "카드 패널 & 옅은 회색 배경", textColor: "text-gray-900" },
 ];
 
 export function ColorSystemSection() {
@@ -98,7 +98,7 @@ export function ColorSystemSection() {
               <Card
                 key={cardTpl.id}
                 variant={cardTpl.id}
-                clickable
+                clickable={false}
                 className="flex flex-col justify-between h-[130px]"
               >
                 <div className="flex items-center justify-between">
@@ -135,55 +135,84 @@ export function ColorSystemSection() {
             Neutral Scale (6 Color Tokens)
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-            {NEUTRAL_COLORS.map((token) => (
-              <div
-                key={token.name}
-                onClick={() => handleCopy(token.hex)}
-                className="group cursor-pointer bg-white border border-gray-200 hover:border-[#005A34] active:border-[#005A34] rounded-2xl overflow-hidden shadow-2xs transition-all"
-              >
-                <div className={`h-20 ${token.class} ${token.textColor} p-3 flex flex-col justify-between`}>
-                  <span className="text-xs font-black tracking-tight">{token.name}</span>
-                  <span className="text-xs font-mono font-extrabold">{token.hex}</span>
+            {NEUTRAL_COLORS.map((token) => {
+              const isWhite = token.name === "White" || token.hex.toUpperCase() === "#FFFFFF";
+              return (
+                <div
+                  key={token.name}
+                  onClick={() => handleCopy(token.hex)}
+                  className={`group cursor-pointer rounded-2xl overflow-hidden shadow-2xs transition-all ${
+                    isWhite ? "bg-white border border-[#e8e8e8]" : "bg-white border border-transparent"
+                  }`}
+                >
+                  <div
+                    className={`h-16 ${token.class} ${
+                      isWhite ? "border-b border-[#e8e8e8]" : ""
+                    }`}
+                  />
+                  <div className="p-2.5 bg-white text-left flex flex-col gap-0.5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] font-black text-gray-900">{token.name}</span>
+                      <span className="text-[10px] font-mono font-extrabold text-gray-400">{token.hex}</span>
+                    </div>
+                    <span className="text-[10px] text-gray-500 font-medium leading-tight block mt-0.5">
+                      {token.desc}
+                    </span>
+                  </div>
                 </div>
-                <div className="p-2.5 bg-white text-left">
-                  <span className="text-[10px] text-gray-500 font-medium leading-tight block">{token.desc}</span>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
-        {/* Brand Colors */}
+        {/* Brand Signature Colors */}
         <div>
           <h3 className="text-sm font-black text-gray-800 uppercase tracking-wider mb-3 text-left">
             Brand Signature Colors
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3">
-            {BRAND_COLORS.map((token) => (
-              <div
-                key={token.name}
-                onClick={() => handleCopy(token.hex)}
-                className="group cursor-pointer bg-white border border-gray-200 hover:border-[#005A34] active:border-[#005A34] rounded-2xl overflow-hidden shadow-2xs transition-all"
-              >
-                <div className={`h-24 ${token.class} ${token.textColor} p-4 flex flex-col justify-between`}>
-                  <span className="text-xs font-bold opacity-80">{token.name}</span>
-                  <span className="text-sm font-mono font-extrabold">{token.hex}</span>
-                </div>
-                <div className="p-3 bg-white text-left">
-                  <div className="flex justify-between items-center text-xs font-mono text-gray-500">
-                    <span>{token.class}</span>
-                    {copiedText === token.hex ? (
-                      <span className="text-[#00C474] font-bold flex items-center gap-1">
-                        <Check size={12} /> Copied
-                      </span>
-                    ) : (
-                      <Copy size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                    )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
+            {BRAND_COLORS.map((token) => {
+              const isWhite = token.name === "White" || token.hex.toUpperCase() === "#FFFFFF";
+              return (
+                <div
+                  key={token.name}
+                  onClick={() => handleCopy(token.hex)}
+                  className={`group cursor-pointer rounded-2xl overflow-hidden shadow-2xs transition-all ${
+                    isWhite ? "bg-white border border-[#e8e8e8]" : "bg-white border border-transparent"
+                  }`}
+                >
+                  {/* 상단 순수 컬러 칩 박스 (텍스트 제거) */}
+                  <div
+                    className={`h-24 ${token.class} ${
+                      isWhite ? "border-b border-[#e8e8e8]" : ""
+                    }`}
+                  />
+
+                  {/* 하단 텍스트 및 토큰 정보 배치 영역 */}
+                  <div className="p-3 bg-white text-left flex flex-col gap-1">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-black text-gray-900">{token.name}</span>
+                      <span className="text-xs font-mono font-extrabold text-gray-500">{token.hex}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between text-[11px] font-mono text-gray-400 mt-0.5">
+                      <span className="truncate">{token.class}</span>
+                      {copiedText === token.hex ? (
+                        <span className="text-[#00C474] font-bold flex items-center gap-0.5 text-[10px]">
+                          <Check size={12} /> Copied
+                        </span>
+                      ) : (
+                        <Copy size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                      )}
+                    </div>
+
+                    <p className="text-[11px] text-gray-500 font-medium leading-tight mt-1">
+                      {token.desc}
+                    </p>
                   </div>
-                  <p className="text-[11px] text-gray-500 mt-1">{token.desc}</p>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 

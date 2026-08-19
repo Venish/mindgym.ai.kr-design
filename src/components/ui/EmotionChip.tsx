@@ -32,24 +32,24 @@ export function EmotionChip({
     <button
       type="button"
       onClick={onClick}
-      className={`inline-flex items-center justify-center font-extrabold tracking-tight transition-colors border cursor-pointer select-none ${
+      className={`inline-flex items-center justify-center font-extrabold tracking-tight transition-colors cursor-pointer select-none ${
         selected
-          ? "bg-[#E9F8F0] border-[#005A34] text-[#005A34]"
-          : "bg-white border-gray-200 text-[#4E5968] hover:border-[#005A34] hover:text-[#191F28] active:border-[#005A34]"
+          ? "bg-[var(--color-pastel-mint-bg)] txt-brand-forest"
+          : "bg-white border border-gray-200 txt-brand-slate hover:border-[var(--color-forest-green)] hover:txt-brand-ink active:border-[var(--color-forest-green)]"
       } ${sizeStyles[size]} ${className}`}
     >
       {emoji && <span className="text-sm leading-none">{emoji}</span>}
       <span>{label}</span>
       {count !== undefined && (
         <span
-          className={`text-[10px] font-mono px-1.5 py-0.2 rounded-full ${
-            selected ? "bg-white/80 text-[#005A34]" : "bg-gray-100 text-gray-400"
+          className={`txt-caption-compact font-mono px-1.5 py-0.2 rounded-full ${
+            selected ? "bg-white/80 txt-brand-forest" : "bg-gray-100 text-gray-400"
           }`}
         >
           {count}
         </span>
       )}
-      {selected && <Check size={13} weight="bold" className="text-[#005A34] shrink-0" />}
+      {selected && <Check size={13} weight="bold" className="txt-brand-forest shrink-0" />}
     </button>
   );
 }
