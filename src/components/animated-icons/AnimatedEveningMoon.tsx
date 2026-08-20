@@ -53,8 +53,11 @@ export function AnimatedEveningMoon({ size = 48, className = "" }: { size?: numb
 
 
 
-      {/* 4. 달 우측 하단 부드럽고 몽글몽글한 밤 구름 (오른쪽으로 조금 더 이동) */}
-      <g transform="translate(4, 0)">
+      {/* 4. 달 우측 하단 부드럽고 몽글몽글한 밤 구름 (좌우로 천천히 움직임) */}
+      <motion.g
+        animate={{ x: [2, 6, 2] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+      >
         <path
           d="M 22 38.5 C 20 38.5 18.5 37 18.5 35 C 18.5 33.3 19.7 31.8 21.4 31.4 C 22.1 29 24.3 27.2 27 27.2 C 30.2 27.2 32.8 29.5 33.3 32.5 C 34.2 31.9 35.3 31.5 36.5 31.5 C 39.2 31.5 41.5 33.6 41.5 36.3 C 41.5 37.5 41 38.5 39.5 38.5 Z"
           fill="url(#eveningCloudGrad)"
@@ -63,7 +66,7 @@ export function AnimatedEveningMoon({ size = 48, className = "" }: { size?: numb
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-      </g>
+      </motion.g>
     </svg>
   );
 }

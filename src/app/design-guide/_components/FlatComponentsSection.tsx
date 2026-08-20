@@ -82,37 +82,37 @@ export function FlatComponentsSection() {
             <div className="bg-[#F9FAFB] rounded-2xl p-5 flex flex-col gap-3">
               <span className="txt-caption-compact font-mono text-gray-400 font-bold block">#02. 3-Column Flat Ritual Cards (완료/진행중/미완료)</span>
               
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-3 gap-2.5">
                 {/* 완료 카드 */}
-                <div className="bg-white border border-gray-200 rounded-xl p-2.5 flex flex-col justify-between h-[100px]">
-                  <div className="w-4 h-4 rounded-full bg-[var(--color-pastel-mint-bg)] txt-brand-green flex items-center justify-center">
-                    <Check size={10} weight="bold" />
+                <div className="bg-white border border-gray-200 rounded-xl p-3.5 flex flex-col justify-between h-[120px]">
+                  <div className="w-[26px] h-[26px] rounded-lg bg-emerald-50 txt-brand-green-accent flex items-center justify-center shrink-0">
+                    <Check size={12} weight="bold" />
                   </div>
-                  <div>
-                    <h5 className="txt-caption-sub font-extrabold text-gray-400 line-through">오프먼트</h5>
-                    <span className="txt-nano-main text-gray-400">완료</span>
+                  <div className="flex flex-col text-left">
+                    <h5 className="text-sm font-black text-gray-400 line-through tracking-tight leading-tight">오프먼트</h5>
+                    <span className="text-xs font-semibold text-gray-400 mt-1">완료</span>
                   </div>
                 </div>
 
                 {/* 진행중 카드 (Mint Tint) */}
-                <div className="bg-[var(--color-pastel-mint-bg)] rounded-xl p-2.5 flex flex-col justify-between h-[100px]">
-                  <Badge variant="forest" size="sm" className="self-start text-[8px] px-1.5 py-0">
+                <div className="bg-[var(--color-pastel-mint-bg)] rounded-xl p-3.5 flex flex-col justify-between h-[120px]">
+                  <div className="w-[26px] h-[26px] rounded-lg bg-white txt-brand-green-accent text-xs font-black flex items-center justify-center shrink-0 shadow-2xs">
                     3분
-                  </Badge>
-                  <div>
-                    <h5 className="txt-caption-sub font-black txt-brand-forest leading-tight">한 칸 완벽주의</h5>
-                    <span className="txt-nano-main text-[#005A34]/80">서랍 정리</span>
+                  </div>
+                  <div className="flex flex-col text-left">
+                    <h5 className="text-sm font-black text-gray-900 leading-tight tracking-tight">한 칸 완벽주의</h5>
+                    <span className="text-xs font-semibold text-gray-400 mt-1">서랍 정리</span>
                   </div>
                 </div>
 
                 {/* 미완료 카드 */}
-                <div className="bg-white border border-gray-200 hover:border-[#005A34] rounded-xl p-2.5 flex flex-col justify-between h-[100px] cursor-pointer">
-                  <Badge variant="amber" size="sm" className="self-start text-[8px] px-1.5 py-0">
+                <div className="bg-white border border-gray-200 hover:border-[#005A34] rounded-xl p-3.5 flex flex-col justify-between h-[120px] cursor-pointer">
+                  <div className="w-[26px] h-[26px] rounded-lg bg-white text-amber-600 text-[11px] font-black flex items-center justify-center shrink-0 border border-amber-200/80 shadow-2xs">
                     10분
-                  </Badge>
-                  <div>
-                    <h5 className="txt-caption-sub font-black text-gray-800 leading-tight">빈손산책</h5>
-                    <span className="txt-nano-main text-gray-400">폰 없이</span>
+                  </div>
+                  <div className="flex flex-col text-left">
+                    <h5 className="text-sm font-black text-gray-900 leading-tight tracking-tight">빈손산책</h5>
+                    <span className="text-xs font-semibold text-gray-400 mt-1">폰 없이</span>
                   </div>
                 </div>
               </div>
@@ -123,28 +123,28 @@ export function FlatComponentsSection() {
               <span className="txt-caption-compact font-mono text-gray-400 font-bold block">#03. Banners & Quick Check-in Cards</span>
               
               {/* 매거진 배너 */}
-              <div className="bg-white border border-gray-200 hover:border-[#005A34] rounded-xl p-3 flex items-center justify-between cursor-pointer">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 bg-brand-green rounded-lg flex items-center justify-center text-white shrink-0">
-                    <BookBookmark size={16} weight="fill" />
+              <div className="bg-white border border-gray-200/80 hover:border-[#4ECB93] rounded-2xl p-3.5 flex items-center justify-between cursor-pointer transition-all shadow-2xs">
+                <div className="flex items-center gap-3.5">
+                  <div className="w-[48px] h-[64px] bg-gradient-to-b from-[#7CE0B0] to-[#4ECB93] rounded-xl flex flex-col justify-end items-center pb-2 text-white shrink-0 shadow-2xs">
+                    <span className="text-xs font-bold font-mono tracking-tighter text-white uppercase">VOL.11</span>
                   </div>
-                  <div className="text-left">
-                    <h5 className="text-xs font-black txt-brand-ink">정시명증 아티클</h5>
-                    <span className="txt-caption-compact text-gray-400 font-medium">이달의 추천 마인드 스토어</span>
+                  <div className="flex flex-col text-left">
+                    <h5 className="text-[1.0625rem] font-black text-gray-900 tracking-tight leading-tight">잠시멈춤</h5>
+                    <span className="text-xs font-semibold text-gray-400 mt-1">이달의 추천 마인드 스토어</span>
                   </div>
                 </div>
-                <CaretRight size={16} className="text-gray-400" />
+                <CaretRight size={18} className="text-gray-300" />
               </div>
 
               {/* 30초 마음 컨디션 배너 */}
-              <div className="bg-white border border-gray-200 hover:border-[#005A34] rounded-xl p-3 flex items-center justify-between cursor-pointer">
-                <div className="flex items-center gap-2 text-xs font-extrabold txt-brand-ink">
-                  <Sparkle size={14} weight="fill" className="txt-brand-green" />
+              <div className="bg-white border border-gray-200 hover:border-[#005A34] rounded-xl p-3.5 flex items-center justify-between cursor-pointer min-h-[54px]">
+                <div className="flex items-center gap-2 text-sm font-black text-gray-900 tracking-tight leading-tight">
+                  <Sparkle size={16} weight="fill" className="txt-brand-green-accent" />
                   <span>마음 컨디션 체크인</span>
                 </div>
-                <Badge variant="mint" size="sm">
+                <span className="text-xs font-black txt-brand-green-accent bg-white px-2.5 py-0.5 rounded-full border border-[#00C473]/30 shadow-2xs">
                   30초
-                </Badge>
+                </span>
               </div>
             </div>
           </div>

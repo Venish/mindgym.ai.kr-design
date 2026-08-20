@@ -32,10 +32,10 @@ export function EmotionChip({
     <button
       type="button"
       onClick={onClick}
-      className={`inline-flex items-center justify-center font-extrabold tracking-tight transition-colors cursor-pointer select-none ${
+      className={`inline-flex items-center justify-center font-extrabold tracking-tight transition-colors border cursor-pointer select-none ${
         selected
-          ? "bg-[var(--color-pastel-mint-bg)] txt-brand-forest"
-          : "bg-white border border-gray-200 txt-brand-slate hover:border-[var(--color-forest-green)] hover:txt-brand-ink active:border-[var(--color-forest-green)]"
+          ? "bg-[var(--color-pastel-mint-bg)] border-transparent txt-brand-forest"
+          : "bg-white border-gray-200 txt-brand-slate hover:border-[var(--color-forest-green)] hover:txt-brand-ink active:border-[var(--color-forest-green)]"
       } ${sizeStyles[size]} ${className}`}
     >
       {emoji && <span className="text-sm leading-none">{emoji}</span>}

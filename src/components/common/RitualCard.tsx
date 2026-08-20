@@ -153,16 +153,16 @@ export function RitualCard({
     );
   }
 
-  // 1. 아이콘 전용 컴팩트 미니 버전 (icon-only - Non-white selection borderless)
+  // 1. 아이콘 전용 컴팩트 미니 버전 (icon-only - Non-white selection borderless with layout-shift prevention)
   if (variant === "icon-only") {
     return (
       <motion.button
         whileTap={{ scale: 0.96 }}
         onClick={onClick}
-        className={`relative flex items-center justify-center p-4 rounded-2xl transition-all duration-200 shrink-0 ${
+        className={`relative flex items-center justify-center p-4 rounded-2xl transition-all duration-200 shrink-0 border-2 ${
           selected
-            ? "bg-[var(--color-pastel-mint-bg)]"
-            : "bg-white border-2 border-gray-200 hover:border-[var(--color-forest-green)] active:border-[var(--color-forest-green)]"
+            ? "bg-[var(--color-pastel-mint-bg)] border-transparent"
+            : "bg-white border-gray-200 hover:border-[var(--color-forest-green)] active:border-[var(--color-forest-green)]"
         } ${className}`}
       >
         <GradientRitualIcon icon={IconComponent} size={42} iconType={icon} />
@@ -175,23 +175,23 @@ export function RitualCard({
     );
   }
 
-  // 2. 한 줄 컴팩트 칩 형태 (compact - Non-white selection borderless)
+  // 2. 한 줄 컴팩트 칩 형태 (compact - Non-white selection borderless with layout-shift prevention)
   if (variant === "compact") {
     return (
       <motion.div
         whileTap={{ scale: 0.98 }}
         onClick={onClick}
-        className={`cursor-pointer p-3.5 rounded-2xl flex items-center justify-between transition-all duration-200 ${
+        className={`cursor-pointer p-3.5 rounded-2xl flex items-center justify-between transition-all duration-200 border ${
           selected
-            ? "bg-[var(--color-pastel-mint-bg)]"
-            : "bg-white border border-gray-200 hover:border-[var(--color-forest-green)] active:border-[var(--color-forest-green)]"
+            ? "bg-[var(--color-pastel-mint-bg)] border-transparent"
+            : "bg-white border-gray-200 hover:border-[var(--color-forest-green)] active:border-[var(--color-forest-green)]"
         } ${className}`}
       >
         <div className="flex items-center gap-3">
           <GradientRitualIcon icon={IconComponent} size={32} iconType={icon} />
           <div className="flex flex-col text-left">
-            <span className="txt-title-compact text-gray-900 leading-tight">{title}</span>
-            <span className="txt-caption-compact txt-brand-forest mt-0.5">
+            <span className="text-sm font-black text-gray-900 leading-tight tracking-tight">{title}</span>
+            <span className="txt-caption-compact txt-brand-forest mt-1">
               {dailyTime} · {level} · {duration}
             </span>
           </div>
@@ -213,14 +213,14 @@ export function RitualCard({
     );
   }
 
-  // 3. 상세 정보가 포함된 대표 리추얼 카드 (detailed - Non-white selection borderless)
+  // 3. 상세 정보가 포함된 대표 리추얼 카드 (detailed - Non-white selection borderless with layout-shift prevention)
   return (
     <div
       onClick={onClick}
-      className={`p-5 rounded-2xl flex flex-col gap-3.5 relative overflow-hidden text-left cursor-pointer transition-all duration-200 ${
+      className={`p-5 rounded-2xl flex flex-col gap-3.5 relative overflow-hidden text-left cursor-pointer transition-all duration-200 border-2 ${
         selected
-          ? "bg-[var(--color-pastel-mint-bg)]"
-          : "bg-white border-2 border-gray-200 hover:border-[var(--color-forest-green)] active:border-[var(--color-forest-green)]"
+          ? "bg-[var(--color-pastel-mint-bg)] border-transparent"
+          : "bg-white border-gray-200 hover:border-[var(--color-forest-green)] active:border-[var(--color-forest-green)]"
       } ${className}`}
     >
       {/* 상단 태그 헤더 */}

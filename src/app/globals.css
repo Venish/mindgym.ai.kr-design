@@ -242,6 +242,18 @@ html {
   /* Gray 400 (#B0B8C1) */
   --color-pastel-gray-dark-text: oklch(0.22 0.02 260);
   /* Neutral Ink (#191F28) */
+
+  /* 온보딩 '도움을 드립니다' 시그니처 오로라 그라데이션 전역 CSS 변수 */
+  --aurora-gradient-brand: linear-gradient(to right, #10b981, #2dd4bf, #38bdf8);
+}
+
+/* 온보딩 '도움을 드립니다' 시그니처 오로라 수채화 그린 텍스트 공통 CSS 클래스 */
+.txt-aurora-brand,
+.text-brand-aurora {
+  background: linear-gradient(to right, #10b981, #2dd4bf, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 @supports (color: oklch(0 0 0)) and (color-gamut: p3) {

@@ -33,17 +33,14 @@ export function AnimatedMorningSun({ size = 48, className = "" }: { size?: numbe
           />
         ))}
       </motion.g>
-      {/* 중앙 따스한 해 펄스 모션 */}
-      <motion.circle
+      {/* 중앙 따스한 해 (고정 원) */}
+      <circle
         cx="24"
         cy="24"
         r="9.5"
         fill="#FFD05B"
         stroke="#FFB236"
         strokeWidth="3"
-        animate={{ scale: [0.94, 1.1, 0.94] }}
-        transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
-        style={{ transformOrigin: "24px 24px" }}
       />
     </svg>
   );

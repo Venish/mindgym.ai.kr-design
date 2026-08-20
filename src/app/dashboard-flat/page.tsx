@@ -100,37 +100,37 @@ export default function DashboardFlatPage() {
 
             {/* 3열 플랫 카드 그리드 */}
             <div className="grid grid-cols-3 gap-2.5">
-              {/* 카드 1: 오프먼트 (완료됨 - 옅은 회색 #F9FAFB 박스) */}
+              {/* 카드 1: 오프먼트 (완료됨 - 첫번째 박스: 원래대로 흐리게) */}
               <div
                 onClick={() => router.push("/player/RT-001")}
                 className="cursor-pointer bg-[#F9FAFB] rounded-2xl p-3.5 flex flex-col justify-between h-[120px] transition-all shadow-2xs active:scale-97"
               >
-                <div className="w-5 h-5 rounded-full bg-white txt-brand-green-accent border border-gray-200/60 flex items-center justify-center shadow-2xs">
+                <div className="w-[26px] h-[26px] rounded-lg bg-white txt-brand-green-accent border border-gray-200/60 flex items-center justify-center shrink-0 shadow-2xs">
                   <Check size={12} weight="bold" />
                 </div>
-                <div>
-                  <h4 className="text-xs font-extrabold text-gray-400 tracking-tight line-through">
+                <div className="flex flex-col text-left">
+                  <h4 className="text-sm font-black text-gray-400 tracking-tight line-through leading-tight">
                     오프먼트
                   </h4>
-                  <p className="text-[10px] text-gray-400 font-medium mt-0.5">
+                  <p className="text-xs text-gray-400 font-semibold mt-1">
                     5분 · 완료
                   </p>
                 </div>
               </div>
 
-              {/* 카드 2: 한 칸 완벽주의 (진행 중 - Mint Tint 배경 #E9F8F0) */}
+              {/* 카드 2: 한 칸 완벽주의 (진행 중 - Mint Tint 배경 / 서랍 정리 서브텍스트 text-gray-400) */}
               <div
                 onClick={() => router.push("/player/RT-012")}
                 className="cursor-pointer bg-[#E9F8F0] rounded-2xl p-3.5 flex flex-col justify-between h-[120px] transition-all hover:shadow-xs active:scale-97"
               >
-                <span className="self-start px-2 py-0.5 bg-white txt-brand-green-accent text-[10px] font-black rounded-full border border-[#00C473]/20 shadow-2xs">
+                <div className="w-[26px] h-[26px] rounded-lg bg-white txt-brand-green-accent text-xs font-black flex items-center justify-center shrink-0 shadow-2xs">
                   3분
-                </span>
-                <div>
-                  <h4 className="text-xs font-black txt-brand-forest tracking-tight leading-tight">
+                </div>
+                <div className="flex flex-col text-left">
+                  <h4 className="text-sm font-black text-gray-900 tracking-tight leading-tight">
                     한 칸 완벽주의
                   </h4>
-                  <p className="text-[10px] txt-brand-forest font-medium mt-0.5 truncate">
+                  <p className="text-xs text-gray-400 font-semibold mt-1 truncate">
                     서랍 한 칸 정리
                   </p>
                 </div>
@@ -141,14 +141,14 @@ export default function DashboardFlatPage() {
                 onClick={() => router.push("/player/RT-004")}
                 className="cursor-pointer bg-[#F9FAFB] rounded-2xl p-3.5 flex flex-col justify-between h-[120px] transition-all shadow-2xs active:scale-97"
               >
-                <span className="self-start px-2 py-0.5 bg-white text-amber-600 text-[10px] font-black rounded-full border border-amber-200/80 shadow-2xs">
+                <div className="w-[26px] h-[26px] rounded-lg bg-white text-amber-600 text-[11px] font-black flex items-center justify-center shrink-0 border border-amber-200/80 shadow-2xs">
                   10분
-                </span>
-                <div>
-                  <h4 className="text-xs font-extrabold text-gray-800 tracking-tight leading-tight">
+                </div>
+                <div className="flex flex-col text-left">
+                  <h4 className="text-sm font-black text-gray-900 tracking-tight leading-tight">
                     빈손산책
                   </h4>
-                  <p className="text-[10px] text-gray-400 font-medium mt-0.5 truncate">
+                  <p className="text-xs text-gray-400 font-semibold mt-1 truncate">
                     폰 없이 걷기
                   </p>
                 </div>

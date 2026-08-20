@@ -127,7 +127,7 @@ export default function DashboardFlatV2Page() {
                     3분
                   </div>
                   <div className="flex flex-col text-left">
-                    <h4 className="text-xs font-black text-gray-900 tracking-tight">
+                    <h4 className="text-sm font-black text-gray-900 tracking-tight">
                       한칸 완벽주의
                     </h4>
                     <p className="text-[11px] font-medium text-gray-400 mt-0.5">
