@@ -1,8 +1,31 @@
-# 🏋️ 마인드짐(MindGym) Next.js 실전 연동용 정적 데이터셋 및 헬퍼 함수 명세 (v1)
+# 🏋️ 마인드짐(MindGym) Next.js 실전 연동용 정적 데이터셋 및 헬퍼 함수 명세 (v2-Updated)
 
 본 문서는 마인드짐(MindGym)의 원본 데이터베이스인 **「MindGym_개발데이터」**를 Next.js App Router 프로젝트 환경에서 즉각 `import`하여 사용할 수 있도록 TypeScript 파일 규격으로 원천 추출한 최종 가이드라인입니다.
 
-안티그래비티(Antigravity)나 로컬 Next.js 프로젝트의 `/src/data/` 폴더 내에 해당 소스들을 복사하여 배치하시면, 수치 환산 연산 에러나 로직 누락 없이 즉각적인 기능 구현을 완료하실 수 있습니다.
+---
+
+## ⚙️ 0. 전역 상태 인터페이스 규격 (`src/context/MindGymContext.tsx`)
+
+```typescript
+export type GardenDayState = "COMPLETED" | "REST_DAY";
+
+export interface MindGymStateContextType {
+  userName: string;
+  totalDumbbells: number;
+  completedDays: string[]; // 실천 완료 날짜 (예: ["2026-08-01", "2026-08-02"])
+  restDays: string[];      // 자연스러운 휴식일 (예: ["2026-08-03"])
+  currentIntention: string;
+  favorites: string[];     // 즐겨찾기 리추얼 ID 목록
+  readMagazines: string[]; // 완독 매거진 ID 목록
+  addDumbbells: (amount: number) => void;
+  markTodayCompleted: () => void;
+  markTodayRest: () => void;
+  toggleFavorite: (id: string) => void;
+  readMagazine: (id: string) => void;
+  getLevelName: (dumbbells?: number) => string;
+  getNextLevelDiff: () => number;
+}
+```
 
 ---
 

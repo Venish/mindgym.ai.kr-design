@@ -23,7 +23,7 @@ export function BrandLogo({ className = "", size = "md" }: BrandLogoProps) {
   };
 
   return (
-    <div className={cn("inline-flex items-center gap-1.5 select-none cursor-pointer", className)}>
+    <div className={cn("inline-flex items-center gap-1.5 select-none cursor-default", className)}>
       <Image
         src="/images/logo_icon.svg"
         alt="MindGym Logo Icon"

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>마인드짐(MindGym) 명세 — PO / 서비스 기획자 명세서</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <style>
+    :root {
+      --primary: #00C474;
+      --primary-soft: rgba(0, 196, 116, 0.08);
+      --bg-main: #f8faf9;
+      --bg-card: #ffffff;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --border-light: #e5e7eb;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 8px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Pretendard", sans-serif; }
+    body { background-color: var(--bg-main); color: var(--text-main); line-height: 1.6; padding-bottom: 60px; }
+    header { background: #fff; border-bottom: 1px solid var(--border-light); padding: 20px 32px; sticky: top; z-index: 100; }
+    .header-container { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .logo-badge { background: var(--primary); color: #fff; font-weight: 800; font-size: 14px; padding: 4px 10px; border-radius: var(--radius-sm); }
+    .logo-title { font-size: 20px; font-weight: 700; }
+    .nav-links { display: flex; background: #f1f5f9; padding: 4px; border-radius: 12px; gap: 4px; }
+    .nav-item { text-decoration: none; padding: 10px 16px; border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--text-muted); transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
+    .nav-item.active { background: #fff; color: var(--primary); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+    .main-container { max-width: 1280px; margin: 24px auto 0; padding: 0 32px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(580px, 1fr)); gap: 24px; }
+    .card { background: var(--bg-card); border-radius: var(--radius-lg); padding: 28px; border: 1px solid rgba(0,0,0,0.04); box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+    .card-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+    .tag { font-size: 12px; padding: 3px 8px; border-radius: 6px; font-weight: 600; background: var(--primary-soft); color: var(--primary); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span class="logo-badge">MIND GYM</span>
+        <div>
+          <h1 class="logo-title">📋 PO / 서비스 기획자 종합 명세서</h1>
+          <p style="font-size:13px; color:var(--text-muted);">심리학적 자비 UX & KOSS 8대 직무스트레스 진단 로직</p>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-item">👨‍💻 시니어 FE</a>
+        <a href="rituals/index.html" class="nav-item">🧘 72가지 리추얼</a>
+        <a href="design-system.html" class="nav-item">🎨 디자인 스킬</a>
+        <a href="product-owner.html" class="nav-item active">📋 PO / 기획자</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">
+          <span>🌱</span> 서비스 기획 목적 & 심리학적 자비 UX
+          <span class="tag">Self-Compassion Theory</span>
+        </div>
+        <div style="font-size: 14px; display: flex; flex-direction: column; gap: 12px;">
+          <p><strong>1. 스트릭 강박의 원천 차단</strong>: 기존 스트릭 앱에서 실패 시 유저가 느끼는 자책감과 탈퇴를 예방하기 위해 '연속 기록 리셋'을 완전히 폐지했습니다.</p>
+          <p><strong>2. 자연스러운 휴식일 (Rest Day)</strong>: 미완료일은 따뜻한 찻잔(☕)으로 처리되어 캘린더가 풍성한 마음 정원으로 아카이빙됩니다.</p>
+          <p><strong>3. KOSS 8대 영역 진단 기반 처방</strong>: 한국인 직무스트레스 36문항 진단을 통해 나에게 필요한 3분~15분 틈새 오디오 리추얼을 맞춤형으로 권유합니다.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span>📊</span> KOSS 8대 직무스트레스 진단 영역
+          <span class="tag">36개 문항</span>
+        </div>
+        <ul style="list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 14px;">
+          <li>1️⃣ 물리적 환경</li>
+          <li>2️⃣ 직무 요구</li>
+          <li>3️⃣ 직무 자율</li>
+          <li>4️⃣ 관계 갈등</li>
+          <li>5️⃣ 직무 불안</li>
+          <li>6️⃣ 조직 체계</li>
+          <li>7️⃣ 보상 부적절</li>
+          <li>8️⃣ 직장 문화</li>
+        </ul>
+        <div style="margin-top: 14px; font-size: 13px; color: var(--text-muted); background: #f8fafc; padding: 10px; border-radius: 8px;">
+          <strong>평가 판정 로직</strong>: 🟢 안정 (0~33점) | 🟡 주의 (34~66점) | 🔴 위험 (67~100점)
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

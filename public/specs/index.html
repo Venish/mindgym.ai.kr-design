@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>마인드짐(MindGym) 명세 — 시니어 FE 엔지니어 대시보드</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <style>
+    :root {
+      --primary: #00C474;
+      --primary-soft: rgba(0, 196, 116, 0.08);
+      --bg-main: #f8faf9;
+      --bg-card: #ffffff;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --border-light: #e5e7eb;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 8px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Pretendard", sans-serif; }
+    body { background-color: var(--bg-main); color: var(--text-main); line-height: 1.6; padding-bottom: 60px; }
+    header { background: #fff; border-bottom: 1px solid var(--border-light); padding: 20px 32px; sticky: top; z-index: 100; }
+    .header-container { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .logo-badge { background: var(--primary); color: #fff; font-weight: 800; font-size: 14px; padding: 4px 10px; border-radius: var(--radius-sm); }
+    .logo-title { font-size: 20px; font-weight: 700; }
+    .nav-links { display: flex; background: #f1f5f9; padding: 4px; border-radius: 12px; gap: 4px; }
+    .nav-item { text-decoration: none; padding: 10px 16px; border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--text-muted); transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
+    .nav-item.active { background: #fff; color: var(--primary); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+    .main-container { max-width: 1280px; margin: 24px auto 0; padding: 0 32px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(580px, 1fr)); gap: 24px; }
+    .card { background: var(--bg-card); border-radius: var(--radius-lg); padding: 28px; border: 1px solid rgba(0,0,0,0.04); box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+    .card-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+    .tag { font-size: 12px; padding: 3px 8px; border-radius: 6px; font-weight: 600; background: var(--primary-soft); color: var(--primary); }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
+    th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--border-light); }
+    th { background: #f8fafc; color: var(--text-muted); }
+    .checklist { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .checklist-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; border-radius: var(--radius-md); background: #f9fafb; }
+    .checklist-item input { width: 18px; height: 18px; accent-color: var(--primary); margin-top: 2px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span class="logo-badge">MIND GYM</span>
+        <div>
+          <h1 class="logo-title">시니어 FE 엔지니어 개발 대시보드</h1>
+          <p style="font-size:13px; color:var(--text-muted);">Next.js App Router 라우팅 & 전역 상태 연결</p>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-item active">👨‍💻 시니어 FE</a>
+        <a href="rituals/index.html" class="nav-item">🧘 72가지 리추얼</a>
+        <a href="design-system.html" class="nav-item">🎨 디자인 스킬</a>
+        <a href="product-owner.html" class="nav-item">📋 PO / 기획자</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <div class="grid-2">
+      <!-- App Router Table -->
+      <div class="card">
+        <div class="card-title">
+          <span>🗺️</span> Next.js App Router 라우팅 맵
+          <span class="tag">App Router v9</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>라우트 경로</th>
+              <th>화면명</th>
+              <th>상태</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>/main-showcase</code></td><td>메인 쇼케이스</td><td><span style="color:#00C474; font-weight:700;">🟢 모듈화 완료</span></td></tr>
+            <tr><td><code>/dashboard</code></td><td>[탭 1] 마음 정원 대시보드</td><td>🟡 2차 바텀시트 연동 진행</td></tr>
+            <tr><td><code>/ritual</code></td><td>[탭 2] 자율 리추얼 라이브러리</td><td>⚪ 3열 그리드 구축 예정</td></tr>
+            <tr><td><code>/magazine</code></td><td>[탭 3] 월간 매거진 서재</td><td>⚪ 완독 모달 구축 예정</td></tr>
+            <tr><td><code>/report</code></td><td>[탭 4] KOSS 분석 리포트</td><td>⚪ 8대 차트 연동 예정</td></tr>
+            <tr><td><code>/onboarding</code></td><td>온보딩 & KOSS 36문항 진단</td><td>⚪ 진단 드로잉 예정</td></tr>
+            <tr><td><code>/player/[id]</code></td><td>오디오 명상 플레이어</td><td>⚪ 공통 플레이어 구축 예정</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Roadmap Checklist -->
+      <div class="card">
+        <div class="card-title">
+          <span>🚀</span> 남은 기능 구현 로드맵
+          <span class="tag">full-output-enforcement</span>
+        </div>
+        <ul class="checklist">
+          <li class="checklist-item">
+            <input type="checkbox" id="t1" checked>
+            <div>
+              <div style="font-size:15px; font-weight:600;">1. MindGymContext.tsx 전역 상태 완벽 동기화</div>
+              <div style="font-size:13px; color:var(--text-muted);">completedDays, restDays, favorites, totalDumbbells 동기화.</div>
+            </div>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="t2">
+            <div>
+              <div style="font-size:15px; font-weight:600;">2. 마음 정원 캘린더 Vercel SVG 애니메이션 탑재</div>
+              <div style="font-size:13px; color:var(--text-muted);">AnimatedSprout 새싹 스프링 & AnimatedCoffeeCup 찻잔 김 루프.</div>
+            </div>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="t3">
+            <div>
+              <div style="font-size:15px; font-weight:600;">3. 72가지 리추얼 라이브러리 3열 그리드</div>
+              <div style="font-size:13px; color:var(--text-muted);">카테고리 필터링 및 리추얼 상세 바텀시트.</div>
+            </div>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="t4">
+            <div>
+              <div style="font-size:15px; font-weight:600;">4. 72가지 리추얼 공통 플레이어 (/player/[id])</div>
+              <div style="font-size:13px; color:var(--text-muted);">자막 싱크 오디오 플레이어 & 완료 덤벨 정산 모달.</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

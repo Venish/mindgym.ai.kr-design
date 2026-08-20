@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>마인드짐(MindGym) 명세 — OKLCH & 무테 디자인 가이드</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <style>
+    :root {
+      --primary: #00C474;
+      --primary-soft: rgba(0, 196, 116, 0.08);
+      --bg-main: #f8faf9;
+      --bg-card: #ffffff;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --border-light: #e5e7eb;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 8px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Pretendard", sans-serif; }
+    body { background-color: var(--bg-main); color: var(--text-main); line-height: 1.6; padding-bottom: 60px; }
+    header { background: #fff; border-bottom: 1px solid var(--border-light); padding: 20px 32px; sticky: top; z-index: 100; }
+    .header-container { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .logo-badge { background: var(--primary); color: #fff; font-weight: 800; font-size: 14px; padding: 4px 10px; border-radius: var(--radius-sm); }
+    .logo-title { font-size: 20px; font-weight: 700; }
+    .nav-links { display: flex; background: #f1f5f9; padding: 4px; border-radius: 12px; gap: 4px; }
+    .nav-item { text-decoration: none; padding: 10px 16px; border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--text-muted); transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
+    .nav-item.active { background: #fff; color: var(--primary); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+    .main-container { max-width: 1280px; margin: 24px auto 0; padding: 0 32px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(580px, 1fr)); gap: 24px; }
+    .card { background: var(--bg-card); border-radius: var(--radius-lg); padding: 28px; border: 1px solid rgba(0,0,0,0.04); box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+    .card-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+    .tag { font-size: 12px; padding: 3px 8px; border-radius: 6px; font-weight: 600; background: var(--primary-soft); color: var(--primary); }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
+    th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--border-light); }
+    th { background: #f8fafc; color: var(--text-muted); }
+    .color-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-top: 12px; }
+    .color-swatch { padding: 16px; border-radius: var(--radius-md); color: #fff; font-weight: 600; font-size: 13px; display: flex; flex-direction: column; justify-content: space-between; height: 90px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span class="logo-badge">MIND GYM</span>
+        <div>
+          <h1 class="logo-title">🎨 UI/UX & OKLCH 디자인 스킬 명세서</h1>
+          <p style="font-size:13px; color:var(--text-muted);">무테(Borderless) 레이아웃 & 8단계 덤벨 성장 비주얼</p>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-item">👨‍💻 시니어 FE</a>
+        <a href="rituals/index.html" class="nav-item">🧘 72가지 리추얼</a>
+        <a href="design-system.html" class="nav-item active">🎨 디자인 스킬</a>
+        <a href="product-owner.html" class="nav-item">📋 PO / 기획자</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <div class="grid-2">
+      <!-- OKLCH & Borderless Card -->
+      <div class="card">
+        <div class="card-title">
+          <span>🎨</span> OKLCH & 무테(Borderless) 디자인 원칙
+          <span class="tag">style-soft-wellness</span>
+        </div>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:10px; font-size:14px;">
+          <li>✅ <strong>메인 브랜드 컬러</strong>: <code>#00C474</code> (Primary Green), <code>oklch(0.72 0.19 155)</code>. 금지 컬러 <code>#015A35</code> 절대 사용 금지.</li>
+          <li>✅ <strong>Non-White Container 무테 원칙</strong>: 비흰색 카드에는 border 선 100% 제거하고 여백과 소프트 섀도우만 적용.</li>
+          <li>✅ <strong>Micro-Interactions</strong>: 클릭/터치 버튼 <code>scale(0.96)</code> 피드백.</li>
+        </ul>
+
+        <div class="color-grid">
+          <div class="color-swatch" style="background: #00C474;">
+            <span>Brand Green</span>
+            <span style="font-size:11px; opacity:0.9;">oklch(0.72 0.19 155)</span>
+          </div>
+          <div class="color-swatch" style="background: oklch(0.97 0.03 155); color: #111827;">
+            <span>Mint Tint</span>
+            <span style="font-size:11px; opacity:0.9;">oklch(0.97 0.03 155)</span>
+          </div>
+          <div class="color-swatch" style="background: #F9FAFB; color: #111827; border: 1px solid #eee;">
+            <span>Surface Card</span>
+            <span style="font-size:11px; opacity:0.9;">#F9FAFB</span>
+          </div>
+          <div class="color-swatch" style="background: #f59e0b;">
+            <span>Golden Accent</span>
+            <span style="font-size:11px; opacity:0.9;">#F59E0B</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dumbbell Evolution Table -->
+      <div class="card">
+        <div class="card-title">
+          <span>🏋️</span> 8단계 덤벨 수직 성장 비주얼 시스템
+          <span class="tag">sheets/05_덤벨_성장</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>레벨</th>
+              <th>등급 명칭</th>
+              <th>요구 덤벨 범위</th>
+              <th>비주얼 특징</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><b>Lv.1</b></td><td>나무 덤벨</td><td>0 ~ 149개</td><td>귀여운 나뭇결 질감의 덤벨</td></tr>
+            <tr><td><b>Lv.2</b></td><td>돌 덤벨</td><td>150 ~ 299개</td><td>투박하지만 단단한 돌 덤벨</td></tr>
+            <tr><td><b>Lv.3</b></td><td>청동 덤벨</td><td>300 ~ 499개</td><td>고풍스러운 청동 덤벨</td></tr>
+            <tr><td><b>Lv.4</b></td><td>철 덤벨</td><td>500 ~ 799개</td><td>묵직한 흑철 덤벨</td></tr>
+            <tr><td><b>Lv.5</b></td><td>은 덤벨</td><td>800 ~ 1,199개</td><td>은빛 정밀 덤벨</td></tr>
+            <tr><td><b>Lv.6</b></td><td>금 덤벨</td><td>1,200 ~ 1,799개</td><td>황금빛 금 덤벨</td></tr>
+            <tr><td><b>Lv.7</b></td><td>플래티넘 덤벨</td><td>1,800 ~ 2,499개</td><td>신비로운 백금 덤벨</td></tr>
+            <tr><td><b>Lv.8</b></td><td>다이아 덤벨</td><td>2,500+ 개</td><td>영롱한 다이아 덤벨</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
