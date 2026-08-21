@@ -10,9 +10,15 @@ import { AnimatedArrowRightIcon } from "@/components/animated-icons/AnimatedArro
 
 interface KossResultViewProps {
   onNext: () => void;
+  buttonText?: string;
+  showArrowIcon?: boolean;
 }
 
-export function KossResultView({ onNext }: KossResultViewProps) {
+export function KossResultView({
+  onNext,
+  buttonText = "이달의 나 설정하기",
+  showArrowIcon = true,
+}: KossResultViewProps) {
   const radarMetrics = [
     { key: "demand", label: "직무요구" },
     { key: "autonomy", label: "자율성" },
@@ -109,8 +115,12 @@ export function KossResultView({ onNext }: KossResultViewProps) {
 
       {/* 메인 CTA 버튼 */}
       <div className="pt-2">
-        <MagicButton onClick={onNext} className="w-full" rightIcon={<AnimatedArrowRightIcon size={18} />}>
-          <span>이달의 나 설정하기</span>
+        <MagicButton
+          onClick={onNext}
+          className="w-full"
+          rightIcon={showArrowIcon ? <AnimatedArrowRightIcon size={18} /> : undefined}
+        >
+          <span>{buttonText}</span>
         </MagicButton>
       </div>
     </motion.div>

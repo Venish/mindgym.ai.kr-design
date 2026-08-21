@@ -1,3 +1,5 @@
+import { Flower, Leaf, Barbell, Clock, Microscope, ShieldCheck, LockKey, FloppyDisk } from "@phosphor-icons/react";
+
 export interface KOSSQuestion {
   id: number;
   domain: "물리환경" | "직무요구" | "직무자율" | "관계갈등" | "직업불안정" | "조직체계" | "보상부적절" | "직장문화";
@@ -5,6 +7,28 @@ export interface KOSSQuestion {
   question: string;
   isReverse: boolean;
 }
+
+export const KOSS_DOMAINS_INFO = [
+  { domain: "물리환경", count: 3 },
+  { domain: "직무요구", count: 8 },
+  { domain: "직무자율", count: 5 },
+  { domain: "관계갈등", count: 4 },
+  { domain: "직업불안정", count: 2 },
+  { domain: "조직체계", count: 7 },
+  { domain: "보상부적절", count: 3 },
+  { domain: "직장문화", count: 4 },
+];
+
+export const KOSS_TIPS = [
+  { text: "솔직하게 답변할수록 더 정확한 내 마음 정원이 완성돼요.", icon: Flower, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" },
+  { text: "정답은 없어요. 최근 1주일간 느낀 그대로 편안히 눌러주세요.", icon: Leaf, bgClass: "bg-[#F8FAF9] border-emerald-100", iconClass: "text-[#00C474]" },
+  { text: "직무 스트레스 지표는 나의 약점이 아닌 보살핌의 신호예요.", icon: Barbell, bgClass: "bg-amber-50/80 border-amber-200/80", iconClass: "text-amber-600" },
+  { text: "잠시 숨을 깊게 내쉬고 현재 나의 상태에 집중해 보세요.", icon: Clock, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" },
+  { text: "진단 결과는 개인 맞춤 틈새 리추얼을 추천하는 데 사용돼요.", icon: Microscope, bgClass: "bg-sky-50/80 border-sky-200/80", iconClass: "text-sky-600" },
+  { text: "나만의 편안한 속도로 차근차근 진행해 보세요.", icon: ShieldCheck, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" },
+  { text: "답변하신 모든 결과는 철저히 암호화되어 안전하게 보호됩니다.", icon: LockKey, bgClass: "bg-gray-50 border-gray-200", iconClass: "text-gray-600" },
+  { text: "완료 후 나만을 위한 리추얼 및 파스텔 스파이더 차트가 펼쳐집니다.", icon: FloppyDisk, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" },
+];
 
 export const kossQuestions: KOSSQuestion[] = [
   { id: 1, domain: "물리환경", domainId: 1, question: "나는 업무 중에 근골격계에 부담을 주는 작업을 한다.", isReverse: false },

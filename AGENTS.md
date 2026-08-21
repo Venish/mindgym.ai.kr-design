@@ -50,6 +50,13 @@ Skills live in `.agents/skills/`. Read the relevant `SKILL.md` **before** starti
 - **Concentric Border Radius**: Keep inner `radius = outerRadius - padding`.
 - **Tabular Numbers**: Use `tabular-nums` for dynamic numbers/counters to avoid layout shifts.
 - **Micro-Interactions**: Use `scale(0.96)` for click/press states. Avoid `transition: all` — specify exact transition properties (e.g. `transition-transform`).
-- **Z-Index Scale**: Use predefined semantic z-index values (`z-base`, `z-overlay`, `z-modal`, etc.) instead of arbitrary numbers.
+- **Z-Index Scale (★3단계 전역 레이어 스택 지침★)**:
+  1) `z-10` : 기본 메인 대시보드 (`/dashboard`)
+  2) `z-40` : 대시보드 바로 위 오버레이 서브 모달/시트 (`GlobalOverlayProvider` - 클릭 뚫림 100% 차단)
+  3) `z-60` : 최상위 레벨업/골든가든 축하 팝업 & 시스템 모달 (`GlobalPopupProvider`)
 - **Non-White Container Borderless Principle (★필수 지침★)**: 배경색이 흰색(`bg-white`)이 아닌 박스/컨테이너/패널 (`bg-gray-50`, `bg-emerald-50`, `bg-indigo-50`, `bg-[var(--color-pastel-mint-bg)]`, `bg-[#F9FAFB]` 등)에는 테두리(`border border-...`)를 절대 적용하지 않고 100% 무경계(Borderless)로 제작합니다. 테두리는 순수 `bg-white` 카드에만 섬세한 헤어라인으로 허용합니다.
+- **App-Like Global Overlay Navigation Principle (★0ms 네이티브 오버레이 아키텍처★)**: 서브 페이지/알림/체크인/리추얼 상세 등 팝업 바텀시트 모달은 라우트 전체를 바꾸지 않고 대시보드가 100% 렌더링된 채로 유지되는 Framer Motion 전역 Overlay 방식 (`useModalStore` / `GlobalOverlayProvider`)을 사용합니다. 닫을 때도 `AnimatePresence` `exit={{ y: '100%' }}` / `exit={{ x: '100%' }}` 아웃 모션으로 끊김 없이 내려가도록 보장합니다.
+- **Silent Background Data Refresh Principle (★무로딩 즉각 백그라운드 갱신 수칙★)**: 모달 창 닫힘 시 대시보드가 갱신될 때 중간 로딩 스피너/화면이나 "데이터를 불러오는 중입니다" 텍스트 노출 없이 0ms로 조용하고 매끄럽게 상태만 즉각 갱신합니다.
+
+
 

@@ -61,10 +61,10 @@ function DashboardContent() {
   }, [completedDays, param]);
 
   return (
-    <div className="w-full max-w-[430px] min-h-screen mx-auto bg-white relative flex flex-col justify-between overflow-hidden text-gray-900 select-none shadow-xs font-sans">
+    <div className="w-full max-w-[430px] min-h-screen mx-auto bg-white relative flex flex-col justify-between overflow-x-hidden text-gray-900 select-none font-sans no-scrollbar">
       
-      {/* 메인 스크롤 바디 */}
-      <main className="flex-1 overflow-y-auto px-4 pt-2 pb-32 flex flex-col gap-4 text-left">
+      {/* 대시보드 스크롤 바디 (pb-32로 하단 고정 네비바 가림 방지) */}
+      <main className="flex-1 px-4 pt-2 pb-32 flex flex-col gap-4 text-left">
         {/* 1. 상단 메뉴 헤더 컴포넌트 */}
         <ShowcaseHeader userName={userName || "보노보노"} levelNum={levelNum} />
 
@@ -92,7 +92,7 @@ function DashboardContent() {
         <ShowcasePauseBanner />
       </main>
 
-      {/* 7. 하단 고정 앱 바로가기 메뉴 바 (텍스트 라벨 포함) */}
+      {/* 7. 하단 고정 앱 바로가기 메뉴 바 */}
       <ShowcaseFixedBottomBar />
 
       {/* 대시보드 팝업 모달 렌더링 */}

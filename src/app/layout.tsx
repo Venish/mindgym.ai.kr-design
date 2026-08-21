@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { MindGymProvider } from "@/context/MindGymContext";
+import { GlobalOverlayProvider } from "@/components/providers/GlobalOverlayProvider";
 
 const nanumSquareRound = localFont({
   src: [
@@ -82,9 +83,11 @@ const pretendard = localFont({
   display: "swap",
 });
 
+import { GlobalPopupProvider } from "@/components/providers/GlobalPopupProvider";
+
 export const metadata: Metadata = {
-  title: "마인드짐 — 마음건강 누적 아카이브",
-  description: "자기자비 기반 지속 가능한 마음 정원 가꾸기 앱",
+  title: "e월간 마음건강 - 마인드짐 (MindGym)",
+  description: "매월 새로워지는 마음 근력 단련 30일 모바일 웹 어플리케이션",
 };
 
 export default function RootLayout({
@@ -94,10 +97,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${nanumSquareRound.variable} ${pretendard.variable}`}>
-      <body className={`${nanumSquareRound.className} bg-gray-100 min-h-screen flex justify-center text-gray-900 antialiased font-sans`}>
+      <body className={`${nanumSquareRound.className} bg-gray-100 min-h-screen flex justify-center text-gray-900 antialiased font-sans no-scrollbar`}>
         <MindGymProvider>
-          <div className="w-full max-w-[430px] mx-auto bg-white min-h-screen flex flex-col shadow-2xl relative overflow-x-hidden [container-type:inline-size]">
+          <div className="w-full max-w-[430px] mx-auto bg-white min-h-screen flex flex-col shadow-2xl relative no-scrollbar">
             {children}
+            <GlobalOverlayProvider />
+            <GlobalPopupProvider />
           </div>
         </MindGymProvider>
       </body>

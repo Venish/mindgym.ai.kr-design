@@ -5,9 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { CaretDown, Clock, Check } from "@phosphor-icons/react";
 
 interface GodTimePickerProps {
-  value: string; // 예: "오전 08:00" 또는 "오후 09:00"
+  value: string; // 예: "07:00" 또는 "오후 11:00"
   onChange: (val: string) => void;
   disabled?: boolean;
+  theme?: "emerald" | "indigo";
 }
 
 const AM_TIMES = [
@@ -29,12 +30,30 @@ const PM_TIMES = [
 ];
 
 export function GodTimePicker({
-  value = "오전 08:00",
+  value = "07:00",
   onChange,
   disabled = false,
+  theme = "emerald",
 }: GodTimePickerProps) {
-  const safeValue = value || "오전 08:00";
+  const safeValue = value || "07:00";
   const [isOpen, setIsOpen] = useState(false);
+
+  // 테마별 클래스 매핑
+  const isIndigo = theme === "indigo";
+  const clockColorClass = isIndigo ? "text-indigo-600" : "text-[#00C474]";
+  const borderOpenClass = isIndigo
+    ? "border-indigo-500 ring-2 ring-indigo-500/20 shadow-md"
+    : "border-[#00C474] ring-2 ring-[#00C474]/20 shadow-md";
+  const borderHoverClass = isIndigo ? "hover:border-indigo-300" : "hover:border-emerald-300";
+  const activeTabClass = isIndigo
+    ? "bg-indigo-600 text-white shadow-md font-extrabold scale-[1.02]"
+    : "bg-[#00C474] text-white shadow-md font-extrabold scale-[1.02]";
+  const selectedChipClass = isIndigo
+    ? "bg-indigo-600 text-white shadow-sm ring-1 ring-indigo-600"
+    : "bg-[#00C474] text-white shadow-sm ring-1 ring-[#00C474]";
+  const chipHoverClass = isIndigo
+    ? "hover:bg-indigo-50 hover:text-indigo-600"
+    : "hover:bg-emerald-50 hover:text-[#00C474]";
   
   // 현재 가리키고 있는 탭 ('오전' | '오후')
   const [period, setPeriod] = useState<"오전" | "오후">(
@@ -45,7 +64,7 @@ export function GodTimePicker({
 
   // value 분리 (예: "오전 08:00" -> timeOnly = "08:00")
   const rawTimeStr = safeValue.replace(/^(오전|오후)\s*/, "").trim();
-  const timeOnly = rawTimeStr || "08:00";
+  const timeOnly = rawTimeStr || "07:00";
 
   // value 변경 시 period 상태 동기화
   useEffect(() => {
@@ -68,7 +87,6 @@ export function GodTimePicker({
   }, []);
 
   const handleSelectTime = (selectedTime: string) => {
-    // "오전 08:00" 형태로 저장
     const fullTimeStr = `${period} ${selectedTime}`;
     onChange(fullTimeStr);
     setIsOpen(false);
@@ -90,13 +108,11 @@ export function GodTimePicker({
         disabled={disabled}
         onClick={() => !disabled && setIsOpen(!isOpen)}
         className={`w-full py-3.5 px-4 bg-white border rounded-2xl flex items-center justify-between transition-all duration-200 cursor-pointer ${
-          isOpen
-            ? "border-[#00C474] ring-2 ring-[#00C474]/20 shadow-md"
-            : "border-gray-200/90 hover:border-emerald-300"
+          isOpen ? borderOpenClass : `border-gray-200/90 ${borderHoverClass}`
         } ${disabled ? "opacity-40 cursor-not-allowed" : ""}`}
       >
         <div className="flex items-center gap-2.5">
-          <Clock size={20} weight="fill" className="text-[#00C474]" />
+          <Clock size={20} weight="fill" className={clockColorClass} />
           <span className="text-base font-black text-gray-900 tracking-tight">
             {period} {timeOnly}
           </span>
@@ -105,7 +121,7 @@ export function GodTimePicker({
         {/* 심플한 화살표 아이콘 */}
         <div className="flex items-center text-gray-400">
           <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
-            <CaretDown size={20} weight="bold" className="text-gray-500 hover:text-[#00C474]" />
+            <CaretDown size={20} weight="bold" className={`text-gray-500 ${isIndigo ? "hover:text-indigo-600" : "hover:text-[#00C474]"}`} />
           </motion.div>
         </div>
       </button>
@@ -127,7 +143,7 @@ export function GodTimePicker({
                 onClick={() => handlePeriodChange("오전")}
                 className={`flex-1 py-2.5 px-3 rounded-xl text-sm font-extrabold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer ${
                   period === "오전"
-                    ? "bg-[#00C474] text-white shadow-md font-extrabold scale-[1.02]"
+                    ? activeTabClass
                     : "bg-gray-100 text-gray-600 hover:bg-gray-200 border border-gray-200/80"
                 }`}
               >
@@ -140,7 +156,7 @@ export function GodTimePicker({
                 onClick={() => handlePeriodChange("오후")}
                 className={`flex-1 py-2.5 px-3 rounded-xl text-sm font-extrabold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer ${
                   period === "오후"
-                    ? "bg-[#00C474] text-white shadow-md font-extrabold scale-[1.02]"
+                    ? activeTabClass
                     : "bg-gray-100 text-gray-600 hover:bg-gray-200 border border-gray-200/80"
                 }`}
               >
@@ -149,7 +165,7 @@ export function GodTimePicker({
               </button>
             </div>
 
-            {/* 30분 단위 시분 시간 칩 목록 (오전/오후 접두어 없이 숫지만 노출, text-sm font-black) */}
+            {/* 30분 단위 시분 시간 칩 목록 */}
             <div className="max-h-52 overflow-y-auto pr-1 grid grid-cols-3 gap-1.5 scrollbar-thin scrollbar-thumb-gray-200">
               {currentList.map((t) => {
                 const isSelected = timeOnly === t;
@@ -160,8 +176,8 @@ export function GodTimePicker({
                     onClick={() => handleSelectTime(t)}
                     className={`py-2.5 px-2 rounded-xl flex items-center justify-center text-sm font-black transition-all duration-150 cursor-pointer ${
                       isSelected
-                        ? "bg-[#00C474] text-white shadow-sm ring-1 ring-[#00C474]"
-                        : "bg-gray-50 hover:bg-emerald-50 text-gray-900 hover:text-[#00C474] border border-gray-100"
+                        ? selectedChipClass
+                        : `bg-gray-50 text-gray-900 border border-gray-100 ${chipHoverClass}`
                     }`}
                   >
                     <span>{t}</span>

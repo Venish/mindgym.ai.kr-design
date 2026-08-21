@@ -95,7 +95,7 @@ export function TypographySection() {
     {
       className: ".txt-caption-main",
       name: "5. Body Sub & Caption (서브 캡션)",
-      size: "1.0rem [430px 모바일 기준 16px / 화면 축소 시 정비례 감축]",
+      size: "0.9375rem [430px 모바일 기준 15px / 화면 축소 시 정비례 감축]",
       weight: "Font Light (300)",
       desc: "서브 캡션 설명, 버튼 라벨, 카드 보조 안내 텍스트",
       sample: "최근 30일간 진행된 리추얼 일지 데이터를 기반으로 분석 결과가 업데이트되었습니다.",

@@ -52,30 +52,38 @@ export function BklitRadarChart({
         viewBox={`0 0 ${size} ${size}`}
         className="overflow-visible"
       >
-        {/* 1. RadarGrid (Concentric Polygon Level Rings) */}
-        {Array.from({ length: levels }).map((_, levelIndex) => {
-          const levelRatio = (levelIndex + 1) / levels;
-          const points = metrics
-            .map((_, i) => {
-              const angle = (Math.PI * 2 * i) / numMetrics - Math.PI / 2;
-              const r = R * levelRatio;
-              return `${cx + r * Math.cos(angle)},${cy + r * Math.sin(angle)}`;
-            })
-            .join(" ");
+        {/* 1. RadarGrid (5단계 레벨 영역 파스텔 틴트 Zone Fill concentric polygon rings) */}
+        {Array.from({ length: levels })
+          .map((_, i) => levels - 1 - i) // 역순 렌더링으로 큰 링 위에 작은 링이 예쁘게 포개짐
+          .map((levelIndex) => {
+            const levelRatio = (levelIndex + 1) / levels;
+            const points = metrics
+              .map((_, i) => {
+                const angle = (Math.PI * 2 * i) / numMetrics - Math.PI / 2;
+                const r = R * levelRatio;
+                return `${cx + r * Math.cos(angle)},${cy + r * Math.sin(angle)}`;
+              })
+              .join(" ");
 
-          return (
-            <polygon
-              key={`ring-${levelIndex}`}
-              points={points}
-              fill="none"
-              stroke="#E2E8F0"
-              strokeWidth={levelIndex + 1 === levels ? "1.5" : "1"}
-              strokeDasharray={levelIndex + 1 === levels ? "none" : "3 3"}
-            />
-          );
-        })}
+            const levelFills = [
+              "rgba(0, 196, 116, 0.10)", // Level 1 (중심 0~2점: 최상/안전 에메랄드)
+              "rgba(0, 196, 116, 0.04)", // Level 2 (2~4점: 양호 에메랄드)
+              "rgba(251, 140, 0, 0.05)", // Level 3 (4~6점: 보통 옐로우/오렌지)
+              "rgba(251, 140, 0, 0.09)", // Level 4 (6~8점: 주의 오렌지)
+              "rgba(229, 57, 53, 0.08)", // Level 5 (외곽 8~10점: 위험/경고 로즈)
+            ];
 
-        {/* 2. RadarAxis (Radial Lines) */}
+            return (
+              <polygon
+                key={`ring-${levelIndex}`}
+                points={points}
+                fill={levelFills[levelIndex] || "none"}
+                stroke="none"
+              />
+            );
+          })}
+
+        {/* 2. RadarAxis (Radial Lines - 테두리선 제거로 최소화) */}
         {metrics.map((_, i) => {
           const angle = (Math.PI * 2 * i) / numMetrics - Math.PI / 2;
           const x2 = cx + R * Math.cos(angle);
@@ -87,8 +95,8 @@ export function BklitRadarChart({
               y1={cy}
               x2={x2}
               y2={y2}
-              stroke="#E2E8F0"
-              strokeWidth="1.2"
+              stroke="rgba(226, 232, 240, 0.4)"
+              strokeWidth="0.8"
             />
           );
         })}
@@ -159,7 +167,7 @@ export function BklitRadarChart({
           );
         })}
 
-        {/* 4. RadarLabels (Metric Labels) */}
+        {/* 4. RadarLabels (Metric Labels: bklit.com 모던 타이포 규격 적용) */}
         {metrics.map((m, i) => {
           const angle = (Math.PI * 2 * i) / numMetrics - Math.PI / 2;
           const labelRadius = R + 26;
@@ -173,7 +181,7 @@ export function BklitRadarChart({
               y={ly}
               textAnchor="middle"
               dominantBaseline="central"
-              className="text-[14px] font-semibold fill-gray-800 tracking-tight"
+              className="text-[12.5px] font-bold fill-gray-800 tracking-tight"
             >
               {m.label}
             </text>
@@ -181,28 +189,34 @@ export function BklitRadarChart({
         })}
       </svg>
 
-      {/* Hover Interactive Tooltip */}
+      {/* Hover Interactive Tooltip (bklit.com 공식 섀도우 & 툴팁 스타일) */}
       <AnimatePresence>
         {hoveredPoint && (
           <motion.div
-            initial={{ opacity: 0, y: 4, scale: 0.9 }}
+            initial={{ opacity: 0, y: 6, scale: 0.92 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
+            exit={{ opacity: 0, scale: 0.92 }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
             style={{
               left: hoveredPoint.x,
               top: hoveredPoint.y - 12,
             }}
-            className="absolute -translate-x-1/2 -translate-y-full pointer-events-none z-20 bg-gray-900 text-white text-[11px] font-bold px-2.5 py-1 rounded-lg shadow-lg flex items-center gap-1.5 whitespace-nowrap"
+            className="absolute -translate-x-1/2 -translate-y-full pointer-events-none z-20 bg-gray-900/95 backdrop-blur-xs text-white text-[12px] font-bold px-3 py-1.5 rounded-xl shadow-2xl border border-gray-800 flex items-center gap-1.5 whitespace-nowrap"
           >
             <span
-              className="w-2 h-2 rounded-full inline-block"
+              className="w-2 h-2 rounded-full inline-block shrink-0"
               style={{ backgroundColor: hoveredPoint.color }}
             />
-            <span>{hoveredPoint.metricLabel}:</span>
-            <span className="text-[#00C474] font-extrabold">{hoveredPoint.value}점</span>
+            <span className="text-gray-300 font-semibold">{hoveredPoint.metricLabel}:</span>
+            <span className="text-[#00C474] font-black">{hoveredPoint.value}점</span>
           </motion.div>
         )}
       </AnimatePresence>
     </div>
   );
 }
+
+/**
+ * SpiderChart: 스파이더 차트 스킬 규격용 명시적 Alias 컴포넌트 Export
+ */
+export const SpiderChart = BklitRadarChart;

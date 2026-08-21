@@ -248,4 +248,5 @@ export const DumbbellIcon: React.FC<DumbbellIconProps> = ({
   );
 };
 
+export const AnimatedDumbbell = DumbbellIcon;
 export default DumbbellIcon;

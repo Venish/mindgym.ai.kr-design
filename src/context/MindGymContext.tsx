@@ -10,14 +10,21 @@ export interface MindGymStateContextType {
   completedDays: string[];
   restDays: string[];
   currentIntention: string;
+  morningEmotion: string;
+  todayQuote: string;
   favorites: string[];
   readMagazines: string[];
+  setUserName: (name: string) => void;
   addDumbbells: (amount: number) => void;
   markTodayCompleted: () => void;
   markTodayRest: () => void;
   toggleFavorite: (id: string) => void;
   readMagazine: (id: string) => void;
   setCurrentIntention: (intention: string) => void;
+  setMorningEmotion: (emotion: string) => void;
+  setTodayQuote: (quote: string) => void;
+  dashboardRefreshKey: number;
+  triggerDashboardRefresh: () => void;
   getLevelName: (dumbbells?: number) => string;
   getLevelNumber: (dumbbells?: number) => number;
   getNextLevelDiff: () => number;
@@ -27,28 +34,50 @@ export interface MindGymStateContextType {
 const MindGymStateContext = createContext<MindGymStateContextType | undefined>(undefined);
 
 export const MindGymProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [userName] = useState("보노보노");
+  const [userName, setUserNameState] = useState("보노보노");
+
+  const setUserName = (name: string) => {
+    setUserNameState(name);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("mg_user_name", name);
+    }
+  };
   const [totalDumbbells, setTotalDumbbells] = useState(120);
   const [completedDays, setCompletedDays] = useState<string[]>([]);
   const [restDays, setRestDays] = useState<string[]>([]);
-  const [currentIntention, setCurrentIntentionState] = useState("안정된 8월");
+  const [currentIntention, setCurrentIntentionState] = useState("활기차게 · 따뜻하게 · 성장하며");
+  const [morningEmotion, setMorningEmotionState] = useState("차분함");
+  const [todayQuote, setTodayQuoteState] = useState("오늘도 남 비교하지 말고 내 페이스대로 걷기");
   const [favorites, setFavorites] = useState<string[]>([]);
   const [readMagazines, setReadMagazines] = useState<string[]>([]);
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
+      const storedName = localStorage.getItem("mg_user_name");
       const storedTotal = localStorage.getItem("mg_total_dumbbells");
       const storedCompleted = localStorage.getItem("mg_completed_days");
       const storedRest = localStorage.getItem("mg_rest_days");
       const storedIntention = localStorage.getItem("mg_current_intention");
+      const storedEmotion = localStorage.getItem("mg_morning_emotion");
+      const storedQuote = localStorage.getItem("mg_today_quote");
       const storedFavorites = localStorage.getItem("mg_favorites");
       const storedMagazines = localStorage.getItem("mg_read_magazines");
 
+      if (storedName) setUserNameState(storedName);
       if (storedTotal) setTotalDumbbells(parseInt(storedTotal, 10));
       if (storedCompleted) setCompletedDays(JSON.parse(storedCompleted));
       if (storedRest) setRestDays(JSON.parse(storedRest));
-      if (storedIntention) setCurrentIntentionState(storedIntention);
+      if (storedIntention) {
+        // 단일 키워드 예전 데이터가 남아있을 경우 100% 3개 조합 더미 텍스트로 보정
+        if (!storedIntention.includes("·") || storedIntention.split("·").length < 3) {
+          setCurrentIntentionState("활기차게 · 따뜻하게 · 성장하며");
+        } else {
+          setCurrentIntentionState(storedIntention);
+        }
+      }
+      if (storedEmotion) setMorningEmotionState(storedEmotion);
+      if (storedQuote) setTodayQuoteState(storedQuote);
       if (storedFavorites) setFavorites(JSON.parse(storedFavorites));
       if (storedMagazines) setReadMagazines(JSON.parse(storedMagazines));
 
@@ -62,10 +91,12 @@ export const MindGymProvider: React.FC<{ children: React.ReactNode }> = ({ child
       localStorage.setItem("mg_completed_days", JSON.stringify(completedDays));
       localStorage.setItem("mg_rest_days", JSON.stringify(restDays));
       localStorage.setItem("mg_current_intention", currentIntention);
+      localStorage.setItem("mg_morning_emotion", morningEmotion);
+      localStorage.setItem("mg_today_quote", todayQuote);
       localStorage.setItem("mg_favorites", JSON.stringify(favorites));
       localStorage.setItem("mg_read_magazines", JSON.stringify(readMagazines));
     }
-  }, [totalDumbbells, completedDays, restDays, currentIntention, favorites, readMagazines, isInitialized]);
+  }, [totalDumbbells, completedDays, restDays, currentIntention, morningEmotion, todayQuote, favorites, readMagazines, isInitialized]);
 
   // 마운트 후 이번 달 1일부터 어제까지 미완료일 자동 REST_DAY 보정
   useEffect(() => {
@@ -184,6 +215,14 @@ export const MindGymProvider: React.FC<{ children: React.ReactNode }> = ({ child
     setCurrentIntentionState(intention);
   };
 
+  const setMorningEmotion = (emotion: string) => {
+    setMorningEmotionState(emotion);
+  };
+
+  const setTodayQuote = (quote: string) => {
+    setTodayQuoteState(quote);
+  };
+
   const getGardenProgress = () => {
     const today = new Date();
     const totalDays = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
@@ -194,6 +233,14 @@ export const MindGymProvider: React.FC<{ children: React.ReactNode }> = ({ child
     };
   };
 
+  const [dashboardRefreshKey, setDashboardRefreshKey] = useState(0);
+
+  // 로딩 화면/스피너/텍스트 표시 없이 0ms 즉각 조용한 백그라운드 재갱신 (Silent Background Update)
+  const triggerDashboardRefresh = () => {
+    /* 중간 로딩 화면 및 "데이터를 불러오는 중입니다" 텍스트 없이 0ms 즉각 조용히 상태만 재갱신 */
+    setDashboardRefreshKey((prev) => prev + 1);
+  };
+
   return (
     <MindGymStateContext.Provider
       value={{
@@ -202,14 +249,21 @@ export const MindGymProvider: React.FC<{ children: React.ReactNode }> = ({ child
         completedDays,
         restDays,
         currentIntention,
+        morningEmotion,
+        todayQuote,
         favorites,
         readMagazines,
+        setUserName,
+        dashboardRefreshKey,
+        triggerDashboardRefresh,
         addDumbbells,
         markTodayCompleted,
         markTodayRest,
         toggleFavorite,
         readMagazine,
         setCurrentIntention,
+        setMorningEmotion,
+        setTodayQuote,
         getLevelName,
         getLevelNumber,
         getNextLevelDiff,

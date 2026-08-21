@@ -173,10 +173,10 @@ html {
   /* 430px 모바일 기준 10px (한 줄 컴팩트 서브 메타/리워드 전용 원본 수치) */
   --fs-body-main: 1.125rem;
   /* 430px 모바일 기준 18px */
-  --fs-caption-main: 1.0rem;
-  /* 430px 모바일 기준 16px */
-  --fs-micro-main: 0.875rem;
-  /* 430px 모바일 기준 14px */
+  --fs-caption-main: 0.9375rem;
+  /* 430px 모바일 기준 15px (공통 서브 캡션 유저 지침 반영) */
+  --fs-micro-main: 0.8125rem;
+  /* 430px 모바일 기준 13px (공통 마이크로 캡션/설명 유저 지침 반영) */
 
   /* 브랜드 시그니처 텍스트 컬러 및 Neutral Scale (OKLCH 1:1 지각적 인지 보정 토큰) */
   --color-signature-green: oklch(0.72 0.19 155);
@@ -503,6 +503,105 @@ textarea {
   .ui-card-accent-hover:active {
     transform: scale(0.96);
   }
+}
+
+/* -------------------------------------------------------------
+ * 🎬 라우트 트랜지션 전역 애니메이션 (Slide-Up & Slide-Left)
+ * ------------------------------------------------------------- */
+@keyframes slideUpIn {
+  from {
+    transform: translateY(100%);
+    opacity: 0.8;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideLeftIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0.9;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInPage {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slideUpIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.animate-slide-left {
+  animation: slideLeftIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes slideDownOut {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0.8;
+  }
+}
+
+@keyframes slideRightOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0.8;
+  }
+}
+
+.animate-slide-down {
+  animation: slideDownOut 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.animate-slide-right {
+  animation: slideRightOut 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+/* -------------------------------------------------------------
+ * 🙈 Webkit 커스텀 스크롤바 width 0px (전역 무형 스크롤바 유저 지침 반영)
+ * ------------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 0px !important;
+  height: 0px !important;
+  background: transparent !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent !important;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  width: 0px !important;
+  height: 0px !important;
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* -------------------------------------------------------------
