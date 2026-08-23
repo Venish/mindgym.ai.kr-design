@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>③ KOSS 점수 산정 로직 - MindGym 개발 데이터</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style>
+        :root {
+            --bg-primary: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --accent: #4F46E5;
+            --accent-light: #EEF2FF;
+            --border: #E2E8F0;
+            --hover-bg: #F1F5F9;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        }
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 24px;
+        }
+        .header {
+            max-width: 1400px;
+            margin: 0 auto 24px;
+            background: var(--card-bg);
+            padding: 20px 28px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+        }
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header h1::before {
+            content: "🌿";
+        }
+        .sheet-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .nav-btn {
+            text-decoration: none;
+            padding: 8px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 8px;
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+        }
+        .nav-btn:hover, .nav-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+            transform: translateY(-1px);
+        }
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            border: 1px solid var(--border);
+        }
+        .search-box {
+            margin-bottom: 24px;
+            display: flex;
+            gap: 12px;
+        }
+        .search-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            font-size: 14px;
+            outline: none;
+            transition: border 0.2s;
+        }
+        .search-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+        h1, h2, h3 {
+            margin-top: 24px;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+        h1 { font-size: 22px; border-bottom: 2px solid var(--accent); padding-bottom: 8px; }
+        h2 { font-size: 18px; margin-top: 28px; color: var(--accent); }
+        h3 { font-size: 16px; }
+        p { margin-bottom: 12px; font-size: 14px; color: var(--text-secondary); }
+        ul { margin-bottom: 16px; padding-left: 20px; }
+        li { font-size: 14px; margin-bottom: 6px; color: var(--text-secondary); }
+        hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+        
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-bottom: 28px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            text-align: left;
+            white-space: normal;
+        }
+        th {
+            background: #F1F5F9;
+            color: #334155;
+            font-weight: 700;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+        }
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+            vertical-align: middle;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:hover td {
+            background-color: #F8FAFC;
+        }
+        strong {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>MindGym 개발 데이터 시트 뷰어</h1>
+        <nav class="sheet-nav"><a href="01_KOSS_문항.html" class="nav-btn">① KOSS 문항</a><a href="02_감정단어_상황코드.html" class="nav-btn">② 감정단어 & 상황코드</a><a href="03_KOSS_점수_산정_로직.html" class="nav-btn">③ KOSS 점수 산정 로직</a><a href="04_리추얼_목록_72개.html" class="nav-btn">④ 리추얼 목록 (72개)</a><a href="05_덤벨_성장_시스템.html" class="nav-btn">⑤ 덤벨 성장 시스템</a><a href="06_상황코드_리추얼_매핑.html" class="nav-btn">⑥ 상황코드 → 리추얼 매핑</a><a href="07_리추얼_실행_스트릭.html" class="nav-btn">⑦ 리추얼 실행 스트릭</a><a href="08_이달의_나_워딩.html" class="nav-btn">⑧ 이달의 나 워딩</a><a href="09_데일리_체크인_워딩.html" class="nav-btn">⑨ 데일리 체크인 워딩</a><a href="10_이달의_나_추천_로직.html" class="nav-btn">⑩ 이달의 나 추천 로직</a><a href="11_데일리_체크인_로직.html" class="nav-btn">⑪ 데일리 체크인 로직</a><a href="12_RECURRING_개발_우선순위.html" class="nav-btn">⑫ RECURRING 개발 우선순위</a></nav>
+    </div>
+
+    <div class="main-container">
+        <div class="search-box">
+            <input type="text" id="searchInput" class="search-input" placeholder="🔍 결과 내 실시간 검색..." onkeyup="filterTables()">
+        </div>
+
+        <div id="contentArea">
+            <h1>03 KOSS 점수 산정 로직</h1>
+<div class="table-container"><table><thead><tr>
+<th>영역</th>
+<th>문항 수</th>
+<th>앱 위험 기준 (점수 범위)</th>
+<th>색상 표시</th>
+<th>레이블</th>
+<th>산정 공식 / 비고</th>
+</tr></thead><tbody>
+<tr>
+<td>물리환경</td>
+<td>3</td>
+<td>≥7 위험 / 5~6 주의 / ≤4 양호</td>
+<td>#E53935 / #FB8C00 / #43A047</td>
+<td>위험/주의/양호</td>
+<td>환산: (합계-문항수)÷(문항수×3)×100</td>
+</tr>
+<tr>
+<td>직무요구</td>
+<td>8</td>
+<td>≥7 위험 / 5~6 주의 / ≤4 양호</td>
+<td>#E53935 / #FB8C00 / #43A047</td>
+<td>위험/주의/양호</td>
+<td>환산: (합계-문항수)÷(문항수×3)×100</td>
+</tr>
+<tr>
+<td>직무자율</td>
+<td>5</td>
+<td>≥7 위험 / 5~6 주의 / ≤4 양호</td>
+<td>#E53935 / #FB8C00 / #43A047</td>
+<td>위험/주의/양호</td>
+<td>5번 문항 역문항 처리 후 계산</td>
+</tr>
+<tr>
+<td>관계갈등</td>
+<td>4</td>
+<td>≥7 위험 / 5~6 주의 / ≤4 양호</td>
+<td>#E53935 / #FB8C00 / #43A047</td>
+<td>위험/주의/양호</td>
+<td>환산: (합계-문항수)÷(문항수×3)×100</td>
+</tr>
+<tr>
+<td>직업불안정</td>
+<td>2</td>
+<td>≥7 위험 / 5~6 주의 / ≤4 양호</td>
+<td>#E53935 / #FB8C00 / #43A047</td>
+<td>위험/주의/양호</td>
+<td>환산: (합계-문항수)÷(문항수×3)×100</td>
+</tr>
+<tr>
+<td>조직체계</td>
+<td>7</td>
+<td>≥7 위험 / 5~6 주의 / ≤4 양호</td>
+<td>#E53935 / #FB8C00 / #43A047</td>
+<td>위험/주의/양호</td>
+<td>1~7번 전체 역문항 처리 후 계산</td>
+</tr>
+<tr>
+<td>보상부적절</td>
+<td>3</td>
+<td>≥7 위험 / 5~6 주의 / ≤4 양호</td>
+<td>#E53935 / #FB8C00 / #43A047</td>
+<td>위험/주의/양호</td>
+<td>환산: (합계-문항수)÷(문항수×3)×100</td>
+</tr>
+<tr>
+<td>직장문화</td>
+<td>4</td>
+<td>≥7 위험 / 5~6 주의 / ≤4 양호</td>
+<td>#E53935 / #FB8C00 / #43A047</td>
+<td>위험/주의/양호</td>
+<td>환산: (합계-문항수)÷(문항수×3)×100</td>
+</tr>
+<tr>
+<td>▶ 응답 척도</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1점</td>
+<td>전혀 그렇지 않다</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2점</td>
+<td>그렇지 않다</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3점</td>
+<td>그렇다</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>4점</td>
+<td>매우 그렇다</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>▶ 역문항 처리</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>변환 공식</td>
+<td>1→4, 2→3, 3→2, 4→1</td>
+<td></td>
+<td></td>
+<td></td>
+<td>역문항은 ★ 표시 (시트①)</td>
+</tr>
+<tr>
+<td>▶ 환산 공식</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>표준화 공식</td>
+<td>(실제 합계 − 문항 수) ÷ (문항 수 × 3) × 100</td>
+<td></td>
+<td></td>
+<td></td>
+<td>0~100점 범위</td>
+</tr>
+<tr>
+<td>▶ 종합 번아웃 판정 (앱 내부)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>양호</td>
+<td>환산 점수 평균 0~43점</td>
+<td></td>
+<td>#43A047 (Green)</td>
+<td>양호</td>
+<td>정상 관리 범위</td>
+</tr>
+<tr>
+<td>주의</td>
+<td>환산 점수 평균 44~66점</td>
+<td></td>
+<td>#FB8C00 (Orange)</td>
+<td>주의</td>
+<td>루틴 강화 권장</td>
+</tr>
+<tr>
+<td>위험</td>
+<td>환산 점수 평균 67점 이상</td>
+<td></td>
+<td>#E53935 (Red)</td>
+<td>위험</td>
+<td>전문가 상담 권장</td>
+</tr>
+<tr>
+<td>▶ 번아웃 상태 문구 (앱 표시)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>양호</td>
+<td>지금은 비교적 안정된 상태예요 😊</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>주의</td>
+<td>조금씩 지쳐가고 있어요</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>위험</td>
+<td>번아웃이 상당히 진행되고 있어요 😔</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table></div>
+        </div>
+    </div>
+
+    <script>
+        // Set active nav link
+        const currentPath = window.location.pathname.split('/').pop();
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            if (btn.getAttribute('href') === currentPath) {
+                btn.classList.add('active');
+            }
+        });
+
+        function filterTables() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const rows = document.querySelectorAll('tbody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(input)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

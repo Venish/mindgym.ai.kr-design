@@ -53,3 +53,6 @@ mindgym_mockup*.html
 *.tmp
 *.bak
 
+# awesome design skills registry & temp examples
+awesome-design-skills/.registry-examples
+.registry-examples

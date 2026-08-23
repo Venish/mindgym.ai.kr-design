@@ -31,12 +31,16 @@ const EVENING_RITUAL_OPTIONS = [
  * RoutineSetupSheet: Hero 상단 ⚙️ 클릭 시 밑에서 위로(slide-up) 올라오는 아침 · 저녁 루틴 모달
  * - 아침과 저녁 탭의 상단 헤더, 섹션 텍스트 및 서브텍스트 스타일 100% 대칭 일치
  */
-export function RoutineSetupSheet() {
+export interface RoutineSetupSheetProps {
+  initialTab?: "MORNING" | "EVENING";
+}
+
+export function RoutineSetupSheet({ initialTab = "MORNING" }: RoutineSetupSheetProps) {
   const { closeModal, openModal } = useModalStore();
   const { userName, morningEmotion, todayQuote, triggerDashboardRefresh } = useMindGym();
 
   // 탭 상태 ("MORNING" | "EVENING")
-  const [activeTab, setActiveTab] = useState<"MORNING" | "EVENING">("MORNING");
+  const [activeTab, setActiveTab] = useState<"MORNING" | "EVENING">(initialTab);
 
   // 아침/저녁 매핑 자동/고정 스위치 상태
   const [isAutoMapping, setIsAutoMapping] = useState(true);

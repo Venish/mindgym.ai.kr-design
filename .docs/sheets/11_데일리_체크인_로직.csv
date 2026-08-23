@@ -1,0 +1,17 @@
+﻿단계,트리거,화면 ID,표시 내용,사용자 액션,다음 화면,조건,비고
+1,AM 알림 수신 (기본 오전 8시),screen-am_checkin,오늘 기분 어때요? 감정 슬라이더 (1~5),감정 점수 선택,am_ritual_bridge,항상,푸시 탭 or 앱 진입
+2,감정 점수 입력 완료,screen-am_ritual_bridge,이달의 리추얼 오늘도 함께 해볼까요?,지금 시작할게요 → ritual_doing / 나중에 할게요 → home,ritual_doing or home,항상,리추얼 미완료 상태
+3-A,리추얼 실행 선택,screen-ritual_doing,리추얼 실행 화면 타이머 / 가이드,완료 버튼 탭,am_complete,항상,완료 시 스트릭 +1
+3-B,나중에 선택,screen-home,홈 화면,—,—,리추얼 미완료 상태 유지,PM 게이트에서 재권유
+4,리추얼 완료,screen-am_complete,🏋️ 오늘도 해냈어요! 덤벨 성장 애니메이션,홈으로,home,완료 후,스트릭 카운트 +1 덤벨 EXP +
+
+게이트,트리거 조건,화면 ID,표시 내용,사용자 액션,다음 화면,데이터 저장,비고
+PM 기본 게이트,PM 알림 수신 & 리추얼 미완료,screen-pm_gate (pm-ritual-gate),오늘 리추얼 아직 못 하셨죠? 😊 [지금 하기] [패스],지금 하기 → ritual_doing / 패스 → pm_haru_gate,ritual_doing or pm_haru_gate,리추얼 완료 여부,리추얼 완료 시 자동으로 pm_haru_gate 표시
+PM 하루 게이트,리추얼 완료 후 or 패스 선택 후,screen-pm_gate (pm-haru-gate),오늘 하루 어땠나요? 감정 슬라이더 + 한줄 메모 (선택),저장 후 홈,home,"오늘 감정 점수, 한줄 메모, 타임스탬프",AM 점수와 비교 → 감정 변화 추적
+SOS 즉석 추천,PM 게이트 진입 시 감정 점수 ≤ 2,pm-haru-gate 내 SOS 섹션,지금 이 감정에 맞는 리추얼이에요 [SOS 리추얼 카드],실행 or 스킵,ritual_doing or home,SOS 리추얼 실행 여부,⑥ SOS 1~2순위 기반 추천
+
+항목,내용
+발송 조건,AM 체크인 완료 + 리추얼 미완료 + 현재 시각 12:00~14:00
+알림 타입,푸시 알림 (안부식 문구)
+알림 문구 예시,오늘 리추얼 아직 못 하셨죠? 잠깐 짬 내볼까요 ☀️
+탭 후 이동,screen-pm_gate (pm-ritual-gate) — 리추얼 실행 유도

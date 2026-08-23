@@ -67,21 +67,60 @@ export function ShowcaseHeroKv({
 
   return (
     <div className="flex flex-col gap-2.5 w-full">
-      <div className="relative bg-gradient-to-b from-emerald-100/85 via-teal-50/65 to-emerald-50/45 rounded-3xl pt-8 px-5 pb-6 shadow-2xs transition-all duration-300 overflow-hidden flex flex-col items-center justify-center text-center gap-3.5 min-h-[220px]">
-        {/* 톱니바퀴 설정 버튼 -> 밑에서 위로(slide-up) RoutineSetupSheet 0ms 모달 연동 */}
-        <button
-          type="button"
-          onClick={() =>
-            openModal({
-              type: "slide-up",
-              content: <RoutineSetupSheet />,
-            })
-          }
-          className="absolute top-1.5 right-1.5 z-20 p-1.5 rounded-full text-gray-400/60 hover:text-emerald-700 hover:bg-emerald-100/50 transition-all active:scale-95 outline-none cursor-pointer"
-          title="아침 · 저녁 루틴 (밑에서 위로 스르륵)"
-        >
-          <Gear size={19} weight="bold" className="text-gray-400/60 hover:text-emerald-700 transition-colors" />
-        </button>
+      <div className="relative bg-gradient-to-b from-emerald-100/85 via-teal-50/65 to-emerald-50/45 rounded-3xl pt-4 px-5 pb-6 shadow-2xs transition-all duration-300 overflow-hidden flex flex-col items-center justify-center text-center gap-3 min-h-[220px]">
+        {/* 메인 히어로 상단: 아침 & 저녁 루틴 팝업 활성화 칩 바 */}
+        <div className="flex items-center justify-between w-full z-20">
+          <div className="flex items-center gap-2">
+            {/* 아침 루틴 팝업 버튼 */}
+            <button
+              type="button"
+              onClick={() =>
+                openModal({
+                  type: "slide-up",
+                  content: <RoutineSetupSheet initialTab="MORNING" />,
+                })
+              }
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 hover:bg-white text-emerald-950 border border-emerald-200/80 shadow-2xs transition-all active:scale-95 cursor-pointer text-xs font-bold"
+              title="아침 루틴 설정 팝업 활성화"
+            >
+              <AnimatedMorningSun size={18} />
+              <span>아침 루틴</span>
+              <span className="text-[10px] font-extrabold text-[#00C474] bg-emerald-50 px-1.5 py-0.5 rounded-md">07:00</span>
+            </button>
+
+            {/* 저녁 루틴 팝업 버튼 */}
+            <button
+              type="button"
+              onClick={() =>
+                openModal({
+                  type: "slide-up",
+                  content: <RoutineSetupSheet initialTab="EVENING" />,
+                })
+              }
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 hover:bg-white text-indigo-950 border border-indigo-200/80 shadow-2xs transition-all active:scale-95 cursor-pointer text-xs font-bold"
+              title="저녁 루틴 설정 팝업 활성화"
+            >
+              <AnimatedEveningMoon size={18} />
+              <span>저녁 루틴</span>
+              <span className="text-[10px] font-extrabold text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded-md">23:00</span>
+            </button>
+          </div>
+
+          {/* 전체 설정 톱니바퀴 */}
+          <button
+            type="button"
+            onClick={() =>
+              openModal({
+                type: "slide-up",
+                content: <RoutineSetupSheet />,
+              })
+            }
+            className="p-1.5 rounded-full text-gray-500/80 hover:text-emerald-700 hover:bg-white/80 transition-all active:scale-95 outline-none cursor-pointer"
+            title="아침 · 저녁 루틴 설정 (밑에서 위로 스르륵)"
+          >
+            <Gear size={19} weight="bold" />
+          </button>
+        </div>
 
         {/* 1. 오늘 마음 ('차분함' 영역 클릭 시 '오늘의 마음가짐 선택' 슬라이딩 위저드 모달 띄우기) */}
         <div
