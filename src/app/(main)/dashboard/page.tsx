@@ -11,6 +11,7 @@ import { ShowcaseHeroKv } from "@/components/dashboard/ShowcaseHeroKv";
 import { ShowcaseBentoGrid } from "@/components/dashboard/ShowcaseBentoGrid";
 import { ShowcaseTodayRoutines } from "@/components/dashboard/ShowcaseTodayRoutines";
 import { ShowcasePauseBanner } from "@/components/dashboard/ShowcasePauseBanner";
+import { ShowcaseParallaxFooter } from "@/components/dashboard/ShowcaseParallaxFooter";
 import { ShowcaseFixedBottomBar } from "@/components/dashboard/ShowcaseFixedBottomBar";
 
 // Modals
@@ -62,8 +63,8 @@ function DashboardContent() {
 
   return (
     <div className="w-full max-w-[430px] min-h-screen mx-auto bg-white relative flex flex-col justify-between overflow-x-hidden text-gray-900 select-none font-sans no-scrollbar">
-      {/* 대시보드 스크롤 메인 영역 (pb-40으로 고정 하단바 메뉴 가림 및 답답함 100% 해소) */}
-      <main className="flex-1 px-4 pt-2 pb-40 flex flex-col gap-4 text-left bg-white">
+      {/* 1. 대시보드 메인 카드 레이어 (패럴랙스 mb-[220px] 복원 & pb-40 내여백 보존) */}
+      <main className="relative z-10 bg-white flex-1 min-h-screen px-4 pt-2 pb-40 flex flex-col gap-4 text-left shadow-lg rounded-b-2xl mb-[220px]">
         {/* 1. 상단 메뉴 헤더 컴포넌트 */}
         <ShowcaseHeader userName={userName || "보노보노"} levelNum={levelNum} />
 
@@ -91,7 +92,12 @@ function DashboardContent() {
         <ShowcasePauseBanner />
       </main>
 
-      {/* 최하단 고정 앱 바로가기 메뉴 바 */}
+      {/* 2. 뒤편 픽스 고정 패럴랙스 푸터 레이어 (fixed bottom-0 z-0 복원) */}
+      <div className="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto z-0 w-full bg-white pointer-events-auto">
+        <ShowcaseParallaxFooter />
+      </div>
+
+      {/* 3. 최하단 고정 앱 바로가기 메뉴 바 (최상단 z-40) */}
       <ShowcaseFixedBottomBar />
 
       {/* 대시보드 팝업 모달 렌더링 */}

@@ -3,13 +3,17 @@
 import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useModalStore } from "@/store/useModalStore";
+import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 
 /**
  * GlobalOverlayProvider: 마인드짐 430px 모바일 프레임 맞춤 다중 모달 오버레이 뷰어 (Z-Index: z-40 스택)
- * - 모달 위에 또 다른 서브 모달(Slide-Left)이 올 때 층층이 쌓이는 네이티브 스택 레이아웃
+ * - 중앙 useBodyScrollLock 훅을 사용하여 배경 대시보드 스크롤을 단일 통합 관리하는 뷰어
  */
 export function GlobalOverlayProvider() {
   const { modalStack, closeModal } = useModalStore();
+
+  // 모달 스택 카운트에 따른 중앙집중 스크롤 락 통합 통제
+  useBodyScrollLock(modalStack.length > 0);
 
   return (
     <AnimatePresence>

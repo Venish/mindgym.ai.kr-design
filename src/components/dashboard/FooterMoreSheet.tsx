@@ -15,6 +15,9 @@ export interface RitualData {
   title: string;
   category: string;
   time: string;
+  level: string;
+  duration: string;
+  reward: string;
   iconNum: number;
   desc: string;
   isLocked?: boolean;
@@ -41,45 +44,99 @@ const RITUAL_CATEGORIES = [
   "관계와 경계",
 ];
 
+// 카테고리별 고유한 리추얼 타이틀 명칭 샘플 데이터베이스
+const SAMPLE_RITUAL_NAMES_BY_CAT: Record<string, string[]> = {
+  "스트레스 비우기": [
+    "횡경막 이완 호흡",
+    "긴장 이완 스트레칭",
+    "맨발 소리 산책",
+    "어깨 다독임 호흡",
+    "마음 소용돌이 비우기",
+    "버리는 일기 쓰기",
+  ],
+  "휴식과 충전": [
+    "미소 수면 명상",
+    "전신 바디스캔",
+    "따뜻한 온기 감싸기",
+    "자연 빗소리 이완",
+    "눈동자 휴식 세션",
+    "달빛 수면 가이드",
+  ],
+  "자기자비 명상": [
+    "333 나비포옹",
+    "나에게 전하는 다정한 문장",
+    "스스로 어깨 다독이기",
+    "실수 용서하기",
+    "내 안의 아이 안아주기",
+    "자기자비 호흡법",
+  ],
+  "감정 정돈": [
+    "마음온도 시각화 일기",
+    "솔직한 분노 수용 노트",
+    "감정 단어 이름 붙이기",
+    "생각 구름 흘려보내기",
+    "오늘의 마음 쉼표 기록",
+    "감정 정리 3분 체크",
+  ],
+  "몰입과 집중": [
+    "1분 시선 고정 명상",
+    "3-2-1 그라운딩 센스",
+    "몰입을 부르는 파도소리",
+    "숨 고르기 뽀모도로",
+    "하나에 집중하는 촛불 관찰",
+    "생각의 잡음 끄기",
+  ],
+  "관계와 경계": [
+    "셀프 QnA 인터뷰",
+    "타인과의 건강한 거리두기",
+    "친절 온기 수집함",
+    "거절의 용기 연습",
+    "따뜻한 시선 되돌려주기",
+    "소중한 사람과의 마음 경계",
+  ],
+};
+
 const GENERATED_72_RITUALS: RitualData[] = Array.from({ length: 72 }, (_, i) => {
   const num = i + 1;
   const cat = RITUAL_CATEGORIES[i % RITUAL_CATEGORIES.length];
-  // 6번째마다 아직 오픈 안 한 미오픈 자물쇠 샘플 처리
+  const namesList = SAMPLE_RITUAL_NAMES_BY_CAT[cat] || ["마음 쉼표 명상"];
+  const ritualName = namesList[Math.floor(i / RITUAL_CATEGORIES.length) % namesList.length];
   const isLocked = num % 6 === 0;
 
   return {
     id: `RT-${String(num).padStart(3, "0")}`,
-    title: `리추얼 ${num}호: ${cat} 쉼표`,
+    title: ritualName,
     category: cat,
     time: `${(i % 5) + 3}분`,
+    level: i % 2 === 0 ? "초급" : "중급",
+    duration: i % 3 === 0 ? "매일" : "한달",
+    reward: `+${((i % 4) + 1) * 10}`,
     iconNum: num,
     isLocked,
     desc: isLocked
       ? "다음 주 공개 예정인 신규 마음건강 리추얼 세션입니다."
-      : `일상의 분주함을 멈추고 ${cat}의 감각을 깨워주는 72가지 대표 마음건강 리추얼입니다.`,
+      : `일상의 분주함을 멈추고 ${cat}의 감각을 깊이 있게 깨워주는 ${ritualName} 세션입니다.`,
   };
 });
 
 // 12개 찜한 리추얼 샘플 목록 (1번 인덱스는 고정된 이달의 월간 리추얼)
 const INITIAL_12_SAVED_RITUALS: RitualData[] = [
-  { id: "RT-001", title: "미소 명상", category: "휴식과 충전", time: "3분", iconNum: 1, desc: "입가에 옅은 미소를 지으며 얼굴 근육의 긴장을 푸는 미소 명상입니다.", isPinned: true },
-  { id: "RT-012", title: "마음일기", category: "감정 정돈", time: "5분", iconNum: 12, desc: "세상의 비난 속에서도 나만의 다정한 변호인이 되어 일기를 씁니다.", isPinned: false },
-  { id: "RT-004", title: "횡경막 호흡", category: "스트레스 비우기", time: "1분", iconNum: 4, desc: "아랫배 깊숙이 들이마시고 내쉬는 호흡 감각에 집중해 심박수를 낮춥니다.", isPinned: false },
-  { id: "RT-010", title: "333 나비포옹", category: "자기자비 명상", time: "1분", iconNum: 10, desc: "양팔을 교차해 스스로 양어깨를 번갈아 다독이며 불안 요소를 잠재웁니다.", isPinned: false },
-  { id: "RT-003", title: "시선고정 명상", category: "몰입과 집중", time: "1분", iconNum: 3, desc: "사물 하나에 1분간 시선을 고정하는 명상입니다.", isPinned: false },
-  { id: "RT-024", title: "마음선물", category: "감정 정돈", time: "1분", iconNum: 24, desc: "오늘 내 마음의 온도를 시각화해서 기록합니다.", isPinned: false },
-  { id: "RT-028", title: "분노일기", category: "감정 정돈", time: "3분", iconNum: 28, desc: "솔직한 분노 후 감정을 수용하는 일기를 씁니다.", isPinned: false },
-  { id: "RT-037", title: "셀프 QnA", category: "관계와 경계", time: "3분", iconNum: 37, desc: "나에게 번갈아 묻고 답하는 인터뷰를 진행합니다.", isPinned: false },
-  { id: "RT-046", title: "바디스캔", category: "휴식과 충전", time: "5분", iconNum: 46, desc: "머리부터 발끝까지 감각을 관찰하는 이완 세션입니다.", isPinned: false },
-  { id: "RT-050", title: "맨발산책", category: "스트레스 비우기", time: "5분", iconNum: 50, desc: "아무것도 들지 않고 발바닥을 느끼며 걷습니다.", isPinned: false },
-  { id: "RT-061", title: "친절수집함", category: "관계와 경계", time: "2분", iconNum: 61, desc: "오늘 타인에게 받은 온기를 수집하는 함입니다.", isPinned: false },
-  { id: "RT-071", title: "3-2-1 그라운딩", category: "몰입과 집중", time: "2분", iconNum: 71, desc: "보이는 것 3개, 들리는 것 2개, 맛 1개를 기록합니다.", isPinned: false },
+  { id: "RT-001", title: "미소 명상", category: "휴식과 충전", time: "3분", level: "중급", duration: "한달", reward: "+30", iconNum: 1, desc: "입가에 옅은 미소를 지으며 얼굴 근육의 긴장을 푸는 미소 명상입니다.", isPinned: true },
+  { id: "RT-012", title: "마음일기", category: "감정 정돈", time: "5분", level: "중급", duration: "한달", reward: "+30", iconNum: 12, desc: "세상의 비난 속에서도 나만의 다정한 변호인이 되어 일기를 씁니다.", isPinned: false },
+  { id: "RT-004", title: "횡경막 호흡", category: "스트레스 비우기", time: "1분", level: "초급", duration: "매일", reward: "+10", iconNum: 4, desc: "아랫배 깊숙이 들이마시고 내쉬는 호흡 감각에 집중해 심박수를 낮춥니다.", isPinned: false },
+  { id: "RT-010", title: "333 나비포옹", category: "자기자비 명상", time: "1분", level: "초급", duration: "매일", reward: "+15", iconNum: 10, desc: "양팔을 교차해 스스로 양어깨를 번갈아 다독이며 불안 요소를 잠재웁니다.", isPinned: false },
+  { id: "RT-003", title: "시선고정 명상", category: "몰입과 집중", time: "1분", level: "초급", duration: "매일", reward: "+10", iconNum: 3, desc: "사물 하나에 1분간 시선을 고정하는 명상입니다.", isPinned: false },
+  { id: "RT-024", title: "마음선물", category: "감정 정돈", time: "1분", level: "초급", duration: "매일", reward: "+10", iconNum: 24, desc: "오늘 내 마음의 온도를 시각화해서 기록합니다.", isPinned: false },
+  { id: "RT-028", title: "분노일기", category: "감정 정돈", time: "3분", level: "중급", duration: "한달", reward: "+20", iconNum: 28, desc: "솔직한 분노 후 감정을 수용하는 일기를 씁니다.", isPinned: false },
+  { id: "RT-037", title: "셀프 QnA", category: "관계와 경계", time: "3분", level: "중급", duration: "한달", reward: "+20", iconNum: 37, desc: "나에게 번갈아 묻고 답하는 인터뷰를 진행합니다.", isPinned: false },
+  { id: "RT-046", title: "바디스캔", category: "휴식과 충전", time: "5분", level: "중급", duration: "한달", reward: "+30", iconNum: 46, desc: "머리부터 발끝까지 감각을 관찰하는 이완 세션입니다.", isPinned: false },
+  { id: "RT-050", title: "맨발산책", category: "스트레스 비우기", time: "5분", level: "중급", duration: "한달", reward: "+30", iconNum: 50, desc: "아무것도 들지 않고 발바닥을 느끼며 걷습니다.", isPinned: false },
+  { id: "RT-061", title: "친절수집함", category: "관계와 경계", time: "2분", level: "초급", duration: "매일", reward: "+15", iconNum: 61, desc: "오늘 타인에게 받은 온기를 수집하는 함입니다.", isPinned: false },
+  { id: "RT-071", title: "3-2-1 그라운딩", category: "몰입과 집중", time: "2분", level: "초급", duration: "매일", reward: "+15", iconNum: 71, desc: "보이는 것 3개, 들리는 것 2개, 맛 1개를 기록합니다.", isPinned: false },
 ];
 
 /**
- * FooterMoreSheet:
- * 상단 - 내가 찜한 리추얼 (Framer Motion Reorder.Group 1차원 TYPE 3 배너 리스트 - 1번 월간 핀 고정)
- * 하단 - 전체 72개 리추얼 (디자인 가이드 카테고리 필터 버튼 연동)
+ * FooterMoreSheet: "내가 찜한 리추얼" 소제목 좌측에 Icon Buttons & Small Action Chips 2번째 아이콘 버튼 적용
  */
 export function FooterMoreSheet() {
   const { clearModals, openModal } = useModalStore();
@@ -172,11 +229,14 @@ export function FooterMoreSheet() {
       />
 
       <div className="flex flex-col w-full px-5 pt-3 gap-6 text-left max-w-lg mx-auto flex-1">
-        {/* ================= SECTION 1: 상단 - 내가 찜한 리추얼 (Framer Motion Reorder 1차원 TYPE 3 배너 리스트) ================= */}
+        {/* ================= SECTION 1: 상단 - 내가 찜한 리추얼 (Icon Buttons & Small Action Chips 2번째 아이콘 버튼 적용) ================= */}
         <div className="flex flex-col gap-3">
           <div className="flex items-center justify-between pb-1">
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#00C474]" />
+              {/* DESIGN GUIDE 3. Icon Buttons & Small Action Chips 의 2번째 아이콘 버튼 (그린 배경 + 흰색 별) 적용 */}
+              <div className="w-6 h-6 rounded-lg bg-[#00C474] text-white flex items-center justify-center shrink-0 shadow-2xs">
+                <Star size={13} weight="fill" />
+              </div>
               <h2 className="text-[0.9375rem] font-bold text-gray-900 tracking-tight">
                 내가 찜한 리추얼
               </h2>
@@ -188,16 +248,19 @@ export function FooterMoreSheet() {
 
           {/* 1차원 TYPE 3 리스트 구조 */}
           <div className="flex flex-col gap-2 w-full">
-            {/* 1. 상단 1번 핀 고정 항목 (월간 대표 리추얼 - 즐겨찾기 위치에 [월간] 뱃지 적용) */}
+            {/* 1. 상단 1번 핀 고정 항목 */}
             {pinnedRitual && (
-              <div className="relative py-2 px-3 rounded-2xl bg-[#F9FAFB] flex items-center gap-2.5 border border-amber-200/80 shadow-2xs">
-                {/* 최좌측 [월간] 고정 뱃지 */}
-                <span className="px-1.5 py-0.5 rounded-md bg-amber-400 text-white text-[10px] font-black shrink-0 shadow-2xs">
-                  월간
-                </span>
+              <div className="relative py-2.5 px-3.5 rounded-2xl bg-[#F9FAFB] flex items-center gap-3 border border-amber-200/80 shadow-2xs">
+                {/* 최좌측 수정 불가 회색 별 아이콘 */}
+                <div
+                  title="이달의 대표 월간 고정 리추얼 (해제 불가)"
+                  className="p-0.5 rounded-lg text-gray-300 cursor-not-allowed shrink-0"
+                >
+                  <Star size={17} weight="fill" className="text-gray-300" />
+                </div>
 
-                {/* 아이콘 */}
-                <div className="relative w-9 h-9 shrink-0">
+                {/* PNG 아이콘 */}
+                <div className="relative w-9 h-9 shrink-0 pointer-events-none">
                   <Image
                     src={getIconPath(pinnedRitual.iconNum)}
                     alt={pinnedRitual.title}
@@ -208,11 +271,14 @@ export function FooterMoreSheet() {
 
                 {/* 중앙 정보 */}
                 <div className="flex-1 min-w-0 text-left flex items-center gap-2">
-                  <h3 className="text-xs font-bold text-slate-900 truncate">
+                  <h3 className="text-sm font-bold text-slate-900 truncate tracking-tight">
                     {pinnedRitual.title}
                   </h3>
-                  <span className="text-[9.5px] font-bold px-2 py-0.5 rounded-full shrink-0 text-emerald-700 bg-emerald-100/70">
+                  <span className="inline-flex items-center justify-center text-[9.5px] font-bold px-2 py-1 rounded-full shrink-0 text-emerald-700 bg-emerald-100/70 leading-none">
                     {pinnedRitual.time}
+                  </span>
+                  <span className="inline-flex items-center justify-center px-1.5 py-1 rounded-md bg-[#00C474] text-white text-[10px] font-bold shrink-0 shadow-2xs leading-none">
+                    월간추천
                   </span>
                 </div>
               </div>
@@ -230,9 +296,9 @@ export function FooterMoreSheet() {
                   key={r.id}
                   value={r}
                   whileDrag={{ scale: 1.02, boxShadow: "0 8px 20px rgba(0,0,0,0.08)", zIndex: 30 }}
-                  className="relative py-2 px-3 rounded-2xl bg-[#F9FAFB] flex items-center gap-2.5 transition-colors group select-none cursor-default"
+                  className="relative py-2.5 px-3.5 rounded-2xl bg-[#F9FAFB] flex items-center gap-3 transition-colors group select-none cursor-default"
                 >
-                  {/* 가장 왼쪽 찜 취소 버튼 */}
+                  {/* 노란색 찜 취소 버튼 */}
                   <button
                     type="button"
                     onClick={() => toggleBookmark(r)}
@@ -254,10 +320,10 @@ export function FooterMoreSheet() {
 
                   {/* 중앙 정보 */}
                   <div className="flex-1 min-w-0 text-left flex items-center gap-2 pointer-events-none">
-                    <h3 className="text-xs font-bold text-slate-900 truncate">
+                    <h3 className="text-sm font-bold text-slate-900 truncate tracking-tight">
                       {r.title}
                     </h3>
-                    <span className="text-[9.5px] font-bold px-2 py-0.5 rounded-full shrink-0 text-emerald-700 bg-emerald-100/70">
+                    <span className="inline-flex items-center justify-center text-[9.5px] font-bold px-2 py-1 rounded-full shrink-0 text-emerald-700 bg-emerald-100/70 leading-none">
                       {r.time}
                     </span>
                   </div>
@@ -275,7 +341,7 @@ export function FooterMoreSheet() {
         {/* 2단 구역 경계 구분을 위한 공간 여백 */}
         <div className="w-full my-1" />
 
-        {/* ================= SECTION 2: 하단 - 전체 72가지 리추얼 (디자인 가이드 카테고리 필터 연동) ================= */}
+        {/* ================= SECTION 2: 하단 - 전체 72가지 리추얼 (5. RitualCard 4개 정사각형 칩) ================= */}
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-1 text-left">
             <div className="flex items-center justify-between pb-1">
@@ -332,7 +398,7 @@ export function FooterMoreSheet() {
             })}
           </div>
 
-          {/* TYPE 3 배너 리스트 카드 목록 (필터링된 결과) */}
+          {/* TYPE 3 배너 리스트 카드 목록 */}
           <div className="flex flex-col gap-3 pt-1 pb-8">
             {filtered72Rituals.map((r) => {
               const isLocked = r.isLocked;
@@ -378,24 +444,28 @@ export function FooterMoreSheet() {
                   </div>
 
                   {/* 중앙 정보 */}
-                  <div className="flex-1 min-w-0 text-left">
-                    <div className="flex items-center gap-2">
-                      <h3 className="text-xs font-bold text-slate-900 truncate">
-                        {r.title}
-                      </h3>
-                      <span
-                        className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ${
-                          isLocked
-                            ? "text-gray-500 bg-gray-200/80"
-                            : "text-emerald-700 bg-emerald-100/70"
-                        }`}
-                      >
-                        {isLocked ? "오픈 예정" : r.time}
-                      </span>
+                  <div className="flex-1 min-w-0 text-left flex flex-col gap-1.5">
+                    <h3 className="text-sm font-bold text-slate-900 truncate tracking-tight">
+                      {r.title}
+                    </h3>
+                    <div className="flex items-center justify-start gap-1.5">
+                      <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-amber-100/90 text-center shadow-2xs shrink-0">
+                        <span className="text-xs font-bold text-gray-900">{r.time}</span>
+                      </div>
+                      {!isLocked && (
+                        <>
+                          <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-purple-100/90 text-center shrink-0">
+                            <span className="text-xs font-bold text-gray-900">{r.level}</span>
+                          </div>
+                          <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-sky-100/90 text-center shrink-0">
+                            <span className="text-xs font-bold text-gray-900">{r.duration}</span>
+                          </div>
+                          <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-rose-200/90 text-center shadow-xs shrink-0">
+                            <span className="text-xs font-bold text-gray-900">{r.reward}</span>
+                          </div>
+                        </>
+                      )}
                     </div>
-                    <p className="text-[11px] text-gray-500 mt-0.5 line-clamp-1 leading-snug">
-                      {r.desc}
-                    </p>
                   </div>
 
                   {/* 오른쪽 잠시 멈춤 화살표 실행 버튼 (화살표 영역만 독립 클릭 트리거) */}

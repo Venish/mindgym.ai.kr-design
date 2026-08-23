@@ -56,3 +56,8 @@ mindgym_mockup*.html
 # awesome design skills registry & temp examples
 awesome-design-skills/.registry-examples
 .registry-examples
+
+# public uploads
+/public/upload/
+/public/uploads/
+
