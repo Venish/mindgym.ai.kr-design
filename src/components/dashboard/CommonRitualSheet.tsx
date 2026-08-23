@@ -122,9 +122,9 @@ export function CommonRitualSheet({
              ========================================================================= */
           <div className="flex flex-col justify-between items-center my-auto flex-1 min-h-[460px] py-4 text-center">
             <div className="flex flex-col items-center gap-4 text-center max-w-sm w-full my-auto">
-              {/* 1. 카테고리 뱃지 단독 표출 (상단 3분 중복 제거) */}
+              {/* 1. 카테고리 뱃지 단독 표출 (상단 3분 중복 제거, border 삭제로 100% 깔끔한 무경계 뱃지) */}
               <div className="flex items-center justify-center">
-                <span className="text-xs font-extrabold text-[#00C474] bg-emerald-50 px-3.5 py-1 rounded-full border border-emerald-200/60">
+                <span className="text-xs font-extrabold text-[#00C474] bg-emerald-50 px-3.5 py-1 rounded-full">
                   {ritualCategory}
                 </span>
               </div>
@@ -190,7 +190,7 @@ export function CommonRitualSheet({
              ========================================================================= */
           <div className="flex flex-col justify-between flex-1 min-h-[460px] py-4 text-center items-center">
             <div className="flex flex-col items-center gap-4 my-auto w-full">
-              <span className="text-xs font-extrabold text-[#00C474] bg-emerald-50 px-3.5 py-1 rounded-full border border-emerald-200/60">
+              <span className="text-xs font-extrabold text-[#00C474] bg-emerald-50 px-3.5 py-1 rounded-full">
                 실행 진행 중 · {ritualTime}
               </span>
 

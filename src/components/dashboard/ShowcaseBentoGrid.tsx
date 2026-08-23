@@ -47,11 +47,11 @@ export function ShowcaseBentoGrid({}: ShowcaseBentoGridProps) {
             </span>
           </div>
 
-          <div className="my-1 flex items-center justify-center py-1 group-hover:scale-105 transition-transform duration-300">
+          <div className="my-1 flex items-center justify-center py-1 animate-pulse hover:scale-110 transition-transform duration-300">
             <img
               src={getIconPath(1)}
               alt="미소 명상"
-              className="w-10 h-10 object-contain drop-shadow-2xs"
+              className="w-10 h-10 object-contain drop-shadow-md"
             />
           </div>
 

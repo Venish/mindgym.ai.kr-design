@@ -16,9 +16,10 @@ import { FlatTemplatesSection } from "./_components/FlatTemplatesSection";
 import { FlatComponentsSection } from "./_components/FlatComponentsSection";
 import { RenewalComparisonSection } from "./_components/RenewalComparisonSection";
 import { IconShowcaseSection } from "./_components/IconShowcaseSection";
+import { MagazineShowcaseSection } from "./_components/MagazineShowcaseSection";
 
 export default function DesignGuidePage() {
-  const [activeSection, setActiveSection] = useState<string>("icons-showcase");
+  const [activeSection, setActiveSection] = useState<string>("magazine-system");
 
   const scrollToSection = (id: string) => {
     setActiveSection(id);
@@ -80,6 +81,9 @@ export default function DesignGuidePage() {
 
         {/* 우측 독립 스크롤 메인 뷰포트 영역 */}
         <div className="flex-1 overflow-y-auto px-8 py-10 flex flex-col gap-16">
+          {/* 📖 0-0. Magazine & E-Book Reader System Section */}
+          <MagazineShowcaseSection />
+
           {/* 🎨 0-1. Icons 3-Type Showcase Section */}
           <IconShowcaseSection />
 

@@ -83,7 +83,7 @@ export function SubPageHeader({
 
   return (
     <div
-      className={`w-full h-[56px] min-h-[56px] flex items-center justify-between px-4 border-b border-gray-100 sticky top-0 bg-white/95 backdrop-blur-md z-30 select-none relative ${className}`}
+      className={`w-full h-[56px] min-h-[56px] flex items-center justify-between px-4 sticky top-0 bg-white/95 backdrop-blur-md z-30 select-none relative ${className}`}
     >
       {/* 1. 좌측 버튼 영역 */}
       <div className="flex items-center justify-start z-10 min-w-[40px] h-full">

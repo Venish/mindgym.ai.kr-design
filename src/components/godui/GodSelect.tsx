@@ -19,6 +19,7 @@ interface GodSelectProps {
   placeholder?: string;
   icon?: React.ReactNode;
   className?: string;
+  triggerClassName?: string;
 }
 
 export function GodSelect({
@@ -29,6 +30,7 @@ export function GodSelect({
   placeholder = "선택해 주세요",
   icon,
   className = "",
+  triggerClassName = "",
 }: GodSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [internalValue, setInternalValue] = useState(
@@ -70,7 +72,8 @@ export function GodSelect({
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
           "relative flex items-center justify-between w-full px-4 py-3.5 bg-white border border-gray-200/90 rounded-2xl shadow-2xs font-extrabold text-sm text-gray-900 transition-all duration-200 active:scale-[0.98]",
-          isOpen && "border-[var(--color-brand-green)]"
+          isOpen && "border-[var(--color-brand-green)]",
+          triggerClassName
         )}
       >
         <div className="flex items-center gap-2.5 overflow-hidden">

@@ -138,6 +138,15 @@
   --glass-shadow-dark: none;
 
   --glass-rainbow-conic: conic-gradient(from 45deg, oklch(1 0 0), oklch(0.78 0.14 210), oklch(0.72 0.18 300 / 0.95), oklch(0.73 0.19 350 / 0.95), oklch(1 0 0));
+
+  /* 📖 Magazine Editorial & E-Book Reader Design Tokens */
+  --color-magazine-paper: #F9FAFB;
+  --color-magazine-highlight: oklch(0.95 0.08 160 / 0.7);
+  --color-magazine-card-bg: #F9FAFB;
+  --color-magazine-primary: #00C474;
+  --color-magazine-badge-bg: #EBFBF3;
+  --color-magazine-text-dark: #0F172A;
+  --color-magazine-text-muted: #64748B;
 }
 
 @layer components {
@@ -703,4 +712,10 @@ textarea,
 label,
 li {
   letter-spacing: -0.56px !important;
+}
+
+/* 코너 뱃지 특수 자간 오버라이드 클래스 (100% REM 상대 단위 규격 통일: 은은한 0.025rem 자간) */
+.badge-ls,
+span.badge-ls {
+  letter-spacing: 0.025rem !important;
 }

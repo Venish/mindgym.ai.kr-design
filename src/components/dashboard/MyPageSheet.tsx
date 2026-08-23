@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { SubPageHeader } from "@/components/ui/SubPageHeader";
 import { Badge } from "@/components/ui/Badge";
+import { GodSelect } from "@/components/godui/GodSelect";
 import { useMindGym } from "@/context/MindGymContext";
 import { usePopupStore } from "@/store/usePopupStore";
 import { useModalStore } from "@/store/useModalStore";
@@ -32,28 +33,53 @@ const RADAR_MONTHLY_VALUES: Record<
   string,
   { label: string; color: string; values: Record<string, number> }
 > = {
+  "5월": {
+    label: "5월 진단",
+    color: "#9333EA",
+    values: { demand: 9, autonomy: 3, culture: 8, reward: 8, relation: 6, wlb: 8, environment: 5, stability: 7 },
+  },
+  "6월": {
+    label: "6월 진단",
+    color: "#3B82F6",
+    values: { demand: 8, autonomy: 4, culture: 7, reward: 7, relation: 5, wlb: 7, environment: 4, stability: 6 },
+  },
   "7월": {
     label: "7월 진단",
     color: "#6366F1",
     values: { demand: 9, autonomy: 4, culture: 8, reward: 7, relation: 5, wlb: 7, environment: 4, stability: 6 },
   },
   "8월": {
-    label: "8월 진단",
+    label: "8월 진단 (현재)",
     color: "#00C474",
     values: { demand: 8, autonomy: 5, culture: 7, reward: 6, relation: 4, wlb: 6, environment: 3, stability: 5 },
   },
-  "9월": {
-    label: "9월 목표",
-    color: "#3B82F6",
-    values: { demand: 6, autonomy: 7, culture: 5, reward: 5, relation: 3, wlb: 4, environment: 3, stability: 4 },
-  },
 };
 
-// 7월, 8월, 9월 KOSS 8대 영역별 파스텔 톤 더미 데이터셋
+// KOSS 8대 영역별 상세 데이터셋
 const MONTHLY_KOSS_DATA: Record<
   string,
   { name: string; sub: string; score: number; status: string; barColor: string; textColor: string }[]
 > = {
+  "5월": [
+    { name: "직무 요구", sub: "업무량·속도", score: 9, status: "위험", barColor: "bg-[#FF9A9E]", textColor: "text-[#E57373]" },
+    { name: "직무 자율성", sub: "의사결정권", score: 3, status: "부족", barColor: "bg-[#FFD166]", textColor: "text-[#D97706]" },
+    { name: "조직 문화", sub: "지지·소통", score: 8, status: "높음", barColor: "bg-[#FF9A9E]", textColor: "text-[#E57373]" },
+    { name: "보상 체계", sub: "급여·인정", score: 8, status: "위험", barColor: "bg-[#FF9A9E]", textColor: "text-[#E57373]" },
+    { name: "관계 갈등", sub: "대인관계", score: 6, status: "주의", barColor: "bg-[#FFB7B2]", textColor: "text-[#E57373]" },
+    { name: "일-생활 균형", sub: "워라밸", score: 8, status: "높음", barColor: "bg-[#FF9A9E]", textColor: "text-[#E57373]" },
+    { name: "물리 환경", sub: "작업환경", score: 5, status: "보통", barColor: "bg-[#FFD166]", textColor: "text-[#D97706]" },
+    { name: "직업 안정성", sub: "고용안정", score: 7, status: "주의", barColor: "bg-[#FFB7B2]", textColor: "text-[#E57373]" },
+  ],
+  "6월": [
+    { name: "직무 요구", sub: "업무량·속도", score: 8, status: "높음", barColor: "bg-[#FF9A9E]", textColor: "text-[#E57373]" },
+    { name: "직무 자율성", sub: "의사결정권", score: 4, status: "부족", barColor: "bg-[#FFD166]", textColor: "text-[#D97706]" },
+    { name: "조직 문화", sub: "지지·소통", score: 7, status: "주의", barColor: "bg-[#FFB7B2]", textColor: "text-[#E57373]" },
+    { name: "보상 체계", sub: "급여·인정", score: 7, status: "주의", barColor: "bg-[#FFB7B2]", textColor: "text-[#E57373]" },
+    { name: "관계 갈등", sub: "대인관계", score: 5, status: "보통", barColor: "bg-[#FFD166]", textColor: "text-[#D97706]" },
+    { name: "일-생활 균형", sub: "워라밸", score: 7, status: "주의", barColor: "bg-[#FFB7B2]", textColor: "text-[#E57373]" },
+    { name: "물리 환경", sub: "작업환경", score: 4, status: "양호", barColor: "bg-[#6EE7B7]", textColor: "text-[#059669]" },
+    { name: "직업 안정성", sub: "고용안정", score: 6, status: "보통", barColor: "bg-[#FFD166]", textColor: "text-[#D97706]" },
+  ],
   "7월": [
     { name: "직무 요구", sub: "업무량·속도", score: 9, status: "위험", barColor: "bg-[#FF9A9E]", textColor: "text-[#E57373]" },
     { name: "직무 자율성", sub: "의사결정권", score: 4, status: "부족", barColor: "bg-[#FFD166]", textColor: "text-[#D97706]" },
@@ -73,16 +99,6 @@ const MONTHLY_KOSS_DATA: Record<
     { name: "일-생활 균형", sub: "워라밸", score: 6, status: "보통", barColor: "bg-[#FFD166]", textColor: "text-[#D97706]" },
     { name: "물리 환경", sub: "작업환경", score: 3, status: "양호", barColor: "bg-[#6EE7B7]", textColor: "text-[#059669]" },
     { name: "직업 안정성", sub: "고용안정", score: 5, status: "보통", barColor: "bg-[#FFD166]", textColor: "text-[#D97706]" },
-  ],
-  "9월": [
-    { name: "직무 요구", sub: "업무량·속도", score: 6, status: "보통", barColor: "bg-[#FFD166]", textColor: "text-[#D97706]" },
-    { name: "직무 자율성", sub: "의사결정권", score: 7, status: "양호", barColor: "bg-[#6EE7B7]", textColor: "text-[#059669]" },
-    { name: "조직 문화", sub: "지지·소통", score: 5, status: "보통", barColor: "bg-[#FFD166]", textColor: "text-[#D97706]" },
-    { name: "보상 체계", sub: "급여·인정", score: 5, status: "보통", barColor: "bg-[#FFD166]", textColor: "text-[#D97706]" },
-    { name: "관계 갈등", sub: "대인관계", score: 3, status: "양호", barColor: "bg-[#6EE7B7]", textColor: "text-[#059669]" },
-    { name: "일-생활 균형", sub: "워라밸", score: 4, status: "양호", barColor: "bg-[#6EE7B7]", textColor: "text-[#059669]" },
-    { name: "물리 환경", sub: "작업환경", score: 3, status: "양호", barColor: "bg-[#6EE7B7]", textColor: "text-[#059669]" },
-    { name: "직업 안정성", sub: "고용안정", score: 4, status: "양호", barColor: "bg-[#6EE7B7]", textColor: "text-[#059669]" },
   ],
 };
 
@@ -157,22 +173,18 @@ export function MyPageSheet() {
   // KOSS 진단 결과 시각화 방식 탭 상태 ("radar": 스파이더 지도 vs "bars": 막대 그래프 상세)
   const [kossChartTab, setKossChartTab] = useState<"radar" | "bars">("radar");
 
-  // 월 선택 칩 상태 (기본 8월, 최대 2개 선택 비교)
-  const [selectedMonths, setSelectedMonths] = useState<string[]>(["8월"]);
+  // 이전 월 선택 Dropdown 상태 (기본: "7월", 선택 가능: "7월", "6월", "5월")
+  const [prevMonth, setPrevMonth] = useState<string>("7월");
+  const currentMonth = "8월"; // 우측 고정: 8월 진단 (현재)
 
-  const handleToggleMonth = (month: string) => {
-    if (selectedMonths.includes(month)) {
-      if (selectedMonths.length > 1) {
-        setSelectedMonths(selectedMonths.filter((m) => m !== month));
-      }
-    } else {
-      if (selectedMonths.length >= 2) {
-        setSelectedMonths([selectedMonths[1], month]);
-      } else {
-        setSelectedMonths([...selectedMonths, month]);
-      }
-    }
-  };
+  // 종합지수 산출 (8대 영역 평균값)
+  const prevItems = MONTHLY_KOSS_DATA[prevMonth] || MONTHLY_KOSS_DATA["7월"];
+  const currItems = MONTHLY_KOSS_DATA[currentMonth] || MONTHLY_KOSS_DATA["8월"];
+
+  const prevAvg = (prevItems.reduce((acc, cur) => acc + cur.score, 0) / prevItems.length).toFixed(1);
+  const currAvg = (currItems.reduce((acc, cur) => acc + cur.score, 0) / currItems.length).toFixed(1);
+  const diffVal = (parseFloat(currAvg) - parseFloat(prevAvg)).toFixed(1);
+  const isImproved = parseFloat(diffVal) <= 0; // 스트레스 지수는 낮아질수록 개선!
 
   // 내정보 X 닫기 터치 시 100% 대시보드(/dashboard)로 명확히 이동
   const handleCloseToDashboard = () => {
@@ -415,49 +427,89 @@ export function MyPageSheet() {
                   layoutId="koss-mypage-tab-active"
                 />
 
-                {/* 직무 분석 월 선택 칩 필터 ('선택' 라벨 14px + 칩 폰트 14.5px 크게 표출) */}
-                <div className="w-full bg-[#F8FAFC] rounded-2xl p-2.5 flex items-center justify-between gap-2.5 shadow-2xs">
-                  <span className="text-[14px] font-bold text-gray-900 pl-1 shrink-0">
-                    선택
+                {/* ★ 월 선택 대조 헤더 (좌측: GodSelect 커스텀 드롭다운 vs 우측: 8월 진단 고정) ★ */}
+                <div className="w-full bg-[#F8FAFC] rounded-2xl p-2.5 grid grid-cols-[1fr_auto_1fr] items-center gap-2 border border-gray-100 shadow-2xs">
+                  {/* 좌측: design-guide 표준 커스텀 GodSelect 드롭다운 (1fr) */}
+                  <div className="w-full">
+                    <GodSelect
+                      options={[
+                        { value: "7월", label: "7월 진단 대조" },
+                        { value: "6월", label: "6월 진단 대조" },
+                        { value: "5월", label: "5월 진단 대조" },
+                        { value: "none", label: "이전 진단 없음" },
+                      ]}
+                      value={prevMonth}
+                      onChange={(val: string) => setPrevMonth(val)}
+                      triggerClassName="h-[42px] px-2.5 py-0 bg-white border border-gray-200 hover:border-gray-300 rounded-xl text-[13px] font-bold text-gray-800 shadow-2xs flex items-center justify-between"
+                    />
+                  </div>
+
+                  {/* 중앙: 대조 화살표 */}
+                  <span className="text-[11px] font-black text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full justify-self-center shrink-0">
+                    VS
                   </span>
-                  <div className="flex items-center gap-1.5 flex-1">
-                    {["7월", "8월", "9월"].map((m) => {
-                      const isSelected = selectedMonths.includes(m);
-                      return (
-                        <button
-                          key={m}
-                          type="button"
-                          onClick={() => handleToggleMonth(m)}
-                          className={`flex-1 py-1.5 px-2.5 rounded-xl text-[14.5px] font-[300] transition-all cursor-pointer active:scale-95 flex items-center justify-center gap-1 ${
-                            isSelected
-                              ? "bg-[#00C474] text-white shadow-xs font-medium"
-                              : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-100"
-                          }`}
-                        >
-                          <span>{m}</span>
-                          {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />}
-                        </button>
-                      );
-                    })}
+
+                  {/* 우측: 지금 월 (8월 진단 고정) */}
+                  <div className="w-full h-[42px] px-2.5 bg-[#00C474] text-white rounded-xl text-[13px] font-bold text-center shadow-xs flex items-center justify-center gap-1 truncate">
+                    <span>8월 진단</span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse shrink-0" />
                   </div>
                 </div>
 
-                {/* 탭 1: 스파이더 종합 지도 (하나의 차트에 겹쳐서 오버레이 표출!) */}
+                {/* ★ 종합지수 자동 비교 / 단독 요약 카드 ★ */}
+                <div className="w-full p-3.5 bg-emerald-50/60 rounded-2xl border border-emerald-100/80 flex items-center justify-between gap-3 shadow-2xs">
+                  <div className="flex flex-col text-left">
+                    <span className="text-xs font-bold text-emerald-800">
+                      종합 스트레스 지수 {prevMonth !== "none" ? "변화 대조" : "현황"}
+                    </span>
+                    <div className="flex items-baseline gap-1.5 mt-0.5">
+                      {prevMonth !== "none" ? (
+                        <>
+                          <span className="text-xs text-gray-500 font-medium">
+                            {prevMonth} ({prevAvg}점) ➔
+                          </span>
+                          <span className="text-base font-black text-gray-900">
+                            8월 ({currAvg}점)
+                          </span>
+                        </>
+                      ) : (
+                        <span className="text-base font-black text-gray-900">
+                          8월 진단 종합: {currAvg}점
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* 이전 월 데이터 유무에 따른 뱃지 분기 */}
+                  {prevMonth !== "none" ? (
+                    <div className={`px-2.5 py-1 rounded-full text-xs font-extrabold flex items-center gap-1 ${
+                      isImproved ? "bg-emerald-100 text-[#00C474]" : "bg-amber-100 text-amber-600"
+                    }`}>
+                      <span>{isImproved ? `▼ ${Math.abs(parseFloat(diffVal))}점 개선` : `▲ ${diffVal}점 증가`}</span>
+                    </div>
+                  ) : (
+                    <span className="px-2.5 py-1 bg-white border border-emerald-200 text-emerald-700 rounded-full text-xs font-bold shadow-2xs">
+                      첫 진단 완료
+                    </span>
+                  )}
+                </div>
+
+                {/* 탭 1: 스파이더 종합 지도 (이전월 유무에 따른 오버레이/단독 차트 분기) */}
                 {kossChartTab === "radar" && (
                   <div className="w-full flex flex-col gap-2.5 items-center text-left relative">
-                    {/* 2개 선택 시 오버레이 범례 (Legend) */}
-                    {selectedMonths.length === 2 && (
-                      <div className="w-full flex items-center justify-center gap-4 text-xs font-bold pt-1">
-                        <span className="flex items-center gap-1.5 text-gray-800">
-                          <span className="w-2.5 h-2.5 rounded-full bg-[#00C474]" />
-                          {selectedMonths[0]} ({RADAR_MONTHLY_VALUES[selectedMonths[0]]?.label})
-                        </span>
+                    {/* 오버레이 범례 (Legend) */}
+                    <div className="w-full flex items-center justify-center gap-4 text-xs font-bold pt-1">
+                      <span className="flex items-center gap-1.5 text-gray-800">
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#00C474]" />
+                        8월 진단
+                      </span>
+                      {prevMonth !== "none" && (
                         <span className="flex items-center gap-1.5 text-gray-700">
                           <span className="w-2.5 h-2.5 rounded-full bg-[#6366F1]" />
-                          {selectedMonths[1]} ({RADAR_MONTHLY_VALUES[selectedMonths[1]]?.label})
+                          {prevMonth} 진단 (대조)
                         </span>
-                      </div>
-                    )}
+                      )}
+                    </div>
 
                     <div className="w-full flex justify-center items-center py-1 overflow-visible">
                       <BklitRadarChart
@@ -471,11 +523,28 @@ export function MyPageSheet() {
                           { key: "environment", label: "물리환경" },
                           { key: "stability", label: "조직체계" },
                         ]}
-                        data={selectedMonths.map((m, idx) => ({
-                          label: m,
-                          color: idx === 0 ? "#00C474" : "#6366F1",
-                          values: RADAR_MONTHLY_VALUES[m]?.values || RADAR_MONTHLY_VALUES["8월"].values,
-                        }))}
+                        data={
+                          prevMonth !== "none"
+                            ? [
+                                {
+                                  label: "8월",
+                                  color: "#00C474",
+                                  values: RADAR_MONTHLY_VALUES["8월"]?.values,
+                                },
+                                {
+                                  label: prevMonth,
+                                  color: "#6366F1",
+                                  values: RADAR_MONTHLY_VALUES[prevMonth]?.values || RADAR_MONTHLY_VALUES["7월"]?.values,
+                                },
+                              ]
+                            : [
+                                {
+                                  label: "8월",
+                                  color: "#00C474",
+                                  values: RADAR_MONTHLY_VALUES["8월"]?.values,
+                                },
+                              ]
+                        }
                         size={330}
                         levels={5}
                       />
@@ -483,37 +552,36 @@ export function MyPageSheet() {
                   </div>
                 )}
 
-                {/* 탭 2: KOSS 8대 영역별 진단 결과 막대 그래프 */}
+                {/* 탭 2: KOSS 8대 영역별 진단 결과 대조 비교표 & 단독 그래프 */}
                 {kossChartTab === "bars" && (
                   <div className="w-full flex flex-col gap-3">
-                    {/* 막대 차트 표출 (1개 선택 시 단일 막대 바 / 2개 선택 시 듀얼 멀티 비교 바) */}
-                    {selectedMonths.length === 2 ? (
+                    {prevMonth !== "none" ? (
                       <BklitBarChart
                         compareMode={true}
-                        comparisonItems={MONTHLY_KOSS_DATA[selectedMonths[0]].map((d1, i) => {
-                          const d2 = MONTHLY_KOSS_DATA[selectedMonths[1]][i];
-                          const diff = d1.score - d2.score;
-                          const isImproved = diff <= 0;
+                        comparisonItems={currItems.map((d2, i) => {
+                          const d1 = prevItems[i] || d2;
+                          const diff = d2.score - d1.score;
+                          const isAreaImproved = diff <= 0;
                           const diffText = diff === 0 ? "동일" : diff < 0 ? `${Math.abs(diff)}점 감소 (개선)` : `${diff}점 증가`;
 
                           return {
-                            name: d1.name,
-                            sub: d1.sub,
-                            month1Label: selectedMonths[0],
-                            month1Score: d1.score,
-                            month1Color: d1.barColor,
-                            month1Status: d1.status,
-                            month2Label: selectedMonths[1],
-                            month2Score: d2.score,
+                            name: d2.name,
+                            sub: d2.sub,
+                            month1Label: "8월 진단",
+                            month1Score: d2.score,
+                            month1Color: d2.barColor,
+                            month1Status: d2.status,
+                            month2Label: prevMonth,
+                            month2Score: d1.score,
                             month2Color: "bg-[#6366F1]",
-                            month2Status: d2.status,
+                            month2Status: d1.status,
                             diffText,
-                            isImproved,
+                            isImproved: isAreaImproved,
                           };
                         })}
                       />
                     ) : (
-                      <BklitBarChart domains={MONTHLY_KOSS_DATA[selectedMonths[0]] || MONTHLY_KOSS_DATA["8월"]} />
+                      <BklitBarChart domains={currItems} />
                     )}
                   </div>
                 )}

@@ -7,6 +7,7 @@ export interface SegmentedTabItem {
   id: string;
   label: string;
   count?: number;
+  badgeActiveColor?: string;
 }
 
 interface SegmentedTabProps {
@@ -37,7 +38,7 @@ export function SegmentedTab({
         fullWidth ? "w-full" : "inline-flex"
       } ${className}`}
     >
-      {/* 1D 수평(X축) 전용 슬라이딩 백그라운드 캡슐 (스크롤 시 Y축 덜컥거림 100% 차단!) */}
+      {/* 1D 수평(X축) 전용 슬라이딩 백그라운드 캡슐 */}
       <motion.div
         className="absolute top-1 bottom-1 bg-white rounded-xl shadow-xs z-0"
         style={{
@@ -51,6 +52,8 @@ export function SegmentedTab({
 
       {items.map((item) => {
         const isActive = item.id === activeId;
+        const defaultActiveBadge = item.badgeActiveColor || "bg-emerald-100 text-[#00C474]";
+
         return (
           <button
             key={item.id}
@@ -65,7 +68,7 @@ export function SegmentedTab({
               {typeof item.count === "number" && (
                 <span
                   className={`px-1.5 py-0.5 rounded-full text-[10px] font-black ${
-                    isActive ? "bg-emerald-100 text-[#00C474]" : "bg-gray-200 text-gray-500"
+                    isActive ? defaultActiveBadge : "bg-gray-200 text-gray-500"
                   }`}
                 >
                   {item.count}

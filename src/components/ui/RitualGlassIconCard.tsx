@@ -144,10 +144,10 @@ export function RitualGlassIconCard({
               <div
                 className="absolute top-[-60%] left-[-60%] w-[220%] h-[220%]"
                 style={{
-                  background: isHovered
+                  background: isHovered || borderOption === "4"
                     ? "var(--glass-rainbow-conic)"
                     : defaultRimColor,
-                  animationName: isHovered ? "waterRotateStudio" : "none",
+                  animationName: isHovered || borderOption === "4" ? "waterRotateStudio" : "none",
                   animationDuration: "4s",
                   animationTimingFunction: "linear",
                   animationIterationCount: "infinite",
@@ -163,7 +163,7 @@ export function RitualGlassIconCard({
             />
 
             {/* Core Icon Image */}
-            <div className={`relative ${iconSizeStyle} z-20 ${isLocked ? "opacity-60 grayscale-[20%]" : ""}`}>
+            <div className={`relative ${iconSizeStyle} z-20 ${isLocked ? "opacity-60 grayscale-[20%]" : ""} ${borderOption === "4" ? "animate-pulse" : ""}`}>
               <Image
                 src={iconSrc}
                 alt={name}

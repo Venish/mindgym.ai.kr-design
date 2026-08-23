@@ -23,6 +23,12 @@ interface SidebarProps {
 export function DesignGuideSidebar({ activeSection, onSelectSection }: SidebarProps) {
   const menuGroups = [
     {
+      title: "📖 MAGAZINE & E-BOOK",
+      items: [
+        { id: "magazine-system", label: "월간 마음건강 매거진 스펙", icon: Sparkle },
+      ],
+    },
+    {
       title: "✨ RENEWAL PROPOSAL",
       items: [
         { id: "icons-showcase", label: "리추얼 아이콘 3타입 쇼케이스", icon: Sparkle },
