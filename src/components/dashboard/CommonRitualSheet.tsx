@@ -5,6 +5,7 @@ import { SubPageHeader } from "@/components/ui/SubPageHeader";
 import { useModalStore } from "@/store/useModalStore";
 import { MagicButton } from "@/components/godui/MagicButton";
 import { useMindGym } from "@/context/MindGymContext";
+import { getIconPath } from "@/utils/iconMap";
 import {
   Star,
   ListDashes,
@@ -39,9 +40,10 @@ export function CommonRitualSheet({
   ritualLevel = "중급",
   ritualPeriod = "한달",
   ritualReward = "+30",
-  ritualIcon = "/images/icons/1.png",
+  ritualIcon,
   description = "얼굴 근육의 긴장을 풀고 평온한 활력을 채우는 아침 리추얼입니다. 입가에 옅은 미소를 지으며 깊은 호흡에 온전히 몰입해 보세요.",
 }: CommonRitualSheetProps) {
+  const actualIcon = ritualIcon || getIconPath(ritualId);
   const { closeModal, clearModals } = useModalStore();
   const { addDumbbells } = useMindGym();
 
@@ -156,7 +158,7 @@ export function CommonRitualSheet({
               {/* 4. 본문 설명 바로 아래 3D 그래픽 이미지 단독 표출 */}
               <div className="w-32 h-32 flex items-center justify-center shrink-0 my-1">
                 <img
-                  src={ritualIcon}
+                  src={actualIcon}
                   alt={ritualTitle}
                   className="w-full h-full object-contain filter drop-shadow-md"
                 />

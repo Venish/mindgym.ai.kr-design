@@ -9,6 +9,7 @@ import { AnimatedMorningSun } from "@/components/animated-icons/AnimatedMorningS
 import { AnimatedEveningMoon } from "@/components/animated-icons/AnimatedEveningMoon";
 
 import { useMindGym } from "@/context/MindGymContext";
+import { getIconPath } from "@/utils/iconMap";
 import { useModalStore } from "@/store/useModalStore";
 import { CalendarSheet } from "@/components/dashboard/CalendarSheet";
 import { TodayMindSelectionWizard } from "@/components/common/TodayMindSelectionWizard";
@@ -36,9 +37,9 @@ export function ShowcaseHeroKv({
   const { userName: contextUserName, currentIntention } = useMindGym();
 
   const weekDays = [
-    { label: "월", icon: "/images/icons/1.png", isDone: true, isSkipped: false, isToday: false, isPast: true, title: "미소 명상", link: "/player/RT-001" },
+    { label: "월", icon: getIconPath(1), isDone: true, isSkipped: false, isToday: false, isPast: true, title: "미소 명상", link: "/player/RT-001" },
     { label: "화", icon: null, isDone: false, isSkipped: true, isToday: false, isPast: true, title: "휴식 (건너뜀)", link: "/checkin" },
-    { label: "수", icon: "/images/icons/3.png", isDone: true, isSkipped: false, isToday: true, isPast: false, title: "마음 호흡 (오늘)", link: "/player/RT-003" },
+    { label: "수", icon: getIconPath(3), isDone: true, isSkipped: false, isToday: true, isPast: false, title: "마음 호흡 (오늘)", link: "/player/RT-003" },
     { label: "목", icon: null, isDone: false, isSkipped: false, isToday: false, isPast: false, title: "목요일", link: "/checkin" },
     { label: "금", icon: null, isDone: false, isSkipped: false, isToday: false, isPast: false, title: "금요일", link: "/checkin" },
     { label: "토", icon: null, isDone: false, isSkipped: false, isToday: false, isPast: false, title: "토요일", link: "/checkin" },

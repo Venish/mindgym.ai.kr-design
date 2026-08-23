@@ -14,9 +14,11 @@ import { AuroraHeroSection } from "./_components/AuroraHeroSection";
 import { MotionIconSection } from "./_components/MotionIconSection";
 import { FlatTemplatesSection } from "./_components/FlatTemplatesSection";
 import { FlatComponentsSection } from "./_components/FlatComponentsSection";
+import { RenewalComparisonSection } from "./_components/RenewalComparisonSection";
+import { IconShowcaseSection } from "./_components/IconShowcaseSection";
 
 export default function DesignGuidePage() {
-  const [activeSection, setActiveSection] = useState<string>("colors");
+  const [activeSection, setActiveSection] = useState<string>("icons-showcase");
 
   const scrollToSection = (id: string) => {
     setActiveSection(id);
@@ -29,6 +31,8 @@ export default function DesignGuidePage() {
   // IntersectionObserver로 스크롤 시 현재 보는 섹션 자동 하이라이팅
   useEffect(() => {
     const sectionIds = [
+      "icons-showcase",
+      "renewal-comparison",
       "colors",
       "radius",
       "typography",
@@ -76,8 +80,16 @@ export default function DesignGuidePage() {
 
         {/* 우측 독립 스크롤 메인 뷰포트 영역 */}
         <div className="flex-1 overflow-y-auto px-8 py-10 flex flex-col gap-16">
+          {/* 🎨 0-1. Icons 3-Type Showcase Section */}
+          <IconShowcaseSection />
+
+          {/* ✨ 0-2. AS-IS vs TO-BE Renewal Comparison Section */}
+          <RenewalComparisonSection />
+
+
           {/* 1. Color System & Ratio */}
           <ColorSystemSection />
+
 
           {/* 2. Concentric Border Radius System Scale */}
           <RadiusSystemSection />

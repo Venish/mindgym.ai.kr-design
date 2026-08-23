@@ -96,7 +96,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={`${nanumSquareRound.variable} ${pretendard.variable}`}>
+    <html lang="ko" suppressHydrationWarning className={`${nanumSquareRound.variable} ${pretendard.variable}`}>
+
       <body className={`${nanumSquareRound.className} bg-gray-100 min-h-screen flex justify-center text-gray-900 antialiased font-sans no-scrollbar`}>
         <MindGymProvider>
           <div className="w-full max-w-[430px] mx-auto bg-white min-h-screen flex flex-col shadow-2xl relative no-scrollbar">

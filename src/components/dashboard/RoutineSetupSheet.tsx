@@ -12,19 +12,20 @@ import { CalendarSheet } from "@/components/dashboard/CalendarSheet";
 import { SegmentedTab } from "@/components/ui/SegmentedTab";
 import { TodayMindSelectionWizard } from "@/components/common/TodayMindSelectionWizard";
 import { EveningReflectionWizard } from "@/components/common/EveningReflectionWizard";
+import { getIconPath } from "@/utils/iconMap";
 
 // 아침용 추천 리추얼 목록
 const MORNING_RITUAL_OPTIONS = [
-  { title: "미소 명상", category: "휴식과 충전", time: "3분", icon: "/images/icons/1.png", desc: "얼굴 근육의 긴장을 풀고 평온한 활력을 채우는 아침 리추얼" },
-  { title: "오프먼트", category: "몰입과 비움", time: "5분", icon: "/images/icons/3.png", desc: "스마트폰을 끄고 조용히 아침 오프라인 감각에 온전히 몰입하는 리추얼" },
-  { title: "아침 햇살 산책", category: "신체 활력", time: "10분", icon: "/images/icons/4.png", desc: "아침 햇살을 받으며 천천히 발걸음에 집중하는 가벼운 산책" },
+  { title: "미소 명상", category: "휴식과 충전", time: "3분", icon: getIconPath(1), desc: "얼굴 근육의 긴장을 풀고 평온한 활력을 채우는 아침 리추얼" },
+  { title: "오프먼트", category: "몰입과 비움", time: "5분", icon: getIconPath(51), desc: "스마트폰을 끄고 조용히 아침 오프라인 감각에 온전히 몰입하는 리추얼" },
+  { title: "아침 햇살 산책", category: "신체 활력", time: "10분", icon: getIconPath(50), desc: "아침 햇살을 받으며 천천히 발걸음에 집중하는 가벼운 산책" },
 ];
 
 // 저녁용 추천 리추얼 목록
 const EVENING_RITUAL_OPTIONS = [
-  { title: "마음일기", category: "감정 정돈", time: "5분", icon: "/images/icons/2.png", desc: "오늘 하루 소중했던 순간과 감정을 솔직하게 적어보는 저녁 회고" },
-  { title: "자기자비 쉼표", category: "자책 비우기", time: "3분", icon: "/images/icons/5.png", desc: "오늘의 나를 다정하게 다독이며 편안한 수면을 준비하는 명상" },
-  { title: "수면 다독임 호흡", category: "숙면 가이드", time: "7분", icon: "/images/icons/6.png", desc: "몸의 긴장을 이완하고 수면의 질을 높이는 저녁 호흡법" },
+  { title: "마음일기", category: "감정 정돈", time: "5분", icon: getIconPath(12), desc: "오늘 하루 소중했던 순간과 감정을 솔직하게 적어보는 저녁 회고" },
+  { title: "자기자비 쉼표", category: "자책 비우기", time: "3분", icon: getIconPath(10), desc: "오늘의 나를 다정하게 다독이며 편안한 수면을 준비하는 명상" },
+  { title: "수면 다독임 호흡", category: "숙면 가이드", time: "7분", icon: getIconPath(4), desc: "몸의 긴장을 이완하고 수면의 질을 높이는 저녁 호흡법" },
 ];
 
 /**
@@ -195,7 +196,7 @@ export function RoutineSetupSheet({ initialTab = "MORNING" }: RoutineSetupSheetP
             {/* 3-A1. 일어나는 시간 */}
             <div className="w-full flex flex-col gap-3">
               <div className="flex items-center justify-between pb-1 border-b border-gray-100">
-                <span className="text-base font-extrabold text-gray-900">일어나는 시간</span>
+                <span className="text-[0.9375rem] font-bold text-gray-900 tracking-tight">일어나는 시간</span>
 
                 <button
                   type="button"
@@ -225,7 +226,7 @@ export function RoutineSetupSheet({ initialTab = "MORNING" }: RoutineSetupSheetP
             {/* 3-A2. 아침 체크인 항목 */}
             <div className="w-full flex flex-col gap-3 pt-2">
               <div className="flex items-center justify-between pb-1 border-b border-gray-100">
-                <h3 className="text-base font-extrabold text-gray-900">아침 체크인</h3>
+                <h3 className="text-[0.9375rem] font-bold text-gray-900 tracking-tight">아침 체크인</h3>
               </div>
 
               {/* 아침 체크인 카드 (클릭 시 메인 감정 위저드 오버레이) */}
@@ -317,7 +318,7 @@ export function RoutineSetupSheet({ initialTab = "MORNING" }: RoutineSetupSheetP
             {/* 3-B1. 자는 시간 (아침 일어나는 시간과 100% 동일 구조) */}
             <div className="w-full flex flex-col gap-3">
               <div className="flex items-center justify-between pb-1 border-b border-gray-100">
-                <span className="text-base font-extrabold text-gray-900">자는 시간</span>
+                <span className="text-[0.9375rem] font-bold text-gray-900 tracking-tight">자는 시간</span>
 
                 <button
                   type="button"
@@ -347,7 +348,7 @@ export function RoutineSetupSheet({ initialTab = "MORNING" }: RoutineSetupSheetP
             {/* 3-B2. 저녁 체크인 (아침 체크인과 100% 동일 구조) */}
             <div className="w-full flex flex-col gap-3 pt-2">
               <div className="flex items-center justify-between pb-1 border-b border-gray-100">
-                <h3 className="text-base font-extrabold text-gray-900">저녁 체크인</h3>
+                <h3 className="text-[0.9375rem] font-bold text-gray-900 tracking-tight">저녁 체크인</h3>
               </div>
 
               {/* 저녁 체크인 카드 (클릭 시 저녁 2가지 회고 오버레이) */}

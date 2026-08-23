@@ -23,6 +23,14 @@ interface SidebarProps {
 export function DesignGuideSidebar({ activeSection, onSelectSection }: SidebarProps) {
   const menuGroups = [
     {
+      title: "✨ RENEWAL PROPOSAL",
+      items: [
+        { id: "icons-showcase", label: "리추얼 아이콘 3타입 쇼케이스", icon: Sparkle },
+        { id: "renewal-comparison", label: "AS-IS vs TO-BE 비교 샘플", icon: Sparkle },
+      ],
+    },
+
+    {
       title: "FOUNDATIONS",
       items: [
         { id: "colors", label: "Color System & Ratio", icon: Palette },
@@ -30,6 +38,7 @@ export function DesignGuideSidebar({ activeSection, onSelectSection }: SidebarPr
         { id: "typography", label: "Typography & Fonts", icon: TextAa },
       ],
     },
+
     {
       title: "UI COMPONENTS",
       items: [

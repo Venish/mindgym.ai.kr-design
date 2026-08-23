@@ -73,7 +73,7 @@ export function CheckinTimeSetupView({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <Sun size={24} weight="fill" className="text-amber-500 shrink-0" />
-              <span className="text-base font-bold text-gray-900">일어나는 시간</span>
+              <span className="text-[0.9375rem] font-bold text-gray-900 tracking-tight">일어나는 시간</span>
             </div>
 
             <button
@@ -105,7 +105,7 @@ export function CheckinTimeSetupView({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <Moon size={24} weight="fill" className="text-indigo-500 shrink-0" />
-              <span className="text-base font-bold text-gray-900">자는 시간</span>
+              <span className="text-[0.9375rem] font-bold text-gray-900 tracking-tight">자는 시간</span>
             </div>
 
             <button

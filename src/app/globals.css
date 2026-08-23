@@ -115,6 +115,80 @@
 @tailwind utilities;
 
 /* -------------------------------------------------------------
+ * 🎨 3D Ritual Glass Icon Card Global Design Tokens & Utilities
+ * - OKLCH Color Space & rem relative units (1rem = 16px)
+ * ------------------------------------------------------------- */
+:root {
+  --glass-card-size: 5rem;
+  --glass-icon-size: 4rem;
+  --glass-rim-padding: 0.125rem; /* 기존 3.5px(0.22rem) -> 2px(0.125rem)로 슬림하게 축소 */
+
+  --glass-rim-soft-mint: oklch(0.696 0.17 162.48 / 0.4);
+  --glass-rim-refined-slate: oklch(0.882 0.015 254.12 / 0.9);
+  --glass-rim-ice-frost: oklch(0.905 0.076 161.42);
+
+  --glass-rim-dark-mint: oklch(0.696 0.17 162.48 / 0.4);
+  --glass-rim-dark-slate: oklch(0.683 0.016 253.22 / 0.4);
+  --glass-rim-dark-frost: oklch(0.792 0.142 161.85 / 0.5);
+
+  --glass-bg-pure-white: oklch(1 0 0);
+  --glass-bg-studio-dark: oklch(0.141 0.021 254.4);
+
+  --glass-shadow-light: none;
+  --glass-shadow-dark: none;
+
+  --glass-rainbow-conic: conic-gradient(from 45deg, oklch(1 0 0), oklch(0.78 0.14 210), oklch(0.72 0.18 300 / 0.95), oklch(0.73 0.19 350 / 0.95), oklch(1 0 0));
+}
+
+@layer components {
+  /* 3D Glass Box Layer Size */
+  .glass-3d-box {
+    width: var(--glass-card-size);
+    height: var(--glass-card-size);
+  }
+
+  /* Core Icon Image Size */
+  .glass-core-icon {
+    width: var(--glass-icon-size);
+    height: var(--glass-icon-size);
+  }
+
+  /* Glass Main Base Light Card (Flat: Shadow 제거) */
+  .glass-base-light {
+    background: var(--glass-bg-pure-white);
+    border: none;
+    border-radius: 1.25rem;
+    box-shadow: none;
+  }
+
+  /* Glass Main Base Dark Card (Flat: Shadow 제거) */
+  .glass-base-dark {
+    background: var(--glass-bg-studio-dark);
+    border: none;
+    border-radius: 1.25rem;
+    box-shadow: none;
+  }
+
+  /* Glass Rim Mask */
+  .glass-rim-mask-layer {
+    padding: var(--glass-rim-padding);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  /* Glass Specular Reflection Light */
+  .glass-specular-light {
+    background: linear-gradient(180deg, oklch(1 0 0 / 0.9) 0%, oklch(1 0 0 / 0.1) 60%, transparent 100%);
+  }
+
+  /* Glass Specular Reflection Dark */
+  .glass-specular-dark {
+    background: linear-gradient(180deg, oklch(1 0 0 / 0.4) 0%, oklch(1 0 0 / 0.05) 60%, transparent 100%);
+  }
+}
+
+/* -------------------------------------------------------------
  * 🎨 Non-White Container Borderless Principle (비흰색 박스 무경계 지침)
  * - 순수 흰색(bg-white) 박스에만 섬세한 hairline border (border border-gray-100/200) 허용
  * - 배경 틴트/컬러/그레이 (bg-gray-50, bg-emerald-50, bg-[var(--color-pastel-mint-bg)] 등) 박스는 border 금지

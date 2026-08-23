@@ -62,9 +62,8 @@ function DashboardContent() {
 
   return (
     <div className="w-full max-w-[430px] min-h-screen mx-auto bg-white relative flex flex-col justify-between overflow-x-hidden text-gray-900 select-none font-sans no-scrollbar">
-      
-      {/* 대시보드 스크롤 바디 (pb-32로 하단 고정 네비바 가림 방지) */}
-      <main className="flex-1 px-4 pt-2 pb-32 flex flex-col gap-4 text-left">
+      {/* 대시보드 스크롤 메인 영역 (pb-40으로 고정 하단바 메뉴 가림 및 답답함 100% 해소) */}
+      <main className="flex-1 px-4 pt-2 pb-40 flex flex-col gap-4 text-left bg-white">
         {/* 1. 상단 메뉴 헤더 컴포넌트 */}
         <ShowcaseHeader userName={userName || "보노보노"} levelNum={levelNum} />
 
@@ -92,7 +91,7 @@ function DashboardContent() {
         <ShowcasePauseBanner />
       </main>
 
-      {/* 7. 하단 고정 앱 바로가기 메뉴 바 */}
+      {/* 최하단 고정 앱 바로가기 메뉴 바 */}
       <ShowcaseFixedBottomBar />
 
       {/* 대시보드 팝업 모달 렌더링 */}
@@ -109,7 +108,7 @@ function DashboardContent() {
 
 export default function DashboardPage() {
   return (
-    <Suspense fallback={<div className="p-5 pt-16 flex items-center justify-center min-h-screen text-gray-400">대시보드 불러오는 중...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-[#F9FAFB]" />}>
       <DashboardContent />
     </Suspense>
   );

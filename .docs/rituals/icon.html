@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glassmorphism 3D Icon Studio & Catalog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #030712;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+
+        /* 3D Glass Layer Container */
+        .glass-icon-container {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+
+        .glass-icon-card {
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* Multi-layer Glass Card Construction */
+        .glass-layer-back {
+            position: absolute;
+            inset: 0;
+            border-radius: 1.75rem;
+            transform: translateZ(0px);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-layer-base {
+            position: relative;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 1.75rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.5),
+                        inset 0 -1px 2px rgba(0, 0, 0, 0.3);
+            transform-style: preserve-3d;
+            transform: translateZ(10px);
+            transition: transform 0.3s ease, border-color 0.4s ease, background 0.3s ease, box-shadow 0.4s ease;
+            overflow: hidden;
+        }
+
+        /* Light Sweep Effect on Glass Surface (Triggered on Hover) */
+        .glass-layer-base::before {
+            content: '';
+            position: absolute;
+            top: -150%;
+            left: -150%;
+            width: 300%;
+            height: 300%;
+            background: linear-gradient(
+                115deg,
+                transparent 35%,
+                rgba(255, 255, 255, 0.0) 42%,
+                rgba(255, 255, 255, 0.85) 50%,
+                rgba(255, 255, 255, 0.15) 53%,
+                transparent 60%
+            );
+            transform: rotate(0deg) translate(-35%, -35%);
+            transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0;
+        }
+
+        /* Animated Water Light Reflection Ripple Border Layer */
+        .glass-water-border {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 5px;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0.6;
+            transition: opacity 0.4s ease, filter 0.4s ease, padding 0.3s ease;
+            z-index: 4;
+            overflow: hidden;
+        }
+
+        /* Fixed Rounded Border Track with Internal Rotating Light Beam */
+        .glass-water-border::before {
+            content: '';
+            position: absolute;
+            top: -60%;
+            left: -60%;
+            width: 220%;
+            height: 220%;
+            background: conic-gradient(
+                from 0deg,
+                rgba(255, 255, 255, 0.95),
+                rgba(56, 189, 248, 0.95),
+                rgba(255, 255, 255, 0.3),
+                rgba(192, 132, 252, 0.9),
+                rgba(255, 255, 255, 0.95),
+                rgba(14, 165, 233, 0.85),
+                rgba(255, 255, 255, 0.95)
+            );
+            animation: waterRotate 5s linear infinite;
+            transform-origin: center center;
+        }
+
+        /* Floating Inner Core Icon */
+        .glass-layer-core {
+            transform: translateZ(35px);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.4));
+        }
+
+        /* Floating Glass Badge Accent */
+        .glass-layer-badge {
+            position: absolute;
+            transform: translateZ(55px);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+        }
+
+        /* Organic Liquid Morphing Shape Keyframes */
+        @keyframes liquidMorph {
+            0%, 100% { border-radius: 28px; }
+            25% { border-radius: 42% 58% 65% 35% / 45% 38% 62% 55%; }
+            50% { border-radius: 55% 45% 38% 62% / 32% 65% 35% 68%; }
+            75% { border-radius: 38% 62% 52% 48% / 58% 35% 65% 42%; }
+        }
+
+        /* Liquid Flow Movement inside Glass */
+        @keyframes liquidFlowBg {
+            0% { transform: translate(-30%, -30%) rotate(0deg) scale(1); }
+            50% { transform: translate(20%, 20%) rotate(180deg) scale(1.25); }
+            100% { transform: translate(-30%, -30%) rotate(360deg) scale(1); }
+        }
+
+        .liquid-gel-mode .glass-layer-base {
+            animation: liquidMorph 8s ease-in-out infinite alternate;
+        }
+
+        /* High Gloss Water Droplet Specular Reflection */
+        .liquid-specular-top {
+            position: absolute;
+            top: 4px;
+            left: 10px;
+            right: 10px;
+            height: 38%;
+            border-radius: 100px 100px 40% 40%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.12) 60%, transparent 100%);
+            pointer-events: none;
+            z-index: 3;
+            transition: opacity 0.3s ease;
+        }
+
+        .liquid-caustic-layer {
+            position: absolute;
+            inset: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.35) 0%, transparent 45%),
+                        radial-gradient(circle at 70% 60%, rgba(56, 189, 248, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 20% 80%, rgba(192, 132, 252, 0.25) 0%, transparent 40%);
+            filter: url(#liquidRefractionFilter);
+            animation: liquidFlowBg 12s ease-in-out infinite;
+            pointer-events: none;
+            opacity: 0.85;
+            mix-blend-mode: overlay;
+        }
+
+        /* Water Droplet Glow Bead */
+        .liquid-droplet-glow {
+            position: absolute;
+            bottom: 10px;
+            right: 14px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.3) 60%, transparent 100%);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        /* Hover Elevation Effects & Liquid Water Light Undulation */
+        .glass-icon-card:hover .glass-layer-base {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: transparent;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5),
+                        0 0 30px rgba(56, 189, 248, 0.3),
+                        inset 0 1px 3px rgba(255, 255, 255, 0.9);
+        }
+
+        .glass-icon-card:hover .glass-layer-base::before {
+            transform: rotate(0deg) translate(35%, 35%);
+            opacity: 1;
+        }
+
+        /* Water Ripple Distortion and Caustic Light Motion on Hover */
+        .glass-icon-card:hover .glass-water-border {
+            opacity: 1;
+            filter: url(#waterRippleFilter) drop-shadow(0 0 12px rgba(125, 211, 252, 0.9));
+        }
+
+        .glass-icon-card:hover .glass-water-border::before {
+            animation: waterRotate 2.5s linear infinite;
+        }
+
+        @keyframes waterRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes waterUndulatePulse {
+            0% { filter: url(#waterRippleFilter) drop-shadow(0 0 8px rgba(56, 189, 248, 0.7)) brightness(1); }
+            50% { filter: url(#waterRippleFilter) drop-shadow(0 0 16px rgba(192, 132, 252, 0.95)) brightness(1.35); }
+            100% { filter: url(#waterRippleFilter) drop-shadow(0 0 10px rgba(14, 165, 233, 0.8)) brightness(1.15); }
+        }
+
+        /* Color Theme Glowing Backdrops */
+        .glow-cyan { background: radial-gradient(circle, rgba(6, 182, 212, 0.4) 0%, transparent 70%); }
+        .glow-purple { background: radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, transparent 70%); }
+        .glow-rose { background: radial-gradient(circle, rgba(244, 63, 94, 0.4) 0%, transparent 70%); }
+        .glow-emerald { background: radial-gradient(circle, rgba(16, 185, 129, 0.4) 0%, transparent 70%); }
+        .glow-amber { background: radial-gradient(circle, rgba(245, 158, 11, 0.4) 0%, transparent 70%); }
+        .glow-indigo { background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, transparent 70%); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(3, 7, 18, 0.8); }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.3); }
+    </style>
+</head>
+<body class="min-h-screen text-slate-100 bg-slate-950 relative selection:bg-cyan-500 selection:text-black">
+
+    <!-- SVG Filter Definition for Liquid Water Distortion Effect -->
+    <svg class="absolute w-0 h-0 pointer-events-none" aria-hidden="true">
+        <defs>
+            <!-- Water Border Ripple Filter -->
+            <filter id="waterRippleFilter" x="-20%" y="-20%" width="140%" height="140%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.04 0.08" numOctaves="2" result="noise">
+                    <animate attributeName="baseFrequency" dur="5s" values="0.03 0.06; 0.06 0.11; 0.03 0.06" repeatCount="indefinite" />
+                </feTurbulence>
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+
+            <!-- Internal Liquid Refraction / Caustics Gel Filter -->
+            <filter id="liquidRefractionFilter" x="-20%" y="-20%" width="140%" height="140%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.02 0.05" numOctaves="3" result="liquidNoise">
+                    <animate attributeName="baseFrequency" dur="7s" values="0.02 0.05; 0.05 0.09; 0.02 0.05" repeatCount="indefinite" />
+                </feTurbulence>
+
+                <feDisplacementMap in="SourceGraphic" in2="liquidNoise" scale="18" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- Background Atmospheric Lighting -->
+    <div id="bgContainer" class="fixed inset-0 z-0 transition-all duration-700 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-indigo-950/80 to-slate-950">
+        <div class="absolute top-1/4 left-10 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-10 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
+        <div class="absolute top-2/3 left-1/3 w-[500px] h-[500px] bg-rose-500/15 rounded-full blur-3xl animate-pulse" style="animation-delay: 4s;"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.04)_1px,transparent_1px)] [background-size:32px_32px] opacity-60"></div>
+    </div>
+
+    <div class="relative z-10 flex flex-col min-h-screen">
+        
+        <header class="w-full border-b border-white/10 backdrop-blur-xl bg-slate-950/50 sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-11 h-11 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-cyan-400 font-bold text-xl shadow-lg">
+                        <i class="fa-solid fa-shapes"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-300 to-rose-400">
+                            Glassmorphism 3D Icons Studio
+                        </h1>
+                        <p class="text-xs text-slate-400 font-medium">다층 유리의 입체감과 빛 반사를 담은 아이콘 생성기</p>
+                    </div>
+                </div>
+
+                <!-- Theme Switcher -->
+                <div class="flex items-center space-x-2 bg-slate-900/80 p-1.5 rounded-full border border-white/10 backdrop-blur-md">
+                    <span class="text-xs text-slate-400 font-semibold px-3 hidden sm:inline"><i class="fa-solid fa-palette mr-1"></i> 분위기:</span>
+                    <button onclick="setTheme('deep')" class="w-7 h-7 rounded-full bg-gradient-to-br from-slate-900 to-indigo-950 border border-white/30 hover:scale-110 transition-transform" title="Deep Cosmic"></button>
+                    <button onclick="setTheme('aurora')" class="w-7 h-7 rounded-full bg-gradient-to-br from-teal-950 to-emerald-900 border border-white/30 hover:scale-110 transition-transform" title="Aurora Emerald"></button>
+                    <button onclick="setTheme('neon')" class="w-7 h-7 rounded-full bg-gradient-to-br from-fuchsia-950 to-purple-900 border border-white/30 hover:scale-110 transition-transform" title="Neon Purple"></button>
+                    <button onclick="setTheme('sunset')" class="w-7 h-7 rounded-full bg-gradient-to-br from-rose-950 to-amber-950 border border-white/30 hover:scale-110 transition-transform" title="Sunset Glow"></button>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Left Side: Interactive Glass Icons Showcase Catalog (7 Columns) -->
+            <section class="lg:col-span-7 xl:col-span-7 space-y-8">
+                
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-water text-cyan-400"></i>
+                            글래스모피즘 아이콘 카탈로그
+                        </h2>
+                        <p class="text-sm text-slate-400 mt-1">마우스를 올려 테두리 쪽에 물이 빛에 반사되어 울렁이는 리퀴드 파동 효과를 확인하세요.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-6">
+                    
+                    <!-- 1. Glass Camera Icon -->
+                    <div class="glass-icon-container group" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                        <div class="glass-icon-card p-6 flex flex-col items-center justify-center text-center">
+                            <div class="glass-layer-back w-24 h-24 glow-cyan opacity-80 blur-xl"></div>
+                            <div class="glass-layer-base w-24 h-24 flex items-center justify-center relative">
+                                <div class="glass-water-border"></div>
+                                <div class="liquid-caustic-layer"></div>
+                                <div class="liquid-specular-top"></div>
+                                <div class="liquid-droplet-glow"></div>
+                                <i class="fa-solid fa-camera text-4xl text-cyan-300 glass-layer-core"></i>
+                                <div class="glass-layer-badge top-2 right-2 w-6 h-6 rounded-full flex items-center justify-center text-[10px] text-cyan-200">
+                                    <i class="fa-solid fa-aperture"></i>
+                                </div>
+                            </div>
+                            <span class="mt-4 text-xs font-semibold text-slate-300 group-hover:text-cyan-300 transition-colors">카메라 (Water Gel)</span>
+                        </div>
+                    </div>
+
+                    <!-- 2. Glass Folder Icon -->
+                    <div class="glass-icon-container group" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                        <div class="glass-icon-card p-6 flex flex-col items-center justify-center text-center">
+                            <div class="glass-layer-back w-24 h-24 glow-amber opacity-80 blur-xl"></div>
+                            <div class="glass-layer-base w-24 h-24 flex items-center justify-center relative">
+                                <div class="glass-water-border"></div>
+                                <div class="liquid-caustic-layer"></div>
+                                <div class="liquid-specular-top"></div>
+                                <div class="liquid-droplet-glow"></div>
+                                <i class="fa-solid fa-folder-open text-4xl text-amber-300 glass-layer-core"></i>
+                                <div class="glass-layer-badge bottom-3 right-3 w-7 h-7 rounded-xl flex items-center justify-center text-xs text-amber-200">
+                                    <i class="fa-solid fa-file-lines"></i>
+                                </div>
+                            </div>
+                            <span class="mt-4 text-xs font-semibold text-slate-300 group-hover:text-amber-300 transition-colors">폴더 (Liquid Drops)</span>
+                        </div>
+                    </div>
+
+                    <!-- 2. Glass Folder Icon -->
+                    <div class="glass-icon-container group" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                        <div class="glass-icon-card p-6 flex flex-col items-center justify-center text-center">
+                            <div class="glass-layer-back w-24 h-24 glow-amber opacity-80 blur-xl"></div>
+                            <div class="glass-layer-base w-24 h-24 flex items-center justify-center relative">
+                                <div class="glass-water-border"></div>
+                                <i class="fa-solid fa-folder-open text-4xl text-amber-300 glass-layer-core"></i>
+                                <div class="glass-layer-badge bottom-3 right-3 w-7 h-7 rounded-xl flex items-center justify-center text-xs text-amber-200">
+                                    <i class="fa-solid fa-file-lines"></i>
+                                </div>
+                            </div>
+                            <span class="mt-4 text-xs font-semibold text-slate-300 group-hover:text-amber-300 transition-colors">폴더 (Glass Storage)</span>
+                        </div>
+                    </div>
+
+                    <!-- 3. Glass Security Shield -->
+                    <div class="glass-icon-container group" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                        <div class="glass-icon-card p-6 flex flex-col items-center justify-center text-center">
+                            <div class="glass-layer-back w-24 h-24 glow-emerald opacity-80 blur-xl"></div>
+                            <div class="glass-layer-base w-24 h-24 flex items-center justify-center relative">
+                                <div class="glass-water-border"></div>
+                                <i class="fa-solid fa-shield-halved text-4xl text-emerald-300 glass-layer-core"></i>
+                                <div class="glass-layer-badge top-3 right-3 w-6 h-6 rounded-full flex items-center justify-center text-[10px] text-emerald-200">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                            </div>
+                            <span class="mt-4 text-xs font-semibold text-slate-300 group-hover:text-emerald-300 transition-colors">보안 쉴드 (Glass Guard)</span>
+                        </div>
+                    </div>
+
+                    <!-- 4. Glass Rocket/Space -->
+                    <div class="glass-icon-container group" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                        <div class="glass-icon-card p-6 flex flex-col items-center justify-center text-center">
+                            <div class="glass-layer-back w-24 h-24 glow-purple opacity-80 blur-xl"></div>
+                            <div class="glass-layer-base w-24 h-24 flex items-center justify-center relative">
+                                <div class="glass-water-border"></div>
+                                <i class="fa-solid fa-rocket text-4xl text-purple-300 glass-layer-core"></i>
+                                <div class="glass-layer-badge bottom-2 right-2 w-7 h-7 rounded-lg flex items-center justify-center text-xs text-purple-200">
+                                    <i class="fa-solid fa-fire"></i>
+                                </div>
+                            </div>
+                            <span class="mt-4 text-xs font-semibold text-slate-300 group-hover:text-purple-300 transition-colors">로켓 (Launch Glass)</span>
+                        </div>
+                    </div>
+
+                    <!-- 5. Glass Message / Chat -->
+                    <div class="glass-icon-container group" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                        <div class="glass-icon-card p-6 flex flex-col items-center justify-center text-center">
+                            <div class="glass-layer-back w-24 h-24 glow-indigo opacity-80 blur-xl"></div>
+                            <div class="glass-layer-base w-24 h-24 flex items-center justify-center relative">
+                                <div class="glass-water-border"></div>
+                                <i class="fa-solid fa-comments text-4xl text-indigo-300 glass-layer-core"></i>
+                                <div class="glass-layer-badge -top-1 -right-1 w-7 h-7 rounded-full flex items-center justify-center text-xs text-indigo-100 font-bold bg-indigo-500/40">
+                                    3
+                                </div>
+                            </div>
+                            <span class="mt-4 text-xs font-semibold text-slate-300 group-hover:text-indigo-300 transition-colors">메시지 (Glass Chat)</span>
+                        </div>
+                    </div>
+
+                    <!-- 6. Glass Music/Audio -->
+                    <div class="glass-icon-container group" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                        <div class="glass-icon-card p-6 flex flex-col items-center justify-center text-center">
+                            <div class="glass-layer-back w-24 h-24 glow-rose opacity-80 blur-xl"></div>
+                            <div class="glass-layer-base w-24 h-24 flex items-center justify-center relative">
+                                <div class="glass-water-border"></div>
+                                <i class="fa-solid fa-music text-4xl text-rose-300 glass-layer-core"></i>
+                                <div class="glass-layer-badge top-2 left-2 w-6 h-6 rounded-full flex items-center justify-center text-[10px] text-rose-200">
+                                    <i class="fa-solid fa-compact-disc"></i>
+                                </div>
+                            </div>
+                            <span class="mt-4 text-xs font-semibold text-slate-300 group-hover:text-rose-300 transition-colors">뮤직 (Glass Beats)</span>
+                        </div>
+                    </div>
+
+                    <!-- 7. Glass Analytics / Chart -->
+                    <div class="glass-icon-container group" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                        <div class="glass-icon-card p-6 flex flex-col items-center justify-center text-center">
+                            <div class="glass-layer-back w-24 h-24 glow-cyan opacity-80 blur-xl"></div>
+                            <div class="glass-layer-base w-24 h-24 flex items-center justify-center relative">
+                                <div class="glass-water-border"></div>
+                                <i class="fa-solid fa-chart-line text-4xl text-teal-300 glass-layer-core"></i>
+                                <div class="glass-layer-badge bottom-2 left-2 w-6 h-6 rounded-full flex items-center justify-center text-[10px] text-teal-200">
+                                    <i class="fa-solid fa-arrow-trend-up"></i>
+                                </div>
+                            </div>
+                            <span class="mt-4 text-xs font-semibold text-slate-300 group-hover:text-teal-300 transition-colors">분석 (Glass Metrics)</span>
+                        </div>
+                    </div>
+
+                    <!-- 8. Glass Wallet / Card -->
+                    <div class="glass-icon-container group" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                        <div class="glass-icon-card p-6 flex flex-col items-center justify-center text-center">
+                            <div class="glass-layer-back w-24 h-24 glow-amber opacity-80 blur-xl"></div>
+                            <div class="glass-layer-base w-24 h-24 flex items-center justify-center relative">
+                                <div class="glass-water-border"></div>
+                                <i class="fa-solid fa-wallet text-4xl text-yellow-300 glass-layer-core"></i>
+                                <div class="glass-layer-badge top-2 right-2 w-6 h-6 rounded-full flex items-center justify-center text-[10px] text-yellow-200">
+                                    <i class="fa-solid fa-coins"></i>
+                                </div>
+                            </div>
+                            <span class="mt-4 text-xs font-semibold text-slate-300 group-hover:text-yellow-300 transition-colors">지갑 (Glass Pay)</span>
+                        </div>
+                    </div>
+
+                    <!-- 9. Glass Weather / Cloud -->
+                    <div class="glass-icon-container group" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                        <div class="glass-icon-card p-6 flex flex-col items-center justify-center text-center">
+                            <div class="glass-layer-back w-24 h-24 glow-purple opacity-80 blur-xl"></div>
+                            <div class="glass-layer-base w-24 h-24 flex items-center justify-center relative">
+                                <div class="glass-water-border"></div>
+                                <i class="fa-solid fa-cloud-bolt text-4xl text-sky-300 glass-layer-core"></i>
+                                <div class="glass-layer-badge bottom-2 right-2 w-6 h-6 rounded-full flex items-center justify-center text-[10px] text-sky-200">
+                                    <i class="fa-solid fa-sun"></i>
+                                </div>
+                            </div>
+                            <span class="mt-4 text-xs font-semibold text-slate-300 group-hover:text-sky-300 transition-colors">날씨 (Glass Atmosphere)</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Feature Highlights Banner -->
+                <div class="p-6 rounded-3xl bg-slate-900/40 border border-white/10 backdrop-blur-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-2xl bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center text-cyan-300 text-2xl">
+                            <i class="fa-solid fa-water"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-white">입체 수면 반사(Liquid Water Caustic) 테두리</h3>
+                            <p class="text-xs text-slate-400">마우스 호버 시 SVG Turbulence 기반 리퀴드 파동이 테두리를 감싸며 빛을 굴절시킵니다</p>
+                        </div>
+                    </div>
+                    <button onclick="scrollToStudio()" class="px-5 py-2.5 rounded-xl bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 text-xs font-bold hover:bg-cyan-500/30 transition-all whitespace-nowrap">
+                        아이콘 커스텀 제작하기 →
+                    </button>
+                </div>
+
+            </section>
+
+            <!-- Right Side: Live Customizer & Canvas Preview Studio (5 Columns) -->
+            <section id="studioSection" class="lg:col-span-5 xl:col-span-5 space-y-6">
+                
+                <div class="p-6 rounded-3xl bg-slate-900/60 border border-white/15 backdrop-blur-2xl sticky top-28 shadow-2xl space-y-6">
+                    
+                    <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-sliders text-cyan-400"></i>
+                            3D 글래스 아이콘 스튜디오
+                        </h3>
+                        <span class="text-xs bg-cyan-500/20 text-cyan-300 px-2.5 py-1 rounded-full border border-cyan-500/30 font-medium">실시간 프리뷰</span>
+                    </div>
+
+                    <div class="relative py-12 px-6 bg-slate-950/70 rounded-2xl border border-white/10 flex flex-col items-center justify-center overflow-hidden min-h-[240px]">
+                        
+                        <!-- Floating Background Glow -->
+                        <div id="previewGlow" class="absolute w-44 h-44 rounded-full blur-3xl transition-all duration-500 opacity-70 bg-cyan-500"></div>
+
+                        <!-- Target Glass Icon Interactive Object -->
+                        <div id="previewContainer" class="glass-icon-container cursor-grab active:cursor-grabbing z-10" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                            <div class="glass-icon-card p-2">
+                                <div id="previewBaseLayer" class="glass-layer-base w-32 h-32 flex items-center justify-center relative">
+                                    <div class="glass-water-border"></div>
+                                    <div id="previewCaustics" class="liquid-caustic-layer"></div>
+                                    <div class="liquid-specular-top"></div>
+                                    <div class="liquid-droplet-glow"></div>
+                                    <i id="previewCoreIcon" class="fa-solid fa-gem text-5xl text-cyan-300 glass-layer-core"></i>
+                                    <div id="previewBadge" class="glass-layer-badge top-3 right-3 w-8 h-8 rounded-xl flex items-center justify-center text-xs text-white">
+                                        <i id="previewBadgeIcon" class="fa-solid fa-sparkles"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <span class="text-[11px] text-slate-400 mt-6 tracking-wider uppercase font-semibold">마우스로 3D 각도와 액체 굴절을 확인하세요</span>
+                    </div>
+
+                    <div class="space-y-4 text-xs font-medium text-slate-300">
+                        
+                        <!-- Liquid Style & Animation Mode Toggles -->
+                        <div class="grid grid-cols-2 gap-3 p-2.5 rounded-2xl bg-slate-950/80 border border-white/10">
+                            <label class="flex items-center space-x-2 cursor-pointer select-none">
+                                <input type="checkbox" id="liquidMorphToggle" onchange="toggleLiquidMorph()" class="w-4 h-4 accent-cyan-400 rounded">
+                                <span class="text-white font-semibold">유기적 물방울 모핑 (Blob)</span>
+                            </label>
+                            <label class="flex items-center space-x-2 cursor-pointer select-none">
+                                <input type="checkbox" id="liquidFlowToggle" checked onchange="updateStudio()" class="w-4 h-4 accent-cyan-400 rounded">
+                                <span class="text-white font-semibold">내부 수면 흐름 (Caustics)</span>
+                            </label>
+                        </div>
+
+                        <!-- Icon Selector -->
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block mb-1.5 text-slate-400">메인 아이콘</label>
+                                <select id="iconSelect" onchange="updateStudio()" class="w-full bg-slate-800/90 border border-white/10 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
+                                    <option value="fa-gem">💎 보석 (Gem)</option>
+                                    <option value="fa-shield-halved">🛡️ 쉴드 (Shield)</option>
+                                    <option value="fa-camera">📷 카메라 (Camera)</option>
+                                    <option value="fa-rocket">🚀 로켓 (Rocket)</option>
+                                    <option value="fa-heart">❤️ 하트 (Heart)</option>
+                                    <option value="fa-cube">🧊 큐브 (Cube)</option>
+                                    <option value="fa-compass">🧭 컴퍼스 (Compass)</option>
+                                    <option value="fa-trophy">🏆 트로피 (Trophy)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block mb-1.5 text-slate-400">뱃지 아이콘</label>
+                                <select id="badgeSelect" onchange="updateStudio()" class="w-full bg-slate-800/90 border border-white/10 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
+                                    <option value="fa-star">⭐ 별 (Star)</option>
+                                    <option value="fa-check">✓ 체크 (Check)</option>
+                                    <option value="fa-bolt">⚡ 번개 (Bolt)</option>
+                                    <option value="fa-lock">🔒 잠금 (Lock)</option>
+                                    <option value="fa-plus">➕ 추가 (Plus)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Color Preset -->
+                        <div>
+                            <label class="block mb-1.5 text-slate-400">유리 틴트 & 네온 컬러</label>
+                            <div class="grid grid-cols-5 gap-2">
+                                <button onclick="setColorTheme('cyan')" class="h-8 rounded-lg bg-cyan-500/30 border border-cyan-400 text-cyan-300 hover:scale-105 transition-transform flex items-center justify-center font-bold">Cyan</button>
+                                <button onclick="setColorTheme('purple')" class="h-8 rounded-lg bg-purple-500/30 border border-purple-400 text-purple-300 hover:scale-105 transition-transform flex items-center justify-center font-bold">Purple</button>
+                                <button onclick="setColorTheme('rose')" class="h-8 rounded-lg bg-rose-500/30 border border-rose-400 text-rose-300 hover:scale-105 transition-transform flex items-center justify-center font-bold">Rose</button>
+                                <button onclick="setColorTheme('emerald')" class="h-8 rounded-lg bg-emerald-500/30 border border-emerald-400 text-emerald-300 hover:scale-105 transition-transform flex items-center justify-center font-bold">Emerald</button>
+                                <button onclick="setColorTheme('amber')" class="h-8 rounded-lg bg-amber-500/30 border border-amber-400 text-amber-300 hover:scale-105 transition-transform flex items-center justify-center font-bold">Amber</button>
+                            </div>
+                        </div>
+
+                        <!-- Border Thickness Slider (iOS Icon Style) -->
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-slate-400">테두리 두께 (iOS Glass Bezel)</span>
+                                <span id="borderThickVal" class="text-cyan-400 font-mono">5px</span>
+                            </div>
+                            <input type="range" id="borderThickInput" min="2" max="10" value="5" oninput="updateStudio()" class="w-full accent-cyan-400">
+                        </div>
+
+                        <!-- Glass Blur Slider -->
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-slate-400">유리 블러 (Backdrop Blur)</span>
+                                <span id="blurVal" class="text-cyan-400 font-mono">20px</span>
+                            </div>
+                            <input type="range" id="blurInput" min="4" max="40" value="20" oninput="updateStudio()" class="w-full accent-cyan-400">
+                        </div>
+
+                        <!-- Glass Opacity Slider -->
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-slate-400">유리 투명도 (Glass Alpha)</span>
+                                <span id="opacityVal" class="text-cyan-400 font-mono">12%</span>
+                            </div>
+                            <input type="range" id="opacityInput" min="2" max="50" value="12" oninput="updateStudio()" class="w-full accent-cyan-400">
+                        </div>
+
+                        <!-- Border Radius Slider -->
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-slate-400">모서리 곡률 (Border Radius)</span>
+                                <span id="radiusVal" class="text-cyan-400 font-mono">28px</span>
+                            </div>
+                            <input type="range" id="radiusInput" min="8" max="48" value="28" oninput="updateStudio()" class="w-full accent-cyan-400">
+                        </div>
+
+                    </div>
+
+                    <div class="pt-4 border-t border-white/10">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-semibold text-slate-300">HTML & CSS 생성 코드</span>
+                            <button onclick="copyStudioCode()" class="text-xs bg-slate-800 hover:bg-slate-700 text-cyan-300 px-3 py-1.5 rounded-lg border border-white/10 transition-colors flex items-center gap-1.5 font-semibold">
+                                <i id="copyIcon" class="fa-regular fa-copy"></i>
+                                <span id="copyBtnText">코드 복사</span>
+                            </button>
+                        </div>
+                        <pre id="codeOutput" class="bg-slate-950 p-3.5 rounded-xl text-[11px] font-mono text-cyan-300 overflow-x-auto border border-white/10 leading-relaxed max-h-48">
+/* Loading Studio Code... */
+                        </pre>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="w-full border-t border-white/10 py-6 text-center text-xs text-slate-500 relative z-10 bg-slate-950/80 backdrop-blur-md">
+            <p>© 3D Glassmorphism Dynamic Icon Generator - Clean HTML/CSS/JS Multi-layer Glass Visuals</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Current Studio Color Configuration
+        let currentColor = {
+            name: 'cyan',
+            rgb: '6, 182, 212',
+            hexText: 'text-cyan-300',
+            glowClass: 'bg-cyan-500'
+        };
+
+        // Toggle Liquid Blob Morphing Animation
+        function toggleLiquidMorph() {
+            const container = document.getElementById('previewContainer');
+            const toggle = document.getElementById('liquidMorphToggle');
+            if (container && toggle) {
+                if (toggle.checked) {
+                    container.classList.add('liquid-gel-mode');
+                } else {
+                    container.classList.remove('liquid-gel-mode');
+                }
+            }
+            updateStudio();
+        }
+
+        // 3D Parallax Tilt Handler
+        function handleTilt(event, container) {
+            const card = container.querySelector('.glass-icon-card');
+            if (!card) return;
+
+            const rect = container.getBoundingClientRect();
+            
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = ((y - centerY) / centerY) * -22; // Max 22deg X tilt
+            const rotateY = ((x - centerX) / centerX) * 22;  // Max 22deg Y tilt
+
+            card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        }
+
+        // Reset Tilt Position
+        function resetTilt(container) {
+            const card = container.querySelector('.glass-icon-card');
+            if (card) {
+                card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg)';
+            }
+        }
+
+        // Set Background Atmosphere Theme
+        function setTheme(theme) {
+            const bg = document.getElementById('bgContainer');
+            if (!bg) return;
+
+            if (theme === 'deep') {
+                bg.className = "fixed inset-0 z-0 transition-all duration-700 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-indigo-950/80 to-slate-950";
+            } else if (theme === 'aurora') {
+                bg.className = "fixed inset-0 z-0 transition-all duration-700 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-teal-950 via-slate-900 to-emerald-950";
+            } else if (theme === 'neon') {
+                bg.className = "fixed inset-0 z-0 transition-all duration-700 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-fuchsia-950 via-slate-900 to-purple-950";
+            } else if (theme === 'sunset') {
+                bg.className = "fixed inset-0 z-0 transition-all duration-700 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-rose-950 via-slate-900 to-amber-950";
+            }
+        }
+
+        // Set Studio Color Preset
+        function setColorTheme(colorKey) {
+            const colorMap = {
+                cyan: { rgb: '6, 182, 212', hexText: 'text-cyan-300', glowClass: 'bg-cyan-500' },
+                purple: { rgb: '168, 85, 247', hexText: 'text-purple-300', glowClass: 'bg-purple-500' },
+                rose: { rgb: '244, 63, 94', hexText: 'text-rose-300', glowClass: 'bg-rose-500' },
+                emerald: { rgb: '16, 185, 129', hexText: 'text-emerald-300', glowClass: 'bg-emerald-500' },
+                amber: { rgb: '245, 158, 11', hexText: 'text-amber-300', glowClass: 'bg-amber-300' }
+            };
+
+            if (colorMap[colorKey]) {
+                currentColor = { name: colorKey, ...colorMap[colorKey] };
+                updateStudio();
+            }
+        }
+
+        // Smooth Scroll to Studio
+        function scrollToStudio() {
+            const studio = document.getElementById('studioSection');
+            if (studio) {
+                studio.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Live Studio Update Logic
+        function updateStudio() {
+            const mainIcon = document.getElementById('iconSelect').value;
+            const badgeIcon = document.getElementById('badgeSelect').value;
+            const blur = document.getElementById('blurInput').value;
+            const opacity = document.getElementById('opacityInput').value / 100;
+            const radius = document.getElementById('radiusInput').value;
+            const thick = document.getElementById('borderThickInput') ? document.getElementById('borderThickInput').value : 5;
+            const flowEnabled = document.getElementById('liquidFlowToggle') ? document.getElementById('liquidFlowToggle').checked : true;
+            const morphEnabled = document.getElementById('liquidMorphToggle') ? document.getElementById('liquidMorphToggle').checked : false;
+
+            // Target elements
+            const previewGlow = document.getElementById('previewGlow');
+            const baseLayer = document.getElementById('previewBaseLayer');
+            const caustics = document.getElementById('previewCaustics');
+            const coreIcon = document.getElementById('previewCoreIcon');
+            const badgeIconEl = document.getElementById('previewBadgeIcon');
+            const waterBorder = baseLayer.querySelector('.glass-water-border');
+
+            // Apply Caustics Visibility
+            if (caustics) {
+                caustics.style.display = flowEnabled ? 'block' : 'none';
+            }
+
+            // Apply Classes & Styles
+            if (previewGlow) {
+                previewGlow.className = `absolute w-44 h-44 rounded-full blur-3xl transition-all duration-500 opacity-70 ${currentColor.glowClass}`;
+            }
+            
+            if (baseLayer) {
+                baseLayer.style.background = `rgba(${currentColor.rgb}, ${opacity})`;
+                baseLayer.style.backdropFilter = `blur(${blur}px)`;
+                baseLayer.style.webkitBackdropFilter = `blur(${blur}px)`;
+                baseLayer.style.borderRadius = `${radius}px`;
+                baseLayer.style.boxShadow = `0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.7), inset 0 -2px 4px rgba(0, 0, 0, 0.3)`;
+            }
+
+            if (waterBorder) {
+                waterBorder.style.padding = `${thick}px`;
+            }
+
+            if (coreIcon) {
+                coreIcon.className = `fa-solid ${mainIcon} text-5xl ${currentColor.hexText} glass-layer-core`;
+            }
+            if (badgeIconEl) {
+                badgeIconEl.className = `fa-solid ${badgeIcon}`;
+            }
+
+            // Value Indicators
+            if (document.getElementById('blurVal')) document.getElementById('blurVal').innerText = `${blur}px`;
+            if (document.getElementById('opacityVal')) document.getElementById('opacityVal').innerText = `${Math.round(opacity * 100)}%`;
+            if (document.getElementById('radiusVal')) document.getElementById('radiusVal').innerText = `${radius}px`;
+            if (document.getElementById('borderThickVal')) document.getElementById('borderThickVal').innerText = `${thick}px`;
+
+            // Export Code Generation
+            const codeString = `<!-- SVG Liquid Refraction Filters -->
+<svg class="absolute w-0 h-0" aria-hidden="true">
+  <filter id="liquidRefractionFilter" x="-20%" y="-20%" width="140%" height="140%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.02 0.05" numOctaves="3" result="liquidNoise">
+      <animate attributeName="baseFrequency" dur="7s" values="0.02 0.05; 0.05 0.09; 0.02 0.05" repeatCount="indefinite" />
+    </feTurbulence>
+    <feDisplacementMap in="SourceGraphic" in2="liquidNoise" scale="18" xChannelSelector="R" yChannelSelector="G" />
+  </filter>
+  <filter id="waterRippleFilter" x="-20%" y="-20%" width="140%" height="140%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.04 0.08" numOctaves="2" result="noise">
+      <animate attributeName="baseFrequency" dur="5s" values="0.03 0.06; 0.06 0.11; 0.03 0.06" repeatCount="indefinite" />
+    </feTurbulence>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G" />
+  </filter>
+</svg>
+
+<div class="glass-icon-wrapper ${morphEnabled ? 'liquid-blob-mode' : ''}" style="perspective: 800px;">
+  <div class="glass-icon-base">
+    <div class="glass-water-border"></div>
+    ${flowEnabled ? '<div class="liquid-caustics"></div>' : ''}
+    <div class="liquid-specular-top"></div>
+    <div class="liquid-droplet-glow"></div>
+    <i class="fa-solid ${mainIcon} glass-core-icon"></i>
+    <div class="glass-badge">
+      <i class="fa-solid ${badgeIcon}"></i>
+    </div>
+  </div>
+</div>
+
+<style>
+.glass-icon-base {
+  width: 8rem;
+  height: 8rem;
+  background: rgba(${currentColor.rgb}, ${opacity});
+  backdrop-filter: blur(${blur}px);
+  -webkit-backdrop-filter: blur(${blur}px);
+  border-radius: ${radius}px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transform-style: preserve-3d;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* Organic Blob Morphing */
+.liquid-blob-mode .glass-icon-base {
+  animation: liquidMorph 8s ease-in-out infinite alternate;
+}
+
+@keyframes liquidMorph {
+  0%, 100% { border-radius: ${radius}px; }
+  33% { border-radius: 42% 58% 65% 35% / 45% 38% 62% 55%; }
+  66% { border-radius: 55% 45% 38% 62% / 32% 65% 35% 68%; }
+}
+
+/* Internal Liquid Flow Wave */
+.liquid-caustics {
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.35) 0%, transparent 45%),
+              radial-gradient(circle at 70% 60%, rgba(${currentColor.rgb}, 0.35) 0%, transparent 50%);
+  filter: url(#liquidRefractionFilter);
+  animation: liquidFlow 12s ease-in-out infinite;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+@keyframes liquidFlow {
+  0% { transform: translate(-30%, -30%) rotate(0deg); }
+  50% { transform: translate(20%, 20%) rotate(180deg); }
+  100% { transform: translate(-30%, -30%) rotate(360deg); }
+}
+
+/* High Gloss Water Specular Reflection */
+.liquid-specular-top {
+  position: absolute;
+  top: 4px;
+  left: 10px;
+  right: 10px;
+  height: 38%;
+  border-radius: 100px 100px 40% 40%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.12) 60%, transparent 100%);
+  pointer-events: none;
+}
+
+.liquid-droplet-glow {
+  position: absolute;
+  bottom: 10px;
+  right: 14px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, transparent 80%);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  pointer-events: none;
+}
+
+/* Thick Liquid Water Bezel */
+.glass-water-border {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: ${thick}px;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.6;
+  overflow: hidden;
+}
+
+.glass-water-border::before {
+  content: '';
+  position: absolute;
+  top: -60%;
+  left: -60%;
+  width: 220%;
+  height: 220%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 255, 255, 0.95),
+    rgba(${currentColor.rgb}, 0.95),
+    rgba(255, 255, 255, 0.3),
+    rgba(192, 132, 252, 0.9),
+    rgba(255, 255, 255, 0.95)
+  );
+  animation: waterRotate 5s linear infinite;
+}
+
+.glass-icon-base:hover .glass-water-border {
+  opacity: 1;
+  filter: url(#waterRippleFilter) drop-shadow(0 0 14px rgba(${currentColor.rgb}, 0.9));
+}
+
+.glass-icon-base:hover .glass-water-border::before {
+  animation: waterRotate 2.5s linear infinite;
+}
+
+@keyframes waterRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.glass-core-icon {
+  font-size: 3rem;
+  transform: translateZ(35px);
+  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.4));
+}
+
+.glass-badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transform: translateZ(55px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>`;
+
+            const codeOutput = document.getElementById('codeOutput');
+            if (codeOutput) {
+                codeOutput.innerText = codeString;
+            }
+        }
+
+        // Copy Code Function
+        function copyStudioCode() {
+            const codeText = document.getElementById('codeOutput').innerText;
+            const textarea = document.createElement('textarea');
+            textarea.value = codeText;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            const btnText = document.getElementById('copyBtnText');
+            const icon = document.getElementById('copyIcon');
+
+            if (btnText) btnText.innerText = '복사 완료!';
+            if (icon) icon.className = 'fa-solid fa-check text-emerald-400';
+
+            setTimeout(() => {
+                if (btnText) btnText.innerText = '코드 복사';
+                if (icon) icon.className = 'fa-regular fa-copy';
+            }, 2000);
+        }
+
+        // Initialize on page load
+        window.onload = function() {
+            updateStudio();
+        };
+    </script>
+</body>
+</html>

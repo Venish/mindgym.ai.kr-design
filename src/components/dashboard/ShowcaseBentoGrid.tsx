@@ -3,6 +3,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { Sparkle, ArrowRight } from "@phosphor-icons/react";
+import { getIconPath } from "@/utils/iconMap";
 import { useModalStore } from "@/store/useModalStore";
 import { CommonRitualSheet } from "@/components/dashboard/CommonRitualSheet";
 import { CommonKossDiagnosisSheet } from "@/components/dashboard/CommonKossDiagnosisSheet";
@@ -48,7 +49,7 @@ export function ShowcaseBentoGrid({}: ShowcaseBentoGridProps) {
 
           <div className="my-1 flex items-center justify-center py-1 group-hover:scale-105 transition-transform duration-300">
             <img
-              src="/images/icons/1.png"
+              src={getIconPath(1)}
               alt="미소 명상"
               className="w-10 h-10 object-contain drop-shadow-2xs"
             />
