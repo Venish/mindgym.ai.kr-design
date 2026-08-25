@@ -42,8 +42,8 @@ function OnboardingContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const isResultDirect = searchParams.get("result") !== null;
-  const modeParam = searchParams.get("mode") || searchParams.get("view");
+  const isResultDirect = searchParams ? searchParams.get("result") !== null : false;
+  const modeParam = searchParams ? (searchParams.get("mode") || searchParams.get("view")) : null;
   const initialView: OnboardingView = isResultDirect
     ? "RESULT"
     : modeParam === "result"

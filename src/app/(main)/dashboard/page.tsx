@@ -3,6 +3,7 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useMindGym } from "@/context/MindGymContext";
+import { useModalStore } from "@/store/useModalStore";
 
 // Modularized Showcase Components 100% Import (@/components/dashboard)
 import { ShowcaseHeader } from "@/components/dashboard/ShowcaseHeader";
@@ -24,42 +25,49 @@ import { magazinesData } from "@/data/magazines";
 function DashboardContent() {
   const { getLevelNumber, getNextLevelDiff, userName, completedDays } = useMindGym();
   const searchParams = useSearchParams();
+  const { openModal, closeModal } = useModalStore();
 
   const levelNum = getLevelNumber();
   const nextDiff = getNextLevelDiff();
   const completedDaysCount = completedDays?.length || 14;
 
-  const [isMorningOpen, setIsMorningOpen] = useState(false);
-  const [isEveningOpen, setIsEveningOpen] = useState(false);
-  const [isGoldenOpen, setIsGoldenOpen] = useState(false);
-  const [isMagazineOpen, setIsMagazineOpen] = useState(false);
-
-  const param = (
-    searchParams.get("type") ||
-    searchParams.get("checkin") ||
-    searchParams.get("time") ||
-    searchParams.get("mode") ||
-    searchParams.get("pop") ||
-    ""
-  ).toLowerCase();
+  const param = searchParams
+    ? (
+        searchParams.get("type") ||
+        searchParams.get("checkin") ||
+        searchParams.get("time") ||
+        searchParams.get("mode") ||
+        searchParams.get("pop") ||
+        ""
+      ).toLowerCase()
+    : "";
 
   useEffect(() => {
     if (completedDays.length === 30) {
-      setIsGoldenOpen(true);
+      openModal({
+        type: "slide-up",
+        content: <GoldenGardenModal isOpen={true} onClose={closeModal} />,
+      });
     }
 
     if (!param) return;
 
     const autoOpenTimer = setTimeout(() => {
       if (["morning", "day", "am", "morning_checkin"].includes(param)) {
-        setIsMorningOpen(true);
+        openModal({
+          type: "slide-up",
+          content: <MorningCheckinDrawer isOpen={true} onClose={closeModal} />,
+        });
       } else if (["evening", "night", "pm", "evening_checkin"].includes(param)) {
-        setIsEveningOpen(true);
+        openModal({
+          type: "slide-up",
+          content: <EveningCheckinDrawer isOpen={true} onClose={closeModal} />,
+        });
       }
     }, 350);
 
     return () => clearTimeout(autoOpenTimer);
-  }, [completedDays, param]);
+  }, [completedDays, param, openModal, closeModal]);
 
   return (
     <div className="w-full max-w-[430px] min-h-screen mx-auto bg-white relative flex flex-col justify-between overflow-x-hidden text-gray-900 select-none font-sans no-scrollbar">
@@ -99,15 +107,6 @@ function DashboardContent() {
 
       {/* 3. 최하단 고정 앱 바로가기 메뉴 바 (최상단 z-40) */}
       <ShowcaseFixedBottomBar />
-
-      {/* 대시보드 팝업 모달 렌더링 */}
-      <MorningCheckinDrawer isOpen={isMorningOpen} onClose={() => setIsMorningOpen(false)} />
-      <EveningCheckinDrawer isOpen={isEveningOpen} onClose={() => setIsEveningOpen(false)} />
-      <GoldenGardenModal isOpen={isGoldenOpen} onClose={() => setIsGoldenOpen(false)} />
-      <MagazineViewerModal
-        magazine={isMagazineOpen ? magazinesData[0] || null : null}
-        onClose={() => setIsMagazineOpen(false)}
-      />
     </div>
   );
 }

@@ -96,43 +96,43 @@ const SAMPLE_RITUAL_NAMES_BY_CAT: Record<string, string[]> = {
   ],
 };
 
-const GENERATED_72_RITUALS: RitualData[] = Array.from({ length: 72 }, (_, i) => {
-  const num = i + 1;
-  const cat = RITUAL_CATEGORIES[i % RITUAL_CATEGORIES.length];
-  const namesList = SAMPLE_RITUAL_NAMES_BY_CAT[cat] || ["마음 쉼표 명상"];
-  const ritualName = namesList[Math.floor(i / RITUAL_CATEGORIES.length) % namesList.length];
-  const isLocked = num % 6 === 0;
+// 12_RECURRING_개발_우선순위.md 27개 표준 우선순위 리추얼 데이터셋 (27개 항목 100% 잠금 해제 오픈)
+const RECURRING_26_RITUALS: RitualData[] = [
+  { id: "RT-001", title: "미소 명상", category: "휴식과 충전", time: "3분", level: "중급", duration: "한달", reward: "+30", iconNum: 1, isLocked: false, desc: "얼굴 근육의 긴장을 풀고 평온한 활력을 채우는 아침 명상입니다." },
+  { id: "RT-002", title: "바디스캔 명상", category: "휴식과 충전", time: "5분", level: "중급", duration: "한달", reward: "+30", iconNum: 46, isLocked: false, desc: "불안·통증·수면에 효과적인 머리부터 발끝까지 관찰하는 이완 명상입니다." },
+  { id: "RT-003", title: "인지 재구성 일기", category: "감정 정돈", time: "5분", level: "중급", duration: "한달", reward: "+30", iconNum: 12, isLocked: false, desc: "인지 왜곡을 교정하고 심리적 핵심을 다루는 일기 세션입니다." },
+  { id: "RT-004", title: "걱정 일기", category: "스트레스 비우기", time: "3분", level: "초급", duration: "매일", reward: "+15", iconNum: 28, isLocked: false, desc: "불안과 미래에 대한 공포를 글로 적어 비워내는 리추얼입니다." },
+  { id: "RT-005", title: "강점 일기", category: "자기자비 명상", time: "3분", level: "초급", duration: "매일", reward: "+15", iconNum: 37, isLocked: false, desc: "나의 강점과 성취를 기록하며 자존감을 세우는 리추얼입니다." },
+  { id: "RT-006", title: "마음 근육 훈련", category: "몰입과 집중", time: "3분", level: "중급", duration: "한달", reward: "+20", iconNum: 1, isLocked: false, desc: "마음짐의 핵심 브랜드 콘텐츠로 불안과 긴장을 완화합니다." },
+  { id: "RT-007", title: "복식호흡", category: "스트레스 비우기", time: "1분", level: "초급", duration: "매일", reward: "+10", iconNum: 4, isLocked: false, desc: "아랫배 깊숙이 들이마시고 내쉬며 즉각 심박수를 낮추는 호흡법입니다." },
+  { id: "RT-008", title: "디지털 디톡스", category: "몰입과 집중", time: "10분", level: "초급", duration: "매일", reward: "+20", iconNum: 51, isLocked: false, desc: "스마트폰을 내려놓고 번아웃과 수면의 자유를 지키는 리추얼입니다." },
+  { id: "RT-009", title: "마음챙김 명상", category: "휴식과 충전", time: "3분", level: "초급", duration: "매일", reward: "+15", iconNum: 3, isLocked: false, desc: "현재의 감각에 집중하여 정서 조절을 돕는 명상입니다." },
+  { id: "RT-010", title: "즐거운 기억 회상", category: "휴식과 충전", time: "3분", level: "초급", duration: "매일", reward: "+10", iconNum: 24, isLocked: false, desc: "우울과 무기력을 해소하는 행복한 순간 회상 리추얼입니다." },
+  { id: "RT-011", title: "성공 경험 회상", category: "자기자비 명상", time: "3분", level: "초급", duration: "매일", reward: "+10", iconNum: 24, isLocked: false, desc: "나의 성취와 성공 감각을 되살리는 자존감 리추얼입니다." },
+  { id: "RT-012", title: "감사 편지 쓰기", category: "관계와 경계", time: "5분", level: "중급", duration: "한달", reward: "+30", iconNum: 61, isLocked: false, desc: "소중한 사람에게 마음을 전하는 관계 회복 리추얼입니다." },
+  { id: "RT-013", title: "친절 실천 챌린지", category: "관계와 경계", time: "3분", level: "초급", duration: "매일", reward: "+15", iconNum: 61, isLocked: false, desc: "타인과 온기를 나누며 연결감을 키우는 리추얼입니다." },
+  { id: "RT-014", title: "소셜 커넥션 체크", category: "관계와 경계", time: "2분", level: "초급", duration: "매일", reward: "+10", iconNum: 71, isLocked: false, desc: "외로움을 해소하고 건강한 관계를 점검하는 리추얼입니다." },
+  { id: "RT-015", title: "감정 표현 글쓰기", category: "감정 정돈", time: "5분", level: "중급", duration: "한달", reward: "+30", iconNum: 28, isLocked: false, desc: "슬픔과 상실의 정서를 깊이 있게 다독이는 일기 세션입니다." },
+  { id: "RT-016", title: "감사 일기", category: "감정 정돈", time: "3분", level: "초급", duration: "매일", reward: "+15", iconNum: 12, isLocked: false, desc: "일상의 소소한 감사로 압박감을 내려놓는 일기 세션입니다." },
+  { id: "RT-017", title: "수면 루틴 만들기", category: "휴식과 충전", time: "7분", level: "중급", duration: "한달", reward: "+30", iconNum: 46, isLocked: false, desc: "수면 질을 높이고 밤의 평온을 되찾는 이완 세션입니다." },
+  { id: "RT-018", title: "스트레스 분쇄", category: "스트레스 비우기", time: "2분", level: "초급", duration: "매일", reward: "+15", iconNum: 8, isLocked: false, desc: "종이를 파쇄기로 갈갈이 분쇄해 감정을 비워내는 리추얼입니다." },
+  { id: "RT-019", title: "자기 긍정 확언", category: "자기자비 명상", time: "2분", level: "초급", duration: "매일", reward: "+10", iconNum: 10, isLocked: false, desc: "나를 바로 세우는 긍정 선언 확언 세션입니다." },
+  { id: "RT-020", title: "자연 감상 & 마인드풀 워킹", category: "휴식과 충전", time: "5분", level: "초급", duration: "매일", reward: "+15", iconNum: 50, isLocked: false, desc: "자연의 소리와 발걸음에 온전히 몰입하는 워킹 세션입니다." },
+  { id: "RT-021", title: "자기 위로 글쓰기", category: "감정 정돈", time: "5분", level: "중급", duration: "한달", reward: "+20", iconNum: 12, isLocked: false, desc: "지친 나를 다정하게 다독이는 셀프 위로 세션입니다." },
+  { id: "RT-022", title: "감정 온도계", category: "감정 정돈", time: "1분", level: "초급", duration: "매일", reward: "+10", iconNum: 24, isLocked: false, desc: "지금 내 마음의 온도를 시각적으로 인식하는 세션입니다." },
+  { id: "RT-023", title: "감사 세 줄", category: "감정 정돈", time: "1분", level: "초급", duration: "매일", reward: "+10", iconNum: 12, isLocked: false, desc: "소소하게 세 줄로 적는 간편 감사 일기 세션입니다." },
+  { id: "RT-024", title: "분노 관찰일지", category: "감정 정돈", time: "3분", level: "중급", duration: "한달", reward: "+20", iconNum: 28, isLocked: false, desc: "분노 감정을 솔직히 관찰하고 수용하는 일기 세션입니다." },
+  { id: "RT-025", title: "화해 상상 드로잉", category: "관계와 경계", time: "3분", level: "중급", duration: "한달", reward: "+20", iconNum: 37, isLocked: false, desc: "시각화 기법으로 관계의 앙금을 푸는 드로잉 세션입니다." },
+  { id: "RT-026", title: "긴장 해소 스트레칭", category: "스트레스 비우기", time: "3분", level: "초급", duration: "매일", reward: "+10", iconNum: 4, isLocked: false, desc: "굳어있는 뭉친 근육을 풀어내는 스트레칭 세션입니다." },
+  { id: "RT-027", title: "스트레칭 루틴", category: "스트레스 비우기", time: "5분", level: "중급", duration: "한달", reward: "+20", iconNum: 50, isLocked: false, desc: "몸과 마음의 긴장을 부드럽게 이완하는 루틴입니다." },
+];
 
-  return {
-    id: `RT-${String(num).padStart(3, "0")}`,
-    title: ritualName,
-    category: cat,
-    time: `${(i % 5) + 3}분`,
-    level: i % 2 === 0 ? "초급" : "중급",
-    duration: i % 3 === 0 ? "매일" : "한달",
-    reward: `+${((i % 4) + 1) * 10}`,
-    iconNum: num,
-    isLocked,
-    desc: isLocked
-      ? "다음 주 공개 예정인 신규 마음건강 리추얼 세션입니다."
-      : `일상의 분주함을 멈추고 ${cat}의 감각을 깊이 있게 깨워주는 ${ritualName} 세션입니다.`,
-  };
-});
+const GENERATED_72_RITUALS = RECURRING_26_RITUALS;
 
-// 12개 찜한 리추얼 샘플 목록 (1번 인덱스는 고정된 이달의 월간 리추얼)
+// 메인 메뉴와 동일한 내가 찜한 리추얼 2개 목록 (미소 명상, 스트레스 분쇄)
 const INITIAL_12_SAVED_RITUALS: RitualData[] = [
-  { id: "RT-001", title: "미소 명상", category: "휴식과 충전", time: "3분", level: "중급", duration: "한달", reward: "+30", iconNum: 1, desc: "입가에 옅은 미소를 지으며 얼굴 근육의 긴장을 푸는 미소 명상입니다.", isPinned: true },
-  { id: "RT-012", title: "마음일기", category: "감정 정돈", time: "5분", level: "중급", duration: "한달", reward: "+30", iconNum: 12, desc: "세상의 비난 속에서도 나만의 다정한 변호인이 되어 일기를 씁니다.", isPinned: false },
-  { id: "RT-004", title: "횡경막 호흡", category: "스트레스 비우기", time: "1분", level: "초급", duration: "매일", reward: "+10", iconNum: 4, desc: "아랫배 깊숙이 들이마시고 내쉬는 호흡 감각에 집중해 심박수를 낮춥니다.", isPinned: false },
-  { id: "RT-010", title: "333 나비포옹", category: "자기자비 명상", time: "1분", level: "초급", duration: "매일", reward: "+15", iconNum: 10, desc: "양팔을 교차해 스스로 양어깨를 번갈아 다독이며 불안 요소를 잠재웁니다.", isPinned: false },
-  { id: "RT-003", title: "시선고정 명상", category: "몰입과 집중", time: "1분", level: "초급", duration: "매일", reward: "+10", iconNum: 3, desc: "사물 하나에 1분간 시선을 고정하는 명상입니다.", isPinned: false },
-  { id: "RT-024", title: "마음선물", category: "감정 정돈", time: "1분", level: "초급", duration: "매일", reward: "+10", iconNum: 24, desc: "오늘 내 마음의 온도를 시각화해서 기록합니다.", isPinned: false },
-  { id: "RT-028", title: "분노일기", category: "감정 정돈", time: "3분", level: "중급", duration: "한달", reward: "+20", iconNum: 28, desc: "솔직한 분노 후 감정을 수용하는 일기를 씁니다.", isPinned: false },
-  { id: "RT-037", title: "셀프 QnA", category: "관계와 경계", time: "3분", level: "중급", duration: "한달", reward: "+20", iconNum: 37, desc: "나에게 번갈아 묻고 답하는 인터뷰를 진행합니다.", isPinned: false },
-  { id: "RT-046", title: "바디스캔", category: "휴식과 충전", time: "5분", level: "중급", duration: "한달", reward: "+30", iconNum: 46, desc: "머리부터 발끝까지 감각을 관찰하는 이완 세션입니다.", isPinned: false },
-  { id: "RT-050", title: "맨발산책", category: "스트레스 비우기", time: "5분", level: "중급", duration: "한달", reward: "+30", iconNum: 50, desc: "아무것도 들지 않고 발바닥을 느끼며 걷습니다.", isPinned: false },
-  { id: "RT-061", title: "친절수집함", category: "관계와 경계", time: "2분", level: "초급", duration: "매일", reward: "+15", iconNum: 61, desc: "오늘 타인에게 받은 온기를 수집하는 함입니다.", isPinned: false },
-  { id: "RT-071", title: "3-2-1 그라운딩", category: "몰입과 집중", time: "2분", level: "초급", duration: "매일", reward: "+15", iconNum: 71, desc: "보이는 것 3개, 들리는 것 2개, 맛 1개를 기록합니다.", isPinned: false },
+  RECURRING_26_RITUALS[0],  // 미소 명상 (RT-001)
+  RECURRING_26_RITUALS[8],  // 스트레스 분쇄 (RT-018)
 ];
 
 /**
@@ -346,7 +346,11 @@ export function FooterMoreSheet() {
           <div className="flex flex-col gap-1 text-left">
             <div className="flex items-center justify-between pb-1">
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-indigo-500" />
+                <img
+                  src="/images/logo_icon.svg"
+                  alt="리추얼 로고"
+                  className="w-4 h-4 object-contain shrink-0"
+                />
                 <h2 className="text-[0.9375rem] font-bold text-gray-900 tracking-tight">
                   전체 마음건강 리추얼
                 </h2>

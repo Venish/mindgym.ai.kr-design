@@ -13,6 +13,7 @@ import { getIconPath } from "@/utils/iconMap";
 import { useModalStore } from "@/store/useModalStore";
 import { CalendarSheet } from "@/components/dashboard/CalendarSheet";
 import { TodayMindSelectionWizard } from "@/components/common/TodayMindSelectionWizard";
+import { EveningReflectionWizard } from "@/components/common/EveningReflectionWizard";
 import { RoutineSetupSheet } from "@/components/dashboard/RoutineSetupSheet";
 
 interface ShowcaseHeroKvProps {
@@ -72,34 +73,34 @@ export function ShowcaseHeroKv({
         {/* 메인 히어로 상단: 아침 & 저녁 루틴 팝업 활성화 칩 바 */}
         <div className="flex items-center justify-between w-full z-20">
           <div className="flex items-center gap-2">
-            {/* 아침 루틴 팝업 버튼 */}
+            {/* 아침 루틴 팝업 버튼 -> 낮 체크인 (TodayMindSelectionWizard) 실행 */}
             <button
               type="button"
               onClick={() =>
                 openModal({
-                  type: "slide-up",
-                  content: <RoutineSetupSheet initialTab="MORNING" />,
+                  type: "slide-left",
+                  content: <TodayMindSelectionWizard />,
                 })
               }
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 hover:bg-white text-emerald-950 border border-emerald-200/80 shadow-2xs transition-all active:scale-95 cursor-pointer text-xs font-bold"
-              title="아침 루틴 설정 팝업 활성화"
+              title="오늘의 마음가짐 선택 (낮 체크인)"
             >
               <AnimatedMorningSun size={18} />
               <span>아침 루틴</span>
               <span className="text-[10px] font-extrabold text-[#00C474] bg-emerald-50 px-1.5 py-0.5 rounded-md">07:00</span>
             </button>
 
-            {/* 저녁 루틴 팝업 버튼 */}
+            {/* 저녁 루틴 팝업 버튼 -> 밤 체크인 (EveningReflectionWizard) 실행 */}
             <button
               type="button"
               onClick={() =>
                 openModal({
-                  type: "slide-up",
-                  content: <RoutineSetupSheet initialTab="EVENING" />,
+                  type: "slide-left",
+                  content: <EveningReflectionWizard />,
                 })
               }
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 hover:bg-white text-indigo-950 border border-indigo-200/80 shadow-2xs transition-all active:scale-95 cursor-pointer text-xs font-bold"
-              title="저녁 루틴 설정 팝업 활성화"
+              title="오늘 저녁 회고 (밤 체크인)"
             >
               <AnimatedEveningMoon size={18} />
               <span>저녁 루틴</span>

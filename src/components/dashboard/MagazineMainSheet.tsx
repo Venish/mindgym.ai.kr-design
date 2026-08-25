@@ -299,12 +299,8 @@ export function MagazineMainSheet({ initialVolId }: MagazineMainSheetProps) {
     return `VOL.${num} ${title}`;
   };
 
-  // 접힘 상태일 때 미리보기 항목 수 (2개)
-  const previewLimit = 2;
-  const visibleArticles = isTocOpen
-    ? cleanArticles
-    : cleanArticles.slice(0, previewLimit);
-  const hasMoreArticles = cleanArticles.length > previewLimit;
+  // 항상 전체 수록 아티클 목차 100% 펼침 노출 (접기 기능 삭제)
+  const visibleArticles = cleanArticles;
 
   return (
     <div className="w-full min-h-full bg-white flex flex-col select-none relative pb-12 text-gray-900 overflow-y-auto overflow-x-hidden">
@@ -447,12 +443,8 @@ export function MagazineMainSheet({ initialVolId }: MagazineMainSheetProps) {
                     key={mag.id}
                     onClick={(e) => {
                       e.stopPropagation();
-                      if (!isDragging) {
-                        if (rawOffset === 0) {
-                          setIsTocOpen(!isTocOpen);
-                        } else {
-                          setActiveIndex(idx);
-                        }
+                      if (!isDragging && rawOffset !== 0) {
+                        setActiveIndex(idx);
                       }
                     }}
                     style={{

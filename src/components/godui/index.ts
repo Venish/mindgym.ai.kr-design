@@ -10,3 +10,4 @@ export { NumberTicker } from "./NumberTicker";
 export { SegmentedControl } from "./SegmentedControl";
 export { SpotlightCard } from "./SpotlightCard";
 export { GodTabBar } from "./GodTabBar";
+export { SplitFlapDisplay } from "./SplitFlapDisplay";

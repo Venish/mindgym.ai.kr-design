@@ -719,3 +719,23 @@ li {
 span.badge-ls {
   letter-spacing: 0.025rem !important;
 }
+
+/* -------------------------------------------------------------
+ * 📱 Mobile Safari/Chrome Input Focus Zoom Prevention
+ * - iOS 사파리는 input, textarea, select의 font-size가 16px 미만일 때 포커스 시 자동 확대(zoom-in) 현상이 발생함
+ * - 포커스 상태 시 font-size를 16px 이상으로 고정하여 화면 줌 현상을 차단
+ * ------------------------------------------------------------- */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  select:focus,
+  textarea:focus,
+  input:focus,
+  input[type="text"]:focus,
+  input[type="number"]:focus,
+  input[type="password"]:focus,
+  input[type="email"]:focus,
+  input[type="search"]:focus,
+  input[type="tel"]:focus,
+  input[type="url"]:focus {
+    font-size: 16px !important;
+  }
+}

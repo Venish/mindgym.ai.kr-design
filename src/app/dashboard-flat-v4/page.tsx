@@ -122,7 +122,7 @@ function DashboardFlatV4Content() {
             <div className="flex flex-col gap-0.5 flex-1 text-left">
               <span className="text-xs font-bold text-emerald-800 tracking-tight flex items-center gap-1">
                 <Sparkle size={12} weight="fill" className="text-[#00C474]" />
-                이달의 나
+                이달의 나 · 8월
               </span>
               <div className="text-lg font-black text-gray-900 tracking-tight flex items-center gap-1">
                 <span>차분한 <span className="text-[var(--color-brand-green)]">8월</span> ·</span>

@@ -99,7 +99,7 @@ export function generateAllFilesDirectly() {
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>마인드짐 리추얼 NO.${item.id} — ${item.title}</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
   <style>
@@ -178,6 +178,8 @@ export function generateAllFilesDirectly() {
 
 // Immediate execution upon module import
 generateAllFilesDirectly();
+
+export const dynamic = "force-static";
 
 export async function GET() {
   return NextResponse.json({ success: true, count: 72, message: "72개 화이트 테마 개별 HTML 파일 생성 완료!" });

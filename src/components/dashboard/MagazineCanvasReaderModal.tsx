@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Play, Pause, TextT, Palette, CaretLeft, CaretRight, SkipForward, SkipBack, BookmarkSimple } from "@phosphor-icons/react";
 import { MagazineData } from "@/types/magazine";
-import { fetchArticleContentText } from "@/services/magazineService";
+import { getArticleTextContent } from "@/services/magazineService";
 
 interface MagazineCanvasReaderModalProps {
   isOpen: boolean;
@@ -24,6 +24,7 @@ export function MagazineCanvasReaderModal({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const isChangingRateRef = useRef<boolean>(false);
   const isSkippingRef = useRef<boolean>(false);
+  const isCancelingRef = useRef<boolean>(false);
   const sentencePageMapRef = useRef<Map<number, number>>(new Map());
 
   const [contentText, setContentText] = useState<string>("");
@@ -55,13 +56,56 @@ export function MagazineCanvasReaderModal({
         setIsBookmarked(false);
       }
 
-      fetchArticleContentText(magazine.id, articleTitle).then((text) => {
-        setContentText(text);
-        const rawSentences = text
-          .split(/(?<=[.!?])\s+/)
-          .map((s) => s.trim())
-          .filter((s) => s.length > 0);
-        setSentences(rawSentences);
+      const matchedArt = magazine.articles?.find((a) => a.title === articleTitle);
+      const sectionName = matchedArt ? matchedArt.section : undefined;
+
+      getArticleTextContent(magazine.id, articleTitle, sectionName).then((rawText) => {
+        // ★ by. 저자 표기 라인 추출 ★
+        const authorMatch = rawText.match(/\bby\.\s*[^\n]+/i);
+        const authorLine = authorMatch ? authorMatch[0].trim() : "";
+
+        // ★ 1. === 및 --- 연속 구분선 & 상단 중복 헤더 문구 100% 소거 정제 ★
+        let cleanedText = rawText
+          .replace(/={3,}/g, "")
+          .replace(/-{3,}/g, "")
+          .replace(/\bby\.\s*[^\n]+/gi, "") // 상단 by. 라인 제거
+          .replace(/\[?주제\s*칼럼[^\]\n]*\]?/gi, "")
+          .replace(/한\s*가지\s*주제를\s*둘러싼\s*다채로운\s*칼럼\s*모음입니다\.?/gi, "")
+          .replace(/이달의\s*주제\s*:[^\n]+/gi, "")
+          .replace(/\n{3,}/g, "\n\n")
+          .trim();
+
+        // ★ by 저자 표기를 글 맨 마지막 하단에 배치 ★
+        if (authorLine) {
+          cleanedText = cleanedText + "\n\n" + authorLine;
+        }
+
+        setContentText(cleanedText);
+
+        // 2. 원문의 개행(\n)을 보존하여 줄바꿈 및 단락 분할
+        // 'by.' 마침표가 문장 구분자로 오인되어 줄바꿈되는 현상 방지 예외 처리
+        const safeText = cleanedText.replace(/\bby\./gi, "by__DOT__");
+        const paragraphs = safeText.split(/\n/);
+        const parsedSentences: string[] = [];
+
+        paragraphs.forEach((p) => {
+          const trimmedP = p.trim();
+          if (trimmedP.length === 0) {
+            parsedSentences.push(""); // 개행 여백 보존용 빈 줄
+          } else {
+            const subSentences = trimmedP
+              .split(/(?<=[.!?])\s+/)
+              .map((s) => s.replace(/by__DOT__/g, "by.").trim())
+              .filter((s) => s.length > 0);
+            if (subSentences.length > 0) {
+              parsedSentences.push(...subSentences);
+            } else {
+              parsedSentences.push(trimmedP.replace(/by__DOT__/g, "by."));
+            }
+          }
+        });
+
+        setSentences(parsedSentences);
         setCurrentSentenceIndex(-1);
         setPlayerStatus("IDLE");
         setCurrentPage(1);
@@ -155,55 +199,37 @@ export function MagazineCanvasReaderModal({
       }
     }
 
-    // B. 상단 매거진 권호 & 아티클 제목 렌더링 (책갈피 아이콘 바로 옆 52px 오프셋 수평 정렬)
+    // B. 상단 매거진 권호 & 아티클 제목 Y좌표 사전 측정 (1페이지 원본 표준 기준)
     const headerPaddingLeft = 52;
     const paddingX = 24;
-    let currentY = 32;
+    let titleYTracker = 32;
 
     if (magazine) {
-      const volNum = magazine.id.replace(/^vol-/i, "").padStart(2, "0");
-      ctx.font = `bold 12px Pretendard, sans-serif`;
-      ctx.fillStyle = volColor;
-      ctx.fillText(`VOL.${volNum} · ${magazine.title}`, headerPaddingLeft, currentY);
-      currentY += 24;
+      titleYTracker += 24;
     }
 
-    // C. 아티클 제목 드로잉 (책갈피 아이콘 수직 라인 52px 정렬)
+    // 1페이지 원본 20px 대형 아티클 제목 줄 수 및 Y좌표 계산
     ctx.font = `bold 20px Pretendard, sans-serif`;
-    ctx.fillStyle = titleColor;
-
     const titleWords = articleTitle.split(" ");
     let titleLine = "";
-    const maxTitleWidth = width - headerPaddingLeft - paddingX;
+    const maxTitleWidth = width - headerPaddingLeft - paddingX - 10;
 
     for (let i = 0; i < titleWords.length; i++) {
       const testLine = titleLine + titleWords[i] + " ";
       const metrics = ctx.measureText(testLine);
       if (metrics.width > maxTitleWidth && i > 0) {
-        ctx.fillText(titleLine, headerPaddingLeft, currentY);
         titleLine = titleWords[i] + " ";
-        currentY += 27;
+        titleYTracker += 27;
       } else {
         titleLine = testLine;
       }
     }
-    ctx.fillText(titleLine, headerPaddingLeft, currentY);
-    currentY += 16;
+    titleYTracker += 72; // 상단 헤더와 아래 본문 내용 사이 시원하게 넓힌 여유 수직 간격 (72px)
 
-    // 제목 하단 은은한 구분선 (52px 시작 오프셋 정렬)
-    ctx.strokeStyle = paperTheme === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.08)";
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(headerPaddingLeft, currentY);
-    ctx.lineTo(width - paddingX, currentY);
-    ctx.stroke();
-
-    currentY += 26;
-
-    // D. 본문 문장 2-Pass 사전 측정 및 드로잉 Engine (페이지 계산과 드로잉 완전 분리!)
-    const lineYStart = currentY;
-    const availableHeight = height - lineYStart - 20; // 하단 여백
-    const lineHeight = fontSize * 1.65;
+    // ★ 모든 페이지(1페이지, 2페이지...) 본문 시작 Y좌표를 1페이지 원본 타이틀 하단으로 100% 통일 ★
+    const firstPageYStart = titleYTracker;
+    const subsequentPageYStart = titleYTracker;       
+    const lineHeight = fontSize * 1.65;    // 기본 줄간격 (1.65배)
     const maxTextWidth = width - paddingX * 2;
 
     interface LineItem {
@@ -216,12 +242,21 @@ export function MagazineCanvasReaderModal({
 
     const calculatedLines: LineItem[] = [];
     let pageTracker = 1;
-    let yTracker = lineYStart;
+    let yTracker = firstPageYStart;
     let targetSentencePage = 1;
     const newPageMap = new Map<number, number>();
 
-    // 1st Pass: 문장(단락) 단위 전체 텍스트 레이아웃 사전 측정 (단락 중간 잘림 방지 100% 보장!)
+    // 1st Pass: 문장(단락) 단위 전체 텍스트 레이아웃 사전 측정
     sentences.forEach((sentence, sIdx) => {
+      // 모든 문장 인덱스를 100% 페이지 지도(Map)에 등록
+      newPageMap.set(sIdx, pageTracker);
+
+      // 빈 개행 줄인 경우 줄바꿈 여백만 yTracker에 추가 후 다음 문장으로!
+      if (sentence === "") {
+        yTracker += lineHeight * 0.7;
+        return;
+      }
+
       const isCurrentHighlighted = sIdx === currentSentenceIndex;
       const words = sentence.split(" ");
       const sentenceLines: string[] = [];
@@ -229,7 +264,6 @@ export function MagazineCanvasReaderModal({
 
       ctx.font = `400 ${fontSize}px Pretendard, -apple-system, sans-serif`;
 
-      // A. 해당 문장이 차지할 전체 줄(Line) 목록 사전 분할
       for (let wIdx = 0; wIdx < words.length; wIdx++) {
         const testLine = currentLine + words[wIdx] + " ";
         const metrics = ctx.measureText(testLine);
@@ -245,22 +279,18 @@ export function MagazineCanvasReaderModal({
         sentenceLines.push(currentLine.trim());
       }
 
-      // B. 문장 전체 높이 계산 (줄 개수 × 줄높이 + 단락 간격)
       const sentenceTotalHeight = sentenceLines.length * lineHeight + 6;
 
-      // ★ [단락 보존 페이징 규칙]: 문장 중간이 쪼개지지 않도록, 여백 초과 시 문장 전체를 100% 다음 페이지 첫 머리로 이송! ★
-      if (yTracker + sentenceTotalHeight > height - 20 && calculatedLines.length > 0) {
+      // 페이지 전환 시 동일한 titleYTracker 유지
+      if (yTracker + sentenceTotalHeight > height - 16 && calculatedLines.length > 0) {
         pageTracker++;
-        yTracker = lineYStart;
+        yTracker = subsequentPageYStart;
       }
-
-      newPageMap.set(sIdx, pageTracker);
 
       if (isCurrentHighlighted) {
         targetSentencePage = pageTracker;
       }
 
-      // C. 계산된 Y 좌표로 문장 줄 등록
       sentenceLines.forEach((lineText) => {
         calculatedLines.push({
           text: lineText,
@@ -272,11 +302,42 @@ export function MagazineCanvasReaderModal({
         yTracker += lineHeight;
       });
 
-      yTracker += 6; // 단락 간 미세 간격
+      yTracker += 6;
     });
 
     sentencePageMapRef.current = newPageMap;
-    setTotalPages(Math.max(1, pageTracker));
+    const computedPages = Math.max(1, pageTracker);
+    setTotalPages((prev) => (prev !== computedPages ? computedPages : prev));
+    setCurrentPage((prev) => Math.min(prev, computedPages));
+
+    // ★ 2nd Pass: 모든 페이지(1페이지, 2페이지...)에서 1페이지 원본의 아름다운 커버 헤더 100% 렌더링 ★
+    let renderY = 32;
+    if (magazine) {
+      const volNum = magazine.id.replace(/^vol-/i, "").padStart(2, "0");
+      ctx.font = `bold 12px Pretendard, sans-serif`;
+      ctx.fillStyle = volColor;
+      ctx.fillText(`VOL.${volNum} · ${magazine.title}`, headerPaddingLeft, renderY);
+      renderY += 24;
+    }
+
+    ctx.font = `bold 20px Pretendard, sans-serif`;
+    ctx.fillStyle = titleColor;
+
+    let rTitleLine = "";
+    for (let i = 0; i < titleWords.length; i++) {
+      const testLine = rTitleLine + titleWords[i] + " ";
+      const metrics = ctx.measureText(testLine);
+      if (metrics.width > maxTitleWidth && i > 0) {
+        ctx.fillText(rTitleLine, headerPaddingLeft, renderY);
+        rTitleLine = titleWords[i] + " ";
+        renderY += 27;
+      } else {
+        rTitleLine = testLine;
+      }
+    }
+    ctx.fillText(rTitleLine, headerPaddingLeft, renderY);
+
+    // 2nd Pass 본문 드로잉: 현재 선택된 currentPage 에 해당하는 줄들만 캔버스에 100% 드로잉!
 
     // 2nd Pass: 현재 선택된 currentPage 에 해당하는 줄들만 캔버스에 100% 드로잉!
     const currentPageLines = calculatedLines.filter((item) => item.page === currentPage);
@@ -316,6 +377,7 @@ export function MagazineCanvasReaderModal({
   const speakVoiceFromIndex = useCallback((targetIndex: number, overrideRate?: number) => {
     if (typeof window === "undefined" || !window.speechSynthesis || sentences.length === 0) return;
 
+    isCancelingRef.current = false;
     window.speechSynthesis.cancel();
     const startIndex = Math.max(0, Math.min(sentences.length - 1, targetIndex));
     const utterance = new SpeechSynthesisUtterance(sentences.slice(startIndex).join(" "));
@@ -341,6 +403,10 @@ export function MagazineCanvasReaderModal({
     };
 
     utterance.onend = () => {
+      if (isCancelingRef.current) {
+        isCancelingRef.current = false;
+        return;
+      }
       if (isChangingRateRef.current) {
         isChangingRateRef.current = false;
         return;
@@ -354,6 +420,10 @@ export function MagazineCanvasReaderModal({
     };
 
     utterance.onerror = () => {
+      if (isCancelingRef.current) {
+        isCancelingRef.current = false;
+        return;
+      }
       if (isChangingRateRef.current) {
         isChangingRateRef.current = false;
         return;
@@ -371,33 +441,73 @@ export function MagazineCanvasReaderModal({
     setPlayerStatus("PLAYING");
   }, [sentences, ttsRate]);
 
-  // 5. [중앙 메인 버튼] Play / Pause 자동 독서 재생/일시정지
+  // ★ 페이지 변경 헬퍼 함수 (이전/다음 이동 시 Play 멈춤 & 튐 방지!) ★
+  const changePage = (newPage: number) => {
+    const clampedPage = Math.max(1, Math.min(totalPages, newPage));
+    if (clampedPage === currentPage) return;
+
+    // Play(음성 낭독) 중이라면 즉시 멈춤 및 취소 락(Lock) 적용
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      isCancelingRef.current = true;
+      window.speechSynthesis.cancel();
+    }
+    setPlayerStatus("IDLE");
+    setCurrentSentenceIndex(-1);
+
+    setCurrentPage(clampedPage);
+  };
+
+  // 5. [중앙 메인 버튼] Play / Pause 자동 독서 재생/일시정지 (현재 페이지 가장 위에서부터 시작)
   const handleToggleAutoPlay = () => {
     if (typeof window === "undefined" || !window.speechSynthesis) return;
 
     if (playerStatus === "PLAYING") {
-      window.speechSynthesis.pause();
+      isCancelingRef.current = true;
+      window.speechSynthesis.cancel();
       setPlayerStatus("PAUSED");
-    } else if (playerStatus === "PAUSED") {
-      window.speechSynthesis.resume();
-      setPlayerStatus("PLAYING");
     } else {
-      const idx = currentSentenceIndex >= 0 ? currentSentenceIndex : 0;
-      speakVoiceFromIndex(idx);
+      // 현재 화면에 뜨는 페이지(currentPage)의 가장 첫 문장 index 찾기
+      let firstSentenceOfPage = 0;
+      for (let i = 0; i < sentences.length; i++) {
+        if (sentencePageMapRef.current.get(i) === currentPage) {
+          firstSentenceOfPage = i;
+          break;
+        }
+      }
+      speakVoiceFromIndex(firstSentenceOfPage);
     }
   };
 
-  // 6. [중앙 콤보 양옆] 이전 / 다음 단락 스킵 (0ms 스킵 & 자동 페이지 넘김 연동!)
+  // 6. [중앙 콤보 양옆] 이전 / 다음 단락 스킵 (현재 화면 페이지 기준 0ms 안전 이동)
   const handleSkipParagraph = (direction: "prev" | "next") => {
     if (sentences.length === 0) return;
 
-    let targetIdx = 0;
-    if (currentSentenceIndex < 0) {
-      targetIdx = direction === "next" ? 0 : sentences.length - 1;
-    } else {
-      targetIdx = direction === "next"
-        ? (currentSentenceIndex + 1) % sentences.length
-        : (currentSentenceIndex - 1 + sentences.length) % sentences.length;
+    // 현재 위치한 문장 인덱스 구하기 (미지정이면 현재 화면 페이지의 첫 문장 기준)
+    let currentIdx = currentSentenceIndex;
+    if (currentIdx < 0) {
+      for (let i = 0; i < sentences.length; i++) {
+        if (sentencePageMapRef.current.get(i) === currentPage) {
+          currentIdx = i;
+          break;
+        }
+      }
+      if (currentIdx < 0) currentIdx = 0;
+    }
+
+    let targetIdx = currentIdx;
+    let attempts = 0;
+    while (attempts < sentences.length) {
+      if (direction === "next") {
+        targetIdx = Math.min(sentences.length - 1, targetIdx + 1);
+      } else {
+        targetIdx = Math.max(0, targetIdx - 1);
+      }
+      attempts++;
+
+      // 만약 targetIdx 문장에 실제 글자가 있거나 끝에 다다르면 스킵 안착!
+      if (sentences[targetIdx].trim().length > 0 || targetIdx === 0 || targetIdx === sentences.length - 1) {
+        break;
+      }
     }
 
     isSkippingRef.current = true;
@@ -441,6 +551,35 @@ export function MagazineCanvasReaderModal({
     else setPaperTheme("warm");
   };
 
+  // ★ 캔버스 좌우 스와이핑(Swipe) 페이지 넘김 제스처 핸들러 ★
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchStartY, setTouchStartY] = useState<number | null>(null);
+
+  const handleTouchStartCanvas = (clientX: number, clientY: number) => {
+    setTouchStartX(clientX);
+    setTouchStartY(clientY);
+  };
+
+  const handleTouchEndCanvas = (clientX: number, clientY: number) => {
+    if (touchStartX === null || touchStartY === null) return;
+    const diffX = clientX - touchStartX;
+    const diffY = clientY - touchStartY;
+
+    // 수평 스와이프 (X 이동이 35px 이상 및 Y 이동보다 큼)
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 35) {
+      if (diffX < 0) {
+        // 왼쪽으로 스와이프 ➔ 다음 페이지 (Play 자동 멈춤 적용)
+        changePage(currentPage + 1);
+      } else {
+        // 오른쪽으로 스와이프 ➔ 이전 페이지 (Play 자동 멈춤 적용)
+        changePage(currentPage - 1);
+      }
+    }
+
+    setTouchStartX(null);
+    setTouchStartY(null);
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -482,8 +621,14 @@ export function MagazineCanvasReaderModal({
               </button>
             </div>
 
-            {/* ★ HTML5 2D Canvas 영역 (하단 컨트롤 바 높이 3.75rem 뺀 전체 핏) ★ */}
-            <div className="absolute top-0 left-0 right-0 bottom-[3.75rem] w-full overflow-hidden">
+            {/* ★ HTML5 2D Canvas 영역 (좌우 스와이핑 터치/마우스 제스처 이벤트 적용) ★ */}
+            <div
+              onMouseDown={(e) => handleTouchStartCanvas(e.clientX, e.clientY)}
+              onMouseUp={(e) => handleTouchEndCanvas(e.clientX, e.clientY)}
+              onTouchStart={(e) => handleTouchStartCanvas(e.touches[0].clientX, e.touches[0].clientY)}
+              onTouchEnd={(e) => handleTouchEndCanvas(e.changedTouches[0].clientX, e.changedTouches[0].clientY)}
+              className="absolute top-0 left-0 right-0 bottom-[3.75rem] w-full overflow-hidden cursor-grab active:cursor-grabbing"
+            >
               <canvas ref={canvasRef} className="w-full h-full block" />
             </div>
 
@@ -503,47 +648,31 @@ export function MagazineCanvasReaderModal({
 
             {/* ★ 하단 고정 플로팅 컨트롤 바 (Play & 화살표 콤보 정중앙 absolute left-1/2 -translate-x-1/2 정렬) ★ */}
             <div className="absolute bottom-0 left-0 right-0 h-[3.75rem] bg-white/95 backdrop-blur-md border-t border-gray-200/60 px-[0.75rem] flex items-center justify-between z-40 shadow-lg select-none">
-              {/* [맨 좌측 뷰어 옵션 그룹]: 속도 칩 + 글자 크기(A) + 배경 컬러 테마(🎨) - 컴팩트 34px (w-[2.125rem] h-[2.125rem]) */}
+              {/* [맨 좌측 그룹]: 시원하게 확대된 페이지 인디케이터 & 수동 넘김 네비게이터 */}
               <div className="flex items-center gap-[0.25rem] shrink-0">
-                {/* 1. 속도 칩 */}
-                <button
-                  type="button"
-                  onClick={handleCycleTtsRate}
-                  className="w-[2.125rem] h-[2.125rem] rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 text-[0.6875rem] font-extrabold tracking-tighter flex items-center justify-center transition-all cursor-pointer shrink-0 tabular-nums active:scale-90"
-                  title="낭독/독서 속도 변경 (1.0 -> 2.0 -> 3.0 -> 0.5)"
-                >
-                  {ttsRate.toFixed(1)}
-                </button>
-
-                {/* 2. 글자 크기 버튼 */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (fontSize === 15) setFontSize(17);
-                    else if (fontSize === 17) setFontSize(20);
-                    else setFontSize(15);
-                  }}
-                  className="w-[2.125rem] h-[2.125rem] rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center transition-all cursor-pointer shrink-0 active:scale-90"
-                  title="글자 크기 변경 (15px -> 17px -> 20px)"
-                >
-                  <TextT size={15} weight="bold" />
-                </button>
-
-                {/* 3. 배경 종이 컬러 테마 버튼 */}
-                <button
-                  type="button"
-                  onClick={handleCyclePaperTheme}
-                  className={`w-[2.125rem] h-[2.125rem] rounded-full flex items-center justify-center transition-all cursor-pointer shrink-0 active:scale-90 ${
-                    paperTheme === "warm"
-                      ? "bg-amber-100 text-amber-800"
-                      : paperTheme === "dark"
-                      ? "bg-gray-800 text-gray-100"
-                      : "bg-emerald-100 text-emerald-800"
-                  }`}
-                  title={`배경 종이 테마 변경 (현재: ${paperTheme.toUpperCase()})`}
-                >
-                  <Palette size={15} weight="bold" />
-                </button>
+                <div className="flex items-center gap-1.5 text-xs font-extrabold text-gray-800 tabular-nums bg-gray-100/90 rounded-full p-1 border border-gray-200/60 shadow-2xs">
+                  <button
+                    type="button"
+                    disabled={currentPage <= 1}
+                    onClick={() => changePage(currentPage - 1)}
+                    className="w-7 h-7 rounded-full bg-white hover:bg-gray-200 text-gray-800 flex items-center justify-center transition-all disabled:opacity-30 disabled:pointer-events-none cursor-pointer active:scale-90 shadow-2xs"
+                    title="이전 페이지"
+                  >
+                    <CaretLeft size={16} weight="bold" />
+                  </button>
+                  <span className="px-1 text-[13px] font-black text-gray-900 select-none">
+                    {currentPage}/{totalPages}
+                  </span>
+                  <button
+                    type="button"
+                    disabled={currentPage >= totalPages}
+                    onClick={() => changePage(currentPage + 1)}
+                    className="w-7 h-7 rounded-full bg-white hover:bg-gray-200 text-gray-800 flex items-center justify-center transition-all disabled:opacity-30 disabled:pointer-events-none cursor-pointer active:scale-90 shadow-2xs"
+                    title="다음 페이지"
+                  >
+                    <CaretRight size={16} weight="bold" />
+                  </button>
+                </div>
               </div>
 
               {/* ★ [정중앙 콤보 그룹]: 이전 단락 ◀ | Play ▶ / ❚❚ | 다음 단락 ▶ (언제든지 클릭 자유) ★ */}
@@ -584,29 +713,47 @@ export function MagazineCanvasReaderModal({
                 </button>
               </div>
 
-              {/* [맨 우측 그룹]: 페이지 인디케이터 & 수동 넘김 네비게이터 */}
+              {/* [맨 우측 뷰어 옵션 그룹]: 속도 칩 + 글자 크기(A) + 배경 컬러 테마(🎨) - 컴팩트 34px (w-[2.125rem] h-[2.125rem]) */}
               <div className="flex items-center gap-[0.25rem] shrink-0">
-                <div className="flex items-center gap-[0.125rem] text-[0.6875rem] font-bold text-gray-600 tabular-nums bg-gray-100/90 rounded-full px-[0.375rem] py-[0.25rem]">
-                  <button
-                    type="button"
-                    disabled={currentPage <= 1}
-                    onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                    className="p-[0.125rem] rounded-full hover:bg-gray-200 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
-                  >
-                    <CaretLeft size={13} weight="bold" />
-                  </button>
-                  <span>
-                    {currentPage}/{totalPages}
-                  </span>
-                  <button
-                    type="button"
-                    disabled={currentPage >= totalPages}
-                    onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                    className="p-[0.125rem] rounded-full hover:bg-gray-200 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
-                  >
-                    <CaretRight size={13} weight="bold" />
-                  </button>
-                </div>
+                {/* 1. 속도 칩 */}
+                <button
+                  type="button"
+                  onClick={handleCycleTtsRate}
+                  className="w-[2.125rem] h-[2.125rem] rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 text-[0.6875rem] font-extrabold tracking-tighter flex items-center justify-center transition-all cursor-pointer shrink-0 tabular-nums active:scale-90"
+                  title="낭독/독서 속도 변경 (1.0 -> 2.0 -> 3.0 -> 0.5)"
+                >
+                  {ttsRate.toFixed(1)}
+                </button>
+
+                {/* 2. 글자 크기 버튼 */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (fontSize === 15) setFontSize(17);
+                    else if (fontSize === 17) setFontSize(20);
+                    else setFontSize(15);
+                  }}
+                  className="w-[2.125rem] h-[2.125rem] rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center transition-all cursor-pointer shrink-0 active:scale-90"
+                  title="글자 크기 변경 (15px -> 17px -> 20px)"
+                >
+                  <TextT size={15} weight="bold" />
+                </button>
+
+                {/* 3. 배경 종이 컬러 테마 버튼 */}
+                <button
+                  type="button"
+                  onClick={handleCyclePaperTheme}
+                  className={`w-[2.125rem] h-[2.125rem] rounded-full flex items-center justify-center transition-all cursor-pointer shrink-0 active:scale-90 ${
+                    paperTheme === "warm"
+                      ? "bg-amber-100 text-amber-800"
+                      : paperTheme === "dark"
+                      ? "bg-gray-800 text-gray-100"
+                      : "bg-emerald-100 text-emerald-800"
+                  }`}
+                  title={`배경 종이 테마 변경 (현재: ${paperTheme.toUpperCase()})`}
+                >
+                  <Palette size={15} weight="bold" />
+                </button>
               </div>
             </div>
           </div>

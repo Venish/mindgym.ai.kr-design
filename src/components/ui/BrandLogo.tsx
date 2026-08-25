@@ -10,31 +10,35 @@ interface BrandLogoProps {
 }
 
 export function BrandLogo({ className = "", size = "md" }: BrandLogoProps) {
-  const iconSizes = {
-    sm: 18,
-    md: 22,
-    lg: 28,
+  const heights = {
+    sm: "h-[20px]",
+    md: "h-[24px]",
+    lg: "h-[30px]",
   };
 
-  const textClasses = {
-    sm: "text-lg",
-    md: "text-xl",
-    lg: "text-2xl",
+  const pxHeights = {
+    sm: 20,
+    md: 24,
+    lg: 30,
+  };
+
+  // viewBox 512 x 112 (Aspect ratio 4.57 : 1)
+  const pxWidths = {
+    sm: 91,
+    md: 110,
+    lg: 137,
   };
 
   return (
-    <div className={cn("inline-flex items-center gap-1.5 select-none cursor-default", className)}>
+    <div className={cn("inline-flex items-center select-none cursor-default shrink-0", className)}>
       <Image
-        src="/images/logo_icon.svg"
-        alt="MindGym Logo Icon"
-        width={iconSizes[size]}
-        height={iconSizes[size]}
-        className="shrink-0"
+        src="/images/logo.svg"
+        alt="MindGym Logo"
+        width={pxWidths[size]}
+        height={pxHeights[size]}
+        className={cn("w-auto shrink-0 object-contain", heights[size])}
         priority
       />
-      <span className={cn("font-black tracking-tight txt-brand-ink lowercase leading-none", textClasses[size])}>
-        mindgym
-      </span>
     </div>
   );
 }

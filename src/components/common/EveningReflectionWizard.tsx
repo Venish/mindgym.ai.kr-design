@@ -33,7 +33,7 @@ export function EveningReflectionWizard({
       {/* 1. 서브 헤더 */}
       <SubPageHeader
         title="오늘 하루 저녁 회고"
-        leftType="close"
+        leftType="back"
         onLeftClick={closeModal}
       />
 

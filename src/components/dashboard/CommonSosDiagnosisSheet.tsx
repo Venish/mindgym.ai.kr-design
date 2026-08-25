@@ -8,6 +8,7 @@ import { CommonRitualSheet } from "@/components/dashboard/CommonRitualSheet";
 
 interface SosItem {
   id: string;
+  ritualId: string;
   label: string;
   prescriptionTitle: string;
   prescriptionDesc: string;
@@ -16,32 +17,36 @@ interface SosItem {
 const sosPrescriptionData: SosItem[] = [
   {
     id: "sos-1",
+    ritualId: "RT-007",
     label: "급격한 감정적인 불안과 초조",
-    prescriptionTitle: "횡경막 안심 호흡법",
-    prescriptionDesc: "아랫배 깊숙이 들이마시고 내쉬는 호흡 감각에 집중해 심박수를 낮추는 1분 리추얼입니다.",
+    prescriptionTitle: "복식호흡",
+    prescriptionDesc: "아랫배 깊숙이 들이마시고 내쉬며 즉각 심박수를 낮추는 긴급 호흡법입니다.",
   },
   {
     id: "sos-2",
-    label: "머리가 복잡하고 집중 불가",
-    prescriptionTitle: "333 나비포옹 테라피",
-    prescriptionDesc: "양팔을 가슴 위에 교차해 번갈아 다독이며 복잡한 잡념을 즉시 끊어내는 1분 리추얼입니다.",
+    ritualId: "RT-004",
+    label: "머리가 복잡하고 잡념 제어 불가",
+    prescriptionTitle: "걱정 일기",
+    prescriptionDesc: "머릿속을 맴도는 막연한 불안과 미래 공포를 글로 적어 가두어내는 리추얼입니다.",
   },
   {
     id: "sos-3",
-    label: "가슴이 갑갑하고 번아웃 느낌",
-    prescriptionTitle: "미소 공간 비우기 명상",
-    prescriptionDesc: "얼굴 근육의 긴장을 풀고 평온한 미소와 함께 갑갑했던 마음을 비워내는 1분 리추얼입니다.",
+    ritualId: "RT-018",
+    label: "가슴이 답답하고 분노/스트레스",
+    prescriptionTitle: "스트레스 분쇄",
+    prescriptionDesc: "나를 괴롭히는 감정을 종이에 솔직하게 적은 후, 파쇄기로 갈갈이 분쇄하는 리추얼입니다.",
   },
   {
     id: "sos-4",
-    label: "나도 모르게 스스로를 자책함",
-    prescriptionTitle: "자기자비 쉼표 다독임",
-    prescriptionDesc: "타인을 대하듯 나 자신에게 다정한 변호인이 되어 따뜻한 화해를 청하는 1분 리추얼입니다.",
+    ritualId: "RT-001",
+    label: "스스로를 비난하고 자책함",
+    prescriptionTitle: "미소 명상",
+    prescriptionDesc: "얼굴 근육의 긴장을 풀고 온화한 미소와 함께 스스로를 다정하게 다독이는 명상입니다.",
   },
 ];
 
 /**
- * CommonSosDiagnosisSheet: 긴급 SOS 처방 모달 (항목 클릭 시 샘플 공통 리추얼 모달로 바로 이동)
+ * CommonSosDiagnosisSheet: 긴급 SOS 처방 모달 (공식 27개 우선순위 리추얼 100% 매핑 연동)
  */
 export function CommonSosDiagnosisSheet() {
   const { closeModal, openModal } = useModalStore();
@@ -51,9 +56,9 @@ export function CommonSosDiagnosisSheet() {
       type: "slide-left",
       content: (
         <CommonRitualSheet
+          ritualId={sosItem.ritualId}
           ritualTitle={sosItem.prescriptionTitle}
           ritualCategory="SOS 긴급처방"
-          ritualTime="1분"
           description={sosItem.prescriptionDesc}
         />
       ),

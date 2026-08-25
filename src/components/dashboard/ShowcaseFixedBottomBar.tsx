@@ -8,20 +8,10 @@ import { CommonRitualSheet } from "@/components/dashboard/CommonRitualSheet";
 import { FooterMoreSheet } from "@/components/dashboard/FooterMoreSheet";
 import { RitualRainbowIconCard, RitualSlateIconCard } from "@/components/ui/RitualGlassIconCard";
 
-// 테스트용 등록 아이콘 12개 데이터셋
+// 등록 아이콘 2개 데이터셋 (미소 명상, 스트레스 분쇄)
 const RITUAL_LIST = [
-  { id: "RT-001", title: "미소 명상", iconNum: 1, cat: "휴식과 충전", time: "3분", desc: "입가에 옅은 미소를 지으며 얼굴 근육의 긴장을 푸는 미소 명상입니다." },
-  { id: "RT-012", title: "마음일기", iconNum: 12, cat: "자책", time: "5분", desc: "세상의 비난 속에서도 나만의 다정한 변호인이 되어 일기를 씁니다." },
-  { id: "RT-004", title: "횡경막 호흡", iconNum: 4, cat: "불안", time: "1분", desc: "아랫배 깊숙이 들이마시고 내쉬는 호흡 감각에 집중해 심박수를 낮춥니다." },
-  { id: "RT-010", title: "333 나비포옹", iconNum: 10, cat: "불안", time: "1분", desc: "양팔을 교차해 스스로 양어깨를 번갈아 다독이며 불안 요소를 잠재웁니다." },
-  { id: "RT-003", title: "시선고정 명상", iconNum: 3, cat: "휴식", time: "1분", desc: "사물 하나에 1분간 시선을 고정하는 명상입니다." },
-  { id: "RT-024", title: "마음선물", iconNum: 24, cat: "감정", time: "1분", desc: "오늘 내 마음의 온도를 시각화해서 기록합니다." },
-  { id: "RT-028", title: "분노일기", iconNum: 28, cat: "수용", time: "3분", desc: "솔직한 분노 후 감정을 수용하는 일기를 씁니다." },
-  { id: "RT-037", title: "셀프 QnA", iconNum: 37, cat: "질문", time: "3분", desc: "나에게 번갈아 묻고 답하는 인터뷰를 진행합니다." },
-  { id: "RT-046", title: "바디스캔", iconNum: 46, cat: "이완", time: "5분", desc: "머리부터 발끝까지 감각을 관찰하는 이완 세션입니다." },
-  { id: "RT-050", title: "맨발산책", iconNum: 50, cat: "산책", time: "5분", desc: "아무것도 들지 않고 발바닥을 느끼며 걷습니다." },
-  { id: "RT-061", title: "친절수집함", iconNum: 61, cat: "연결", time: "2분", desc: "오늘 타인에게 받은 온기를 수집하는 함입니다." },
-  { id: "RT-071", title: "3-2-1 그라운딩", iconNum: 71, cat: "기록", time: "2분", desc: "보이는 것 3개, 들리는 것 2개, 맛 1개를 기록합니다." },
+  { id: "RT-001", title: "미소 명상", iconNum: 1, cat: "휴식과 충전", time: "3분", desc: "얼굴 근육의 긴장을 풀고 평온한 활력을 채우는 아침 미소 명상입니다." },
+  { id: "RT-018", title: "스트레스 분쇄", iconNum: 8, cat: "스트레스 비우기", time: "2분", desc: "나를 괴롭히는 감정을 종이에 적어 물리적으로 파쇄하고 가볍게 비워내는 리추얼입니다." },
 ];
 
 /**
@@ -32,7 +22,7 @@ const RITUAL_LIST = [
  */
 export function ShowcaseFixedBottomBar() {
   const router = useRouter();
-  const { openModal } = useModalStore();
+  const { openModal, clearModals } = useModalStore();
   const [isExpanded, setIsExpanded] = useState(false);
 
   const totalCount = RITUAL_LIST.length; // 12개
@@ -41,13 +31,13 @@ export function ShowcaseFixedBottomBar() {
   const expandedHeightRem = rowCount * 5.8 + 4.2;
   const currentHeightStyle = isExpanded ? `${expandedHeightRem}rem` : "5.8rem";
 
-  // 첫 번째 행용 아이콘 (최대 4개)
-  const firstRowRituals = RITUAL_LIST.slice(0, 4);
-  const firstRowEmptyCount = Math.max(0, 4 - firstRowRituals.length);
+  // 첫 번째 행용 아이콘 (메인 메뉴 2개 노출)
+  const firstRowRituals = RITUAL_LIST.slice(0, 2);
+  const firstRowEmptyCount = Math.max(0, 4 - firstRowRituals.length); // 2개 빈 슬롯
   const firstRowEmptySlots = Array.from({ length: firstRowEmptyCount });
 
-  // 2번째 행 이상용 아이콘 (4개 초과분)
-  const subsequentRituals = RITUAL_LIST.slice(4);
+  // 2번째 행 이상용 아이콘 (2개 초과분)
+  const subsequentRituals = RITUAL_LIST.slice(2);
 
   const handleOpenRitual = (r: (typeof RITUAL_LIST)[0]) => {
     openModal({
@@ -131,7 +121,10 @@ export function ShowcaseFixedBottomBar() {
             <button
               key={`empty-1st-${idx}`}
               type="button"
-              onClick={() => router.push("/ritual")}
+              onClick={() => {
+                clearModals();
+                router.push("/ritual");
+              }}
               className="flex flex-col items-center justify-center shrink-0 group outline-none cursor-pointer"
               title="리추얼 추가하기 (빈 슬롯)"
             >

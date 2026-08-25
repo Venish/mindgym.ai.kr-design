@@ -32,11 +32,11 @@ export function OnboardingSlidesView({
       badge: "WELCOME · MINDGYM",
       title: (
         <>
-          한 달을 살아가는 데 <br />
-          <AuroraText>도움을 드립니다</AuroraText>
+          바쁜 하루 속에서도 <br />
+          <AuroraText>나를 잃지 않도록</AuroraText>
         </>
       ),
-      sub: "마인드짐에 오신 것을 환영합니다. 매일 1분~5분 틈새 리추얼로 일상 속 감정과 스트레스를 케어해 보세요.",
+      sub: "마음에도 운동이 필요합니다",
       icon: (
         <img
           src="/images/logo_icon.svg"
@@ -80,23 +80,42 @@ export function OnboardingSlidesView({
     },
   ];
 
+  const handleDragEnd = (_: any, info: { offset: { x: number } }) => {
+    const swipeThreshold = 50;
+    if (info.offset.x < -swipeThreshold) {
+      // 왼쪽으로 스와이프 (다음)
+      if (slideIndex < slides.length - 1) {
+        onNextSlide();
+      }
+    } else if (info.offset.x > swipeThreshold) {
+      // 오른쪽으로 스와이프 (이전)
+      if (slideIndex > 0) {
+        onSelectDot(slideIndex - 1);
+      }
+    }
+  };
+
   return (
-    <div className="flex-1 flex flex-col justify-between my-auto z-10 pt-4 pb-4">
+    <div className="flex-1 flex flex-col justify-between my-auto z-10 pt-4 pb-4 select-none">
       <AnimatePresence mode="wait">
         <motion.div
           key={`slide-${slideIndex}`}
-          initial={{ opacity: 0, x: 20 }}
+          initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.3 }}
-          className="flex-1 flex flex-col items-center justify-center text-center px-4 my-auto gap-6"
+          exit={{ opacity: 0, x: -30 }}
+          transition={{ duration: 0.25 }}
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.2}
+          onDragEnd={handleDragEnd}
+          className="flex-1 flex flex-col items-center justify-center text-center px-4 my-auto gap-6 cursor-grab active:cursor-grabbing touch-pan-y"
         >
           {/* 아이콘 심볼 */}
-          <div className="w-24 h-24 bg-emerald-50/80 text-[#00C474] rounded-3xl flex items-center justify-center border border-emerald-100/90 shadow-soft mb-2">
+          <div className="w-24 h-24 bg-emerald-50/80 text-[#00C474] rounded-3xl flex items-center justify-center border border-emerald-100/90 shadow-soft mb-2 pointer-events-none">
             {slides[slideIndex].icon}
           </div>
 
-          <div>
+          <div className="pointer-events-none">
             <span className="txt-caption-main txt-brand-green uppercase tracking-wider font-semibold">
               {slides[slideIndex].badge}
             </span>
