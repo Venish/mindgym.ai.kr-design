@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MindGym - 마음 비우기 파쇄기</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="gameContainer">
+        <!-- Canvas 2D Layer (Shredder, Paper Feed, Particle Physics, Healing Badge) -->
+        <canvas id="gameCanvas" width="450" height="800"></canvas>
+
+        <!-- Pure HTML DOM UI Layer (Typing State, Preset Chips, Textarea, Speed Chips, Submit Button) -->
+        <div id="htmlUiContainer">
+            <header class="ui-header">
+                <img src="assets/images/logo.png" alt="MindGym Logo" class="ui-logo" onerror="this.src='../assets/images/logo.png'">
+                <h1 class="ui-title">마음 비우기 파쇄기</h1>
+                <p class="ui-subtitle">오늘 나를 힘들게 했던 상황을 선택하거나 적어보세요.</p>
+            </header>
+
+            <!-- Preset Chips -->
+            <div class="preset-chips">
+                <button type="button" class="chip-btn" data-text="오늘 직장에서 받았던 답답하고 억울했던 스트레스를 파쇄기에 모두 넣어 날려버립니다.">직장 상사 스트레스</button>
+                <button type="button" class="chip-btn" data-text="끝없이 쏟아지는 과제와 쌓여가는 업무 스트레스를 깨끗하게 비워냅니다.">끝없는 과제 & 야근</button>
+                <button type="button" class="chip-btn" data-text="다가오지 않은 미래에 대한 막연한 불안과 걱정을 내려놓습니다.">불안한 미래 걱정</button>
+                <button type="button" class="chip-btn" data-text="타인의 말 한마디에 상처받았던 서운한 마음을 가볍게 비워냅니다.">인간관계의 상처</button>
+            </div>
+
+            <!-- Paper Textarea Box -->
+            <div class="paper-card">
+                <textarea id="stressInput" placeholder="오늘 마음속 깊은 곳을 답답하게 만들었던 불안이나 스트레스를 이곳에 적어보세요."></textarea>
+            </div>
+
+            <!-- Speed Options -->
+            <div class="speed-chips">
+                <button type="button" class="speed-btn" data-factor="1.0">천천히 1.0x</button>
+                <button type="button" class="speed-btn active" data-factor="1.7">보통 1.7x</button>
+                <button type="button" class="speed-btn" data-factor="3.2">빠르게 3.2x</button>
+            </div>
+
+            <!-- Submit Action Button -->
+            <div class="action-bar">
+                <button type="button" id="btnShred" class="main-shred-btn">파쇄하기</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/sound_synth.js"></script>
+    <script src="js/paper_raster.js"></script>
+    <script src="js/shredder_view.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

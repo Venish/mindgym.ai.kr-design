@@ -1,0 +1,229 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+body {
+    background-color: #0f172a;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1A1F29;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#gameContainer {
+    width: 100vw;
+    height: 100vh;
+    max-width: 480px;
+    max-height: 850px;
+    aspect-ratio: 450 / 800;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #F7FAF9;
+    border-radius: 16px;
+    box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+/* Canvas 2D Layer */
+#gameCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    touch-action: none;
+}
+
+/* Pure HTML DOM UI Layer */
+#htmlUiContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 20px 28px 20px;
+    background-color: #F7FAF9;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+#htmlUiContainer.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-16px);
+}
+
+/* Header */
+.ui-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.ui-logo {
+    height: 24px;
+    margin-bottom: 12px;
+    object-fit: contain;
+}
+
+.ui-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1A1F29;
+    margin-bottom: 6px;
+}
+
+.ui-subtitle {
+    font-size: 14px;
+    font-weight: 300;
+    color: #64748B;
+}
+
+/* Preset Chips Grid */
+.preset-chips {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    max-width: 360px;
+    margin-bottom: 20px;
+}
+
+.chip-btn {
+    background-color: #E8F7F0;
+    color: #005933;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.chip-btn:hover, .chip-btn:active {
+    background-color: #D1F0E2;
+    transform: translateY(-1px);
+}
+
+/* Paper Textarea Box */
+.paper-card {
+    width: 100%;
+    max-width: 360px;
+    height: 280px;
+    background-color: #EDF7F2;
+    border: 1.5px solid #D1E6DB;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    position: relative;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+    /* Faint ruling lines pattern */
+    background-image: repeating-linear-gradient(
+        transparent,
+        transparent 25px,
+        rgba(209, 230, 219, 0.6) 25px,
+        rgba(209, 230, 219, 0.6) 26px
+    );
+    background-position: 0 42px;
+}
+
+.paper-card:focus-within {
+    border-color: #00C473;
+    box-shadow: 0 0 0 3px rgba(0, 196, 115, 0.15);
+}
+
+#stressInput {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    resize: none;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 26px;
+    color: #1A1F29;
+    user-select: text;
+    -webkit-user-select: text;
+}
+
+#stressInput::placeholder {
+    color: #94A3B8;
+    font-weight: 400;
+}
+
+/* Speed Chips */
+.speed-chips {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 360px;
+    margin-bottom: auto;
+}
+
+.speed-btn {
+    flex: 1;
+    background-color: #E8F7F0;
+    color: #005933;
+    border: none;
+    border-radius: 18px;
+    padding: 8px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.speed-btn.active {
+    background-color: #00C473;
+    color: #FFFFFF;
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(0, 196, 115, 0.3);
+}
+
+/* Submit Action Button */
+.action-bar {
+    width: 100%;
+    max-width: 280px;
+    margin-top: 16px;
+}
+
+.main-shred-btn {
+    width: 100%;
+    height: 52px;
+    background-color: #00C473;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 26px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 196, 115, 0.35);
+    transition: all 0.2s ease;
+}
+
+.main-shred-btn:hover, .main-shred-btn:active {
+    background-color: #00B067;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 196, 115, 0.45);
+}

@@ -11,3 +11,5 @@ export { SegmentedControl } from "./SegmentedControl";
 export { SpotlightCard } from "./SpotlightCard";
 export { GodTabBar } from "./GodTabBar";
 export { SplitFlapDisplay } from "./SplitFlapDisplay";
+export { GodMemoPaper } from "./GodMemoPaper";
+export { GodSlider } from "./GodSlider";

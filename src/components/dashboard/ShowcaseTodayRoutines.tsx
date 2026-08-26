@@ -62,6 +62,7 @@ export function ShowcaseTodayRoutines() {
               type: "slide-left",
               content: (
                 <CommonRitualSheet
+                  ritualId="RT-018"
                   ritualTitle="스트레스 분쇄"
                   ritualCategory="스트레스 비우기"
                   ritualTime="2분"
