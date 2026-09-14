@@ -121,7 +121,8 @@
 :root {
   --glass-card-size: 5rem;
   --glass-icon-size: 4rem;
-  --glass-rim-padding: 0.125rem; /* 기존 3.5px(0.22rem) -> 2px(0.125rem)로 슬림하게 축소 */
+  --glass-rim-padding: 1.75px; /* 일반 림(Soft Mint, Refined Slate, Ice Frost): 슬림하고 세련된 1.75px */
+  --glass-rim-padding-rainbow: 3.5px; /* Rainbow Aurora 전용: 화려하고 선명한 3.5px */
 
   --glass-rim-soft-mint: oklch(0.696 0.17 162.48 / 0.4);
   --glass-rim-refined-slate: oklch(0.882 0.015 254.12 / 0.9);
@@ -184,6 +185,12 @@
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
+    transition: padding 0.2s ease-in-out;
+  }
+
+  /* Rainbow Aurora Rim Mask (3.5px) */
+  .glass-rim-mask-rainbow {
+    padding: var(--glass-rim-padding-rainbow);
   }
 
   /* Glass Specular Reflection Light */

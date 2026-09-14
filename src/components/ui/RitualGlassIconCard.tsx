@@ -138,8 +138,12 @@ export function RitualGlassIconCard({
               theme === "dark" ? "glass-base-dark" : "glass-base-light"
             }`}
           >
-            {/* Rim Mask */}
-            <div className="absolute inset-0 rounded-[inherit] glass-rim-mask-layer opacity-90 pointer-events-none overflow-hidden">
+            {/* Rim Mask (호버 시 또는 Rainbow Aurora일 때 3.5px로 확대, 평상시 일반 림은 1.75px) */}
+            <div
+              className={`absolute inset-0 rounded-[inherit] opacity-90 pointer-events-none overflow-hidden glass-rim-mask-layer ${
+                isHovered || borderOption === "4" ? "glass-rim-mask-rainbow" : ""
+              }`}
+            >
               {/* Bezel */}
               <div
                 className="absolute top-[-60%] left-[-60%] w-[220%] h-[220%]"

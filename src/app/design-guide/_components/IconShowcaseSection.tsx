@@ -122,15 +122,46 @@ function RitualIcon3DCard({
   );
 }
 
+import { ALL_72_RITUALS } from "@/data/all72Rituals";
+import {
+  RitualGlassIconCard,
+  RitualSoftMintIconCard,
+  RitualSlateIconCard,
+  RitualIceFrostIconCard,
+  RitualRainbowIconCard,
+} from "@/components/ui/RitualGlassIconCard";
+
 export function IconShowcaseSection() {
   const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
 
-  const categories = ["ALL", "휴식과 충전", "몰입과 집중", "스트레스 비우기"];
+  const categories = [
+    "ALL",
+    "스트레스 비우기",
+    "자기자비 명상",
+    "감정 정돈",
+    "몰입과 집중",
+    "휴식과 충전",
+    "관계와 경계",
+  ];
 
-  const filteredRituals =
+  // 72개 리추얼 기준 필터링
+  const filtered72 =
     selectedCategory === "ALL"
-      ? RITUAL_ICONS
-      : RITUAL_ICONS.filter((item) => item.category === selectedCategory);
+      ? ALL_72_RITUALS
+      : ALL_72_RITUALS.filter((item) => item.category === selectedCategory);
+
+  const filteredRituals: IconItem[] = filtered72.map((item) => ({
+    id: item.id,
+    name: item.title,
+    iconNum: item.iconNum,
+    category: item.category,
+    tag: item.time,
+    level: item.level,
+    duration: item.duration,
+    reward: item.reward,
+    desc: item.desc,
+    isLocked: item.isLocked,
+  }));
 
   return (
     <section id="icons-showcase" className="space-y-8 select-none text-left scroll-mt-24">
@@ -141,7 +172,7 @@ export function IconShowcaseSection() {
           마인드짐 아이콘 & 카테고리별 디자인 시스템 (ICON SHOWCASE)
         </h2>
         <p className="text-xs text-gray-500 mt-1">
-          화이트 테마와 다크 테마의 요소 및 4개 파스텔 정사각형 칩 스펙이 100% 동일하게 매칭된 시스템 가이드입니다.
+          단일 아이콘 컴포넌트(RitualGlassIconCard)부터 72개 전체 리추얼 카탈로그까지 한눈에 확인하는 시스템 가이드입니다.
         </p>
       </div>
 
@@ -157,9 +188,154 @@ export function IconShowcaseSection() {
                 : "bg-gray-100 text-gray-600 hover:bg-gray-200"
             }`}
           >
-            {cat === "ALL" ? "전체 보기" : cat}
+            {cat === "ALL" ? `전체 보기 (${ALL_72_RITUALS.length})` : cat}
           </button>
         ))}
+      </div>
+
+      {/* ================================================================================= */}
+      {/* ★ SECTION 0: 단일 아이콘 컴포넌트 (RitualGlassIconCard) 쇼케이스 ★ */}
+      {/* ================================================================================= */}
+      <div className="bg-white p-6 rounded-3xl border border-gray-200/90 shadow-2xs space-y-5">
+        <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+          <div>
+            <span className="text-xs font-extrabold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg">
+              SINGLE ICONS (`RitualGlassIconCard`)
+            </span>
+            <h3 className="text-base font-bold text-gray-900 mt-1.5">
+              단일 리추얼 아이콘 컴포넌트 (4가지 림 테두리 옵션 & 사이즈)
+            </h3>
+          </div>
+          <span className="text-xs text-gray-400 font-medium hidden sm:inline">
+            Soft Mint / Refined Slate / Ice Frost / Rainbow Aurora
+          </span>
+        </div>
+
+        {/* 4가지 보더 림 스타일 샘플 */}
+        <div className="space-y-3">
+          <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+            1) 4가지 림 스타일 (Border Rim Options)
+          </h4>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 bg-gray-50/70 rounded-2xl">
+            <div className="flex flex-col items-center gap-2 p-3 bg-white rounded-xl shadow-2xs">
+              <span className="text-[11px] font-bold text-emerald-600">Option 1: Soft Mint</span>
+              <RitualSoftMintIconCard
+                name="미소 명상"
+                icon={1}
+                tag="1분 · 명상"
+                size="md"
+              />
+            </div>
+            <div className="flex flex-col items-center gap-2 p-3 bg-white rounded-xl shadow-2xs">
+              <span className="text-[11px] font-bold text-slate-600">Option 2: Refined Slate</span>
+              <RitualSlateIconCard
+                name="마음챙김 벨"
+                icon={2}
+                tag="1분 · 소리"
+                size="md"
+              />
+            </div>
+            <div className="flex flex-col items-center gap-2 p-3 bg-white rounded-xl shadow-2xs">
+              <span className="text-[11px] font-bold text-cyan-600">Option 3: Ice Frost</span>
+              <RitualIceFrostIconCard
+                name="스트레스 분쇄"
+                icon={8}
+                tag="2분 · 글쓰기"
+                size="md"
+              />
+            </div>
+            <div className="flex flex-col items-center gap-2 p-3 bg-white rounded-xl shadow-2xs">
+              <span className="text-[11px] font-bold text-purple-600">Option 4: Rainbow Aurora</span>
+              <RitualRainbowIconCard
+                name="바디스캔"
+                icon={46}
+                tag="5분 · 이완"
+                size="md"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* 규격 사이즈 (sm: 3.6rem / md: 5rem / lg: 6rem) 및 다크 테마 샘플 */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+          {/* 사이즈별 */}
+          <div className="p-4 bg-gray-50/70 rounded-2xl space-y-3">
+            <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+              2) 사이즈 규격 (sm / md / lg)
+            </h4>
+            <div className="flex items-end justify-around gap-2 pt-2">
+              <div className="flex flex-col items-center gap-1.5">
+                <span className="text-[10px] font-mono font-bold text-gray-400">sm (3.6rem)</span>
+                <RitualGlassIconCard name="미소명상" icon={1} size="sm" borderOption="1" />
+              </div>
+              <div className="flex flex-col items-center gap-1.5">
+                <span className="text-[10px] font-mono font-bold text-gray-400">md (5.0rem 기본)</span>
+                <RitualGlassIconCard name="미소명상" icon={1} size="md" borderOption="1" />
+              </div>
+              <div className="flex flex-col items-center gap-1.5">
+                <span className="text-[10px] font-mono font-bold text-gray-400">lg (6.0rem 대형)</span>
+                <RitualGlassIconCard name="미소명상" icon={1} size="lg" borderOption="1" />
+              </div>
+            </div>
+          </div>
+
+          {/* 다크 테마 단일 아이콘 */}
+          <div className="p-4 bg-slate-900 rounded-2xl space-y-3 text-white">
+            <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+              3) 다크 테마 단일 아이콘 (Dark Glass)
+            </h4>
+            <div className="flex items-center justify-around gap-2 pt-2">
+              <RitualGlassIconCard
+                name="미소 명상"
+                icon={1}
+                tag="1분"
+                theme="dark"
+                borderOption="1"
+              />
+              <RitualGlassIconCard
+                name="스트레스 분쇄"
+                icon={8}
+                tag="2분"
+                theme="dark"
+                borderOption="3"
+              />
+              <RitualGlassIconCard
+                name="오픈 예정"
+                icon={11}
+                isLocked={true}
+                theme="dark"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* 72개 리추얼 단일 아이콘 전체 그리드 (현재 카테고리 기준 필터) */}
+        <div className="space-y-3 pt-3">
+          <div className="flex items-center justify-between">
+            <h4 className="text-xs font-bold text-gray-700 uppercase tracking-wider flex items-center gap-2">
+              <span>4) 72개 단일 아이콘 그리드 컬렉션</span>
+              <span className="text-xs font-black text-[#00C474] bg-emerald-50 px-2 py-0.5 rounded-full">
+                {filtered72.length}개
+              </span>
+            </h4>
+            <span className="text-[11px] text-gray-400">아이콘에 마우스를 올리면 회전 광택 모션이 동작합니다</span>
+          </div>
+          <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-9 gap-3 p-4 bg-gray-50/60 rounded-2xl max-h-[480px] overflow-y-auto">
+            {filtered72.map((item) => (
+              <div
+                key={item.id}
+                className="flex flex-col items-center justify-center p-2 bg-white rounded-xl shadow-2xs hover:shadow-xs transition-all hover:scale-105"
+              >
+                <RitualGlassIconCard
+                  name={item.title}
+                  icon={item.iconNum}
+                  size="sm"
+                  borderOption="1"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* ================================================================================= */}
