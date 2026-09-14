@@ -61,3 +61,6 @@ awesome-design-skills/.registry-examples
 /public/upload/
 /public/uploads/
 
+# public icons
+/public/images/icons/
+
