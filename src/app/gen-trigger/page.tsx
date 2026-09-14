@@ -186,9 +186,9 @@ try {
 
 export default function GenTriggerPage() {
   return (
-    <div style={{ padding: 40, fontFamily: 'sans-serif' }}>
-      <h1>✅ 72가지 리추얼 개별 HTML (1.html ~ 72.html) 자동 일괄 생성 완료!</h1>
-      <p>public/specs/rituals/ 위치에 72개 파일이 성공적으로 배포되었습니다.</p>
+    <div className="p-10 font-sans tracking-tight">
+      <h1 className="text-xl font-extrabold text-gray-900">✅ 72가지 리추얼 개별 HTML (1.html ~ 72.html) 자동 일괄 생성 완료!</h1>
+      <p className="text-sm font-medium text-gray-600 mt-2">public/specs/rituals/ 위치에 72개 파일이 성공적으로 배포되었습니다.</p>
     </div>
   );
 }

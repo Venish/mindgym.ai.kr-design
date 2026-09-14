@@ -34,8 +34,8 @@ export function NicknameSetupView({
             어떻게 <AuroraText>불러드릴까요?</AuroraText>
           </h1>
           <p className="txt-body-main txt-brand-clay mt-2 leading-relaxed">
-            <strong className="font-extrabold text-gray-900">마인드짐</strong>에서 사용할 닉네임을 설정해 주세요. <br />
-            동료들에게는 설정하신 닉네임만 표시돼요.
+            마인드짐에서 사용할 닉네임을 정해 주세요. <br />
+            동료에게는 설정한 닉네임만 표시됩니다.
           </p>
         </div>
 

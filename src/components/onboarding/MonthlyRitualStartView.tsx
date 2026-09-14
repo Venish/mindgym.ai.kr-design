@@ -65,14 +65,14 @@ export function MonthlyRitualStartView({
   };
 
   // 선택된 단어
-  const [mindWord, setMindWord] = useState("안정되게");
+  const [mindWord, setMindWord] = useState("차분하게");
   const [relationWord, setRelationWord] = useState("따뜻하게");
-  const [growthWord, setGrowthWord] = useState("성장하며");
+  const [growthWord, setGrowthWord] = useState("균형 되찾기");
 
-  // 원본 단어 목록 (Step 1: 6개, Step 2: 4개, Step 3: 6개)
-  const mindWords = ["차분하게", "안정되게", "활기차게", "가볍게", "단단하게", "용기있게"];
-  const relationWords = ["따뜻하게", "연결되어", "즐겁게", "평화롭게"];
-  const growthWords = ["의미있게", "새롭게", "성장하며", "뿌듯하게", "균형있게", "여유롭게"];
+  // 원본 단어 목록 (Step 1: 6개, Step 2: 6개, Step 3: 6개)
+  const mindWords = ["차분하게", "평온하게", "활기차게", "단단하게", "여유있게", "용기있게"];
+  const relationWords = ["따뜻하게", "솔직하게", "유연하게", "경청하며", "존중하며", "친근하게"];
+  const growthWords = ["균형 되찾기", "회복력 기르기", "안정감 높이기", "여유 되찾기", "중심 세우기", "무리하지 않기"];
 
   const handleSelectMindWord = (w: string) => {
     setMindWord(w);
@@ -151,11 +151,11 @@ export function MonthlyRitualStartView({
                 transition={{ duration: 0.2 }}
               >
                 <h1 className="text-[26px] font-black txt-brand-ink leading-snug mt-1">
-                  이달에 이런 <br />
-                  <AuroraText>마음으로 지내고 싶어요</AuroraText>
+                  이번 달, 나는 <br />
+                  <AuroraText>이렇게 지내고 싶어요</AuroraText>
                 </h1>
                 <p className="text-xs text-gray-500 font-semibold mt-1.5 leading-relaxed">
-                  원하는 마음 상태 단어를 하나 선택해 보세요
+                  원하는 마음의 방향을 하나 골라보세요
                 </p>
               </motion.div>
             )}
@@ -173,7 +173,7 @@ export function MonthlyRitualStartView({
                   <AuroraText>이렇게 지내고 싶어요</AuroraText>
                 </h1>
                 <p className="text-xs text-gray-500 font-semibold mt-1.5 leading-relaxed">
-                  주변 사람들과 태도 의도를 하나 골라주세요
+                  대인관계에서 어떤 나를 원하나요
                 </p>
               </motion.div>
             )}
@@ -187,11 +187,11 @@ export function MonthlyRitualStartView({
                 transition={{ duration: 0.2 }}
               >
                 <h1 className="text-[26px] font-black txt-brand-ink leading-snug mt-1">
-                  이런 성장과 <br />
-                  <AuroraText>의미를 느끼고 싶어요</AuroraText>
+                  나에게 이런 <br />
+                  <AuroraText>변화를 선물하고 싶어요</AuroraText>
                 </h1>
                 <p className="text-xs text-gray-500 font-semibold mt-1.5 leading-relaxed">
-                  이번 달 스스로에게 선물할 성장의 키워드예요
+                  가장 가까운 키워드를 골라보세요
                 </p>
               </motion.div>
             )}
@@ -205,11 +205,11 @@ export function MonthlyRitualStartView({
                 transition={{ duration: 0.2 }}
               >
                 <h1 className="text-[26px] font-black txt-brand-ink leading-snug mt-1">
-                  <span className="text-[#00C474]">"{mindWord}"</span> 의도 → <br />
-                  <AuroraText>이달을 함께할 리추얼</AuroraText>
+                  이달의 마음 다짐이 <br />
+                  <AuroraText>정해졌어요.</AuroraText>
                 </h1>
                 <p className="text-xs text-gray-500 font-semibold mt-1.5 leading-relaxed">
-                  선택하신 마음 방향에 꼭 맞는 맞춤 추천 리추얼이에요
+                  선택한 방향을 바탕으로 이번 달 함께할 리추얼을 추천해 드려요
                 </p>
               </motion.div>
             )}
@@ -223,11 +223,11 @@ export function MonthlyRitualStartView({
                 transition={{ duration: 0.2 }}
               >
                 <h1 className="text-[26px] font-black txt-brand-ink leading-snug mt-1">
-                  언제 체크인 <br />
-                  <AuroraText>알림을 받을까요?</AuroraText>
+                  체크인 알림은 <br />
+                  <AuroraText>언제 받을까요?</AuroraText>
                 </h1>
                 <p className="text-xs text-gray-500 font-semibold mt-1.5 leading-relaxed">
-                  정해진 시간에 알림을 드려요 · 언제든 환경설정에서 변경 가능
+                  원하는 시간에 알림을 드려요. 설정은 언제든 바꿀 수 있어요.
                 </p>
               </motion.div>
             )}
@@ -249,7 +249,7 @@ export function MonthlyRitualStartView({
                 <div className="flex items-center gap-3 w-full pt-6 pb-2.5">
                   <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-gray-200 to-gray-300" />
                   <span className="text-base font-bold text-gray-700 shrink-0 text-center">
-                    이달에 이런 마음으로 지내고 싶어요
+                    이번 달, 나는 이렇게 지내고 싶어요
                   </span>
                   <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-gray-200 to-gray-300" />
                 </div>
@@ -309,7 +309,7 @@ export function MonthlyRitualStartView({
                 <div className="flex items-center gap-3 w-full pt-6 pb-2.5">
                   <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-gray-200 to-gray-300" />
                   <span className="text-base font-bold text-gray-700 shrink-0 text-center">
-                    이런 성장과 의미를 느끼고 싶어요
+                    나에게 이런 변화를 선물하고 싶어요
                   </span>
                   <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-gray-200 to-gray-300" />
                 </div>

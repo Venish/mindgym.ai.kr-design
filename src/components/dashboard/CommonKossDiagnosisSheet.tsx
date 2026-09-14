@@ -31,9 +31,19 @@ export function CommonKossDiagnosisSheet() {
   const currentQ = kossQuestions[qIndex];
   const currentDomain = currentQ?.domain || "직무자율";
 
-  // 팁 아이콘 선택
-  const tipIndex = qIndex % KOSS_TIPS.length;
-  const currentTip = KOSS_TIPS[tipIndex];
+  // 팁 문구 선택 (마지막 질문: 수고하셨어요!..., 직장문화: 거의 다 왔어요!..., 기타: 기본 팁)
+  const getTip = () => {
+    if (qIndex === kossQuestions.length - 1) {
+      return { text: "수고하셨어요! 마지막 질문입니다.", icon: KOSS_TIPS[7].icon, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" };
+    }
+    if (currentDomain === "직장문화") {
+      return { text: "거의 다 왔어요! 완료하면 지금의 마음 상태를 한눈에 볼 수 있어요", icon: KOSS_TIPS[6].icon, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" };
+    }
+    const tipIndex = qIndex % KOSS_TIPS.length;
+    return KOSS_TIPS[tipIndex];
+  };
+
+  const currentTip = getTip();
 
   // 질문을 2줄로 미학적 포맷팅
   const formatQuestionToTwoLines = (qStr: string) => {

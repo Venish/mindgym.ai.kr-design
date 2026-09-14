@@ -314,7 +314,7 @@ export function MyPageSheet() {
         >
           <div className="flex items-center justify-between px-1">
             <h2 className="text-[0.9375rem] font-bold text-gray-900 tracking-tight group-hover:text-[#00C474] transition-colors">
-              월간 마음 단련 출석
+              월간 마음건강 달력
             </h2>
             <span className="txt-micro-main font-medium text-gray-400 group-hover:text-[#00C474] transition-colors">
               8월 달력 보기 ❯
@@ -359,14 +359,14 @@ export function MyPageSheet() {
           <div className="flex items-center justify-between px-1">
             <div className="flex flex-col">
               <h2 className="text-[0.9375rem] font-bold text-gray-900 tracking-tight">
-                KOSS 마음 건강 스트레스 지도
+                내 마음건강 리포트
               </h2>
               <span className="text-[11px] font-medium text-gray-400 mt-0.5">
-                2026.08.12 진단 완료 (KOSS 36문항)
+                2026.08.12 체크 완료 (KOSS 36문항)
               </span>
             </div>
             <Badge variant="mint" size="md">
-              진단 완료
+              체크 완료
             </Badge>
           </div>
 
@@ -400,7 +400,7 @@ export function MyPageSheet() {
             className="w-full block py-3 px-4 bg-[#F1F5F9] hover:bg-gray-200/90 rounded-2xl text-[14px] font-bold text-gray-800 transition-all text-center cursor-pointer active:scale-98 shadow-2xs"
           >
             <div className="flex items-center justify-center gap-1.5 w-full">
-              <span>상세 스트레스 지도</span>
+              <span>자세히 보기</span>
               {isKossExpanded ? <CaretUp size={16} weight="bold" /> : <CaretDown size={16} weight="bold" />}
             </div>
           </button>
@@ -421,22 +421,22 @@ export function MyPageSheet() {
                   activeId={kossChartTab}
                   onChange={(id) => setKossChartTab(id as "radar" | "bars")}
                   items={[
-                    { id: "radar", label: "종합 지도" },
+                    { id: "radar", label: "종합 리포트" },
                     { id: "bars", label: "영역별 분석" },
                   ]}
                   layoutId="koss-mypage-tab-active"
                 />
 
-                {/* ★ 월 선택 대조 헤더 (좌측: GodSelect 커스텀 드롭다운 vs 우측: 8월 진단 고정) ★ */}
+                {/* ★ 월 선택 대조 헤더 (좌측: GodSelect 커스텀 드롭다운 vs 우측: 8월 고정) ★ */}
                 <div className="w-full bg-[#F8FAFC] rounded-2xl p-2.5 grid grid-cols-[1fr_auto_1fr] items-center gap-2 border border-gray-100 shadow-2xs">
                   {/* 좌측: design-guide 표준 커스텀 GodSelect 드롭다운 (1fr) */}
                   <div className="w-full">
                     <GodSelect
                       options={[
-                        { value: "7월", label: "7월 진단 대조" },
-                        { value: "6월", label: "6월 진단 대조" },
-                        { value: "5월", label: "5월 진단 대조" },
-                        { value: "none", label: "이전 진단 없음" },
+                        { value: "7월", label: "7월" },
+                        { value: "6월", label: "6월" },
+                        { value: "5월", label: "5월" },
+                        { value: "none", label: "이전 기록 없음" },
                       ]}
                       value={prevMonth}
                       onChange={(val: string) => setPrevMonth(val)}
@@ -449,9 +449,9 @@ export function MyPageSheet() {
                     VS
                   </span>
 
-                  {/* 우측: 지금 월 (8월 진단 고정) */}
+                  {/* 우측: 지금 월 (8월 고정) */}
                   <div className="w-full h-[42px] px-2.5 bg-[#00C474] text-white rounded-xl text-[13px] font-bold text-center shadow-xs flex items-center justify-center gap-1 truncate">
-                    <span>8월 진단</span>
+                    <span>8월</span>
                     <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse shrink-0" />
                   </div>
                 </div>
@@ -459,22 +459,22 @@ export function MyPageSheet() {
                 {/* ★ 종합지수 자동 비교 / 단독 요약 카드 ★ */}
                 <div className="w-full p-3.5 bg-emerald-50/60 rounded-2xl border border-emerald-100/80 flex items-center justify-between gap-3 shadow-2xs">
                   <div className="flex flex-col text-left">
-                    <span className="text-xs font-bold text-emerald-800">
-                      종합 스트레스 지수 {prevMonth !== "none" ? "변화 대조" : "현황"}
+                    <span className="text-[13px] font-black text-emerald-900 tracking-tight">
+                      종합 스트레스 지수 월간 비교
                     </span>
-                    <div className="flex items-baseline gap-1.5 mt-0.5">
+                    <div className="flex items-baseline gap-1.5 mt-1">
                       {prevMonth !== "none" ? (
                         <>
-                          <span className="text-xs text-gray-500 font-medium">
+                          <span className="text-xs text-gray-600 font-bold">
                             {prevMonth} ({prevAvg}점) ➔
                           </span>
-                          <span className="text-base font-black text-gray-900">
+                          <span className="text-base font-black text-gray-900 tracking-tight">
                             8월 ({currAvg}점)
                           </span>
                         </>
                       ) : (
-                        <span className="text-base font-black text-gray-900">
-                          8월 진단 종합: {currAvg}점
+                        <span className="text-base font-black text-gray-900 tracking-tight">
+                          8월: {currAvg}점
                         </span>
                       )}
                     </div>
@@ -501,12 +501,12 @@ export function MyPageSheet() {
                     <div className="w-full flex items-center justify-center gap-4 text-xs font-bold pt-1">
                       <span className="flex items-center gap-1.5 text-gray-800">
                         <span className="w-2.5 h-2.5 rounded-full bg-[#00C474]" />
-                        8월 진단
+                        8월
                       </span>
                       {prevMonth !== "none" && (
                         <span className="flex items-center gap-1.5 text-gray-700">
                           <span className="w-2.5 h-2.5 rounded-full bg-[#6366F1]" />
-                          {prevMonth} 진단 (대조)
+                          {prevMonth}
                         </span>
                       )}
                     </div>
@@ -567,7 +567,7 @@ export function MyPageSheet() {
                           return {
                             name: d2.name,
                             sub: d2.sub,
-                            month1Label: "8월 진단",
+                            month1Label: "8월",
                             month1Score: d2.score,
                             month1Color: d2.barColor,
                             month1Status: d2.status,

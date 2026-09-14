@@ -55,14 +55,14 @@ export function CheckinTimeSetupView({
 
           {/* 메인 타이틀 */}
           <h1 className="text-2xl font-black text-gray-900 tracking-tight text-center mt-1">
-            언제 체크인 알림을 받을까요?
+            체크인 알림은 언제 받을까요?
           </h1>
 
           {/* 서브 타이틀 */}
           <div className="flex items-center justify-center gap-3 mt-1.5 mb-4">
             <div className="h-[1px] w-5 bg-gradient-to-r from-transparent to-gray-300" />
             <span className="text-xs font-semibold text-gray-500 tracking-tight">
-              정해진 시간에 알림을 드려요 · 언제든 환경설정에서 변경 가능해요
+              원하는 시간에 알림을 드려요. 설정은 언제든 바꿀 수 있어요.
             </span>
             <div className="h-[1px] w-5 bg-gradient-to-l from-transparent to-gray-300" />
           </div>

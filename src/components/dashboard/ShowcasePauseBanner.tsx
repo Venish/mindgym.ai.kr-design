@@ -65,7 +65,7 @@ export function ShowcasePauseBanner() {
     <div className="flex flex-col gap-2.5 w-full select-none">
       {/* 공통 섹션 중제목 컴포넌트 사용 */}
       <SectionTitle
-        title="지금 나에게 맞는 이야기"
+        title="지금 읽기 좋은 이야기"
         action={
           <button
             type="button"

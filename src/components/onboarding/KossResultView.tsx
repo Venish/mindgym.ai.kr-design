@@ -71,10 +71,10 @@ export function KossResultView({
         {/* 메인 타이틀 */}
         <div>
           <h1 className="text-[26px] font-black txt-brand-ink leading-tight">
-            종합 스트레스 지도
+            내 마음건강 요약
           </h1>
           <p className="text-xs txt-brand-clay mt-1 font-medium">
-            최근 나의 마음 상태를 8가지 지표로 직관적으로 시각화했어요.
+            최근의 마음 상태를 8가지 항목으로 한눈에 보여드려요
           </p>
         </div>
 

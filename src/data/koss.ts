@@ -20,14 +20,14 @@ export const KOSS_DOMAINS_INFO = [
 ];
 
 export const KOSS_TIPS = [
-  { text: "솔직하게 답변할수록 더 정확한 내 마음 정원이 완성돼요.", icon: Flower, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" },
+  { text: "솔직하게 답할수록 지금의 내 상태를 더 정확하게 확인할 수 있어요.", icon: Flower, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" },
   { text: "정답은 없어요. 최근 1주일간 느낀 그대로 편안히 눌러주세요.", icon: Leaf, bgClass: "bg-[#F8FAF9] border-emerald-100", iconClass: "text-[#00C474]" },
   { text: "직무 스트레스 지표는 나의 약점이 아닌 보살핌의 신호예요.", icon: Barbell, bgClass: "bg-amber-50/80 border-amber-200/80", iconClass: "text-amber-600" },
   { text: "잠시 숨을 깊게 내쉬고 현재 나의 상태에 집중해 보세요.", icon: Clock, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" },
   { text: "진단 결과는 개인 맞춤 틈새 리추얼을 추천하는 데 사용돼요.", icon: Microscope, bgClass: "bg-sky-50/80 border-sky-200/80", iconClass: "text-sky-600" },
   { text: "나만의 편안한 속도로 차근차근 진행해 보세요.", icon: ShieldCheck, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" },
-  { text: "답변하신 모든 결과는 철저히 암호화되어 안전하게 보호됩니다.", icon: LockKey, bgClass: "bg-gray-50 border-gray-200", iconClass: "text-gray-600" },
-  { text: "완료 후 나만을 위한 리추얼 및 파스텔 스파이더 차트가 펼쳐집니다.", icon: FloppyDisk, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" },
+  { text: "거의 다 왔어요! 완료하면 지금의 마음 상태를 한눈에 볼 수 있어요", icon: LockKey, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" },
+  { text: "수고하셨어요! 마지막 질문입니다.", icon: FloppyDisk, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" },
 ];
 
 export const kossQuestions: KOSSQuestion[] = [
@@ -82,7 +82,7 @@ export function calculateDomainScore(domainName: string, adjustedAnswers: { [qId
   const domainQuestions = kossQuestions.filter(q => q.domain === domainName);
   const qCount = domainQuestions.length;
   if (qCount === 0) return 0;
-  
+
   let sum = 0;
   domainQuestions.forEach(q => {
     sum += adjustedAnswers[q.id] || 1;

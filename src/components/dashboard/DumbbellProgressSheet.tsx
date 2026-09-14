@@ -18,7 +18,7 @@ import { useModalStore } from "@/store/useModalStore";
 
 interface DumbbellLevelItem {
   level: number;
-  variant: "wood" | "stone" | "bronze" | "iron" | "silver" | "gold" | "platinum";
+  variant: "wood" | "stone" | "iron" | "bronze" | "silver" | "gold";
   name: string;
   minDumbbells: number;
   maxDumbbells: number;
@@ -26,13 +26,12 @@ interface DumbbellLevelItem {
 }
 
 const DUMBBELL_LEVELS: DumbbellLevelItem[] = [
-  { level: 1, variant: "wood", name: "나무 덤벨", minDumbbells: 0, maxDumbbells: 149, desc: "마음 단련의 첫걸음을 뗀 조용한 싹" },
-  { level: 2, variant: "stone", name: "돌 덤벨", minDumbbells: 150, maxDumbbells: 299, desc: "흔들리지 않는 기초를 다지는 시기" },
-  { level: 3, variant: "bronze", name: "청동 덤벨", minDumbbells: 300, maxDumbbells: 499, desc: "꾸준한 습관이 자리잡는 단단함" },
-  { level: 4, variant: "iron", name: "철 덤벨", minDumbbells: 500, maxDumbbells: 799, desc: "어떤 스트레스도 이겨내는 강인함" },
-  { level: 5, variant: "silver", name: "은 덤벨", minDumbbells: 800, maxDumbbells: 1199, desc: "주변까지 맑게 비추는 깊은 평온" },
-  { level: 6, variant: "gold", name: "금 덤벨", minDumbbells: 1200, maxDumbbells: 1799, desc: "빛나는 마음 근력의 완성단계 (현재 칭호)" },
-  { level: 7, variant: "platinum", name: "플래티넘 덤벨", minDumbbells: 1800, maxDumbbells: 2499, desc: "마음정원을 만개시킨 마인드 마스터" },
+  { level: 1, variant: "wood", name: "나무 덤벨", minDumbbells: 0, maxDumbbells: 149, desc: "마음을 돌보는 기초가 쌓이고 있어요" },
+  { level: 2, variant: "stone", name: "돌 덤벨", minDumbbells: 150, maxDumbbells: 299, desc: "나를 붙잡는 힘이 생기고 있어요" },
+  { level: 3, variant: "iron", name: "철 덤벨", minDumbbells: 300, maxDumbbells: 499, desc: "내 루틴이 조금씩 자리잡고 있어요" },
+  { level: 4, variant: "bronze", name: "동 덤벨", minDumbbells: 500, maxDumbbells: 799, desc: "회복력이 점점 커지고 있어요" },
+  { level: 5, variant: "silver", name: "은 덤벨", minDumbbells: 800, maxDumbbells: 1199, desc: "마음건강 루틴이 단단해지고 있어요" },
+  { level: 6, variant: "gold", name: "금 덤벨", minDumbbells: 1200, maxDumbbells: 1799, desc: "마음을 지키는 힘이 자리잡았어요" },
 ];
 
 /**
@@ -110,7 +109,7 @@ export function DumbbellProgressSheet() {
     <div className="w-full min-h-full bg-white flex flex-col select-none relative pb-12 text-gray-900 overflow-y-auto">
       {/* 1. 서브 헤더 (✕ 닫기 터치 시 밑으로 슬라이딩 아웃) */}
       <SubPageHeader
-        title="마음 근력 덤벨 성장의 길"
+        title="나의 마음덤벨"
         leftType="close"
         onLeftClick={closeModal}
       />
@@ -131,15 +130,15 @@ export function DumbbellProgressSheet() {
           </div>
 
           <h3 className="text-xl font-black text-gray-900 tracking-tight mt-1">
-            마음 근력이 금빛으로 빛나고 있어요
+            마음을 지키는 힘이 자리잡았어요
           </h3>
           <p className="text-xs font-semibold text-gray-500 mt-1 mb-3">
-            플래티넘 덤벨까지 <span className="text-amber-600 font-extrabold">{remaining} DB</span> 남았어요
+            마음건강 최고 덤벨 등급 달성! ✨
           </p>
 
-          {/* 세그먼트 프로그레스 인디케이터 라인 바 (마운트 시 0% ➔ 목표 수치 차오름 애니메이션) */}
+          {/* 세그먼트 프로그레스 인디케이터 라인 바 (총 6개 세그먼트) */}
           <div className="w-full max-w-[220px] flex items-center gap-1.5 justify-center my-1">
-            {[true, true, true, true, true, true, false].map((active, idx) => (
+            {[true, true, true, true, true, true].map((active, idx) => (
               <div
                 key={idx}
                 className={`h-2 flex-1 rounded-full transition-all duration-700 ease-out ${
@@ -154,15 +153,15 @@ export function DumbbellProgressSheet() {
 
           <div className="w-full flex justify-between items-center text-[11px] font-extrabold text-gray-500 mt-3 pt-2 border-t border-gray-200/60 px-1">
             <span>현재 {displayDumbbells} DB</span>
-            <span>목표 1,800 DB</span>
+            <span>최고 등급 달성</span>
           </div>
         </div>
 
         {/* 3. 7대 덤벨 등급 성장의 길 수평 스크롤 가로 카루셀 로드맵 */}
         <div className="w-full flex flex-col gap-3">
           <div className="flex items-center justify-between px-1">
-            <h3 className="text-[0.9375rem] font-bold text-gray-900 tracking-tight">
-              덤벨 등급 로드맵
+            <h3 className="text-base font-extrabold text-gray-900 tracking-tight">
+              덤벨 성장 단계
             </h3>
           </div>
 
@@ -239,8 +238,8 @@ export function DumbbellProgressSheet() {
 
         {/* 4. 덤벨 모으기 안내 가이드 카드 (감싸기 외곽 박스 제거 & 서피스 bg-[#F8FAFC] 4열 카드) */}
         <div className="w-full flex flex-col gap-3 px-1 text-left">
-          <h3 className="text-[0.9375rem] font-bold text-gray-900 tracking-tight">
-            덤벨 적립 가이드
+          <h3 className="text-base font-extrabold text-gray-900 tracking-tight">
+            덤벨 강화 기준
           </h3>
 
           <div className="grid grid-cols-2 gap-2.5 pt-0.5">
@@ -249,7 +248,7 @@ export function DumbbellProgressSheet() {
                 <Barbell size={20} weight="bold" />
               </div>
               <div className="flex flex-col text-left">
-                <span className="text-[11.5px] font-bold text-gray-500">리추얼 완수</span>
+                <span className="text-xs font-extrabold text-gray-600 tracking-tight">리추얼 완수</span>
                 <span className="text-xs font-extrabold text-[#00C474]">+3 DB</span>
               </div>
             </div>
@@ -259,7 +258,7 @@ export function DumbbellProgressSheet() {
                 <BookOpen size={20} weight="bold" />
               </div>
               <div className="flex flex-col text-left">
-                <span className="text-[11.5px] font-bold text-gray-500">매거진 완독</span>
+                <span className="text-xs font-extrabold text-gray-600 tracking-tight">매거진 완독</span>
                 <span className="text-xs font-extrabold text-amber-600">+10 DB</span>
               </div>
             </div>
@@ -269,7 +268,7 @@ export function DumbbellProgressSheet() {
                 <Sparkle size={20} weight="bold" />
               </div>
               <div className="flex flex-col text-left">
-                <span className="text-[11.5px] font-bold text-gray-500">KOSS 직무진단</span>
+                <span className="text-xs font-extrabold text-gray-600 tracking-tight">KOSS 직무진단</span>
                 <span className="text-xs font-extrabold text-indigo-600">+5 DB</span>
               </div>
             </div>
@@ -279,7 +278,7 @@ export function DumbbellProgressSheet() {
                 <CalendarCheck size={20} weight="bold" />
               </div>
               <div className="flex flex-col text-left">
-                <span className="text-[11.5px] font-bold text-gray-500">30일 마스터</span>
+                <span className="text-xs font-extrabold text-gray-600 tracking-tight">30일 마스터</span>
                 <span className="text-xs font-extrabold text-rose-600">+30 DB</span>
               </div>
             </div>

@@ -18,28 +18,28 @@ const sosPrescriptionData: SosItem[] = [
   {
     id: "sos-1",
     ritualId: "RT-007",
-    label: "급격한 감정적인 불안과 초조",
+    label: "불안하고 초조해요",
     prescriptionTitle: "복식호흡",
     prescriptionDesc: "아랫배 깊숙이 들이마시고 내쉬며 즉각 심박수를 낮추는 긴급 호흡법입니다.",
   },
   {
     id: "sos-2",
     ritualId: "RT-004",
-    label: "머리가 복잡하고 잡념 제어 불가",
+    label: "생각이 너무 많아 정리가 안 돼요",
     prescriptionTitle: "걱정 일기",
     prescriptionDesc: "머릿속을 맴도는 막연한 불안과 미래 공포를 글로 적어 가두어내는 리추얼입니다.",
   },
   {
     id: "sos-3",
     ritualId: "RT-018",
-    label: "가슴이 답답하고 분노/스트레스",
+    label: "답답하고 예민해요",
     prescriptionTitle: "스트레스 분쇄",
     prescriptionDesc: "나를 괴롭히는 감정을 종이에 솔직하게 적은 후, 파쇄기로 갈갈이 분쇄하는 리추얼입니다.",
   },
   {
     id: "sos-4",
     ritualId: "RT-001",
-    label: "스스로를 비난하고 자책함",
+    label: "자꾸 나를 탓하게 돼요",
     prescriptionTitle: "미소 명상",
     prescriptionDesc: "얼굴 근육의 긴장을 풀고 온화한 미소와 함께 스스로를 다정하게 다독이는 명상입니다.",
   },
@@ -85,13 +85,12 @@ export function CommonSosDiagnosisSheet() {
                 SOS PRESCRIPTION
               </span>
 
-              <h1 className="text-[26px] font-black text-gray-900 leading-snug">
-                지금 어떤 마음 <br />
-                <span className="text-rose-600 block mt-1">상태이신가요?</span>
+              <h1 className="text-[26px] font-black text-gray-900 leading-snug tracking-tight">
+                나를 힘들게 하는 감정을 선택해보세요
               </h1>
 
               <p className="text-xs text-gray-500 font-semibold mt-2.5 leading-relaxed">
-                가장 가까운 상태를 하나 선택해 보세요. 1분간 안전하게 마음을 진정시켜 드립니다.
+                지금의 상태와 가장 가까운 마음을 골라보세요 바로 해볼 수 있는 짧은 리추얼을 추천해 드려요
               </p>
             </div>
 
@@ -99,7 +98,7 @@ export function CommonSosDiagnosisSheet() {
             <div className="flex items-center gap-3 w-full pt-2 pb-1">
               <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-gray-200 to-gray-300" />
               <span className="text-sm font-extrabold text-gray-700 shrink-0 text-center">
-                SOS 1분 긴급 처방 선택
+                지금의 마음 한 문장
               </span>
               <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-gray-200 to-gray-300" />
             </div>

@@ -86,14 +86,14 @@ function OnboardingContent() {
 
   // KOSS 질문 진행 중 하단 팁 데이터
   const kossTips = [
-    { text: "솔직하게 답변할수록 더 정확한 내 마음 정원이 완성돼요.", icon: Flower, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" },
+    { text: "솔직하게 답할수록 지금의 내 상태를 더 정확하게 확인할 수 있어요.", icon: Flower, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" },
     { text: "정답은 없어요. 최근 1주일간 느낀 그대로 편안히 눌러주세요.", icon: Leaf, bgClass: "bg-[#F8FAF9] border-emerald-100", iconClass: "text-[#00C474]" },
     { text: "직무 스트레스 지표는 나의 약점이 아닌 보살핌의 신호예요.", icon: Barbell, bgClass: "bg-amber-50/80 border-amber-200/80", iconClass: "text-amber-600" },
     { text: "잠시 숨을 깊게 내쉬고 현재 나의 상태에 집중해 보세요.", icon: Clock, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" },
     { text: "진단 결과는 개인 맞춤 틈새 리추얼을 추천하는 데 사용돼요.", icon: Microscope, bgClass: "bg-sky-50/80 border-sky-200/80", iconClass: "text-sky-600" },
     { text: "나만의 편안한 속도로 36문항을 차근차근 진행해 보세요.", icon: ShieldCheck, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" },
-    { text: "답변하신 모든 결과는 철저히 암호화되어 안전하게 보호됩니다.", icon: LockKey, bgClass: "bg-gray-50 border-gray-200", iconClass: "text-gray-600" },
-    { text: "거의 다 왔어요! 완료 후 나만을 위한 리추얼이 펼쳐집니다.", icon: FloppyDisk, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" },
+    { text: "거의 다 왔어요! 완료하면 지금의 마음 상태를 한눈에 볼 수 있어요", icon: LockKey, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" },
+    { text: "수고하셨어요! 마지막 질문입니다.", icon: FloppyDisk, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" },
   ];
 
   const domainsInfo = [
@@ -110,11 +110,21 @@ function OnboardingContent() {
   const currentQ = kossQuestions[qIndex];
   const currentDomain = currentQ ? currentQ.domain : "직무 스트레스";
 
-  const currentTipIndex = Math.min(
-    Math.floor((qIndex / kossQuestions.length) * kossTips.length),
-    kossTips.length - 1
-  );
-  const currentTip = kossTips[currentTipIndex];
+  const getTip = () => {
+    if (qIndex === kossQuestions.length - 1) {
+      return { text: "수고하셨어요! 마지막 질문입니다.", icon: FloppyDisk, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" };
+    }
+    if (currentDomain === "직장문화") {
+      return { text: "거의 다 왔어요! 완료하면 지금의 마음 상태를 한눈에 볼 수 있어요", icon: LockKey, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" };
+    }
+    const currentTipIndex = Math.min(
+      Math.floor((qIndex / kossQuestions.length) * kossTips.length),
+      kossTips.length - 1
+    );
+    return kossTips[currentTipIndex];
+  };
+
+  const currentTip = getTip();
 
   const formatQuestionToTwoLines = (qStr: string) => {
     if (!qStr) return null;

@@ -32,13 +32,13 @@ export function KossIntroView({ nickname, onStart, onSkip }: KossIntroViewProps)
           <span className="block mb-1">
             <span className="text-[#00C474]">{nickname}</span> 님,
           </span>
-          지금 마음 상태를 <br />
-          <AuroraText className="inline-block mt-1">체크해 볼게요</AuroraText>
+          지금의 마음 상태를 <br />
+          <AuroraText className="inline-block mt-1">살펴볼게요</AuroraText>
         </h1>
 
         <p className="txt-caption-main text-gray-500 leading-relaxed max-w-xs text-center mt-3 font-normal mb-6">
-          36개 질문으로 최근 나의 마음 상태를 살펴봐요. <br />
-          결과를 바탕으로 나에게 맞는 맞춤 리추얼을 추천해 드려요.
+          36개 질문으로 최근의 <br />
+          스트레스 경향과 마음 상태를 확인합니다.
         </p>
       </div>
 

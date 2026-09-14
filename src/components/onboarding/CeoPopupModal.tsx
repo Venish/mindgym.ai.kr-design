@@ -28,12 +28,12 @@ export function CeoPopupModal({ isOpen, onClose }: CeoPopupModalProps) {
       {/* 인사말 본문 */}
       <h2 className="text-xl font-extrabold leading-snug tracking-tight txt-brand-ink mb-2">
         우리 회사의 가장 소중한 자산은 <br />
-        <AuroraText className="inline-block mt-0.5">여러분의 마음입니다.</AuroraText>
+        <AuroraText className="inline-block mt-0.5">여러분입니다.</AuroraText>
       </h2>
 
       <p className="txt-caption-main txt-brand-clay leading-relaxed mb-6">
-        바쁜 일상 속에서도 마음을 돌볼 시간, <br />
-        <strong className="font-extrabold text-gray-900">마인드짐</strong>이 함께 만들어 드릴게요.
+        바쁜 일상 속에서도 마음건강을 돌볼 수 있도록, <br />
+        마인드짐이 함께하겠습니다.
       </p>
 
       {/* CEO 서명 카드 */}

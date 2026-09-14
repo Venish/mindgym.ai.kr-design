@@ -26,7 +26,7 @@ export function AnalyzingBridgeView({ analysisStep }: AnalyzingBridgeViewProps) 
         <div className="w-20 h-20 bg-emerald-50/80 text-[#00C474] rounded-3xl flex items-center justify-center border border-emerald-100/90 shadow-soft mb-1">
           <AnimatedLogoIcon size={44} />
         </div>
-        <div className="flex items-center text-2xl font-black text-[#00C474] tracking-tight font-mono">
+        <div className="flex items-center text-2xl font-black text-[#00C474] tracking-tight">
           <NumberTicker value={100} decimalPlaces={1} delay={0.1} className="text-[#00C474] font-black text-2xl" />
           <span className="ml-0.5">%</span>
         </div>

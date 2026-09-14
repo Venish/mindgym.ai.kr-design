@@ -237,12 +237,12 @@ export function FooterMoreSheet() {
               <div className="w-6 h-6 rounded-lg bg-[#00C474] text-white flex items-center justify-center shrink-0 shadow-2xs">
                 <Star size={13} weight="fill" />
               </div>
-              <h2 className="text-[0.9375rem] font-bold text-gray-900 tracking-tight">
+              <h2 className="text-base font-extrabold text-gray-900 tracking-tight">
                 내가 찜한 리추얼
               </h2>
             </div>
-            <span className="text-xs font-bold text-gray-400 font-mono">
-              {savedRituals.length}
+            <span className="text-xs font-black text-[#00C474] bg-emerald-50 px-2 py-0.5 rounded-full">
+              {savedRituals.length}건
             </span>
           </div>
 

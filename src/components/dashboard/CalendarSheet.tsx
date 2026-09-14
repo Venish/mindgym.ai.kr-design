@@ -194,7 +194,7 @@ export function CalendarSheet() {
         <div className="w-full flex flex-col gap-3">
           <div className="flex items-center justify-between px-1">
             <h3 className="text-[0.9375rem] font-bold text-gray-900 tracking-tight flex items-center gap-1.5">
-              <span>8월 {selectedDay}일 단련 기록</span>
+              <span>8월 {selectedDay}일 리추얼 기록</span>
               {selectedDay === todayNum && (
                 <span className="text-[11px] font-extrabold text-[#00C474] bg-emerald-50 px-2 py-0.5 rounded-full">
                   오늘
@@ -212,11 +212,11 @@ export function CalendarSheet() {
             <div className="w-full bg-[#F8FAFC] rounded-3xl p-4 flex flex-col gap-3 shadow-2xs text-left">
               {/* 완수한 리추얼 목록 */}
               <div className="flex flex-col gap-2">
-                <span className="text-xs font-bold text-gray-500">완수한 마음 단련</span>
+                <span className="text-xs font-extrabold text-gray-500 tracking-tight">완료한 리추얼</span>
                 {currentRecord.rituals?.map((rit, idx) => (
                   <div key={idx} className="flex items-center gap-2 bg-white rounded-xl p-3 shadow-2xs">
                     <CheckCircle size={20} weight="fill" className="text-[#00C474] shrink-0" />
-                    <span className="text-[14px] font-bold text-gray-900">{rit}</span>
+                    <span className="text-[14px] font-extrabold text-gray-900 tracking-tight">{rit}</span>
                   </div>
                 ))}
               </div>
@@ -224,13 +224,13 @@ export function CalendarSheet() {
               {/* 감정 & 실천 메모 */}
               <div className="flex flex-col gap-1.5 pt-2 border-t border-gray-200/60">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-gray-500">이날의 마음:</span>
+                  <span className="text-xs font-extrabold text-gray-500 tracking-tight">오늘의 마음 상태</span>
                   <span className="text-xs font-extrabold text-[#00C474] bg-emerald-100/80 px-2.5 py-0.5 rounded-full">
                     {currentRecord.emotion}
                   </span>
                 </div>
                 {currentRecord.memo && (
-                  <p className="text-xs font-medium text-gray-700 leading-relaxed bg-white rounded-xl p-3 shadow-2xs mt-1">
+                  <p className="text-xs font-bold text-gray-700 leading-relaxed bg-white rounded-xl p-3 shadow-2xs mt-1 tracking-tight">
                     "{currentRecord.memo}"
                   </p>
                 )}
@@ -239,7 +239,7 @@ export function CalendarSheet() {
           ) : (
             <div className="w-full bg-[#F8FAFC] rounded-3xl p-6 flex flex-col items-center justify-center text-center gap-2 shadow-2xs">
               <CalendarBlank size={36} weight="duotone" className="text-gray-300" />
-              <span className="text-sm font-bold text-gray-500">
+              <span className="text-sm font-extrabold text-gray-500 tracking-tight">
                 8월 {selectedDay}일에는 출석 기록이 없어요.
               </span>
             </div>

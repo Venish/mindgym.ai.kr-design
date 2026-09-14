@@ -7,6 +7,7 @@ import { X, MoonStars, Sparkle, ArrowRight } from "@phosphor-icons/react";
 import { useMindGym } from "@/context/MindGymContext";
 import { useRouter } from "next/navigation";
 import { MagicButton } from "../godui/MagicButton";
+import { AuroraText } from "@/components/godui/AuroraText";
 import { AnimatedArrowRightIcon } from "../animated-icons/AnimatedArrowRightIcon";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 
@@ -20,7 +21,7 @@ export function EveningCheckinDrawer({
   const { userName, addDumbbells, markTodayCompleted } = useMindGym();
   const router = useRouter();
   const [step, setStep] = useState<"EMOTION" | "PRESCRIPTION">("EMOTION");
-  const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
 
   // 중앙 스크롤 락 훅 사용
@@ -30,14 +31,23 @@ export function EveningCheckinDrawer({
     setMounted(true);
   }, []);
 
-  const emotions = ["뿌듯함", "편안함", "보통임", "피곤함", "지침/스트레스", "우울함"];
+  const options = [
+    {
+      title: "오늘도 잘 버텨냈어요.",
+      desc: "하루를 무사히 보낸 나를 다정하게 바라봐요",
+    },
+    {
+      title: "조금 힘들었어요",
+      desc: "나에게 회복할 시간을 내어줘도 괜찮아요",
+    },
+  ];
 
-  const handleSelectEmotion = (emo: string) => {
-    setSelectedEmotion(emo);
+  const handleSelectOption = (title: string) => {
+    setSelectedOption(title);
   };
 
   const handleNextStep = () => {
-    if (!selectedEmotion) return;
+    if (!selectedOption) return;
     setStep("PRESCRIPTION");
   };
 
@@ -75,46 +85,64 @@ export function EveningCheckinDrawer({
           </div>
 
           {step === "EMOTION" ? (
-            /* STEP 1: 오늘 하루 감정 정리 */
+            /* STEP 1: 오늘 하루 회고 문구 선택 */
             <div className="flex flex-col gap-5">
               <div>
-                <h2 className="text-xl font-bold text-gray-900 leading-snug">
-                  {userName || "보노보노"}님, <br />
-                  오늘 하루는 어떻게 마감하시나요?
+                <h2 className="text-2xl font-black text-gray-900 leading-snug">
+                  오늘 하루를 <br />
+                  <AuroraText>돌아볼 시간이에요</AuroraText>
                 </h2>
-                <p className="text-xs text-gray-500 mt-1">
-                  오늘 하루 동안의 마음 상태를 선택해주세요.
+                <p className="text-xs font-semibold text-gray-500 mt-1.5 leading-relaxed">
+                  지금의 마음에 더 가까운 문장을 하나 골라보세요
                 </p>
               </div>
 
-              <div className="grid grid-cols-2 gap-2.5">
-                {emotions.map((emo) => {
-                  const isSelected = selectedEmotion === emo;
+              {/* 내 마음 돌아보기 구분선 */}
+              <div className="flex items-center gap-3 w-full pt-1 pb-1">
+                <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-gray-200 to-gray-300" />
+                <span className="text-sm font-bold text-gray-700 shrink-0 text-center">
+                  내 마음 돌아보기
+                </span>
+                <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-gray-200 to-gray-300" />
+              </div>
+
+              {/* 문구 2종 선택 옵션 카드 */}
+              <div className="flex flex-col gap-3">
+                {options.map((opt) => {
+                  const isSelected = selectedOption === opt.title;
                   return (
                     <button
-                      key={emo}
-                      onClick={() => handleSelectEmotion(emo)}
-                      className={`p-4 rounded-2xl border text-sm font-bold transition-all text-left flex items-center justify-between ${
+                      key={opt.title}
+                      type="button"
+                      onClick={() => handleSelectOption(opt.title)}
+                      className={`p-4.5 rounded-2xl border text-left transition-all cursor-pointer active:scale-98 ${
                         isSelected
-                          ? "border-indigo-500 bg-indigo-50 text-indigo-700 shadow-sm"
-                          : "border-gray-100 bg-[#F9FAFB] text-gray-700 hover:border-gray-200"
+                          ? "border-[#00C474] bg-emerald-50/70 ring-2 ring-[#00C474]/20 shadow-xs"
+                          : "border-gray-150 bg-[#F8FAFC] hover:bg-gray-100"
                       }`}
                     >
-                      <span>{emo}</span>
-                      {isSelected && (
-                        <span className="w-2 h-2 rounded-full bg-indigo-500" />
-                      )}
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-[15px] font-extrabold text-gray-900 leading-snug">
+                          {opt.title}
+                        </h3>
+                        {isSelected && (
+                          <span className="w-2.5 h-2.5 rounded-full bg-[#00C474]" />
+                        )}
+                      </div>
+                      <p className="text-xs font-semibold text-gray-500 mt-1 leading-relaxed">
+                        {opt.desc}
+                      </p>
                     </button>
                   );
                 })}
               </div>
 
               <button
-                disabled={!selectedEmotion}
+                disabled={!selectedOption}
                 onClick={handleNextStep}
                 className={`w-full py-4 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
-                  selectedEmotion
-                    ? "bg-indigo-600 text-white shadow-lg shadow-indigo-500/20 active:scale-[0.98]"
+                  selectedOption
+                    ? "bg-[#00C474] text-white shadow-lg shadow-emerald-500/20 active:scale-[0.98]"
                     : "bg-gray-100 text-gray-400 cursor-not-allowed"
                 }`}
               >
@@ -130,7 +158,7 @@ export function EveningCheckinDrawer({
                   <Sparkle size={12} weight="fill" /> 저녁 마감 처방
                 </span>
                 <h2 className="text-xl font-bold text-gray-900 leading-snug">
-                  [{selectedEmotion}] 하루를 보낸 당신에게 <br />
+                  [{selectedOption}] 하루를 보낸 당신에게 <br />
                   3분 이완 수면 명상을 추천해요
                 </h2>
                 <p className="text-xs text-gray-500 mt-1">

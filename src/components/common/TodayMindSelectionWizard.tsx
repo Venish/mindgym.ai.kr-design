@@ -30,7 +30,7 @@ export function TodayMindSelectionWizard({
     morningEmotion || "차분함"
   );
   const [selectedQuote, setSelectedQuote] = useState<string>(
-    todayQuote || "오늘도 남 비교하지 말고 내 페이스대로 걷기"
+    todayQuote || "남과 비교하지 않고 내 페이스대로 가기"
   );
   const [customInputQuote, setCustomInputQuote] = useState<string>("");
 
@@ -39,19 +39,21 @@ export function TodayMindSelectionWizard({
     "차분함",
     "상쾌함",
     "설렘",
-    "평온함",
+    "무난함",
+    "멍함",
     "긴장됨",
     "피곤함",
     "답답함",
-    "기쁨",
   ];
 
-  // Step 2: 다짐 메모 예시 문구 칩
+  // Step 2: 다짐 메모 예시 문구 칩 (6종)
   const presetQuotes = [
-    "오늘도 남 비교하지 말고 내 페이스대로 걷기",
-    "내 안의 소리에 집중하고 편안해지기",
-    "천천히 가더라도 바르게 걸어가기",
-    "나 자신을 따뜻하고 다정하게 아껴주기",
+    "남과 비교하지 않고 내 페이스대로 가기",
+    "급할수록 천천히, 내 호흡으로 움직이기",
+    "오늘 할 수 있는 만큼만 하기",
+    "완벽보다 안정감 있게 하루 보내기",
+    "흔들려도 다시 돌아오기",
+    "바쁜 와중에도 나를 놓치지 않기",
   ];
 
   const handleSelectEmotion = (w: string) => {
@@ -87,19 +89,20 @@ export function TodayMindSelectionWizard({
   };
 
   return (
-    <div className="w-full min-h-full bg-white flex flex-col select-none relative pb-8 text-gray-900">
-      {/* 서브 헤더: 스텝 2일 때 1단계로, 스텝 1일 때 모달 닫기 */}
+    <div className="w-full h-full min-h-screen sm:min-h-0 bg-white flex flex-col select-none relative text-gray-900 overflow-hidden">
+      {/* 서브 헤더: 상단 완전 고정 */}
       {showSubHeader && (
         <SubPageHeader
-          title="오늘의 마음가짐 설정"
+          title="아침 체크인"
           leftType="back"
           onLeftClick={handleHeaderBack}
         />
       )}
 
-      <div className="flex-1 flex flex-col justify-between w-full px-5 pt-2 pb-2 text-left h-full min-h-[500px]">
+      {/* 전체 본문 수직 오버플로우 스크롤 컨테이너 */}
+      <div className="flex-1 overflow-y-auto custom-scrollbar px-5 pt-3 pb-8 flex flex-col justify-between">
         {/* 1. 최상단 고정 2분할 세그먼트 스텝 라인 바 */}
-        <div className="w-full flex gap-2 shrink-0 pt-1 pb-2">
+        <div className="w-full flex gap-2 shrink-0 pt-1 pb-3">
           {[1, 2].map((i) => (
             <div key={i} className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
               <motion.div
@@ -112,13 +115,13 @@ export function TodayMindSelectionWizard({
           ))}
         </div>
 
-        {/* 2. 중앙 수직 정렬 내용 영역 (타이틀 & 콘텐츠 영역 높이 고정) */}
-        <div className="flex-1 flex flex-col justify-center my-auto gap-4 py-2">
-          {/* 타이틀 뷰 좌측 정렬 레이아웃 (높이 고정: h-[105px]) */}
-          <div className="h-[105px] flex flex-col justify-start shrink-0">
+        {/* 2. 중앙 타이틀 & 다짐 선택 본문 영역 */}
+        <div className="flex-1 flex flex-col justify-start py-2 gap-4">
+          {/* 타이틀 뷰 좌측 정렬 레이아웃 */}
+          <div className="flex flex-col justify-start shrink-0">
             <span className="txt-caption-main txt-brand-green uppercase font-semibold inline-flex items-center gap-1.5">
               <img src="/images/logo_icon.svg" alt="Icon" className="w-3.5 h-3.5 object-contain" />
-              TODAY MIND SETTING STEP 0{step}
+              MORNING CHECK-IN STEP 0{step}
             </span>
 
             <AnimatePresence mode="wait">
@@ -131,12 +134,9 @@ export function TodayMindSelectionWizard({
                   transition={{ duration: 0.2 }}
                 >
                   <h1 className="text-[26px] font-black txt-brand-ink leading-snug mt-1">
-                    지금 느껴지는 <br />
-                    <AuroraText>오늘의 마음 상태예요</AuroraText>
+                    지금 가장 가까운 <br />
+                    <AuroraText>마음상태를 골라보세요</AuroraText>
                   </h1>
-                  <p className="text-xs text-gray-500 font-semibold mt-1.5 leading-relaxed">
-                    현재 가장 가깝게 느껴지는 마음 단어를 하나 선택해 보세요
-                  </p>
                 </motion.div>
               )}
 
@@ -150,18 +150,18 @@ export function TodayMindSelectionWizard({
                 >
                   <h1 className="text-[26px] font-black txt-brand-ink leading-snug mt-1">
                     나에게 보내는 <br />
-                    <AuroraText>오늘의 한 줄 다짐 메모</AuroraText>
+                    <AuroraText>오늘의 한 문장</AuroraText>
                   </h1>
                   <p className="text-xs text-gray-500 font-semibold mt-1.5 leading-relaxed">
-                    오늘 하루 나를 단단하게 잡아줄 다짐 한 줄을 선택해 주세요
+                    오늘 하루를 지탱해 줄 문장을 하나 골라보세요
                   </p>
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
 
-          {/* 3. 단계별 선택 콘텐츠 (높이 고정: h-[270px]) */}
-          <div className="h-[270px] flex flex-col justify-start shrink-0 my-1">
+          {/* 3. 단계별 선택 콘텐츠 */}
+          <div className="flex flex-col justify-start shrink-0 my-1">
             <AnimatePresence mode="wait">
               {step === 1 && (
                 <motion.div
@@ -175,7 +175,7 @@ export function TodayMindSelectionWizard({
                   <div className="flex items-center gap-3 w-full pt-4 pb-2">
                     <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-gray-200 to-gray-300" />
                     <span className="text-base font-bold text-gray-700 shrink-0 text-center">
-                      오늘 마음 감정 선택
+                      지금의 마음 한 단어
                     </span>
                     <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-gray-200 to-gray-300" />
                   </div>
@@ -200,9 +200,9 @@ export function TodayMindSelectionWizard({
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.2 }}
-                  className="flex flex-col gap-3 h-full justify-start items-center w-full"
+                  className="flex flex-col gap-2.5 h-full justify-start items-center w-full pb-2"
                 >
-                  <div className="flex items-center gap-3 w-full pt-3 pb-1">
+                  <div className="flex items-center gap-3 w-full pt-2 pb-1">
                     <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-gray-200 to-gray-300" />
                     <span className="text-base font-bold text-gray-700 shrink-0 text-center">
                       다짐 문구 선택 또는 작성
@@ -210,13 +210,13 @@ export function TodayMindSelectionWizard({
                     <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-gray-200 to-gray-300" />
                   </div>
 
-                  <div className="flex flex-col gap-2.5 w-full">
+                  <div className="flex flex-col gap-2 w-full">
                     {presetQuotes.map((q) => (
                       <button
                         key={q}
                         type="button"
                         onClick={() => handleSelectQuote(q)}
-                        className={`w-full py-3.5 px-4 rounded-2xl text-[14.5px] font-bold text-left transition-all cursor-pointer active:scale-98 shadow-2xs ${
+                        className={`w-full py-3 px-3.5 rounded-2xl text-[14px] font-bold text-left transition-all cursor-pointer active:scale-98 shadow-2xs ${
                           selectedQuote === q && !customInputQuote
                             ? "bg-[#00C474] text-white shadow-xs"
                             : "bg-[#F8FAFC] text-gray-800 hover:bg-gray-100 border border-gray-100"
@@ -226,13 +226,27 @@ export function TodayMindSelectionWizard({
                       </button>
                     ))}
 
-                    <input
-                      type="text"
-                      value={customInputQuote}
-                      onChange={(e) => setCustomInputQuote(e.target.value)}
-                      placeholder="나만의 다짐 메모 직접 입력하기..."
-                      className="w-full py-3.5 px-4 rounded-2xl text-[14.5px] font-bold bg-[#F8FAFC] border border-gray-200 focus:border-[#00C474] focus:bg-white text-gray-900 placeholder:text-gray-400 outline-none transition-all mt-1"
-                    />
+                    {/* 직접 입력 전용 카드 */}
+                    <div
+                      className={`w-full rounded-2xl border transition-all mt-1 ${
+                        customInputQuote
+                          ? "border-[#00C474] bg-emerald-50/50 ring-2 ring-[#00C474]/20 shadow-xs"
+                          : "border-gray-200 bg-[#F8FAFC] focus-within:border-[#00C474] focus-within:bg-white focus-within:ring-2 focus-within:ring-[#00C474]/20"
+                      }`}
+                    >
+                      <div className="flex items-center px-3.5 py-1 gap-2.5">
+                        <span className="text-[11px] font-extrabold text-[#00C474] bg-emerald-100/90 px-2.5 py-0.5 rounded-full shrink-0">
+                          직접 입력
+                        </span>
+                        <input
+                          type="text"
+                          value={customInputQuote}
+                          onChange={(e) => setCustomInputQuote(e.target.value)}
+                          placeholder="나만의 다짐 문장을 직접 작성해 보세요..."
+                          className="w-full bg-transparent py-2.5 text-[14px] font-bold text-gray-900 placeholder:text-gray-400 outline-none"
+                        />
+                      </div>
+                    </div>
                   </div>
                 </motion.div>
               )}
@@ -241,7 +255,7 @@ export function TodayMindSelectionWizard({
         </div>
 
         {/* 4. 하단 탐색 버튼 그룹 */}
-        <div className="flex flex-col gap-2 shrink-0 pt-2">
+        <div className="flex flex-col gap-2 shrink-0 pt-4 mt-auto">
           <div className="flex gap-2.5">
             {step > 1 && (
               <button

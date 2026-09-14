@@ -59,12 +59,12 @@ export function BklitBarChart({
             </span>
             <span className="flex items-center gap-1.5 text-gray-600">
               <span className="w-2.5 h-2.5 rounded-full bg-[#A5B4FC]" />
-              {firstItem.month2Label} (이전)
+              {firstItem.month2Label}
             </span>
           </div>
 
           <span className="text-[11px] font-extrabold text-[#059669] bg-emerald-50 px-2.5 py-0.5 rounded-full">
-            단일 바 겹침 비교
+            월간 비교
           </span>
         </div>
 

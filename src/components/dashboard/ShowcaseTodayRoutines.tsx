@@ -21,7 +21,7 @@ export function ShowcaseTodayRoutines() {
   return (
     <div className="flex flex-col gap-2.5 w-full">
       {/* 공통 섹션 중제목 컴포넌트 사용 */}
-      <SectionTitle title="오늘 나를 위한 맞춤 추천" />
+      <SectionTitle title="오늘의 추천 리추얼" />
 
       {/* 전역 공통 3열 카드 그리드 컴포넌트 적용 */}
       <CommonCardGrid cols={3}>

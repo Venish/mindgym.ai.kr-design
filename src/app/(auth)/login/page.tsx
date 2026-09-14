@@ -36,7 +36,7 @@ export default function LoginPage() {
             CORPORATE WELLNESS
           </span>
           <h1 className="txt-title-main txt-brand-ink leading-snug mt-1">
-            <AuroraText>마인드짐</AuroraText>에 입장하세요
+            <AuroraText>마인드짐</AuroraText>에 입장해 주세요
           </h1>
           <p className="txt-body-main txt-brand-clay mt-1.5 leading-relaxed">
             기업 계정으로 로그인해 주세요.

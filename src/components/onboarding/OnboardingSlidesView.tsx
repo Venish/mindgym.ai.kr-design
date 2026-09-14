@@ -10,7 +10,7 @@ import { AnimatedArrowRightIcon } from "@/components/animated-icons/AnimatedArro
 
 interface SlideData {
   title: React.ReactNode;
-  sub: string;
+  sub: React.ReactNode;
   badge: string;
   icon: React.ReactNode;
 }
@@ -36,7 +36,13 @@ export function OnboardingSlidesView({
           <AuroraText>나를 잃지 않도록</AuroraText>
         </>
       ),
-      sub: "마음에도 운동이 필요합니다",
+      sub: (
+        <>
+          운동을 하고 책을 읽듯이 <br />
+          마음도 스스로 돌볼 수 있는 <br />
+          루틴이 필요합니다.
+        </>
+      ),
       icon: (
         <img
           src="/images/logo_icon.svg"
@@ -49,33 +55,52 @@ export function OnboardingSlidesView({
       badge: "WHY MINDGYM · 01",
       title: (
         <>
-          측정된 나의 상태에서 <br />
-          <AuroraText>출발합니다</AuroraText>
+          지금의 나를 <br />
+          <AuroraText>먼저 확인해요.</AuroraText>
         </>
       ),
-      sub: 'KOSS 직무 스트레스 검사로 번아웃 수치를 진단. "느낌"이 아닌 과학 기반 처방으로 맞춤 리추얼이 시작됩니다.',
+      sub: (
+        <>
+          KOSS 기반 마음상태 체크로 <br />
+          최근의 스트레스 경향을 살펴보이고 <br />
+          지금의 나를 객관적으로 확인합니다.
+        </>
+      ),
       icon: <Pulse size={52} weight="bold" className="text-[#00C474]" />,
     },
     {
       badge: "WHY MINDGYM · 02",
       title: (
         <>
-          매일의 접점, <br />
-          <AuroraText>한 달의 흐름</AuroraText>
+          부담없이, <br />
+          <AuroraText>내 페이스대로 이어가요</AuroraText>
         </>
       ),
-      sub: "아침 감정 체크인부터 저녁 리추얼까지. 다정한 습관을 설계해서 하루도 빠지고 싶지 않게 함께합니다.",
+      sub: (
+        <>
+          매일의 체크인과 리추얼로 <br />
+          내 하루에 자연스럽게 스며드는 <br />
+          마음건강 루틴을 만듭니다.
+        </>
+      ),
       icon: <CalendarCheck size={52} weight="fill" className="text-[#00C474]" />,
     },
     {
       badge: "WHY MINDGYM · 03",
       title: (
         <>
-          보이는 성장, <br />
-          <AuroraText>쌓이는 마음 증거</AuroraText>
+          쌓이는 마음의 기록, <br />
+          <AuroraText>보이는 나의 변화</AuroraText>
         </>
       ),
-      sub: "나무 덤벨부터 다이아 덤벨까지. 내가 얼마나 꾸준히 실천했는지가 눈에 보이는 마음 정원 성장으로 남습니다.",
+      sub: (
+        <>
+          하루하루의 체크인과 <br />
+          리추얼이 기록으로 쌓일수록 <br />
+          내 마음의 흐름과 변화를 <br />
+          직접 확인할 수 있어요.
+        </>
+      ),
       icon: <Barbell size={52} weight="fill" className="text-[#00C474]" />,
     },
   ];

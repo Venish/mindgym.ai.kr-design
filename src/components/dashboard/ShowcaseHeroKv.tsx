@@ -153,7 +153,7 @@ export function ShowcaseHeroKv({
         <div className="w-full flex flex-col items-center gap-2 z-10 mt-1.5 pt-1.5 pb-0.5">
           <div className="flex items-center justify-start w-full px-1">
             <span className="text-xs font-medium text-gray-500/90 tracking-tight">
-              이번 주 마음 이정표
+              주간 리추얼 기록
             </span>
           </div>
 

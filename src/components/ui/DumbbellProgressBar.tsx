@@ -40,7 +40,7 @@ export function DumbbellProgressBar() {
     <div
       onClick={handleOpenDumbbellSheet}
       className="w-full bg-brand-mint-light p-4 rounded-2xl flex flex-col gap-2 cursor-pointer group hover:shadow-xs transition-all active:scale-98"
-      title="마음 근력 덤벨 성장의 길 보기 (밑에서 위로 스르륵)"
+      title="나의 마음덤벨 보기"
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
