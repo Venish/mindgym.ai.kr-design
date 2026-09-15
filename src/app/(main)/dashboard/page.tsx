@@ -9,8 +9,9 @@ import { useModalStore } from "@/store/useModalStore";
 import { ShowcaseHeader } from "@/components/dashboard/ShowcaseHeader";
 import { ShowcaseMonthlyMe } from "@/components/dashboard/ShowcaseMonthlyMe";
 import { ShowcaseHeroKv } from "@/components/dashboard/ShowcaseHeroKv";
-import { ShowcaseBentoGrid } from "@/components/dashboard/ShowcaseBentoGrid";
-import { ShowcaseTodayRoutines } from "@/components/dashboard/ShowcaseTodayRoutines";
+import { ShowcaseSosPrescription } from "@/components/dashboard/ShowcaseSosPrescription";
+import { ShowcaseWorkplaceGuideTipBar } from "@/components/dashboard/ShowcaseWorkplaceGuideTipBar";
+import { ShowcaseMindSwitchBar } from "@/components/dashboard/ShowcaseMindSwitchBar";
 import { ShowcasePauseBanner } from "@/components/dashboard/ShowcasePauseBanner";
 import { ShowcaseParallaxFooter } from "@/components/dashboard/ShowcaseParallaxFooter";
 import { ShowcaseFixedBottomBar } from "@/components/dashboard/ShowcaseFixedBottomBar";
@@ -70,9 +71,9 @@ function DashboardContent() {
   }, [completedDays, param, openModal, closeModal]);
 
   return (
-    <div className="w-full max-w-[430px] min-h-screen mx-auto bg-white relative flex flex-col justify-between overflow-x-hidden text-gray-900 select-none font-sans no-scrollbar">
+    <div className="w-full max-w-[430px] min-h-screen mx-auto bg-theme-app relative flex flex-col justify-between overflow-x-hidden txt-brand-ink select-none font-sans no-scrollbar transition-colors duration-200">
       {/* 1. 대시보드 메인 카드 레이어 (패럴랙스 mb-[220px] 복원 & pb-40 내여백 보존) */}
-      <main className="relative z-10 bg-white flex-1 min-h-screen px-4 pt-2 pb-40 flex flex-col gap-4 text-left shadow-lg rounded-b-2xl mb-[220px]">
+      <main className="relative z-10 bg-theme-app flex-1 min-h-screen px-4 pt-2 pb-40 flex flex-col gap-4 text-left shadow-lg rounded-b-2xl mb-[220px] transition-colors duration-200">
         {/* 1. 상단 메뉴 헤더 컴포넌트 */}
         <ShowcaseHeader userName={userName || "보노보노"} levelNum={levelNum} />
 
@@ -90,18 +91,21 @@ function DashboardContent() {
           levelNum={levelNum}
         />
 
-        {/* 4. 30초 체크인 & 덤벨 성장의 길 2열 벤토 */}
-        <ShowcaseBentoGrid levelNum={levelNum} nextDiff={nextDiff} />
+        {/* 4. 마음 스위치 (한 줄 4열 원터치 토글 바) */}
+        <ShowcaseMindSwitchBar />
 
-        {/* 5. 오늘의 루틴 3가지 (플랫 3열) */}
-        <ShowcaseTodayRoutines />
+        {/* 5. 긴급 SOS 처방 (4종 감정별 즉각 리추얼 연동) */}
+        <ShowcaseSosPrescription />
 
-        {/* 6. 잠시멈춤 VOL.11 매거진 배너 */}
+        {/* 6. 직장인 실전 리추얼 100% 활용기 (TIP 한 줄 띠 배너) */}
+        <ShowcaseWorkplaceGuideTipBar />
+
+        {/* 7. 잠시멈춤 VOL.11 매거진 배너 */}
         <ShowcasePauseBanner />
       </main>
 
       {/* 2. 뒤편 픽스 고정 패럴랙스 푸터 레이어 (fixed bottom-0 z-0 복원) */}
-      <div className="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto z-0 w-full bg-white pointer-events-auto">
+      <div className="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto z-0 w-full bg-theme-app pointer-events-auto transition-colors duration-200">
         <ShowcaseParallaxFooter />
       </div>
 

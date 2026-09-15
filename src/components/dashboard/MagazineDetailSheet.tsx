@@ -31,7 +31,7 @@ export function MagazineDetailSheet({ magazine, onOpenReader }: MagazineDetailSh
   };
 
   return (
-    <div className="w-full bg-[#F9FAFB] flex flex-col select-none relative text-gray-900 min-h-full pb-[4rem] overflow-y-auto">
+    <div className="w-full bg-[#F9FAFB] dark:bg-slate-900 flex flex-col select-none relative text-gray-900 dark:text-slate-100 min-h-full pb-[4rem] overflow-y-auto">
       {/* 상단 헤더 */}
       <SubPageHeader
         title={`${magazine.id.toUpperCase()} 상세 목차`}
@@ -41,13 +41,13 @@ export function MagazineDetailSheet({ magazine, onOpenReader }: MagazineDetailSh
 
       <div className="flex flex-col w-full px-[1.25rem] pt-[1rem] gap-[1.5rem] text-left max-w-[32rem] mx-auto flex-1">
         {/* 1. 상단 대형 3D 입체 커버 히어로 엠블럼 */}
-        <div className="relative p-[1.5rem] rounded-[2rem] bg-white border border-gray-100 shadow-sm flex flex-col items-center text-center gap-[1.25rem] overflow-hidden">
+        <div className="relative p-[1.5rem] rounded-[2rem] bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-sm flex flex-col items-center text-center gap-[1.25rem] overflow-hidden">
           {/* 파스텔 백그라운드 후광 틴트 */}
-          <div className="absolute top-0 left-0 right-0 h-[6rem] bg-gradient-to-b from-[#EBFBF3] to-transparent opacity-80" />
+          <div className="absolute top-0 left-0 right-0 h-[6rem] bg-gradient-to-b from-[#EBFBF3] dark:from-emerald-950/40 to-transparent opacity-80" />
 
           <div className="relative z-10 flex flex-col items-center gap-[1rem]">
             {/* 3D 커버 썸네일 */}
-            <div className="relative w-[7.5rem] h-[10rem] rounded-[1rem] overflow-hidden shadow-xl bg-gray-200 border border-white">
+            <div className="relative w-[7.5rem] h-[10rem] rounded-[1rem] overflow-hidden shadow-xl bg-gray-200 dark:bg-slate-700 border border-white dark:border-slate-600">
               <Image
                 src={magazine.thumbPath}
                 alt={magazine.title}
@@ -61,13 +61,13 @@ export function MagazineDetailSheet({ magazine, onOpenReader }: MagazineDetailSh
             </div>
 
             <div className="flex flex-col items-center gap-[0.375rem]">
-              <span className="text-[0.75rem] font-bold text-[#00874E] bg-[#EBFBF3] px-[0.75rem] py-[0.25rem] rounded-[0.5rem]">
+              <span className="text-[0.75rem] font-bold text-[#00874E] dark:text-emerald-300 bg-[#EBFBF3] dark:bg-emerald-950/60 px-[0.75rem] py-[0.25rem] rounded-[0.5rem]">
                 {magazine.category}
               </span>
-              <h2 className="text-[1.375rem] font-bold text-gray-900 mt-[0.25rem]">
+              <h2 className="text-[1.375rem] font-bold text-gray-900 dark:text-slate-100 mt-[0.25rem]">
                 {magazine.title}
               </h2>
-              <span className="text-[0.75rem] font-semibold text-gray-400">
+              <span className="text-[0.75rem] font-semibold text-gray-400 dark:text-slate-400">
                 {magazine.publishDate} 발행 · 총 {magazine.articles.length}개 수록 코너
               </span>
             </div>
@@ -87,11 +87,11 @@ export function MagazineDetailSheet({ magazine, onOpenReader }: MagazineDetailSh
         {/* 2. 수록 코너 & 아티클 리스트 타임라인 */}
         <div className="flex flex-col gap-[0.875rem]">
           <div className="flex items-center justify-between px-[0.25rem]">
-            <h3 className="text-[1rem] font-bold text-gray-900 flex items-center gap-[0.375rem]">
+            <h3 className="text-[1rem] font-bold text-gray-900 dark:text-slate-100 flex items-center gap-[0.375rem]">
               <BookmarkSimple size={18} weight="fill" className="text-[#00C474]" />
               수록 코너 & 목차 아티클 ({magazine.articles.length})
             </h3>
-            <span className="text-[0.75rem] font-semibold text-gray-400">터치 시 해당 코너 이동</span>
+            <span className="text-[0.75rem] font-semibold text-gray-400 dark:text-slate-400">터치 시 해당 코너 이동</span>
           </div>
 
           <div className="flex flex-col gap-[0.625rem]">
@@ -99,24 +99,24 @@ export function MagazineDetailSheet({ magazine, onOpenReader }: MagazineDetailSh
               <div
                 key={idx}
                 onClick={() => handleStartRead(art.title)}
-                className="p-[1.125rem] rounded-[1.25rem] bg-white border border-gray-100/80 flex items-center justify-between transition-all hover:bg-emerald-50/40 hover:border-emerald-200 cursor-pointer active:scale-[0.98] shadow-2xs group"
+                className="p-[1.125rem] rounded-[1.25rem] bg-white dark:bg-slate-800 border border-gray-100/80 dark:border-slate-700 flex items-center justify-between transition-all hover:bg-emerald-50/40 dark:hover:bg-slate-700/60 hover:border-emerald-200 dark:hover:border-slate-600 cursor-pointer active:scale-[0.98] shadow-2xs group"
               >
                 <div className="flex items-start gap-[0.875rem] min-w-0 flex-1 pr-[0.5rem]">
-                  <span className="w-[1.75rem] h-[1.75rem] rounded-[0.5rem] bg-gray-100 group-hover:bg-[#EBFBF3] text-gray-500 group-hover:text-[#00874E] text-[0.75rem] font-bold flex items-center justify-center shrink-0 transition-colors">
+                  <span className="w-[1.75rem] h-[1.75rem] rounded-[0.5rem] bg-gray-100 dark:bg-slate-700 group-hover:bg-[#EBFBF3] dark:group-hover:bg-emerald-950/60 text-gray-500 dark:text-slate-300 group-hover:text-[#00874E] dark:group-hover:text-emerald-300 text-[0.75rem] font-bold flex items-center justify-center shrink-0 transition-colors">
                     {String(idx + 1).padStart(2, "0")}
                   </span>
 
                   <div className="flex flex-col text-left min-w-0">
-                    <span className="text-[0.6875rem] font-bold text-[#00874E]">
+                    <span className="text-[0.6875rem] font-bold text-[#00874E] dark:text-emerald-400">
                       [{art.section}]
                     </span>
-                    <h4 className="text-[0.875rem] font-bold text-gray-900 truncate mt-[0.125rem] group-hover:text-[#00874E] transition-colors">
+                    <h4 className="text-[0.875rem] font-bold text-gray-900 dark:text-slate-100 truncate mt-[0.125rem] group-hover:text-[#00874E] dark:group-hover:text-emerald-300 transition-colors">
                       {art.title}
                     </h4>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-[0.375rem] text-gray-400 group-hover:text-[#00C474] transition-colors shrink-0">
+                <div className="flex items-center gap-[0.375rem] text-gray-400 dark:text-slate-400 group-hover:text-[#00C474] dark:group-hover:text-emerald-400 transition-colors shrink-0">
                   <span className="text-[0.6875rem] font-semibold hidden sm:inline">읽기</span>
                   <CaretRight size={16} weight="bold" />
                 </div>

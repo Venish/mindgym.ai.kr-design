@@ -66,7 +66,7 @@ export function CommonSosDiagnosisSheet() {
   };
 
   return (
-    <div className="w-full min-h-full bg-white flex flex-col select-none relative pb-12 text-gray-900 overflow-y-auto">
+    <div className="w-full min-h-full bg-theme-app flex flex-col select-none relative pb-12 txt-brand-ink overflow-y-auto transition-colors duration-300">
       {/* 1. 서브 헤더 */}
       <SubPageHeader
         title="긴급 SOS 처방"
@@ -85,22 +85,22 @@ export function CommonSosDiagnosisSheet() {
                 SOS PRESCRIPTION
               </span>
 
-              <h1 className="text-[26px] font-black text-gray-900 leading-snug tracking-tight">
+              <h1 className="text-[26px] font-black txt-brand-ink leading-snug tracking-tight">
                 나를 힘들게 하는 감정을 선택해보세요
               </h1>
 
-              <p className="text-xs text-gray-500 font-semibold mt-2.5 leading-relaxed">
+              <p className="text-xs text-theme-muted font-semibold mt-2.5 leading-relaxed">
                 지금의 상태와 가장 가까운 마음을 골라보세요 바로 해볼 수 있는 짧은 리추얼을 추천해 드려요
               </p>
             </div>
 
             {/* 중앙 수평 구분선 */}
             <div className="flex items-center gap-3 w-full pt-2 pb-1">
-              <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-gray-200 to-gray-300" />
-              <span className="text-sm font-extrabold text-gray-700 shrink-0 text-center">
+              <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-theme-subtle to-theme-subtle" />
+              <span className="text-sm font-extrabold txt-brand-ink shrink-0 text-center">
                 지금의 마음 한 문장
               </span>
-              <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-gray-200 to-gray-300" />
+              <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-theme-subtle to-theme-subtle" />
             </div>
 
             {/* 긴급 SOS 처방 선택 리스트 (2열 2행 큼직한 사각형 그리드 배치) */}
@@ -110,12 +110,12 @@ export function CommonSosDiagnosisSheet() {
                   key={item.id}
                   type="button"
                   onClick={() => handleStartPrescription(item)}
-                  className="h-[140px] bg-[#F8FAFC] hover:bg-rose-50/70 p-4 rounded-3xl text-center transition-all flex flex-col items-center justify-center gap-2.5 shadow-2xs active:scale-[0.98] cursor-pointer border border-gray-100 hover:border-rose-300"
+                  className="h-[140px] bg-theme-card hover:bg-rose-50/70 dark:hover:bg-rose-950/40 p-4 rounded-3xl text-center transition-all flex flex-col items-center justify-center gap-2.5 shadow-2xs active:scale-[0.98] cursor-pointer border border-theme-card hover:border-rose-300 dark:hover:border-rose-800"
                 >
-                  <div className="w-9 h-9 rounded-2xl bg-rose-100/80 text-rose-600 flex items-center justify-center shrink-0">
+                  <div className="w-9 h-9 rounded-2xl bg-rose-100/80 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0">
                     <Shield size={20} weight="bold" />
                   </div>
-                  <span className="text-sm font-extrabold text-gray-900 leading-snug break-keep text-center">
+                  <span className="text-sm font-extrabold txt-brand-ink leading-snug break-keep text-center">
                     {item.label}
                   </span>
                 </button>

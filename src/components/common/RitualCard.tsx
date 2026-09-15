@@ -89,6 +89,7 @@ export interface RitualCardProps {
   reward?: string;
   description?: string;
   icon?: RitualIconType;
+  imageSrc?: string;
   variant?: "detailed" | "compact" | "icon-only" | "pure-icon" | "icon-pure" | "raw-icon" | "icon-raw";
   size?: number;
   selected?: boolean;
@@ -106,6 +107,7 @@ export function RitualCard({
   reward = "+30",
   description,
   icon = "notebook",
+  imageSrc,
   variant = "detailed",
   size,
   selected = false,
@@ -123,7 +125,11 @@ export function RitualCard({
         onClick={onClick}
         className={`inline-flex items-center justify-center shrink-0 select-none ${onClick ? "cursor-pointer" : ""} ${className}`}
       >
-        <GradientRitualIcon icon={IconComponent} size={size || 44} iconType={icon} />
+        {imageSrc ? (
+          <img src={imageSrc} alt={title} className="object-contain" style={{ width: size || 44, height: size || 44 }} />
+        ) : (
+          <GradientRitualIcon icon={IconComponent} size={size || 44} iconType={icon} />
+        )}
       </div>
     );
   }
@@ -138,7 +144,11 @@ export function RitualCard({
         className={`relative inline-flex flex-col items-center justify-center p-2 rounded-2xl transition-all duration-200 shrink-0 hover:bg-emerald-50/50 active:bg-emerald-100/50 outline-none ${className}`}
         title={title}
       >
-        <GradientRitualIcon icon={IconComponent} size={size || 44} iconType={icon} />
+        {imageSrc ? (
+          <img src={imageSrc} alt={title} className="object-contain" style={{ width: size || 44, height: size || 44 }} />
+        ) : (
+          <GradientRitualIcon icon={IconComponent} size={size || 44} iconType={icon} />
+        )}
         {title && (
           <span className="txt-micro-main text-gray-800 tracking-tight mt-1 line-clamp-1">
             {title}
@@ -153,7 +163,7 @@ export function RitualCard({
     );
   }
 
-  // 1. 아이콘 전용 컴팩트 미니 버전 (icon-only - Non-white selection borderless with layout-shift prevention)
+  // 1. 아이콘 전용 컴팩트 미니 버전 (icon-only)
   if (variant === "icon-only") {
     return (
       <motion.button
@@ -165,7 +175,11 @@ export function RitualCard({
             : "bg-white border-gray-200 hover:border-[var(--color-forest-green)] active:border-[var(--color-forest-green)]"
         } ${className}`}
       >
-        <GradientRitualIcon icon={IconComponent} size={42} iconType={icon} />
+        {imageSrc ? (
+          <img src={imageSrc} alt={title} className="w-[42px] h-[42px] object-contain" />
+        ) : (
+          <GradientRitualIcon icon={IconComponent} size={42} iconType={icon} />
+        )}
         {badge && (
           <span className="absolute -top-1.5 -right-1.5 txt-micro-main font-black bg-brand-green text-white px-1.5 py-0.5 rounded-full shadow-xs">
             {badge}
@@ -175,7 +189,7 @@ export function RitualCard({
     );
   }
 
-  // 2. 한 줄 컴팩트 칩 형태 (compact - Non-white selection borderless with layout-shift prevention)
+  // 2. 한 줄 컴팩트 칩 형태 (compact)
   if (variant === "compact") {
     return (
       <motion.div
@@ -188,7 +202,11 @@ export function RitualCard({
         } ${className}`}
       >
         <div className="flex items-center gap-3">
-          <GradientRitualIcon icon={IconComponent} size={32} iconType={icon} />
+          {imageSrc ? (
+            <img src={imageSrc} alt={title} className="w-8 h-8 object-contain rounded-lg" />
+          ) : (
+            <GradientRitualIcon icon={IconComponent} size={32} iconType={icon} />
+          )}
           <div className="flex flex-col text-left">
             <span className="text-sm font-black text-gray-900 leading-tight tracking-tight">{title}</span>
             <span className="txt-caption-compact txt-brand-forest mt-1">
@@ -213,7 +231,7 @@ export function RitualCard({
     );
   }
 
-  // 3. 상세 정보가 포함된 대표 리추얼 카드 (detailed - Non-white selection borderless with layout-shift prevention)
+  // 3. 상세 정보가 포함된 대표 리추얼 카드 (detailed)
   return (
     <div
       onClick={onClick}
@@ -242,7 +260,11 @@ export function RitualCard({
       <div className="flex flex-col gap-3.5 z-10">
         {/* 상단 1열: 아이콘 + 타이틀 + 체크표시 */}
         <div className="flex items-center gap-3">
-          <GradientRitualIcon icon={IconComponent} size={44} iconType={icon} />
+          {imageSrc ? (
+            <img src={imageSrc} alt={title} className="w-11 h-11 object-contain rounded-xl shadow-xs" />
+          ) : (
+            <GradientRitualIcon icon={IconComponent} size={44} iconType={icon} />
+          )}
           <span className="text-xl font-bold text-gray-900 tracking-tight flex-1">{title}</span>
           {selected && <CheckCircle size={24} className="txt-brand-green-accent shrink-0" weight="fill" />}
         </div>

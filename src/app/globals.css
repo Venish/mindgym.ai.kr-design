@@ -171,6 +171,11 @@
     box-shadow: none;
   }
 
+  .dark .glass-base-light,
+  [data-theme="dark"] .glass-base-light {
+    background: var(--glass-bg-studio-dark);
+  }
+
   /* Glass Main Base Dark Card (Flat: Shadow 제거) */
   .glass-base-dark {
     background: var(--glass-bg-studio-dark);
@@ -196,6 +201,11 @@
   /* Glass Specular Reflection Light */
   .glass-specular-light {
     background: linear-gradient(180deg, oklch(1 0 0 / 0.9) 0%, oklch(1 0 0 / 0.1) 60%, transparent 100%);
+  }
+
+  .dark .glass-specular-light,
+  [data-theme="dark"] .glass-specular-light {
+    background: linear-gradient(180deg, oklch(1 0 0 / 0.4) 0%, oklch(1 0 0 / 0.05) 60%, transparent 100%);
   }
 
   /* Glass Specular Reflection Dark */
@@ -268,6 +278,20 @@ html {
   --fs-micro-main: 0.8125rem;
   /* 430px 모바일 기준 13px (공통 마이크로 캡션/설명 유저 지침 반영) */
 
+  /* -------------------------------------------------------------
+   * 🎨 Theme Design Tokens (Classic vs Natural Comfort)
+   * ------------------------------------------------------------- */
+  /* 1) 기본 (Classic): 기존 화이트 + 옅은 에메랄드 */
+  --theme-bg-body: #F3F4F6;
+  --theme-bg-app: #FFFFFF;
+  --theme-bg-card: #FFFFFF;
+  --theme-bg-card-subtle: #F9FAFB;
+  --theme-bg-hero-from: rgba(209, 250, 229, 0.85); /* emerald-100/85 */
+  --theme-bg-hero-via: rgba(240, 253, 250, 0.65);  /* teal-50/65 */
+  --theme-bg-hero-to: rgba(236, 253, 245, 0.45);   /* emerald-50/45 */
+  --theme-border-subtle: rgba(229, 231, 235, 0.9); /* gray-200/90 */
+  --theme-border-card: #E5E7EB;
+
   /* 브랜드 시그니처 텍스트 컬러 및 Neutral Scale (OKLCH 1:1 지각적 인지 보정 토큰) */
   --color-signature-green: oklch(0.72 0.19 155);
   --color-brand-green: oklch(0.72 0.19 155);
@@ -280,7 +304,290 @@ html {
   --color-neutral-gray-400: oklch(0.76 0.02 260);
   --color-neutral-gray-200: oklch(0.94 0.01 260);
   --color-neutral-surface: oklch(0.985 0.005 260);
+}
 
+/* -------------------------------------------------------------
+ * 🎨 5가지 웰니스 프리미엄 테마 프리셋 토큰 (CSS Data-Theme System)
+ * ------------------------------------------------------------- */
+
+/* 1) 🌿 프레시 클리어 민트 (기본 추천): 맑은 아침이슬 + 비비드 웰니스 민트 (칙칙함 0%) */
+:root,
+[data-theme="fresh-mint"] {
+  --theme-bg-body: #E8F2EC;
+  --theme-bg-app: #F2F9F5;
+  --theme-bg-card: #FFFFFF;
+  --theme-bg-card-subtle: #E5F4EC;
+  --theme-bg-hero-from: #CDEFE0;
+  --theme-bg-hero-via: #E0F6EC;
+  --theme-bg-hero-to: #EEFAF4;
+  --theme-border-subtle: #D2EBDD;
+  --theme-border-card: #CDE5D8;
+
+  --color-signature-green: #00BA66;
+  --color-brand-green: #00BA66;
+  --color-forest-green: #005A32;
+  --color-mint-tint: #D6F3E5;
+
+  --color-neutral-ink: #0F172A;
+  --color-neutral-gray-700: #334155;
+  --color-neutral-gray-500: #64748B;
+  --color-neutral-gray-400: #94A3B8;
+  --color-neutral-gray-200: #E2E8F0;
+  --color-neutral-surface: #E8F5EE;
+}
+
+/* 2) 🥛 웜 밀크 아이보리: 종이 감성의 포근한 우윳빛 캔버스 & 생기 넘치는 오리지널 그린 */
+[data-theme="warm-ivory"] {
+  --theme-bg-body: #ECE6DC;
+  --theme-bg-app: #FAF7F2;
+  --theme-bg-card: #FFFFFF;
+  --theme-bg-card-subtle: #F2ECE2;
+  --theme-bg-hero-from: #D8F3E5;
+  --theme-bg-hero-via: #EAF7F0;
+  --theme-bg-hero-to: #FAF7F2;
+  --theme-border-subtle: #E6DFD3;
+  --theme-border-card: #DFD6C7;
+
+  --color-signature-green: #00C474;
+  --color-brand-green: #00C474;
+  --color-forest-green: #00874E;
+  --color-mint-tint: #D4F4E4;
+
+  --color-neutral-ink: #1C1917;
+  --color-neutral-gray-700: #44403C;
+  --color-neutral-gray-500: #78716C;
+  --color-neutral-gray-400: #A8A29E;
+  --color-neutral-gray-200: #E7E5E4;
+  --color-neutral-surface: #F4EFE6;
+}
+
+/* 3) 🌱 브라이트 세이지: 회색기 없는 맑은 허브 세이지 & 딥 포레스트 */
+[data-theme="soft-sage"],
+[data-theme="natural-comfort"] {
+  --theme-bg-body: #E2ECE5;
+  --theme-bg-app: #EEF5F1;
+  --theme-bg-card: #FFFFFF;
+  --theme-bg-card-subtle: #DEECE3;
+  --theme-bg-hero-from: #C8E2D2;
+  --theme-bg-hero-via: #DBEDE3;
+  --theme-bg-hero-to: #EAF4EE;
+  --theme-border-subtle: #CCE0D4;
+  --theme-border-card: #C3D9CB;
+
+  --color-signature-green: #009E5C;
+  --color-brand-green: #009E5C;
+  --color-forest-green: #004D2C;
+  --color-mint-tint: #D3EFE0;
+
+  --color-neutral-ink: #0F172A;
+  --color-neutral-gray-700: #334155;
+  --color-neutral-gray-500: #64748B;
+  --color-neutral-gray-400: #94A3B8;
+  --color-neutral-gray-200: #E2E8F0;
+  --color-neutral-surface: #E3EDE6;
+}
+
+/* 4) 🪻 라벤더 캄 & 민트: 은은한 연보라빛 스파 톤 & 세련된 블루/틸 포인트 */
+[data-theme="lavender-calm"] {
+  --theme-bg-body: #E7E4F2;
+  --theme-bg-app: #F6F5FA;
+  --theme-bg-card: #FFFFFF;
+  --theme-bg-card-subtle: #ECEAF5;
+  --theme-bg-hero-from: #DDD7F0;
+  --theme-bg-hero-via: #EAE6F7;
+  --theme-bg-hero-to: #F3F1FA;
+  --theme-border-subtle: #D8D2EC;
+  --theme-border-card: #CFC7E6;
+
+  --color-signature-green: #0284C7;
+  --color-brand-green: #0284C7;
+  --color-forest-green: #0369A1;
+  --color-mint-tint: #E0E7FF;
+
+  --color-neutral-ink: #1E1B4B;
+  --color-neutral-gray-700: #312E81;
+  --color-neutral-gray-500: #4338CA;
+  --color-neutral-gray-400: #818CF8;
+  --color-neutral-gray-200: #E0E7FF;
+  --color-neutral-surface: #EDE9FE;
+}
+
+/* 5) ⚪ 클래식 오리지널 화이트: 순백색 캔버스 & 원형 에메랄드 */
+[data-theme="classic"] {
+  --theme-bg-body: #F3F4F6;
+  --theme-bg-app: #FFFFFF;
+  --theme-bg-card: #FFFFFF;
+  --theme-bg-card-subtle: #F9FAFB;
+  --theme-bg-hero-from: rgba(209, 250, 229, 0.85);
+  --theme-bg-hero-via: rgba(240, 253, 250, 0.65);
+  --theme-bg-hero-to: rgba(236, 253, 245, 0.45);
+  --theme-border-subtle: rgba(229, 231, 235, 0.9);
+  --theme-border-card: #E5E7EB;
+
+  --color-signature-green: oklch(0.72 0.19 155);
+  --color-brand-green: oklch(0.72 0.19 155);
+  --color-forest-green: oklch(0.42 0.12 155);
+  --color-mint-tint: oklch(0.97 0.03 155);
+
+  --color-neutral-ink: oklch(0.22 0.02 260);
+  --color-neutral-gray-700: oklch(0.42 0.03 260);
+  --color-neutral-gray-500: oklch(0.64 0.03 260);
+  --color-neutral-gray-400: oklch(0.76 0.02 260);
+  --color-neutral-gray-200: oklch(0.94 0.01 260);
+  --color-neutral-surface: oklch(0.985 0.005 260);
+}
+
+/* 6) ⚡ 네오 브루탈리즘 + 브랜드 그린: 크림 옐로우 멀티컬러 베이스 + 딥 차콜 보더 + 하드 섀도우 (main 영역은 플랫) */
+[data-theme="brutal-brand"] {
+  --theme-bg-body: #FDF6E2;
+  --theme-bg-app: #FFFBEB;
+  --theme-bg-card: #FFFFFF;
+  --theme-bg-card-subtle: #FEF08A;
+  --theme-bg-hero-from: #FEF08A;
+  --theme-bg-hero-via: #FFFBEB;
+  --theme-bg-hero-to: #FFFFFF;
+  --theme-border-subtle: #1E293B;
+  --theme-border-card: #1E293B;
+
+  --color-signature-green: #00C474;
+  --color-brand-green: #00C474;
+  --color-forest-green: #0F172A;
+  --color-mint-tint: #D1FAE5;
+
+  --color-neutral-ink: #0F172A;
+  --color-neutral-gray-700: #1E293B;
+  --color-neutral-gray-500: #475569;
+  --color-neutral-gray-200: #1E293B;
+  --color-neutral-surface: #FEF9C3;
+}
+
+/* 7) 🌙 슬레이트 다크 나이트 (메인 다크 모드) */
+.dark,
+html.dark,
+[data-theme="dark"],
+html[data-theme="dark"] {
+  --theme-bg-body: #080B10;
+  --theme-bg-app: #0F172A;
+  --theme-bg-card: #1E293B;
+  --theme-bg-card-subtle: #334155;
+  --theme-bg-hero-from: #1E293B;
+  --theme-bg-hero-via: #0F172A;
+  --theme-bg-hero-to: #080B10;
+  --theme-border-subtle: #334155;
+  --theme-border-card: #334155;
+
+  --color-signature-green: #34D399;
+  --color-brand-green: #34D399;
+  --color-forest-green: #10B981;
+  --color-mint-tint: #064E3B;
+
+  --color-brand-ink: #F8FAFC !important;
+  --color-neutral-ink: #F8FAFC !important;
+  --color-neutral-gray-700: #E2E8F0 !important;
+  --color-neutral-gray-500: #94A3B8 !important;
+  --color-neutral-gray-400: #64748B !important;
+  --color-neutral-gray-200: #334155 !important;
+  --color-neutral-surface: #1E293B !important;
+}
+
+.dark,
+html.dark,
+[data-theme="dark"],
+.dark body,
+html.dark body,
+[data-theme="dark"] body {
+  color: #F8FAFC !important;
+  background-color: var(--theme-bg-body, #080B10);
+}
+
+.dark .txt-brand-ink,
+html.dark .txt-brand-ink,
+[data-theme="dark"] .txt-brand-ink {
+  color: #F8FAFC !important;
+}
+
+.dark .text-theme-muted,
+html.dark .text-theme-muted,
+[data-theme="dark"] .text-theme-muted {
+  color: #94A3B8 !important;
+}
+
+/* -------------------------------------------------------------
+ * 🌿 72종 리추얼 전용 독립 캔버스 샌드박스 (Theme Isolation)
+ * - 6대 카테고리 수채화 파스텔 그라디언트 및 딥 잉크(#0F172A) 100% 보존
+ * - 전역 다크 모드 폰트 화이트(#F8FAFC) 오버라이드 제외 처리
+ * ------------------------------------------------------------- */
+[data-ritual-sheet] {
+  --color-brand-ink: #0F172A;
+  --color-neutral-ink: #0F172A;
+  --color-neutral-gray-700: #334155;
+  --color-neutral-gray-500: #64748B;
+  --color-neutral-gray-400: #94A3B8;
+  --color-neutral-gray-200: #E2E8F0;
+  --theme-border-subtle: rgba(229, 231, 235, 0.9);
+  --theme-bg-card: #FFFFFF;
+  --theme-bg-app: #FFFFFF;
+}
+
+.dark [data-ritual-sheet],
+[data-theme="dark"] [data-ritual-sheet],
+.dark [data-ritual-sheet] *,
+[data-theme="dark"] [data-ritual-sheet] * {
+  --color-brand-ink: #0F172A !important;
+  --color-neutral-ink: #0F172A !important;
+  --color-neutral-gray-700: #334155 !important;
+  --color-neutral-gray-500: #64748B !important;
+  --color-neutral-gray-400: #94A3B8 !important;
+  --theme-border-subtle: rgba(229, 231, 235, 0.9) !important;
+}
+
+.dark [data-ritual-sheet],
+[data-theme="dark"] [data-ritual-sheet] {
+  color: #0F172A !important;
+}
+
+.dark [data-ritual-sheet] .txt-brand-ink,
+[data-theme="dark"] [data-ritual-sheet] .txt-brand-ink {
+  color: #0F172A !important;
+}
+
+.dark [data-ritual-sheet] .text-theme-muted,
+[data-theme="dark"] [data-ritual-sheet] .text-theme-muted {
+  color: #64748B !important;
+}
+
+.dark [data-ritual-sheet] .text-slate-800,
+[data-theme="dark"] [data-ritual-sheet] .text-slate-800,
+.dark [data-ritual-sheet] .text-gray-900,
+[data-theme="dark"] [data-ritual-sheet] .text-gray-900 {
+  color: #0F172A !important;
+}
+
+.dark [data-ritual-sheet] .text-gray-700,
+[data-theme="dark"] [data-ritual-sheet] .text-gray-700,
+.dark [data-ritual-sheet] .text-slate-700,
+[data-theme="dark"] [data-ritual-sheet] .text-slate-700 {
+  color: #334155 !important;
+}
+
+.dark [data-ritual-sheet] .text-gray-500,
+[data-theme="dark"] [data-ritual-sheet] .text-gray-500,
+.dark [data-ritual-sheet] .text-slate-500,
+[data-theme="dark"] [data-ritual-sheet] .text-slate-500 {
+  color: #64748B !important;
+}
+
+.dark [data-ritual-sheet] .text-slate-900,
+[data-theme="dark"] [data-ritual-sheet] .text-slate-900 {
+  color: #0F172A !important;
+}
+
+.dark [data-ritual-sheet] .text-slate-800,
+[data-theme="dark"] [data-ritual-sheet] .text-slate-800 {
+  color: #1E293B !important;
+}
+
+:root {
   /* -------------------------------------------------------------
    * 📐 Concentric & Proportional Border-Radius Scale (동심원 곡률 규격)
    * ------------------------------------------------------------- */
@@ -358,7 +665,7 @@ html {
 }
 
 body {
-  background-color: #ffffff;
+  background-color: var(--theme-bg-body, #ffffff);
 }
 
 body,
@@ -453,11 +760,11 @@ textarea {
 
   /* 2. 전역 시그니처 텍스트 컬러 클래스 */
   .txt-brand-ink {
-    color: #191F28;
+    color: var(--color-neutral-ink, #191F28) !important;
   }
 
   .txt-brand-forest {
-    color: #005A34;
+    color: var(--color-forest-green, #005A34);
   }
 
   .txt-brand-green {
@@ -488,12 +795,44 @@ textarea {
     color: var(--color-brand-clay);
   }
 
-  .txt-brand-ink {
-    color: var(--color-brand-ink);
+  .bg-white {
+    background-color: var(--theme-bg-card, #ffffff);
   }
 
-  .bg-white {
-    background-color: #ffffff !important;
+  .bg-theme-app {
+    background-color: var(--theme-bg-app, #ffffff);
+  }
+
+  .bg-theme-card {
+    background-color: var(--theme-bg-card, #ffffff);
+  }
+
+  .bg-theme-subtle {
+    background-color: var(--theme-bg-card-subtle, #F9FAFB);
+  }
+
+  .text-theme-accent {
+    color: var(--color-brand-green, #00C474);
+  }
+
+  .bg-theme-accent {
+    background-color: var(--color-brand-green, #00C474);
+  }
+
+  .border-theme-accent {
+    border-color: var(--color-brand-green, #00C474);
+  }
+
+  .text-theme-muted {
+    color: var(--color-neutral-gray-500, #78716C);
+  }
+
+  .border-theme-subtle {
+    border-color: var(--theme-border-subtle, rgba(229, 231, 235, 0.9));
+  }
+
+  .border-theme-card {
+    border-color: var(--theme-border-card, #E5E7EB);
   }
 
   .bg-brand-green {
@@ -511,6 +850,27 @@ textarea {
 
   .shadow-soft-depth {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.02);
+  }
+
+  /* 🎨 스타일 다변화 전용 보더 & 하드 섀도우 유틸리티 */
+  .border-hairline {
+    border-width: 0.5px;
+  }
+
+  .shadow-hard-drop {
+    box-shadow: 3px 3px 0px #000000;
+  }
+
+  .shadow-hard-drop-sm {
+    box-shadow: 2px 2px 0px #000000;
+  }
+
+  .shadow-fintech-glow {
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.1), 0 4px 12px rgba(37, 99, 235, 0.08);
+  }
+
+  .shadow-neon-glow {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.18), inset 0 0 12px rgba(16, 185, 129, 0.08);
   }
 
   .active-ring-glow {
@@ -593,6 +953,60 @@ textarea {
   .ui-card-accent-hover:active {
     transform: scale(0.96);
   }
+}
+
+/* -------------------------------------------------------------
+ * ⚡ [data-theme="brutal-brand"] 컴포넌트 브루탈리즘 규칙
+ * - 내부 요소(개별 카드, 뱃지, 버튼, 입력창, 위젯 등)에는 2px 블랙 보더와 3px 하드 섀도우 적용
+ * - 내부를 감싸는 외부 레이아웃/패널/모달 껍데기(Outer Shells)에서만 border 및 그림자 제거
+ * ------------------------------------------------------------- */
+[data-theme="brutal-brand"] .bg-theme-card,
+[data-theme="brutal-brand"] .bg-white {
+  border: 1.5px solid #1E293B !important;
+  box-shadow: 1.25px 1.25px 0px rgba(30, 41, 59, 0.7) !important;
+}
+
+[data-theme="brutal-brand"] .border-theme-subtle,
+[data-theme="brutal-brand"] .border-theme-card {
+  border-color: #1E293B !important;
+}
+
+[data-theme="brutal-brand"] button:active {
+  transform: translate(0.75px, 0.75px) !important;
+  box-shadow: 0.5px 0.5px 0px rgba(30, 41, 59, 0.7) !important;
+}
+
+/* ★ [외부 껍데기 레이아웃 규칙] 좌우/상단 border는 제거하되, main의 하단(border-b)은 1.5px 딥 차콜 보더로 패럴랙스 경계 유지 ★ */
+[data-theme="brutal-brand"] body,
+[data-theme="brutal-brand"] .max-w-\[430px\],
+[data-theme="brutal-brand"] div.bg-theme-app,
+[data-theme="brutal-brand"] div.min-h-screen.w-full,
+[data-theme="brutal-brand"] .flex-1.flex.flex-col.w-full.min-h-screen,
+[data-theme="brutal-brand"] .motion-div,
+[data-theme="brutal-brand"] [data-modal-container],
+[data-theme="brutal-brand"] [data-ritual-sheet],
+[data-theme="brutal-brand"] .fixed.inset-0,
+[data-theme="brutal-brand"] .fixed.inset-0 > div,
+[data-theme="brutal-brand"] .fixed.inset-0 > div > div,
+[data-theme="brutal-brand"] .fixed.inset-0 .bg-theme-app {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+[data-theme="brutal-brand"] main {
+  border-left: none !important;
+  border-right: none !important;
+  border-top: none !important;
+  border-bottom: 2px solid #1E293B !important;
+  box-shadow: 0 1.5px 0px rgba(30, 41, 59, 0.3) !important;
+}
+
+/* ★ 패럴랙스 푸터: 하단에만 딥 차콜 보더 적용 (좌우 및 상단은 border 없음) ★ */
+[data-theme="brutal-brand"] footer {
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: 2px solid #1E293B !important;
+  border-top: none !important;
 }
 
 /* -------------------------------------------------------------

@@ -69,7 +69,7 @@ export function SubPageHeader({
       <button
         type="button"
         onClick={handleLeftClick}
-        className="p-1.5 text-gray-500 hover:text-gray-900 rounded-full hover:bg-gray-100 transition-colors active:scale-95 outline-none cursor-pointer"
+        className="p-1.5 text-theme-muted hover:txt-brand-ink rounded-full hover:bg-theme-card-subtle transition-colors outline-none cursor-pointer"
         title={leftType === "close" ? "닫기" : "뒤로가기"}
       >
         {leftType === "close" ? (
@@ -81,9 +81,13 @@ export function SubPageHeader({
     );
   };
 
+  const isTransparent =
+    className.includes("bg-transparent") || className.includes("!bg-transparent");
+  const bgClasses = isTransparent ? "" : "bg-theme-app/95 backdrop-blur-md";
+
   return (
     <div
-      className={`w-full h-[56px] min-h-[56px] flex items-center justify-between px-4 sticky top-0 bg-white/95 backdrop-blur-md z-30 select-none relative ${className}`}
+      className={`w-full h-[56px] min-h-[56px] flex items-center justify-between px-4 sticky top-0 ${bgClasses} z-30 select-none relative ${className}`}
     >
       {/* 1. 좌측 버튼 영역 */}
       <div className="flex items-center justify-start z-10 min-w-[40px] h-full">
@@ -91,7 +95,7 @@ export function SubPageHeader({
       </div>
 
       {/* 2. 중앙 타이틀 (좌우 아이콘 크기/유무와 관계없이 무조건 화면 100% 절대 정중앙 absolute center) */}
-      <h1 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-lg font-bold text-gray-900 tracking-tight text-center truncate max-w-[60%] pointer-events-none z-0">
+      <h1 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-lg font-bold txt-brand-ink tracking-tight text-center truncate max-w-[60%] pointer-events-none z-0">
         {title}
       </h1>
 

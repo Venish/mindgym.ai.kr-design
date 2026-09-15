@@ -52,11 +52,11 @@ export function ShowcaseMonthlyMe({
       {/* ===== [좌측 이달의 나 & 003 플랩 통합 마이페이지 그룹 (바닥 items-end 정렬)] ===== */}
       <div
         onClick={handleMyPageOpen}
-        className="flex items-end gap-2.5 text-left cursor-pointer group active:scale-95 transition-all w-auto shrink-0"
+        className="flex items-end gap-2.5 text-left cursor-pointer group transition-all w-auto shrink-0"
         title="이달의 나 & 연속 실천 기록 마이페이지 모달 보기"
       >
         {/* 1. 8월 미니 달력 뱃지 */}
-        <div className="w-10 h-10 rounded-md bg-white flex flex-col items-center justify-between shrink-0 border border-emerald-300/90 shadow-2xs group-hover:scale-105 transition-transform overflow-hidden">
+        <div className="w-10 h-10 rounded-md bg-theme-card flex flex-col items-center justify-between shrink-0 border border-emerald-300/90 dark:border-emerald-600/60 shadow-2xs overflow-hidden">
           {/* 상단 슬림 에메랄드 캘린더 헤더 띠 */}
           <div className="w-full bg-[#00C474] h-3 flex items-center justify-center shrink-0">
             <span className="text-[8px] font-bold text-white tracking-widest leading-none">
@@ -64,14 +64,14 @@ export function ShowcaseMonthlyMe({
             </span>
           </div>
           {/* 하단 대형 숫자 '8' 전용 표출 영역 */}
-          <div className="w-full flex-1 flex items-center justify-center bg-white text-gray-900 font-black text-[22px] tracking-tighter leading-none">
+          <div className="w-full flex-1 flex items-center justify-center txt-brand-ink font-black text-[22px] tracking-tighter leading-none">
             {currentMonthNum}
           </div>
         </div>
 
         {/* 2. 이달의 나 텍스트 블록 (바닥 라인 맞춰 pb-[1px]) */}
         <div className="flex flex-col gap-0.5 w-auto shrink-0 pb-[1px]">
-          <div className="flex items-center gap-1 text-[11px] font-extrabold text-emerald-800 tracking-tight">
+          <div className="flex items-center gap-1 text-[11px] font-extrabold text-emerald-700 dark:text-emerald-400 tracking-tight">
             <span>이달의 나</span>
           </div>
           <div className="text-[13px] font-black text-[#00C474] tracking-tight leading-snug">
@@ -94,11 +94,11 @@ export function ShowcaseMonthlyMe({
             content: <DumbbellProgressSheet />,
           })
         }
-        className="flex items-center gap-1.5 bg-gray-100 hover:bg-emerald-50 px-3.5 py-2 rounded-full shrink-0 shadow-2xs cursor-pointer active:scale-95 transition-all outline-none"
+        className="flex items-center gap-1.5 bg-theme-card-subtle hover:bg-emerald-50 dark:hover:bg-emerald-950/40 px-3.5 py-2 rounded-full shrink-0 shadow-2xs cursor-pointer transition-all outline-none border border-theme-subtle"
         title="내 성장의 길 덤벨 레벨 보기 (밑에서 위로 스르륵)"
       >
         <Barbell size={18} weight="fill" className="text-[#00C474]" />
-        <span className="text-sm font-mono font-black text-gray-800">
+        <span className="text-sm font-mono font-black txt-brand-ink">
           Lv.{levelNum}
         </span>
       </button>

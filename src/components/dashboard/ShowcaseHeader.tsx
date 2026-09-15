@@ -10,6 +10,7 @@ import { MagazineCanvasReaderModal } from "@/components/dashboard/MagazineCanvas
 import { getMagazineCategories } from "@/services/magazineService";
 import { MagazineData } from "@/types/magazine";
 import { useMindGym } from "@/context/MindGymContext";
+import { MiniThemeToggle } from "@/components/ui/ThemeSwitcher";
 
 interface ShowcaseHeaderProps {
   userName?: string;
@@ -88,18 +89,21 @@ export function ShowcaseHeader({
           <BrandLogo size="sm" />
         </div>
 
-        {/* Right Mobile Status (우측 내 서재 아이콘 & 알림 종 버튼 -> 종의 24px 원본 스펙에 100% 맞춤) */}
-        <div className="flex items-center gap-1">
+        {/* Right Mobile Status (테마 토글 + 내 서재 아이콘 + 알림 종 버튼) */}
+        <div className="flex items-center gap-1.5">
+          {/* 초소형 원클릭 테마 토글 아이콘 */}
+          <MiniThemeToggle />
+
           {/* ★ [내 서재 아이콘]: 종(24px) 스펙에 정확히 100% 맞춤! ★ */}
           <button
             type="button"
             aria-label="마음건강 서재 모아보기"
             onClick={handleOpenFavoritesSheet}
-            className="p-1.5 txt-brand-ink hover:text-gray-900 rounded-full hover:bg-gray-100 transition-colors relative active:scale-95 flex items-center justify-center outline-none cursor-pointer"
+            className="p-1.5 txt-brand-ink rounded-full hover:bg-theme-card-subtle transition-colors relative flex items-center justify-center outline-none cursor-pointer"
             title="마음건강 서재 (내가 찜한 목록)"
           >
-            <ListBullets size={24} weight="bold" className="txt-brand-ink hover:text-gray-900 transition-colors" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-amber-500 rounded-full ring-2 ring-white" />
+            <ListBullets size={24} weight="bold" className="txt-brand-ink transition-colors" />
+            <span className="absolute top-1 right-1 w-2 h-2 bg-amber-500 rounded-full ring-2 ring-white dark:ring-slate-900" />
           </button>
 
           {/* 알림 종 버튼 (원래 기준 24px bold) */}
@@ -107,11 +111,11 @@ export function ShowcaseHeader({
             type="button"
             aria-label="알림 수신함"
             onClick={handleNotificationOpen}
-            className="p-1.5 txt-brand-ink hover:text-gray-900 rounded-full hover:bg-gray-100 transition-colors relative active:scale-95 flex items-center justify-center outline-none cursor-pointer"
+            className="p-1.5 txt-brand-ink rounded-full hover:bg-theme-card-subtle transition-colors relative flex items-center justify-center outline-none cursor-pointer"
             title="알림 센터"
           >
             <Bell size={24} weight="bold" className="txt-brand-ink" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-brand-green rounded-full ring-2 ring-white" />
+            <span className="absolute top-1 right-1 w-2 h-2 bg-brand-green rounded-full ring-2 ring-white dark:ring-slate-900" />
           </button>
         </div>
       </div>

@@ -18,19 +18,24 @@ export function MagicButton({
   rightIcon,
   ...props
 }: MagicButtonProps) {
-  const baseStyles = "group relative inline-flex items-center justify-center overflow-hidden rounded-xl font-semibold ui-btn-action";
+  const baseStyles = "group relative inline-flex items-center justify-center overflow-hidden rounded-2xl font-bold ui-btn-action transition-all duration-200 cursor-pointer select-none";
   
   const variantStyles = {
-    primary: "bg-[var(--color-brand-green)] text-white shadow-[0_4px_20px_rgba(0,196,115,0.25)] hover:opacity-95",
-    secondary: "bg-emerald-50 text-[var(--color-brand-green)] hover:bg-emerald-100",
-    outline: "bg-white text-gray-700 hover:bg-gray-50 shadow-soft border border-gray-200/80",
-    ghost: "bg-transparent text-gray-400 hover:text-gray-600 shadow-none font-medium",
+    primary: "bg-[var(--color-brand-green)] text-white shadow-[0_4px_20px_rgba(0,196,115,0.22)] hover:opacity-95 active:scale-[0.96]",
+    secondary: "bg-emerald-50 dark:bg-emerald-950/50 text-[var(--color-brand-green)] hover:bg-emerald-100 dark:hover:bg-emerald-900/50",
+    outline: "bg-theme-card text-theme-main hover:bg-theme-card-subtle shadow-soft border border-theme-subtle",
+    ghost: "bg-transparent text-theme-muted hover:text-theme-main shadow-none font-medium text-[13px] min-h-[40px] rounded-xl",
   };
 
   return (
     <motion.button
       whileTap={{ scale: 0.96 }}
-      className={cn(baseStyles, variantStyles[variant], "px-6 py-3 text-base min-h-[44px]", className)}
+      className={cn(
+        baseStyles,
+        variantStyles[variant],
+        variant === "ghost" ? "px-4 py-2 min-h-[40px]" : "px-6 py-3.5 text-[15px] min-h-[52px]",
+        className
+      )}
       {...(props as any)}
     >
       {/* 텍스트: 정중앙 정렬 */}

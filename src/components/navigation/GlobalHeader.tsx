@@ -71,22 +71,22 @@ export function GlobalHeader() {
             type="button"
             aria-label="마음건강 서재 모아보기"
             onClick={handleOpenFavoritesSheet}
-            className="p-1.5 text-gray-700 hover:text-gray-900 bg-transparent transition-all flex items-center justify-center relative active:scale-95 outline-none cursor-pointer"
+            className="p-1.5 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white bg-transparent transition-all flex items-center justify-center relative active:scale-95 outline-none cursor-pointer"
             title="마음건강 서재 (내가 찜한 목록)"
           >
-            <ListBullets size={24} weight="bold" className="text-gray-700 hover:text-gray-900 transition-colors" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-amber-500 rounded-full ring-2 ring-white" />
+            <ListBullets size={24} weight="bold" className="text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white transition-colors" />
+            <span className="absolute top-1 right-1 w-2 h-2 bg-amber-500 rounded-full ring-2 ring-white dark:ring-slate-900" />
           </button>
 
           {/* 우측 단일 알림 아이콘 (원래 기준 24px regular/bold) */}
           <button
             type="button"
             aria-label="알림 센터"
-            className="p-1.5 text-gray-700 hover:text-gray-900 bg-transparent transition-all flex items-center justify-center relative active:scale-95 outline-none cursor-pointer"
+            className="p-1.5 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white bg-transparent transition-all flex items-center justify-center relative active:scale-95 outline-none cursor-pointer"
             title="알림 센터"
           >
-            <Bell size={24} weight="regular" className="text-gray-700 hover:text-gray-900 transition-colors" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#00C473] rounded-full ring-2 ring-white" />
+            <Bell size={24} weight="regular" className="text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white transition-colors" />
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#00C473] rounded-full ring-2 ring-white dark:ring-slate-900" />
           </button>
         </div>
       </header>

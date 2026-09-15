@@ -68,33 +68,33 @@ export function AnimatedLogoIcon({ className = "", size = 64 }: AnimatedLogoIcon
           }
         }
 
-        /* 2 ➔ 3 ➔ 4 ➔ 5 번 순차 등장 */
+        /* 2 ➔ 3 ➔ 4 ➔ 5 번 순차 등장 (스피디하고 경쾌하게) */
         .leaf-2 {
-          animation: leafFadeInEase 0.85s ease-in-out forwards,
-                     leafSubtlePulse 2.4s ease-in-out 1.9s infinite;
-          animation-delay: 0.05s, 1.9s;
+          animation: leafFadeInEase 0.35s ease-in-out forwards,
+                     leafSubtlePulse 2.4s ease-in-out 1.2s infinite;
+          animation-delay: 0.00s, 1.2s;
         }
         .leaf-3 {
-          animation: leafFadeInEase 0.85s ease-in-out forwards,
-                     leafSubtlePulse 2.4s ease-in-out 1.9s infinite;
-          animation-delay: 0.20s, 1.9s;
+          animation: leafFadeInEase 0.35s ease-in-out forwards,
+                     leafSubtlePulse 2.4s ease-in-out 1.2s infinite;
+          animation-delay: 0.06s, 1.2s;
         }
         .leaf-4 {
-          animation: leafFadeInEase 0.85s ease-in-out forwards,
-                     leafSubtlePulse 2.4s ease-in-out 1.9s infinite;
-          animation-delay: 0.35s, 1.9s;
+          animation: leafFadeInEase 0.35s ease-in-out forwards,
+                     leafSubtlePulse 2.4s ease-in-out 1.2s infinite;
+          animation-delay: 0.12s, 1.2s;
         }
         .leaf-5 {
-          animation: leafFadeInEase 0.85s ease-in-out forwards,
-                     leafSubtlePulse 2.4s ease-in-out 1.9s infinite;
-          animation-delay: 0.50s, 1.9s;
+          animation: leafFadeInEase 0.35s ease-in-out forwards,
+                     leafSubtlePulse 2.4s ease-in-out 1.2s infinite;
+          animation-delay: 0.18s, 1.2s;
         }
 
-        /* 1번 잎사귀: 딜레이 0.95s 로 조율 (5번 피어남과 자연스럽게 연동되어 착! 꽂힘) */
+        /* 1번 잎사귀: 0.32s 딜레이 후 0.22s 초고속 착! 꽂힘 (0.54s에 잎사귀 완성) */
         .leaf-1 {
-          animation: leaf1SnapIn 0.38s cubic-bezier(0.16, 1.35, 0.4, 1) forwards,
-                     leafSubtlePulse 2.4s ease-in-out 1.9s infinite;
-          animation-delay: 0.95s, 1.9s;
+          animation: leaf1SnapIn 0.22s cubic-bezier(0.16, 1.35, 0.4, 1) forwards,
+                     leafSubtlePulse 2.4s ease-in-out 1.2s infinite;
+          animation-delay: 0.32s, 1.2s;
         }
       `}</style>
       <svg

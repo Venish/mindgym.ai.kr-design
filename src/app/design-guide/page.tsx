@@ -17,9 +17,11 @@ import { FlatComponentsSection } from "./_components/FlatComponentsSection";
 import { RenewalComparisonSection } from "./_components/RenewalComparisonSection";
 import { IconShowcaseSection } from "./_components/IconShowcaseSection";
 import { MagazineShowcaseSection } from "./_components/MagazineShowcaseSection";
+import { ThemeColorLabSection } from "./_components/ThemeColorLabSection";
+import { DiverseStylesShowcaseSection } from "./_components/DiverseStylesShowcaseSection";
 
 export default function DesignGuidePage() {
-  const [activeSection, setActiveSection] = useState<string>("magazine-system");
+  const [activeSection, setActiveSection] = useState<string>("theme-color-lab");
 
   const scrollToSection = (id: string) => {
     setActiveSection(id);
@@ -32,6 +34,9 @@ export default function DesignGuidePage() {
   // IntersectionObserver로 스크롤 시 현재 보는 섹션 자동 하이라이팅
   useEffect(() => {
     const sectionIds = [
+      "theme-color-lab",
+      "diverse-styles",
+      "magazine-system",
       "icons-showcase",
       "renewal-comparison",
       "colors",
@@ -67,7 +72,7 @@ export default function DesignGuidePage() {
   }, []);
 
   return (
-    <main className="fixed inset-0 z-[9999] bg-white txt-brand-ink font-sans flex flex-col w-screen h-screen overflow-hidden">
+    <main className="fixed inset-0 z-[9999] bg-theme-app txt-brand-ink font-sans flex flex-col w-screen h-screen overflow-hidden transition-colors duration-200">
       {/* 1. 최상단 고정 헤더 (상단 탭 제거 및 깔끔한 로고/Hero 보존) */}
       <DesignGuideHeader />
 
@@ -81,6 +86,12 @@ export default function DesignGuidePage() {
 
         {/* 우측 독립 스크롤 메인 뷰포트 영역 */}
         <div className="flex-1 overflow-y-auto px-8 py-10 flex flex-col gap-16">
+          {/* 🎨 [NEW 1] Realtime Theme Color Lab Section */}
+          <ThemeColorLabSection />
+
+          {/* ⚡ [NEW 2] Diverse Styles Showcase Section (Fintech / Editorial / Brutalism / Dark) */}
+          <DiverseStylesShowcaseSection />
+
           {/* 📖 0-0. Magazine & E-Book Reader System Section */}
           <MagazineShowcaseSection />
 
@@ -126,7 +137,7 @@ export default function DesignGuidePage() {
           <MotionIconSection />
 
           {/* 푸터 */}
-          <footer className="border-t border-gray-200 bg-white p-6 rounded-2xl text-center text-xs text-gray-400 font-medium">
+          <footer className="border-t border-theme-subtle bg-theme-card p-6 rounded-2xl text-center text-xs text-gray-400 font-medium transition-colors">
             © 2026 MindGym · Design System Standard Specification (Figma & Toss TDS Portal Specification)
           </footer>
         </div>

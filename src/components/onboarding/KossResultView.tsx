@@ -55,66 +55,68 @@ export function KossResultView({
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.96 }}
       transition={{ duration: 0.3 }}
-      className="flex-1 flex flex-col justify-between my-auto z-10 pt-2 pb-4 gap-4 text-left"
+      className="w-full flex-1 flex flex-col justify-between select-none relative txt-brand-ink min-h-full"
     >
-      <div className="flex flex-col gap-3">
-        {/* 상단 subheader 및 배지 */}
-        <div className="flex justify-between items-center pt-2">
-          <span className="text-[11px] font-medium text-gray-400">
-            2026.08.12 기준 · KOSS 36문항
-          </span>
-          <span className="text-[11px] font-bold text-[#00C474] bg-emerald-50/80 px-2.5 py-0.5 rounded-full border border-emerald-100">
-            진단 완료
-          </span>
-        </div>
-
-        {/* 메인 타이틀 */}
-        <div>
-          <h1 className="text-[26px] font-black txt-brand-ink leading-tight">
-            내 마음건강 요약
-          </h1>
-          <p className="text-xs txt-brand-clay mt-1 font-medium">
-            최근의 마음 상태를 8가지 항목으로 한눈에 보여드려요
-          </p>
-        </div>
-
-        {/* Bklit 레이더 차트 */}
-        <div className="w-full flex justify-center items-center py-2 my-1 overflow-visible">
-          <BklitRadarChart
-            metrics={radarMetrics}
-            data={radarData}
-            size={350}
-            levels={5}
-          />
-        </div>
-
-        {/* 집중 관리 영역 카드 */}
-        <div className="relative overflow-hidden bg-amber-50/80 rounded-3xl p-5 text-left flex flex-col gap-2">
-          <div className="absolute -right-3 -bottom-3 text-amber-500/25 pointer-events-none select-none z-0">
-            <Warning size={130} weight="bold" />
-          </div>
-
-          <div className="relative z-10 flex justify-between items-center">
-            <span className="text-xs font-extrabold text-amber-700 bg-amber-100/90 px-3 py-1 rounded-full flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-              집중 케어 필요 영역
+      <div className="flex-1 overflow-y-auto no-scrollbar py-1 flex flex-col w-full">
+        <div className="my-auto w-full flex flex-col gap-3.5 py-2 text-left">
+          {/* 상단 subheader 및 배지 */}
+          <div className="flex justify-between items-center pt-1">
+            <span className="text-[11px] font-medium text-gray-400">
+              2026.08.12 기준 · KOSS 36문항
+            </span>
+            <span className="text-[11px] font-bold text-[#00C474] bg-emerald-50/80 px-2.5 py-0.5 rounded-full border border-emerald-100">
+              진단 완료
             </span>
           </div>
 
-          <div className="relative z-10">
-            <h3 className="text-xl font-black txt-brand-ink tracking-tight mt-1">
-              직무 요구도 · 8점
-            </h3>
-            <p className="text-xs txt-brand-clay leading-relaxed mt-1.5 font-medium">
-              업무량과 속도 관련 스트레스가 높아요. <br />
-              맞춤 루틴으로 함께 관리해드릴게요.
+          {/* 메인 타이틀 */}
+          <div>
+            <h1 className="text-[26px] font-black txt-brand-ink leading-tight">
+              내 마음건강 요약
+            </h1>
+            <p className="text-xs txt-brand-clay mt-1 font-medium">
+              최근의 마음 상태를 8가지 항목으로 한눈에 보여드려요
             </p>
+          </div>
+
+          {/* Bklit 레이더 차트 */}
+          <div className="w-full flex justify-center items-center py-2 my-1 overflow-visible">
+            <BklitRadarChart
+              metrics={radarMetrics}
+              data={radarData}
+              size={350}
+              levels={5}
+            />
+          </div>
+
+          {/* 집중 관리 영역 카드 */}
+          <div className="relative overflow-hidden bg-amber-50/80 rounded-3xl p-5 text-left flex flex-col gap-2">
+            <div className="absolute -right-3 -bottom-3 text-amber-500/25 pointer-events-none select-none z-0">
+              <Warning size={130} weight="bold" />
+            </div>
+
+            <div className="relative z-10 flex justify-between items-center">
+              <span className="text-xs font-extrabold text-amber-700 bg-amber-100/90 px-3 py-1 rounded-full flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+                집중 케어 필요 영역
+              </span>
+            </div>
+
+            <div className="relative z-10">
+              <h3 className="text-xl font-black txt-brand-ink tracking-tight mt-1">
+                직무 요구도 · 8점
+              </h3>
+              <p className="text-xs txt-brand-clay leading-relaxed mt-1.5 font-medium">
+                업무량과 속도 관련 스트레스가 높아요. <br />
+                맞춤 루틴으로 함께 관리해드릴게요.
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
       {/* 메인 CTA 버튼 */}
-      <div className="pt-2">
+      <div className="w-full shrink-0 pt-2 pb-1">
         <MagicButton
           onClick={onNext}
           className="w-full"

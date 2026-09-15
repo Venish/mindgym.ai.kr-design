@@ -1,3 +1,4 @@
+import React from "react";
 import { Flower, Leaf, Barbell, Clock, Microscope, ShieldCheck, LockKey, FloppyDisk } from "@phosphor-icons/react";
 
 export interface KOSSQuestion {
@@ -6,6 +7,35 @@ export interface KOSSQuestion {
   domainId: number;
   question: string;
   isReverse: boolean;
+}
+
+/**
+ * 긴 질문 텍스트를 자연스럽게 2줄로 분할하여 ReactNode로 반환하는 공통 유틸
+ */
+export function formatQuestionToTwoLines(qStr: string): React.ReactNode {
+  if (!qStr) return null;
+  const cleanStr = qStr.trim();
+  if (cleanStr.includes("\n")) {
+    const parts = cleanStr.split("\n");
+    return React.createElement(
+      "span",
+      null,
+      parts[0],
+      React.createElement("br"),
+      parts.slice(1).join(" ")
+    );
+  }
+  const mid = Math.floor(cleanStr.length / 2);
+  let splitIdx = cleanStr.indexOf(" ", mid);
+  if (splitIdx === -1) splitIdx = cleanStr.lastIndexOf(" ", mid);
+  if (splitIdx === -1) return cleanStr;
+  return React.createElement(
+    "span",
+    null,
+    cleanStr.substring(0, splitIdx),
+    React.createElement("br"),
+    cleanStr.substring(splitIdx + 1)
+  );
 }
 
 export const KOSS_DOMAINS_INFO = [

@@ -28,6 +28,7 @@ interface KossQuestionsViewProps {
   currentTip: KossTip;
   formatQuestionToTwoLines: (qStr: string) => React.ReactNode;
   onSelectAnswer: (val: number) => void;
+  isLocked?: boolean;
 }
 
 export function KossQuestionsView({
@@ -40,7 +41,20 @@ export function KossQuestionsView({
   currentTip,
   formatQuestionToTwoLines,
   onSelectAnswer,
+  isLocked = false,
 }: KossQuestionsViewProps) {
+  const [selectedOpt, setSelectedOpt] = React.useState<number | null>(null);
+
+  // 질문 인덱스가 변경되면 선택 하이라이트 초기화
+  React.useEffect(() => {
+    setSelectedOpt(null);
+  }, [qIndex]);
+
+  const handleOptClick = (val: number) => {
+    if (isLocked) return;
+    setSelectedOpt(val);
+    onSelectAnswer(val);
+  };
   const displayIndex = Math.min(qIndex + 1, totalQuestionsCount);
   const TipIcon = currentTip.icon;
 
@@ -129,16 +143,26 @@ export function KossQuestionsView({
               { label: "그렇지 않다", value: 2 },
               { label: "그렇다", value: 3 },
               { label: "매우 그렇다", value: 4 },
-            ].map((opt) => (
-              <button
-                key={opt.value}
-                onClick={() => onSelectAnswer(opt.value)}
-                className="group w-full py-3.5 px-4 bg-gray-50 hover:bg-brand-mint-light hover:txt-brand-green rounded-2xl text-left txt-body-main txt-brand-clay transition-all flex items-center justify-between active:scale-[0.98]"
-              >
-                <span>{opt.label}</span>
-                <AnimatedArrowRightIcon size={16} />
-              </button>
-            ))}
+            ].map((opt) => {
+              const isSelected = selectedOpt === opt.value;
+              return (
+                <button
+                  key={opt.value}
+                  disabled={isLocked}
+                  onClick={() => handleOptClick(opt.value)}
+                  className={`group w-full py-3.5 px-4 rounded-2xl text-left txt-body-main transition-all flex items-center justify-between active:scale-[0.98] ${
+                    isLocked ? "pointer-events-none cursor-default" : "cursor-pointer"
+                  } ${
+                    isSelected
+                      ? "bg-emerald-100/90 text-[#00A862] font-bold ring-2 ring-[#00C474] shadow-sm"
+                      : "bg-gray-50 hover:bg-brand-mint-light hover:txt-brand-green txt-brand-clay"
+                  }`}
+                >
+                  <span>{opt.label}</span>
+                  <AnimatedArrowRightIcon size={16} />
+                </button>
+              );
+            })}
           </div>
         </motion.div>
       </AnimatePresence>

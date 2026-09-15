@@ -107,21 +107,21 @@ export function GodTimePicker({
         type="button"
         disabled={disabled}
         onClick={() => !disabled && setIsOpen(!isOpen)}
-        className={`w-full py-3.5 px-4 bg-white border rounded-2xl flex items-center justify-between transition-all duration-200 cursor-pointer ${
-          isOpen ? borderOpenClass : `border-gray-200/90 ${borderHoverClass}`
+        className={`w-full py-3.5 px-4 bg-theme-card border rounded-2xl flex items-center justify-between transition-all duration-200 cursor-pointer ${
+          isOpen ? borderOpenClass : `border-theme-subtle ${borderHoverClass}`
         } ${disabled ? "opacity-40 cursor-not-allowed" : ""}`}
       >
         <div className="flex items-center gap-2.5">
           <Clock size={20} weight="fill" className={clockColorClass} />
-          <span className="text-base font-black text-gray-900 tracking-tight">
+          <span className="text-base font-black txt-brand-ink tracking-tight">
             {period} {timeOnly}
           </span>
         </div>
 
         {/* 심플한 화살표 아이콘 */}
-        <div className="flex items-center text-gray-400">
+        <div className="flex items-center text-theme-muted">
           <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
-            <CaretDown size={20} weight="bold" className={`text-gray-500 ${isIndigo ? "hover:text-indigo-600" : "hover:text-[#00C474]"}`} />
+            <CaretDown size={20} weight="bold" className={`text-theme-muted ${isIndigo ? "hover:text-indigo-600" : "hover:text-[#00C474]"}`} />
           </motion.div>
         </div>
       </button>
@@ -134,7 +134,7 @@ export function GodTimePicker({
             animate={{ opacity: 1, y: 4, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.98 }}
             transition={{ duration: 0.15 }}
-            className="absolute left-0 right-0 top-full z-50 mt-1.5 bg-white border border-gray-200/90 rounded-2xl shadow-xl p-3"
+            className="absolute left-0 right-0 top-full z-50 mt-1.5 bg-theme-card border border-theme-subtle rounded-2xl shadow-xl p-3"
           >
             {/* 상단 클릭 감 명확한(Selectable Chip) 오전/오후 선택 탭 */}
             <div className="flex gap-2 mb-3">
@@ -144,7 +144,7 @@ export function GodTimePicker({
                 className={`flex-1 py-2.5 px-3 rounded-xl text-sm font-extrabold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer ${
                   period === "오전"
                     ? activeTabClass
-                    : "bg-gray-100 text-gray-600 hover:bg-gray-200 border border-gray-200/80"
+                    : "bg-theme-card-subtle text-theme-muted hover:brightness-95 border border-theme-subtle"
                 }`}
               >
                 <span>오전</span>
@@ -157,7 +157,7 @@ export function GodTimePicker({
                 className={`flex-1 py-2.5 px-3 rounded-xl text-sm font-extrabold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer ${
                   period === "오후"
                     ? activeTabClass
-                    : "bg-gray-100 text-gray-600 hover:bg-gray-200 border border-gray-200/80"
+                    : "bg-theme-card-subtle text-theme-muted hover:brightness-95 border border-theme-subtle"
                 }`}
               >
                 <span>오후</span>
@@ -177,7 +177,7 @@ export function GodTimePicker({
                     className={`py-2.5 px-2 rounded-xl flex items-center justify-center text-sm font-black transition-all duration-150 cursor-pointer ${
                       isSelected
                         ? selectedChipClass
-                        : `bg-gray-50 text-gray-900 border border-gray-100 ${chipHoverClass}`
+                        : `bg-theme-card-subtle txt-brand-ink border border-theme-subtle ${chipHoverClass}`
                     }`}
                   >
                     <span>{t}</span>

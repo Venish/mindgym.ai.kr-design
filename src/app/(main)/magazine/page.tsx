@@ -15,16 +15,16 @@ export function MagazinePage() {
   const pastMagazines = magazinesData.slice(1);
 
   return (
-    <div className="flex-1 flex flex-col gap-5 p-5 bg-white">
+    <div className="flex-1 flex flex-col gap-5 p-5 bg-theme-app txt-brand-ink transition-colors duration-300">
       {/* Header */}
       <div>
-        <span className="text-[10px] font-bold text-[#00C474] bg-emerald-50 px-2.5 py-1 rounded-full">
+        <span className="text-[10px] font-bold text-theme-accent bg-theme-card-subtle px-2.5 py-1 rounded-full">
           월간 정기 간행물
         </span>
-        <h2 className="text-xl font-black text-gray-900 mt-1">
+        <h2 className="text-xl font-black txt-brand-ink mt-1">
           마음건강 매거진 서재 📖
         </h2>
-        <p className="text-xs font-medium text-gray-500 mt-0.5">
+        <p className="text-xs font-medium text-theme-muted mt-0.5">
           매월 발행되는 심리학 전문가 아티클을 읽고 완독 보너스 +10 덤벨을 받으세요.
         </p>
       </div>
@@ -33,7 +33,7 @@ export function MagazinePage() {
       {mainMagazine && (
         <NeumorphCard
           onClick={() => setSelectedMag(mainMagazine)}
-          className={`p-6 bg-gradient-to-r ${mainMagazine.coverGradient} text-white flex flex-col gap-4 relative overflow-hidden active:scale-[0.96] transition-transform cursor-pointer`}
+          className={`p-6 bg-gradient-to-r ${mainMagazine.coverGradient} text-white flex flex-col gap-4 relative overflow-hidden active:scale-[0.96] transition-transform cursor-pointer border-theme-card shadow-2xs`}
         >
           <div className="flex justify-between items-center z-10">
             <span className="text-[10px] font-extrabold uppercase bg-white/20 px-2.5 py-1 rounded-full">
@@ -64,7 +64,7 @@ export function MagazinePage() {
 
       {/* 과월호 책장 비주얼 그리드 */}
       <div className="flex flex-col gap-3">
-        <h3 className="text-sm font-extrabold text-gray-900">📚 과월호 아카이브 서재</h3>
+        <h3 className="text-sm font-extrabold txt-brand-ink">📚 과월호 아카이브 서재</h3>
 
         <div className="grid grid-cols-1 gap-3">
           {pastMagazines.map((mag) => {
@@ -73,25 +73,25 @@ export function MagazinePage() {
               <NeumorphCard
                 key={mag.id}
                 onClick={() => setSelectedMag(mag)}
-                className="p-4 flex items-center justify-between gap-3 border border-gray-50 hover:bg-gray-50/50 active:scale-[0.96] transition-transform cursor-pointer"
+                className="p-4 flex items-center justify-between gap-3 bg-theme-card border-theme-card active:scale-[0.96] transition-transform cursor-pointer shadow-2xs"
               >
                 <div className="flex items-center gap-3">
                   <div className={`w-12 h-12 rounded-xl bg-gradient-to-tr ${mag.coverGradient} flex items-center justify-center text-white font-black text-xs shadow-sm`}>
                     <BookOpen size={22} />
                   </div>
                   <div>
-                    <span className="text-[10px] font-bold text-gray-400">{mag.issueNumber}</span>
-                    <h4 className="text-xs font-extrabold text-gray-900 line-clamp-1">{mag.title}</h4>
-                    <p className="text-[11px] font-medium text-gray-500">{mag.readTime} 정독 코스</p>
+                    <span className="text-[10px] font-bold text-theme-muted">{mag.issueNumber}</span>
+                    <h4 className="text-xs font-extrabold txt-brand-ink line-clamp-1">{mag.title}</h4>
+                    <p className="text-[11px] font-medium text-theme-muted">{mag.readTime} 정독 코스</p>
                   </div>
                 </div>
 
                 {isRead ? (
-                  <span className="text-xs font-bold text-[var(--color-brand-green)] bg-emerald-50 px-2 py-1 rounded-full whitespace-nowrap">
+                  <span className="text-xs font-bold text-theme-accent bg-theme-card-subtle px-2 py-1 rounded-full whitespace-nowrap">
                     완독
                   </span>
                 ) : (
-                  <ArrowRight size={18} className="text-gray-400" />
+                  <ArrowRight size={18} className="text-theme-muted" />
                 )}
               </NeumorphCard>
             );

@@ -30,7 +30,7 @@ export function EveningReflectionWizard({
   };
 
   return (
-    <div className="w-full h-full min-h-screen sm:min-h-0 bg-white flex flex-col select-none relative text-gray-900 overflow-hidden">
+    <div className="w-full h-full min-h-screen sm:min-h-0 bg-theme-app flex flex-col select-none relative txt-brand-ink overflow-hidden transition-colors duration-300">
       {/* 1. 서브 헤더 */}
       <SubPageHeader
         title="저녁 체크인"
@@ -47,23 +47,23 @@ export function EveningReflectionWizard({
               EVENING CHECK-IN STEP 01
             </span>
 
-            <h1 className="text-[26px] font-black text-gray-900 leading-snug">
+            <h1 className="text-[26px] font-black txt-brand-ink leading-snug">
               오늘 하루를 <br />
               <AuroraText>돌아볼 시간이에요</AuroraText>
             </h1>
 
-            <p className="text-xs text-gray-500 font-semibold mt-1.5 leading-relaxed">
+            <p className="text-xs text-theme-muted font-semibold mt-1.5 leading-relaxed">
               지금의 마음에 더 가까운 문장을 하나 골라보세요
             </p>
           </div>
 
           {/* 내 마음 돌아보기 구분선 */}
           <div className="flex items-center gap-3 w-full pt-1 pb-1">
-            <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-gray-200 to-gray-300" />
-            <span className="text-sm font-bold text-gray-700 shrink-0 text-center">
+            <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-theme-subtle to-theme-subtle" />
+            <span className="text-sm font-bold txt-brand-ink shrink-0 text-center">
               내 마음 돌아보기
             </span>
-            <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-gray-200 to-gray-300" />
+            <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-theme-subtle to-theme-subtle" />
           </div>
 
         {/* 2가지 회고 카드 좌우 2분할 배치 (원본 포맷 그대로 유지) */}
@@ -71,17 +71,17 @@ export function EveningReflectionWizard({
           <button
             type="button"
             onClick={() => setSelectedState("YES")}
-            className={`h-[150px] rounded-3xl text-center p-4 flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer active:scale-98 ${
+            className={`h-[150px] rounded-3xl text-center p-4 flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer ${
               selectedState === "YES"
-                ? "bg-indigo-50 border-2 border-indigo-500 shadow-sm text-indigo-900"
-                : "bg-[#F8FAFC] border border-gray-100 text-gray-700 hover:bg-gray-100"
+                ? "bg-indigo-50 dark:bg-indigo-950/50 border-2 border-indigo-500 shadow-sm text-indigo-900 dark:text-indigo-200"
+                : "bg-theme-card-subtle border border-theme-subtle txt-brand-ink hover:brightness-95"
             }`}
           >
             <span className="text-base font-black leading-snug">
               오늘도 잘 <br />
               버텨냈어요.
             </span>
-            <span className="text-[11px] font-semibold text-indigo-600/90 leading-tight">
+            <span className="text-[11px] font-semibold text-indigo-600/90 dark:text-indigo-400 leading-tight">
               하루를 무사히 보낸 나를 다정하게 바라봐요
             </span>
           </button>
@@ -89,16 +89,16 @@ export function EveningReflectionWizard({
           <button
             type="button"
             onClick={() => setSelectedState("NO")}
-            className={`h-[150px] rounded-3xl text-center p-4 flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer active:scale-98 ${
+            className={`h-[150px] rounded-3xl text-center p-4 flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer ${
               selectedState === "NO"
-                ? "bg-rose-50 border-2 border-rose-400 shadow-sm text-rose-900"
-                : "bg-[#F8FAFC] border border-gray-100 text-gray-700 hover:bg-gray-100"
+                ? "bg-rose-50 dark:bg-rose-950/50 border-2 border-rose-400 shadow-sm text-rose-900 dark:text-rose-200"
+                : "bg-theme-card-subtle border border-theme-subtle txt-brand-ink hover:brightness-95"
             }`}
           >
             <span className="text-base font-black leading-snug">
               조금 힘들었어요
             </span>
-            <span className="text-[11px] font-semibold text-rose-600/90 leading-tight">
+            <span className="text-[11px] font-semibold text-rose-600/90 dark:text-rose-400 leading-tight">
               나에게 회복할 시간을 내어줘도 괜찮아요
             </span>
           </button>
@@ -106,7 +106,7 @@ export function EveningReflectionWizard({
       </div>
 
       {/* 3. 하단 닫기/완료 CTA 버튼 */}
-      <div className="w-full px-5 py-5 bg-white shrink-0 max-w-lg mx-auto border-t border-gray-100">
+      <div className="w-full px-5 py-5 bg-theme-app shrink-0 max-w-lg mx-auto border-t border-theme-subtle">
         <MagicButton
           type="button"
           onClick={handleFinish}

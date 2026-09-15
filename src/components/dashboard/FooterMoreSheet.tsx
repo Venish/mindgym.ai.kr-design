@@ -220,7 +220,7 @@ export function FooterMoreSheet() {
   };
 
   return (
-    <div className="w-full bg-white flex flex-col select-none relative text-gray-900 min-h-full pb-16 overflow-y-auto">
+    <div className="w-full bg-theme-app flex flex-col select-none relative txt-brand-ink min-h-full pb-16 overflow-y-auto">
       {/* 상단 헤더 (X 닫기 버튼 누르면 이전 더보기 포함 전체 접힘) */}
       <SubPageHeader
         title="리추얼 모아보기"
@@ -237,11 +237,11 @@ export function FooterMoreSheet() {
               <div className="w-6 h-6 rounded-lg bg-[#00C474] text-white flex items-center justify-center shrink-0 shadow-2xs">
                 <Star size={13} weight="fill" />
               </div>
-              <h2 className="text-base font-extrabold text-gray-900 tracking-tight">
+              <h2 className="text-base font-extrabold txt-brand-ink tracking-tight">
                 내가 찜한 리추얼
               </h2>
             </div>
-            <span className="text-xs font-black text-[#00C474] bg-emerald-50 px-2 py-0.5 rounded-full">
+            <span className="text-xs font-black text-[#00C474] dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full">
               {savedRituals.length}건
             </span>
           </div>
@@ -250,13 +250,13 @@ export function FooterMoreSheet() {
           <div className="flex flex-col gap-2 w-full">
             {/* 1. 상단 1번 핀 고정 항목 */}
             {pinnedRitual && (
-              <div className="relative py-2.5 px-3.5 rounded-2xl bg-[#F9FAFB] flex items-center gap-3 border border-amber-200/80 shadow-2xs">
+              <div className="relative py-2.5 px-3.5 rounded-2xl bg-theme-card flex items-center gap-3 border border-amber-200/80 dark:border-amber-700/60 shadow-2xs">
                 {/* 최좌측 수정 불가 회색 별 아이콘 */}
                 <div
                   title="이달의 대표 월간 고정 리추얼 (해제 불가)"
-                  className="p-0.5 rounded-lg text-gray-300 cursor-not-allowed shrink-0"
+                  className="p-0.5 rounded-lg text-theme-muted/40 cursor-not-allowed shrink-0"
                 >
-                  <Star size={17} weight="fill" className="text-gray-300" />
+                  <Star size={17} weight="fill" className="text-theme-muted/40" />
                 </div>
 
                 {/* PNG 아이콘 */}
@@ -296,7 +296,7 @@ export function FooterMoreSheet() {
                   key={r.id}
                   value={r}
                   whileDrag={{ scale: 1.02, boxShadow: "0 8px 20px rgba(0,0,0,0.08)", zIndex: 30 }}
-                  className="relative py-2.5 px-3.5 rounded-2xl bg-[#F9FAFB] flex items-center gap-3 transition-colors group select-none cursor-default"
+                  className="relative py-2.5 px-3.5 rounded-2xl bg-theme-card-subtle flex items-center gap-3 transition-colors group select-none cursor-default"
                 >
                   {/* 노란색 찜 취소 버튼 */}
                   <button
@@ -351,15 +351,15 @@ export function FooterMoreSheet() {
                   alt="리추얼 로고"
                   className="w-4 h-4 object-contain shrink-0"
                 />
-                <h2 className="text-[0.9375rem] font-bold text-gray-900 tracking-tight">
+                <h2 className="text-[0.9375rem] font-bold txt-brand-ink tracking-tight">
                   전체 마음건강 리추얼
                 </h2>
               </div>
-              <span className="text-xs font-bold text-gray-400 font-mono">
+              <span className="text-xs font-bold text-theme-muted font-mono">
                 {filtered72Rituals.length} / 72
               </span>
             </div>
-            <p className="text-xs font-semibold text-gray-500 pt-0.5">
+            <p className="text-xs font-semibold text-theme-muted pt-0.5">
               작은 쉼표 하나로 시작하는 나만을 위한 마음건강 루틴입니다.
             </p>
           </div>
@@ -413,8 +413,8 @@ export function FooterMoreSheet() {
                   key={r.id}
                   className={`relative p-3 rounded-2xl flex items-center gap-3 transition-all group overflow-hidden ${
                     isLocked
-                      ? "bg-[#F9FAFB]/90 opacity-90 cursor-not-allowed"
-                      : "bg-[#F9FAFB]"
+                      ? "bg-theme-card/90 opacity-90 cursor-not-allowed border border-theme-subtle"
+                      : "bg-theme-card border border-theme-subtle"
                   }`}
                 >
                   {/* 정중앙 공통 잠금 오버레이 */}
@@ -428,12 +428,12 @@ export function FooterMoreSheet() {
                       toggleBookmark(r);
                     }}
                     title={isBookmarked ? "찜 취소" : "내가 찜한 리추얼에 추가"}
-                    className="p-1 rounded-lg text-gray-300 hover:text-amber-400 active:scale-90 transition-all cursor-pointer shrink-0 outline-none z-10"
+                    className="p-1 rounded-lg text-theme-muted/40 hover:text-amber-400 active:scale-90 transition-all cursor-pointer shrink-0 outline-none z-10"
                   >
                     <Star
                       size={18}
                       weight={isBookmarked ? "fill" : "regular"}
-                      className={isBookmarked ? "text-amber-400 drop-shadow-2xs" : "text-gray-300 hover:text-amber-400"}
+                      className={isBookmarked ? "text-amber-400 drop-shadow-2xs" : "text-theme-muted/40 hover:text-amber-400"}
                     />
                   </button>
 
@@ -449,23 +449,23 @@ export function FooterMoreSheet() {
 
                   {/* 중앙 정보 */}
                   <div className="flex-1 min-w-0 text-left flex flex-col gap-1.5">
-                    <h3 className="text-sm font-bold text-slate-900 truncate tracking-tight">
+                    <h3 className="text-sm font-bold txt-brand-ink truncate tracking-tight">
                       {r.title}
                     </h3>
                     <div className="flex items-center justify-start gap-1.5">
-                      <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-amber-100/90 text-center shadow-2xs shrink-0">
-                        <span className="text-xs font-bold text-gray-900">{r.time}</span>
+                      <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-amber-100/90 dark:bg-amber-950/70 text-center shadow-2xs shrink-0">
+                        <span className="text-xs font-bold txt-brand-ink">{r.time}</span>
                       </div>
                       {!isLocked && (
                         <>
-                          <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-purple-100/90 text-center shrink-0">
-                            <span className="text-xs font-bold text-gray-900">{r.level}</span>
+                          <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-purple-100/90 dark:bg-purple-950/70 text-center shrink-0">
+                            <span className="text-xs font-bold txt-brand-ink">{r.level}</span>
                           </div>
-                          <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-sky-100/90 text-center shrink-0">
-                            <span className="text-xs font-bold text-gray-900">{r.duration}</span>
+                          <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-sky-100/90 dark:bg-sky-950/70 text-center shrink-0">
+                            <span className="text-xs font-bold txt-brand-ink">{r.duration}</span>
                           </div>
-                          <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-rose-200/90 text-center shadow-xs shrink-0">
-                            <span className="text-xs font-bold text-gray-900">{r.reward}</span>
+                          <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-rose-200/90 dark:bg-rose-950/70 text-center shadow-xs shrink-0">
+                            <span className="text-xs font-bold txt-brand-ink">{r.reward}</span>
                           </div>
                         </>
                       )}
@@ -481,7 +481,7 @@ export function FooterMoreSheet() {
                         handleOpenRitual(r);
                       }}
                       title={`${r.title} 리추얼 시작하기`}
-                      className="p-2 rounded-xl text-gray-400 hover:text-emerald-600 hover:bg-emerald-100/60 active:scale-95 transition-all cursor-pointer shrink-0 outline-none"
+                      className="p-2 rounded-xl text-theme-muted hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-theme-card-subtle transition-all cursor-pointer shrink-0 outline-none"
                     >
                       <CaretRight size={20} weight="bold" />
                     </button>

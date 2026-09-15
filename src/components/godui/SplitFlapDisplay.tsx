@@ -36,14 +36,14 @@ function SplitFlapDigit({ char, size = "lg" }: SplitFlapDigitProps) {
 
   return (
     <div
-      className={`relative inline-flex items-center justify-center rounded-sm bg-[#18181b] text-zinc-100 font-mono font-black select-none overflow-hidden ${sizeStyles[size]}`}
+      className={`relative inline-flex items-center justify-center rounded-sm bg-[#18181b] dark:bg-slate-800 text-zinc-100 dark:text-emerald-300 font-mono font-black select-none overflow-hidden border border-zinc-800 dark:border-slate-600 shadow-2xs ${sizeStyles[size]}`}
       style={{ perspective: "300px" }}
     >
-      {/* 중앙 분리선 (어두운 회색 줄 bg-zinc-600, 그림자 제거) */}
-      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[1px] bg-zinc-600 z-30 pointer-events-none" />
+      {/* 중앙 분리선 (어두운 회색 줄 bg-zinc-600 dark:bg-slate-600, 그림자 제거) */}
+      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[1px] bg-zinc-600 dark:bg-slate-600 z-30 pointer-events-none" />
 
-      {/* 메인 폰트 서체 (text-zinc-100, 그림자 제거) */}
-      <span className="leading-none tracking-tighter text-zinc-100 font-mono font-black z-0">
+      {/* 메인 폰트 서체 (text-zinc-100 dark:text-emerald-300, 그림자 제거) */}
+      <span className="leading-none tracking-tighter text-zinc-100 dark:text-emerald-300 font-mono font-black z-0">
         {displayChar}
       </span>
 
@@ -56,9 +56,9 @@ function SplitFlapDigit({ char, size = "lg" }: SplitFlapDigitProps) {
             animate={{ rotateX: -180 }}
             transition={{ duration: 0.15, ease: "easeInOut" }}
             style={{ transformOrigin: "bottom", backfaceVisibility: "hidden" }}
-            className="absolute top-0 left-0 right-0 h-1/2 overflow-hidden flex items-end justify-center z-20 bg-[#18181b] text-zinc-100"
+            className="absolute top-0 left-0 right-0 h-1/2 overflow-hidden flex items-end justify-center z-20 bg-[#18181b] dark:bg-slate-800 text-zinc-100 dark:text-emerald-300"
           >
-            <span className="translate-y-1/2 leading-none font-mono font-black text-zinc-100">{prevChar}</span>
+            <span className="translate-y-1/2 leading-none font-mono font-black text-zinc-100 dark:text-emerald-300">{prevChar}</span>
           </motion.div>
         )}
       </AnimatePresence>

@@ -3,20 +3,15 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AnimatePresence } from "framer-motion";
-import {
-  Flower,
-  Leaf,
-  Barbell,
-  Clock,
-  Microscope,
-  ShieldCheck,
-  FloppyDisk,
-  LockKey,
-} from "@phosphor-icons/react";
 import { BrandLogo } from "@/components/ui/BrandLogo";
-import { kossQuestions } from "@/data/koss";
+import {
+  kossQuestions,
+  KOSS_TIPS,
+  KOSS_DOMAINS_INFO,
+  formatQuestionToTwoLines,
+} from "@/data/koss";
 
-// 분리한 온보딩 서브 컴포넌트 10종 Import
+// 공통 컴포넌트 & 온보딩 모듈러 서브 컴포넌트
 import { OnboardingSlidesView } from "@/components/onboarding/OnboardingSlidesView";
 import { CeoPopupModal } from "@/components/onboarding/CeoPopupModal";
 import { NicknameSetupView } from "@/components/onboarding/NicknameSetupView";
@@ -24,10 +19,25 @@ import { KossIntroView } from "@/components/onboarding/KossIntroView";
 import { KossQuestionsView } from "@/components/onboarding/KossQuestionsView";
 import { AnalyzingBridgeView } from "@/components/onboarding/AnalyzingBridgeView";
 import { KossResultView } from "@/components/onboarding/KossResultView";
-import { MonthlyRitualStartView } from "@/components/onboarding/MonthlyRitualStartView";
 import { CheckinTimeSetupView } from "@/components/onboarding/CheckinTimeSetupView";
+import { MonthlyIntentionWizard } from "@/components/common/MonthlyIntentionWizard";
+import { MonthlyRitualStartView } from "@/components/onboarding/MonthlyRitualStartView";
 
-type OnboardingView =
+/**
+ * 상단 중앙 브랜드 로고가 노출되는 뷰 집합 (선언적 관리)
+ */
+const LOGO_VISIBLE_VIEWS = new Set<OnboardingView>([
+  "SLIDES",
+  "NICKNAME",
+  "CEO_POPUP",
+  "KOSS_INTRO",
+  "CHECKIN_TIME_SETUP",
+]);
+
+/**
+ * 사용자 직접 제어 가능 온보딩 스텝 정의 (순서 및 스텝 플로우)
+ */
+export type OnboardingView =
   | "SLIDES"
   | "CEO_POPUP"
   | "NICKNAME"
@@ -36,6 +46,7 @@ type OnboardingView =
   | "ANALYZING"
   | "RESULT"
   | "CHECKIN_TIME_SETUP"
+  | "MONTHLY_INTENTION"
   | "MONTHLY_START";
 
 function OnboardingContent() {
@@ -48,8 +59,10 @@ function OnboardingContent() {
     ? "RESULT"
     : modeParam === "result"
     ? "RESULT"
-    : modeParam === "monthly_start" || modeParam === "monthly_intention"
+    : modeParam === "monthly_start"
     ? "MONTHLY_START"
+    : modeParam === "monthly_intention"
+    ? "MONTHLY_INTENTION"
     : modeParam === "checkin_time"
     ? "CHECKIN_TIME_SETUP"
     : "SLIDES";
@@ -64,7 +77,8 @@ function OnboardingContent() {
     else if (modeParam === "koss_intro") setView("KOSS_INTRO");
     else if (modeParam === "koss") setView("KOSS");
     else if (modeParam === "analyzing" || modeParam === "loading") setView("ANALYZING");
-    else if (modeParam === "monthly_start" || modeParam === "monthly_intention") setView("MONTHLY_START");
+    else if (modeParam === "monthly_intention") setView("MONTHLY_INTENTION");
+    else if (modeParam === "monthly_start") setView("MONTHLY_START");
     else if (modeParam === "checkin_time") setView("CHECKIN_TIME_SETUP");
     else if (modeParam === "slides") setView("SLIDES");
   }, [modeParam, isResultDirect]);
@@ -75,7 +89,7 @@ function OnboardingContent() {
   const [nickname, setNickname] = useState("보노보노");
 
   // 이달의 나 & 체크인 시간 설정 상태
-  const [selectedKeyword, setSelectedKeyword] = useState("차분한 8월");
+  const [selectedKeyword, setSelectedKeyword] = useState("차분하게 · 따뜻하게 · 균형 되찾기");
   const [morningTime, setMorningTime] = useState("08:00");
   const [eveningTime, setEveningTime] = useState("21:00");
 
@@ -84,73 +98,23 @@ function OnboardingContent() {
   const [answers, setAnswers] = useState<{ [qId: number]: number }>({});
   const [analysisStep, setAnalysisStep] = useState(1);
 
-  // KOSS 질문 진행 중 하단 팁 데이터
-  const kossTips = [
-    { text: "솔직하게 답할수록 지금의 내 상태를 더 정확하게 확인할 수 있어요.", icon: Flower, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" },
-    { text: "정답은 없어요. 최근 1주일간 느낀 그대로 편안히 눌러주세요.", icon: Leaf, bgClass: "bg-[#F8FAF9] border-emerald-100", iconClass: "text-[#00C474]" },
-    { text: "직무 스트레스 지표는 나의 약점이 아닌 보살핌의 신호예요.", icon: Barbell, bgClass: "bg-amber-50/80 border-amber-200/80", iconClass: "text-amber-600" },
-    { text: "잠시 숨을 깊게 내쉬고 현재 나의 상태에 집중해 보세요.", icon: Clock, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" },
-    { text: "진단 결과는 개인 맞춤 틈새 리추얼을 추천하는 데 사용돼요.", icon: Microscope, bgClass: "bg-sky-50/80 border-sky-200/80", iconClass: "text-sky-600" },
-    { text: "나만의 편안한 속도로 36문항을 차근차근 진행해 보세요.", icon: ShieldCheck, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" },
-    { text: "거의 다 왔어요! 완료하면 지금의 마음 상태를 한눈에 볼 수 있어요", icon: LockKey, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" },
-    { text: "수고하셨어요! 마지막 질문입니다.", icon: FloppyDisk, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" },
-  ];
-
-  const domainsInfo = [
-    { domain: "물리환경", count: 3 },
-    { domain: "직무요구", count: 8 },
-    { domain: "직무자율", count: 5 },
-    { domain: "관계갈등", count: 4 },
-    { domain: "직업불안정", count: 2 },
-    { domain: "조직체계", count: 7 },
-    { domain: "보상부적절", count: 3 },
-    { domain: "직장문화", count: 4 },
-  ];
-
   const currentQ = kossQuestions[qIndex];
   const currentDomain = currentQ ? currentQ.domain : "직무 스트레스";
 
-  const getTip = () => {
+  // 현재 문항 기반 가이드 팁 획득
+  const currentTip = (() => {
     if (qIndex === kossQuestions.length - 1) {
-      return { text: "수고하셨어요! 마지막 질문입니다.", icon: FloppyDisk, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" };
+      return KOSS_TIPS[KOSS_TIPS.length - 1]; // 마지막 질문 팁
     }
     if (currentDomain === "직장문화") {
-      return { text: "거의 다 왔어요! 완료하면 지금의 마음 상태를 한눈에 볼 수 있어요", icon: LockKey, bgClass: "bg-emerald-50/90 border-emerald-200/80", iconClass: "text-[#00C474]" };
+      return KOSS_TIPS[KOSS_TIPS.length - 2]; // 거의 다 왔어요 팁
     }
-    const currentTipIndex = Math.min(
-      Math.floor((qIndex / kossQuestions.length) * kossTips.length),
-      kossTips.length - 1
+    const tipIdx = Math.min(
+      Math.floor((qIndex / kossQuestions.length) * KOSS_TIPS.length),
+      KOSS_TIPS.length - 1
     );
-    return kossTips[currentTipIndex];
-  };
-
-  const currentTip = getTip();
-
-  const formatQuestionToTwoLines = (qStr: string) => {
-    if (!qStr) return null;
-    const cleanStr = qStr.trim();
-    if (cleanStr.includes("\n")) {
-      const parts = cleanStr.split("\n");
-      return (
-        <span>
-          {parts[0]}
-          <br />
-          {parts.slice(1).join(" ")}
-        </span>
-      );
-    }
-    const mid = Math.floor(cleanStr.length / 2);
-    let splitIdx = cleanStr.indexOf(" ", mid);
-    if (splitIdx === -1) splitIdx = cleanStr.lastIndexOf(" ", mid);
-    if (splitIdx === -1) return cleanStr;
-    return (
-      <span>
-        {cleanStr.substring(0, splitIdx)}
-        <br />
-        {cleanStr.substring(splitIdx + 1)}
-      </span>
-    );
-  };
+    return KOSS_TIPS[tipIdx];
+  })();
 
   const handleNextSlide = () => {
     if (slideIndex < 3) {
@@ -161,32 +125,40 @@ function OnboardingContent() {
   };
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isQuestionLocked, setIsQuestionLocked] = useState(false);
 
   const handleSelectAnswer = (val: number) => {
-    if (!currentQ || isSubmitting) return;
+    if (!currentQ || isSubmitting || isQuestionLocked) return;
+    setIsQuestionLocked(true);
     setAnswers((prev) => ({ ...prev, [currentQ.id]: val }));
 
-    if (qIndex >= kossQuestions.length - 1) {
-      setIsSubmitting(true);
-      setView("ANALYZING");
-      setAnalysisStep(1);
+    setTimeout(() => {
+      if (qIndex >= kossQuestions.length - 1) {
+        setIsSubmitting(true);
+        setView("ANALYZING");
+      } else {
+        setQIndex((prev) => Math.min(prev + 1, kossQuestions.length - 1));
+      }
+      setIsQuestionLocked(false);
+    }, 150);
+  };
 
-      setTimeout(() => setAnalysisStep(2), 500);
-      setTimeout(() => setAnalysisStep(3), 1000);
-      setTimeout(() => setAnalysisStep(4), 1500);
-      setTimeout(() => {
-        setView("RESULT");
-        setIsSubmitting(false);
-      }, 2000);
-    } else {
-      setQIndex((prev) => Math.min(prev + 1, kossQuestions.length - 1));
+  // 온보딩 완료 시 뒤로가기 방지용 router.replace 호출
+  const handleCompleteOnboarding = () => {
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem("mindgym_has_onboarded", "true");
+      } catch (e) {
+        // ignore
+      }
     }
+    router.replace("/dashboard?execute_ritual=true");
   };
 
   return (
     <div className="w-full flex-1 flex flex-col justify-between relative px-5 py-4 min-h-[580px]">
-      {/* 최상단 마인드짐 로고 헤더 */}
-      {view !== "KOSS" && view !== "MONTHLY_START" && (
+      {/* 최상단 마인드짐 로고 헤더 (선언적 뷰 집합 관리) */}
+      {LOGO_VISIBLE_VIEWS.has(view) && (
         <div className="w-full flex justify-center items-center py-2 shrink-0 z-20">
           <BrandLogo size="md" />
         </div>
@@ -215,9 +187,10 @@ function OnboardingContent() {
             nickname={nickname}
             onStart={() => {
               setQIndex(0);
+              setIsQuestionLocked(false);
               setView("KOSS");
             }}
-            onSkip={() => setView("RESULT")}
+            onSkip={() => setView("CHECKIN_TIME_SETUP")}
           />
         )}
 
@@ -228,19 +201,26 @@ function OnboardingContent() {
             totalQuestionsCount={kossQuestions.length}
             currentQ={currentQ}
             currentDomain={currentDomain}
-            domainsInfo={domainsInfo}
+            domainsInfo={KOSS_DOMAINS_INFO}
             currentTip={currentTip}
             formatQuestionToTwoLines={formatQuestionToTwoLines}
             onSelectAnswer={handleSelectAnswer}
+            isLocked={isQuestionLocked}
           />
         )}
 
         {view === "ANALYZING" && (
-          <AnalyzingBridgeView analysisStep={analysisStep} />
+          <AnalyzingBridgeView
+            onComplete={() => {
+              setView("RESULT");
+              setIsSubmitting(false);
+              router.replace("/onboarding?mode=result");
+            }}
+          />
         )}
 
         {view === "RESULT" && (
-          <KossResultView onNext={() => setView("MONTHLY_START")} />
+          <KossResultView onNext={() => setView("CHECKIN_TIME_SETUP")} />
         )}
 
         {view === "CHECKIN_TIME_SETUP" && (
@@ -249,7 +229,20 @@ function OnboardingContent() {
             eveningTime={eveningTime}
             onSelectMorningTime={(t) => setMorningTime(t)}
             onSelectEveningTime={(t) => setEveningTime(t)}
-            onComplete={() => setView("MONTHLY_START")}
+            onComplete={() => setView("MONTHLY_INTENTION")}
+            onSkip={handleCompleteOnboarding}
+          />
+        )}
+
+        {view === "MONTHLY_INTENTION" && (
+          <MonthlyIntentionWizard
+            showSubHeader={false}
+            onBack={() => setView("CHECKIN_TIME_SETUP")}
+            onComplete={(mind, rel, grow) => {
+              const combined = `${mind} · ${rel} · ${grow}`;
+              setSelectedKeyword(combined);
+              setView("MONTHLY_START");
+            }}
           />
         )}
 
@@ -259,10 +252,7 @@ function OnboardingContent() {
             selectedKeyword={selectedKeyword}
             morningTime={morningTime}
             eveningTime={eveningTime}
-            onSelectMorningTime={(t) => setMorningTime(t)}
-            onSelectEveningTime={(t) => setEveningTime(t)}
-            onSelectKeyword={(kw) => setSelectedKeyword(kw)}
-            onNext={() => router.push("/dashboard?execute_ritual=true")}
+            onNext={handleCompleteOnboarding}
           />
         )}
       </AnimatePresence>
@@ -278,7 +268,7 @@ function OnboardingContent() {
 
 export default function OnboardingPage() {
   return (
-    <Suspense fallback={<div className="flex-1 flex items-center justify-center">Loading...</div>}>
+    <Suspense fallback={<div className="flex-1 min-h-screen bg-theme-app" />}>
       <OnboardingContent />
     </Suspense>
   );

@@ -51,11 +51,10 @@ export function KossIntroView({ nickname, onStart, onSkip }: KossIntroViewProps)
         <MagicButton
           onClick={onSkip}
           variant="ghost"
-          className="w-full text-gray-400 hover:text-gray-600 font-medium py-2 text-sm"
+          className="w-full"
         >
           <span>다음에 하기</span>
         </MagicButton>
-
       </div>
     </motion.div>
   );

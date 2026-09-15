@@ -90,7 +90,7 @@ export function MagazineFavoritesSheet({
           animate={{ x: 0 }}
           exit={{ x: "100%" }}
           transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute inset-0 z-50 bg-white flex flex-col overflow-y-auto no-scrollbar select-none text-gray-900 pb-12"
+          className="absolute inset-0 z-50 bg-theme-app flex flex-col overflow-y-auto no-scrollbar select-none txt-brand-ink pb-12 transition-colors duration-300"
         >
           {/* 1. 상단 공통 서브 헤더 (sticky top-0 완벽 상단 고정!) */}
           <SubPageHeader
@@ -100,7 +100,7 @@ export function MagazineFavoritesSheet({
           />
 
           {/* 2. 탭 스위처 (헤더 바로 아래 sticky top-[56px] 완벽 고정!) */}
-          <div className="sticky top-[56px] z-20 bg-white/95 backdrop-blur-md px-5 pt-2 pb-3">
+          <div className="sticky top-[56px] z-20 bg-theme-app/95 backdrop-blur-md px-5 pt-2 pb-3">
             <SegmentedTab
               items={[
                 {
@@ -139,21 +139,21 @@ export function MagazineFavoritesSheet({
                       onClick={() => {
                         onOpenEbookReader(magazine, article.title);
                       }}
-                      className="group relative p-3.5 bg-[#F9FAFB] hover:bg-emerald-50/40 rounded-2xl border border-gray-100/90 flex flex-col gap-2.5 transition-all shadow-2xs cursor-pointer hover:border-[#00C474]/50 overflow-hidden"
+                      className="group relative p-3.5 bg-theme-card rounded-2xl border border-theme-card flex flex-col gap-2.5 transition-all shadow-2xs cursor-pointer hover:border-theme-accent overflow-hidden"
                     >
                       {/* 상단: [VOL.XX 매거진 칩 & 카테고리] + [상대 시간 표시] */}
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex items-center gap-1.5 min-w-0">
-                          <span className="text-xs font-extrabold text-gray-900 tracking-tight shrink-0">
+                          <span className="text-xs font-extrabold txt-brand-ink tracking-tight shrink-0">
                             {volLabel}
                           </span>
-                          <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded truncate">
+                          <span className="text-[11px] font-bold text-theme-accent bg-theme-card-subtle px-1.5 py-0.5 rounded truncate">
                             {article.section || "에세이"}
                           </span>
                         </div>
 
                         {/* 상대 시간 뱃지 */}
-                        <div className="flex items-center gap-1 text-[11px] font-bold text-gray-400 shrink-0">
+                        <div className="flex items-center gap-1 text-[11px] font-bold text-theme-muted shrink-0">
                           <Clock size={12} weight="bold" />
                           <span>{item.timeAgoLabel}</span>
                         </div>
@@ -161,7 +161,7 @@ export function MagazineFavoritesSheet({
 
                       {/* 중간: 아티클 제목 + Play 버튼 */}
                       <div className="flex items-center justify-between gap-2.5">
-                        <h4 className="text-[14px] font-bold text-gray-900 group-hover:text-[#00C474] transition-colors truncate flex-1 leading-snug">
+                        <h4 className="text-[14px] font-bold txt-brand-ink group-hover:text-theme-accent transition-colors truncate flex-1 leading-snug">
                           {article.title}
                         </h4>
 
@@ -172,7 +172,7 @@ export function MagazineFavoritesSheet({
                             e.stopPropagation();
                             onOpenEbookReader(magazine, article.title);
                           }}
-                          className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center transition-all shrink-0 active:scale-90 cursor-pointer"
+                          className="w-8 h-8 rounded-full bg-theme-card-subtle text-theme-muted flex items-center justify-center transition-all shrink-0 active:scale-90 cursor-pointer"
                           title="이어서 읽기 (Play)"
                         >
                           <Play size={14} weight="fill" className="ml-0.5" />
@@ -180,7 +180,7 @@ export function MagazineFavoritesSheet({
                       </div>
 
                       {/* 하단: 읽었던 위치 프로그레스 바 트랙 선 */}
-                      <div className="w-full h-1 bg-gray-200/80 rounded-full overflow-hidden">
+                      <div className="w-full h-1 bg-theme-card-subtle rounded-full overflow-hidden">
                         <div
                           className="h-full bg-gradient-to-r from-emerald-400 to-[#00C474] rounded-full transition-all duration-300"
                           style={{ width: `${item.progressPercent}%` }}
@@ -218,7 +218,7 @@ export function MagazineFavoritesSheet({
                       return (
                         <div
                           key={`fav-${idx}`}
-                          className="p-3.5 bg-[#F9FAFB] hover:bg-amber-50/30 rounded-2xl border border-gray-100/90 flex items-center justify-between gap-2 transition-all shadow-2xs hover:border-amber-400/50 cursor-pointer"
+                          className="p-3.5 bg-theme-card rounded-2xl border border-theme-card flex items-center justify-between gap-2 transition-all shadow-2xs hover:border-amber-400/50 cursor-pointer"
                           onClick={() => {
                             onOpenEbookReader(magazine, article.title);
                           }}
@@ -239,14 +239,14 @@ export function MagazineFavoritesSheet({
 
                             <div className="flex flex-col items-start min-w-0 flex-1 text-left gap-0.5">
                               <div className="flex items-center gap-1.5 max-w-full">
-                                <span className="text-xs font-extrabold text-gray-900 tracking-tight shrink-0">
+                                <span className="text-xs font-extrabold txt-brand-ink tracking-tight shrink-0">
                                   {volLabel}
                                 </span>
                                 <span className="text-[11px] font-bold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded truncate">
                                   {article.section || "에세이"}
                                 </span>
                               </div>
-                              <h4 className="text-[14px] font-bold text-gray-900 truncate w-full">
+                              <h4 className="text-[14px] font-bold txt-brand-ink truncate w-full">
                                 {article.title}
                               </h4>
                             </div>
@@ -259,7 +259,7 @@ export function MagazineFavoritesSheet({
                               e.stopPropagation();
                               onOpenEbookReader(magazine, article.title);
                             }}
-                            className="p-1.5 text-gray-400 hover:text-gray-900 transition-colors cursor-pointer active:scale-90 shrink-0"
+                            className="p-1.5 text-theme-muted hover:txt-brand-ink transition-colors cursor-pointer active:scale-90 shrink-0"
                             title="E-Book 바로 읽기"
                           >
                             <CaretRight size={18} weight="bold" />

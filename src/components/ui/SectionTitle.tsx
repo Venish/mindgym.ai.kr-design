@@ -19,7 +19,7 @@ export function SectionTitle({
 }: SectionTitleProps) {
   return (
     <div className={`flex items-center justify-between px-0.5 py-0.5 select-none ${className}`}>
-      <h2 className="text-[0.9375rem] font-bold text-gray-900 tracking-tight leading-none cursor-default">
+      <h2 className="text-[0.9375rem] font-bold txt-brand-ink tracking-tight leading-none cursor-default">
         {title}
       </h2>
       {action && <div className="flex items-center">{action}</div>}

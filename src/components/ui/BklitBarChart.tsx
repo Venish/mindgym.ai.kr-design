@@ -155,25 +155,25 @@ export function BklitBarChart({
           <div key={idx} className="flex flex-col gap-1.5 group">
             <div className="flex items-center justify-between text-xs">
               <div className="flex items-center gap-2">
-                <span className="font-bold text-gray-800 tracking-tight text-[13px]">
+                <span className="font-bold txt-brand-ink tracking-tight text-[13px]">
                   {domain.name}
                 </span>
-                <span className="text-[11px] text-gray-400 font-medium">
+                <span className="text-[11px] text-theme-muted font-medium">
                   {domain.sub}
                 </span>
               </div>
 
               <div className="flex items-center gap-2">
-                <span className={`font-black text-[12px] px-2 py-0.5 rounded-md bg-white shadow-2xs ${domain.textColor}`}>
+                <span className={`font-black text-[12px] px-2 py-0.5 rounded-md bg-theme-card shadow-2xs ${domain.textColor}`}>
                   {domain.status}
                 </span>
-                <span className="font-black text-gray-900 text-[13px] tabular-nums">
+                <span className="font-black txt-brand-ink text-[13px] tabular-nums">
                   {domain.score}점
                 </span>
               </div>
             </div>
 
-            <div className="w-full h-2.5 bg-gray-200/60 rounded-full overflow-hidden relative">
+            <div className="w-full h-2.5 bg-theme-card-subtle rounded-full overflow-hidden relative">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${percent}%` }}

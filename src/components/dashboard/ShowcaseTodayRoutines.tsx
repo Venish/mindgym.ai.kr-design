@@ -40,16 +40,16 @@ export function ShowcaseTodayRoutines() {
               ),
             })
           }
-          className="bg-white border border-gray-200 hover:border-emerald-300 rounded-xl p-3.5 flex flex-col justify-between h-[134px] cursor-pointer active:scale-95 transition-all shadow-2xs"
+          className="bg-theme-card border border-theme-card hover:border-emerald-300 rounded-xl p-3.5 flex flex-col justify-between h-[134px] cursor-pointer transition-all shadow-2xs"
         >
-          <div className="w-[30px] h-[30px] rounded-lg bg-emerald-50 text-[#00C474] flex items-center justify-center shrink-0">
+          <div className="w-[30px] h-[30px] rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-[#00C474] flex items-center justify-center shrink-0">
             <Check size={16} weight="bold" />
           </div>
           <div className="flex flex-col text-left">
-            <h3 className="text-[0.9375rem] font-bold text-gray-400 line-through tracking-tight leading-snug">
+            <h3 className="text-[0.9375rem] font-bold text-theme-muted/60 line-through tracking-tight leading-snug">
               미소 명상
             </h3>
-            <span className="text-[13px] font-semibold text-gray-400 mt-1">
+            <span className="text-[13px] font-semibold text-theme-muted/60 mt-1">
               완료
             </span>
           </div>
@@ -71,16 +71,16 @@ export function ShowcaseTodayRoutines() {
               ),
             })
           }
-          className="bg-[var(--color-pastel-mint-bg)] hover:bg-emerald-100/70 rounded-xl p-3.5 flex flex-col justify-between h-[134px] cursor-pointer active:scale-95 transition-all shadow-2xs"
+          className="bg-theme-card border border-theme-card hover:border-[#009E5C]/60 rounded-xl p-3.5 flex flex-col justify-between h-[134px] cursor-pointer transition-all shadow-2xs"
         >
-          <div className="w-[30px] h-[30px] rounded-lg bg-white text-[#00C474] text-xs font-black flex items-center justify-center shrink-0 shadow-2xs">
+          <div className="w-[30px] h-[30px] rounded-lg bg-emerald-100/80 dark:bg-emerald-950/70 text-[#009E5C] dark:text-emerald-400 text-xs font-black flex items-center justify-center shrink-0 shadow-2xs">
             2분
           </div>
           <div className="flex flex-col text-left">
-            <h3 className="text-[0.9375rem] font-bold text-gray-900 leading-snug tracking-tight">
+            <h3 className="text-[0.9375rem] font-bold txt-brand-ink leading-snug tracking-tight">
               스트레스 분쇄
             </h3>
-            <span className="text-[13px] font-semibold text-gray-600 mt-1">
+            <span className="text-[13px] font-semibold text-theme-muted mt-1">
               종이 파쇄
             </span>
           </div>
@@ -94,16 +94,16 @@ export function ShowcaseTodayRoutines() {
               content: <CommonSosDiagnosisSheet />,
             })
           }
-          className="bg-[#F9FAFB] hover:bg-[#F2F4F7] rounded-xl p-3.5 flex flex-col justify-between h-[134px] cursor-pointer active:scale-95 transition-all shadow-2xs group"
+          className="bg-theme-card border border-theme-card hover:border-rose-300 rounded-xl p-3.5 flex flex-col justify-between h-[134px] cursor-pointer transition-all shadow-2xs group"
         >
-          <div className="w-[30px] h-[30px] rounded-lg bg-rose-100 text-rose-800 text-[11px] font-black tracking-tight flex items-center justify-center shrink-0 shadow-2xs">
+          <div className="w-[30px] h-[30px] rounded-lg bg-rose-100 dark:bg-rose-950/70 text-rose-800 dark:text-rose-300 text-[11px] font-black tracking-tight flex items-center justify-center shrink-0 shadow-2xs">
             SOS
           </div>
           <div className="flex flex-col text-left">
-            <h3 className="text-[0.9375rem] font-bold text-gray-900 group-hover:text-rose-600 leading-snug tracking-tight">
+            <h3 className="text-[0.9375rem] font-bold txt-brand-ink group-hover:text-rose-600 dark:group-hover:text-rose-400 leading-snug tracking-tight">
               지금 멘탈 진정
             </h3>
-            <span className="text-[13px] font-semibold text-gray-500 mt-1">
+            <span className="text-[13px] font-semibold text-theme-muted mt-1">
               내 상황별 맞춤
             </span>
           </div>

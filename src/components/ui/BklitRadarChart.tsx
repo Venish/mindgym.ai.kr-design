@@ -52,36 +52,62 @@ export function BklitRadarChart({
         viewBox={`0 0 ${size} ${size}`}
         className="overflow-visible"
       >
-        {/* 1. RadarGrid (5단계 레벨 영역 파스텔 틴트 Zone Fill concentric polygon rings) */}
-        {Array.from({ length: levels })
-          .map((_, i) => levels - 1 - i) // 역순 렌더링으로 큰 링 위에 작은 링이 예쁘게 포개짐
-          .map((levelIndex) => {
-            const levelRatio = (levelIndex + 1) / levels;
-            const points = metrics
-              .map((_, i) => {
-                const angle = (Math.PI * 2 * i) / numMetrics - Math.PI / 2;
-                const r = R * levelRatio;
-                return `${cx + r * Math.cos(angle)},${cy + r * Math.sin(angle)}`;
-              })
-              .join(" ");
+        {/* ★ 360도 전역 무지개(Conic Rainbow Gradient) 클립패스 정의 ★ */}
+        <defs>
+          <clipPath id="radarPolygonClip">
+            <polygon
+              points={metrics
+                .map((_, i) => {
+                  const angle = (Math.PI * 2 * i) / numMetrics - Math.PI / 2;
+                  const r = R;
+                  return `${cx + r * Math.cos(angle)},${cy + r * Math.sin(angle)}`;
+                })
+                .join(" ")}
+            />
+          </clipPath>
+        </defs>
 
-            const levelFills = [
-              "rgba(0, 196, 116, 0.10)", // Level 1 (중심 0~2점: 최상/안전 에메랄드)
-              "rgba(0, 196, 116, 0.04)", // Level 2 (2~4점: 양호 에메랄드)
-              "rgba(251, 140, 0, 0.05)", // Level 3 (4~6점: 보통 옐로우/오렌지)
-              "rgba(251, 140, 0, 0.09)", // Level 4 (6~8점: 주의 오렌지)
-              "rgba(229, 57, 53, 0.08)", // Level 5 (외곽 8~10점: 위험/경고 로즈)
-            ];
+        {/* 1. 전체 360도 무지개 배경 (은은하고 부드러운 소프트 파스텔 톤) */}
+        <foreignObject
+          x={cx - R}
+          y={cy - R}
+          width={R * 2}
+          height={R * 2}
+          clipPath="url(#radarPolygonClip)"
+        >
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              background:
+                "conic-gradient(from 0deg at 50% 50%, #FF9EB0 0deg, #FFBEA6 51deg, #FFD896 102deg, #FFF0A3 154deg, #B7F2CE 205deg, #B0D5FC 257deg, #D8B8F8 308deg, #FF9EB0 360deg)",
+            }}
+          />
+        </foreignObject>
 
-            return (
-              <polygon
-                key={`ring-${levelIndex}`}
-                points={points}
-                fill={levelFills[levelIndex] || "none"}
-                stroke="none"
-              />
-            );
-          })}
+        {/* 2. RadarGrid (5단계 레벨 동심 다각형 가이드 링) */}
+        {Array.from({ length: levels }).map((_, levelIndex) => {
+          const levelRatio = (levelIndex + 1) / levels;
+          const points = metrics
+            .map((_, i) => {
+              const angle = (Math.PI * 2 * i) / numMetrics - Math.PI / 2;
+              const r = R * levelRatio;
+              return `${cx + r * Math.cos(angle)},${cy + r * Math.sin(angle)}`;
+            })
+            .join(" ");
+
+          return (
+            <polygon
+              key={`ring-${levelIndex}`}
+              points={points}
+              fill="none"
+              stroke="rgba(255, 255, 255, 0.45)"
+              strokeWidth={levelIndex === levels - 1 ? "1.2" : "0.8"}
+              strokeDasharray={levelIndex === levels - 1 ? "none" : "2 2"}
+              className="dark:stroke-slate-700/60"
+            />
+          );
+        })}
 
         {/* 2. RadarAxis (Radial Lines - 테두리선 제거로 최소화) */}
         {metrics.map((_, i) => {
@@ -181,7 +207,7 @@ export function BklitRadarChart({
               y={ly}
               textAnchor="middle"
               dominantBaseline="central"
-              className="text-[12.5px] font-bold fill-gray-800 tracking-tight"
+              className="text-[12.5px] font-bold fill-gray-800 dark:fill-slate-200 tracking-tight"
             >
               {m.label}
             </text>

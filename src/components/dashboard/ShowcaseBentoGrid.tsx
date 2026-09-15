@@ -30,19 +30,19 @@ export function ShowcaseBentoGrid({}: ShowcaseBentoGridProps) {
             content: (
               <CommonRitualSheet
                 ritualTitle="미소 명상"
-                ritualCategory="이달의 대표 리추얼"
+                ritualCategory="휴식과 충전"
                 ritualTime="3분"
                 description="입가에 옅은 미소를 지으며 얼굴 근육의 긴장을 풀고, 평온한 기운이 온몸에 스며들도록 정돈하는 이달의 대표 리추얼입니다."
               />
             ),
           })
         }
-        className="bg-white border border-gray-200/90 rounded-2xl p-3.5 shadow-2xs flex flex-col justify-between min-h-[136px] relative overflow-hidden group hover:border-[#00C474] transition-all cursor-pointer active:scale-[0.98]"
+        className="bg-theme-card border border-theme-subtle rounded-2xl p-3.5 shadow-2xs flex flex-col justify-between min-h-[136px] relative overflow-hidden group hover:border-[#009E5C] transition-all cursor-pointer active:scale-[0.98]"
       >
         <div className="flex flex-col gap-1.5 relative z-10">
           <div className="flex items-center justify-between">
             <span className="text-xs font-black txt-brand-ink">이달의 리추얼</span>
-            <span className="text-[10px] font-bold text-[#00C474] bg-emerald-50 px-1.5 py-0.5 rounded">
+            <span className="text-[10px] font-extrabold text-[#009E5C] bg-emerald-100/70 px-2 py-0.5 rounded">
               8월 대표
             </span>
           </div>
@@ -55,8 +55,8 @@ export function ShowcaseBentoGrid({}: ShowcaseBentoGridProps) {
             />
           </div>
 
-          <p className="text-[11px] text-gray-700 font-bold text-center leading-tight">
-            미소 명상 <span className="text-[#00C474] font-black">· 3분</span>
+          <p className="text-[11px] text-gray-800 font-bold text-center leading-tight">
+            미소 명상 <span className="text-[#009E5C] font-black">· 3분</span>
           </p>
         </div>
       </div>
@@ -69,7 +69,7 @@ export function ShowcaseBentoGrid({}: ShowcaseBentoGridProps) {
             content: <CommonKossDiagnosisSheet />,
           })
         }
-        className="bg-white border border-gray-200/90 rounded-2xl p-4 shadow-2xs flex flex-col justify-between hover:border-[#00C474] transition-all cursor-pointer group min-h-[136px] active:scale-[0.98]"
+        className="bg-theme-card border border-theme-subtle rounded-2xl p-4 shadow-2xs flex flex-col justify-between hover:border-[#009E5C] transition-all cursor-pointer group min-h-[136px] active:scale-[0.98]"
       >
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-1.5">

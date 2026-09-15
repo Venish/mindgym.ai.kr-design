@@ -14,6 +14,7 @@ import { BklitRadarChart } from "@/components/ui/BklitRadarChart";
 import { BklitBarChart } from "@/components/ui/BklitBarChart";
 import { SegmentedTab } from "@/components/ui/SegmentedTab";
 import { CalendarSheet } from "@/components/dashboard/CalendarSheet";
+import { SettingsSheet } from "@/components/dashboard/SettingsSheet";
 import {
   PencilSimple,
   Barbell,
@@ -229,8 +230,8 @@ export function MyPageSheet() {
   };
 
   return (
-    <div ref={containerRef} className="w-full min-h-full bg-white flex flex-col select-none relative pb-12 text-gray-900 overflow-y-auto">
-      {/* 1. 상단 공통 서브 헤더 (X 닫기 클릭 시 /dashboard로 이동 / 우측 상단 톱니바퀴 버튼 클릭 시 /settings 이동) */}
+    <div ref={containerRef} className="w-full min-h-full bg-theme-app flex flex-col select-none relative pb-12 txt-brand-ink overflow-y-auto transition-colors duration-300">
+      {/* 1. 상단 공통 서브 헤더 (X 닫기 클릭 시 /dashboard로 이동 / 우측 상단 톱니바퀴 버튼 클릭 시 환경설정 시트 오픈) */}
       <SubPageHeader
         title="내 정보 & 여정"
         leftType="close"
@@ -238,8 +239,13 @@ export function MyPageSheet() {
         rightAction={
           <button
             type="button"
-            onClick={() => router.push("/settings")}
-            className="p-1.5 text-gray-600 hover:text-gray-900 rounded-full hover:bg-gray-100 transition-colors active:scale-95 cursor-pointer"
+            onClick={() => {
+              openModal({
+                type: "slide-left",
+                content: <SettingsSheet />,
+              });
+            }}
+            className="p-1.5 text-theme-muted hover:txt-brand-ink rounded-full hover:bg-theme-card-subtle transition-colors active:scale-95 cursor-pointer"
             title="여정 알림 & 환경설정"
           >
             <Gear size={22} weight="bold" />
@@ -249,7 +255,7 @@ export function MyPageSheet() {
 
       <div className="flex flex-col w-full px-5 pt-3 gap-6 text-left">
         {/* 2. 상단 프로필 & 지향점 카드 (Borderless Non-White 원칙 적용) */}
-        <div className="w-full bg-[#F8FAFC] rounded-3xl p-5 flex flex-col gap-4 relative">
+        <div className="w-full bg-theme-card border-theme-card shadow-2xs rounded-3xl p-5 flex flex-col gap-4 relative">
           <div className="flex items-center gap-4">
             {/* 이니셜 아바타 */}
             <div className="w-14 h-14 rounded-2xl bg-[#00C474] text-white font-extrabold text-2xl flex items-center justify-center shadow-sm shrink-0">
@@ -265,33 +271,33 @@ export function MyPageSheet() {
                   className="flex items-center gap-1.5 group text-left cursor-pointer active:scale-95 transition-transform"
                   title="닉네임 수정하기"
                 >
-                  <span className="text-xl font-bold text-gray-900 tracking-tight group-hover:text-[#00C474] transition-colors">
+                  <span className="text-xl font-bold txt-brand-ink tracking-tight group-hover:text-[#00C474] transition-colors">
                     {userName}
                   </span>
                   <PencilSimple
                     size={16}
                     weight="bold"
-                    className="text-gray-400 group-hover:text-[#00C474] transition-colors"
+                    className="text-theme-muted group-hover:text-[#00C474] transition-colors"
                   />
                 </button>
               </div>
 
               {/* 3단계 키워드 선택 문구 + 연필 버튼 (이달의 나 라벨 삭제로 줄바꿈 방지) */}
-              <div className="mt-1 flex items-center gap-1.5 text-gray-600">
+              <div className="mt-1 flex items-center gap-1.5 text-theme-muted">
                 <button
                   type="button"
                   onClick={handleOpenIntentionSheet}
-                  className="flex items-center gap-1 txt-caption-main text-gray-600 hover:text-gray-900 group cursor-pointer active:scale-95 transition-transform text-left flex-wrap"
+                  className="flex items-center gap-1 txt-caption-main text-theme-muted hover:txt-brand-ink group cursor-pointer active:scale-95 transition-transform text-left flex-wrap"
                   title="이달의 나 3단계 지향점 선택하기"
                 >
                   <span className="font-bold text-[#00C474] underline decoration-emerald-300 underline-offset-4 group-hover:text-[#00C474] transition-colors">
                     "{displayIntention}"
                   </span>
-                  <span className="font-bold text-gray-900 ml-0.5 shrink-0">8월</span>
+                  <span className="font-bold txt-brand-ink ml-0.5 shrink-0">8월</span>
                   <PencilSimple
                     size={15}
                     weight="bold"
-                    className="text-gray-400 group-hover:text-[#00C474] transition-colors ml-0.5 shrink-0"
+                    className="text-theme-muted group-hover:text-[#00C474] transition-colors ml-0.5 shrink-0"
                   />
                 </button>
               </div>
@@ -313,18 +319,18 @@ export function MyPageSheet() {
           title="전체 월간 출석 달력 보기 (오른쪽에서 왼쪽으로 스르륵)"
         >
           <div className="flex items-center justify-between px-1">
-            <h2 className="text-[0.9375rem] font-bold text-gray-900 tracking-tight group-hover:text-[#00C474] transition-colors">
+            <h2 className="text-[0.9375rem] font-bold txt-brand-ink tracking-tight group-hover:text-[#00C474] transition-colors">
               월간 마음건강 달력
             </h2>
-            <span className="txt-micro-main font-medium text-gray-400 group-hover:text-[#00C474] transition-colors">
+            <span className="txt-micro-main font-medium text-theme-muted group-hover:text-[#00C474] transition-colors">
               8월 달력 보기 ❯
             </span>
           </div>
 
           <div className="grid grid-cols-3 gap-2.5">
             {/* 1. 연속 출석 (1:1 정사각형 aspect-square) */}
-            <div className="bg-[#F0FDF4] rounded-2xl aspect-square p-2.5 flex flex-col items-center justify-center text-center shadow-2xs">
-              <span className="text-[12px] font-extrabold text-emerald-800 mb-0.5">
+            <div className="bg-emerald-50 dark:bg-emerald-950/40 rounded-2xl aspect-square p-2.5 flex flex-col items-center justify-center text-center shadow-2xs">
+              <span className="text-[12px] font-extrabold text-emerald-800 dark:text-emerald-300 mb-0.5">
                 연속 출석
               </span>
               <span className="text-xl font-black text-[#00C474] tabular-nums mt-0.5">
@@ -333,21 +339,21 @@ export function MyPageSheet() {
             </div>
 
             {/* 2. 이번 달 실천 (1:1 정사각형 aspect-square) */}
-            <div className="bg-[#F8FAFC] rounded-2xl aspect-square p-2.5 flex flex-col items-center justify-center text-center shadow-2xs">
-              <span className="text-[12px] font-extrabold text-gray-600 mb-0.5">
+            <div className="bg-theme-card-subtle rounded-2xl aspect-square p-2.5 flex flex-col items-center justify-center text-center shadow-2xs">
+              <span className="text-[12px] font-extrabold text-theme-muted mb-0.5">
                 이번 달 실천
               </span>
-              <span className="text-xl font-black text-gray-900 tabular-nums mt-0.5">
+              <span className="text-xl font-black txt-brand-ink tabular-nums mt-0.5">
                 14일
               </span>
             </div>
 
             {/* 3. 누적 출석 (1:1 정사각형 aspect-square) */}
-            <div className="bg-[#F8FAFC] rounded-2xl aspect-square p-2.5 flex flex-col items-center justify-center text-center shadow-2xs">
-              <span className="text-[12px] font-extrabold text-gray-600 mb-0.5">
+            <div className="bg-theme-card-subtle rounded-2xl aspect-square p-2.5 flex flex-col items-center justify-center text-center shadow-2xs">
+              <span className="text-[12px] font-extrabold text-theme-muted mb-0.5">
                 누적 출석
               </span>
-              <span className="text-xl font-black text-gray-900 tabular-nums mt-0.5">
+              <span className="text-xl font-black txt-brand-ink tabular-nums mt-0.5">
                 28일
               </span>
             </div>
@@ -358,10 +364,10 @@ export function MyPageSheet() {
         <div ref={kossSectionRef} className="w-full flex flex-col gap-3 pt-1 scroll-mt-36">
           <div className="flex items-center justify-between px-1">
             <div className="flex flex-col">
-              <h2 className="text-[0.9375rem] font-bold text-gray-900 tracking-tight">
+              <h2 className="text-[0.9375rem] font-bold txt-brand-ink tracking-tight">
                 내 마음건강 리포트
               </h2>
-              <span className="text-[11px] font-medium text-gray-400 mt-0.5">
+              <span className="text-[11px] font-medium text-theme-muted mt-0.5">
                 2026.08.12 체크 완료 (KOSS 36문항)
               </span>
             </div>
@@ -371,23 +377,23 @@ export function MyPageSheet() {
           </div>
 
           {/* 1. 기본 뷰: 직무 요구도 · 집중 케어 필요 영역 요약 카드 */}
-          <div className="w-full relative overflow-hidden bg-amber-50/90 rounded-2xl p-4 text-left flex flex-col gap-1.5 shadow-2xs">
-            <div className="absolute -right-3 -bottom-3 text-amber-500/20 pointer-events-none select-none z-0">
+          <div className="w-full relative overflow-hidden bg-amber-50/90 dark:bg-amber-950/40 rounded-2xl p-4 text-left flex flex-col gap-1.5 shadow-2xs">
+            <div className="absolute -right-3 -bottom-3 text-amber-500/20 dark:text-amber-400/10 pointer-events-none select-none z-0">
               <Warning size={110} weight="bold" />
             </div>
 
             <div className="relative z-10 flex justify-between items-center">
-              <span className="text-[11px] font-extrabold text-amber-800 bg-amber-100/90 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+              <span className="text-[11px] font-extrabold text-amber-800 dark:text-amber-300 bg-amber-100/90 dark:bg-amber-900/50 px-2.5 py-0.5 rounded-full flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
                 집중 케어 필요 영역
               </span>
             </div>
 
             <div className="relative z-10">
-              <h3 className="text-base font-extrabold text-gray-900 tracking-tight mt-0.5">
+              <h3 className="text-base font-extrabold txt-brand-ink tracking-tight mt-0.5">
                 직무 요구도 · 8점
               </h3>
-              <p className="text-xs text-gray-600 leading-relaxed mt-1 font-medium">
+              <p className="text-xs text-theme-muted leading-relaxed mt-1 font-medium">
                 업무량과 속도 관련 스트레스가 높아요. 맞춤 리추얼로 케어받으실 수 있습니다.
               </p>
             </div>
@@ -397,7 +403,7 @@ export function MyPageSheet() {
           <button
             type="button"
             onClick={handleToggleKossSection}
-            className="w-full block py-3 px-4 bg-[#F1F5F9] hover:bg-gray-200/90 rounded-2xl text-[14px] font-bold text-gray-800 transition-all text-center cursor-pointer active:scale-98 shadow-2xs"
+            className="w-full block py-3 px-4 bg-theme-card-subtle hover:bg-slate-200 dark:hover:bg-slate-700 rounded-2xl text-[14px] font-bold txt-brand-ink transition-all text-center cursor-pointer active:scale-98 shadow-2xs"
           >
             <div className="flex items-center justify-center gap-1.5 w-full">
               <span>자세히 보기</span>
@@ -428,7 +434,7 @@ export function MyPageSheet() {
                 />
 
                 {/* ★ 월 선택 대조 헤더 (좌측: GodSelect 커스텀 드롭다운 vs 우측: 8월 고정) ★ */}
-                <div className="w-full bg-[#F8FAFC] rounded-2xl p-2.5 grid grid-cols-[1fr_auto_1fr] items-center gap-2 border border-gray-100 shadow-2xs">
+                <div className="w-full bg-theme-card-subtle rounded-2xl p-2.5 grid grid-cols-[1fr_auto_1fr] items-center gap-2 border-theme-card shadow-2xs">
                   {/* 좌측: design-guide 표준 커스텀 GodSelect 드롭다운 (1fr) */}
                   <div className="w-full">
                     <GodSelect
@@ -440,12 +446,12 @@ export function MyPageSheet() {
                       ]}
                       value={prevMonth}
                       onChange={(val: string) => setPrevMonth(val)}
-                      triggerClassName="h-[42px] px-2.5 py-0 bg-white border border-gray-200 hover:border-gray-300 rounded-xl text-[13px] font-bold text-gray-800 shadow-2xs flex items-center justify-between"
+                      triggerClassName="h-[42px] px-2.5 py-0 bg-theme-card border-theme-card hover:border-emerald-400 rounded-xl text-[13px] font-bold txt-brand-ink shadow-2xs flex items-center justify-between"
                     />
                   </div>
 
                   {/* 중앙: 대조 화살표 */}
-                  <span className="text-[11px] font-black text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full justify-self-center shrink-0">
+                  <span className="text-[11px] font-black text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-1 rounded-full justify-self-center shrink-0">
                     VS
                   </span>
 
@@ -457,23 +463,23 @@ export function MyPageSheet() {
                 </div>
 
                 {/* ★ 종합지수 자동 비교 / 단독 요약 카드 ★ */}
-                <div className="w-full p-3.5 bg-emerald-50/60 rounded-2xl border border-emerald-100/80 flex items-center justify-between gap-3 shadow-2xs">
+                <div className="w-full p-3.5 bg-emerald-50/60 dark:bg-emerald-950/40 rounded-2xl border border-emerald-100/80 dark:border-emerald-900/60 flex items-center justify-between gap-3 shadow-2xs">
                   <div className="flex flex-col text-left">
-                    <span className="text-[13px] font-black text-emerald-900 tracking-tight">
+                    <span className="text-[13px] font-black text-emerald-900 dark:text-emerald-300 tracking-tight">
                       종합 스트레스 지수 월간 비교
                     </span>
                     <div className="flex items-baseline gap-1.5 mt-1">
                       {prevMonth !== "none" ? (
                         <>
-                          <span className="text-xs text-gray-600 font-bold">
+                          <span className="text-xs text-theme-muted font-bold">
                             {prevMonth} ({prevAvg}점) ➔
                           </span>
-                          <span className="text-base font-black text-gray-900 tracking-tight">
+                          <span className="text-base font-black txt-brand-ink tracking-tight">
                             8월 ({currAvg}점)
                           </span>
                         </>
                       ) : (
-                        <span className="text-base font-black text-gray-900 tracking-tight">
+                        <span className="text-base font-black txt-brand-ink tracking-tight">
                           8월: {currAvg}점
                         </span>
                       )}
@@ -483,12 +489,12 @@ export function MyPageSheet() {
                   {/* 이전 월 데이터 유무에 따른 뱃지 분기 */}
                   {prevMonth !== "none" ? (
                     <div className={`px-2.5 py-1 rounded-full text-xs font-extrabold flex items-center gap-1 ${
-                      isImproved ? "bg-emerald-100 text-[#00C474]" : "bg-amber-100 text-amber-600"
+                      isImproved ? "bg-emerald-100 dark:bg-emerald-900/60 text-[#00C474] dark:text-emerald-400" : "bg-amber-100 dark:bg-amber-900/60 text-amber-600 dark:text-amber-400"
                     }`}>
                       <span>{isImproved ? `▼ ${Math.abs(parseFloat(diffVal))}점 개선` : `▲ ${diffVal}점 증가`}</span>
                     </div>
                   ) : (
-                    <span className="px-2.5 py-1 bg-white border border-emerald-200 text-emerald-700 rounded-full text-xs font-bold shadow-2xs">
+                    <span className="px-2.5 py-1 bg-theme-card border-theme-card text-emerald-700 dark:text-emerald-400 rounded-full text-xs font-bold shadow-2xs">
                       첫 진단 완료
                     </span>
                   )}
@@ -499,12 +505,12 @@ export function MyPageSheet() {
                   <div className="w-full flex flex-col gap-2.5 items-center text-left relative">
                     {/* 오버레이 범례 (Legend) */}
                     <div className="w-full flex items-center justify-center gap-4 text-xs font-bold pt-1">
-                      <span className="flex items-center gap-1.5 text-gray-800">
+                      <span className="flex items-center gap-1.5 txt-brand-ink">
                         <span className="w-2.5 h-2.5 rounded-full bg-[#00C474]" />
                         8월
                       </span>
                       {prevMonth !== "none" && (
-                        <span className="flex items-center gap-1.5 text-gray-700">
+                        <span className="flex items-center gap-1.5 text-theme-muted">
                           <span className="w-2.5 h-2.5 rounded-full bg-[#6366F1]" />
                           {prevMonth}
                         </span>
@@ -593,13 +599,13 @@ export function MyPageSheet() {
         {/* 5. 가장 많이 한 리추얼 (기본: 최고 3건 / 클릭 시: 10개 전체 펼침) */}
         <div className="w-full flex flex-col gap-3 pt-2">
           <div className="flex items-center justify-between px-1">
-            <h2 className="text-[0.9375rem] font-bold text-gray-900 tracking-tight">
+            <h2 className="text-[0.9375rem] font-bold txt-brand-ink tracking-tight">
               가장 많이 한 리추얼
             </h2>
             <button
               type="button"
               onClick={() => setIsRitualListExpanded(!isRitualListExpanded)}
-              className="flex items-center gap-1 text-[12.5px] font-bold text-[#00C474] hover:text-emerald-700 bg-emerald-50 hover:bg-emerald-100 px-2.5 py-1 rounded-full cursor-pointer active:scale-95 transition-all shadow-2xs"
+              className="flex items-center gap-1 text-[12.5px] font-bold text-[#00C474] hover:text-emerald-700 dark:hover:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 px-2.5 py-1 rounded-full cursor-pointer active:scale-95 transition-all shadow-2xs"
               title={isRitualListExpanded ? "접기" : "전체 10개 리추얼 보기"}
             >
               <span>{isRitualListExpanded ? "접기 ▴" : "최고 3건 ▾"}</span>
@@ -610,23 +616,23 @@ export function MyPageSheet() {
             {(isRitualListExpanded ? TOP_RITUALS_DATA : TOP_RITUALS_DATA.slice(0, 3)).map((r) => (
               <div
                 key={r.rank}
-                className="w-full bg-[#F8FAFC] rounded-2xl p-3.5 flex items-center justify-between shadow-2xs hover:bg-slate-100/80 transition-colors"
+                className="w-full bg-theme-card-subtle rounded-2xl p-3.5 flex items-center justify-between shadow-2xs hover:bg-slate-100/80 dark:hover:bg-slate-800 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div
                     className={`w-8 h-8 rounded-xl flex items-center justify-center font-extrabold text-sm shrink-0 ${
                       r.rank <= 3
                         ? "bg-[#00C474] text-white shadow-xs"
-                        : "bg-gray-200 text-gray-700 font-bold"
+                        : "bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold"
                     }`}
                   >
                     {r.rank}
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-[14px] font-bold text-gray-900">
+                    <span className="text-[14px] font-bold txt-brand-ink">
                       {r.title}
                     </span>
-                    <span className="text-[11.5px] font-medium text-gray-500 mt-0.5">
+                    <span className="text-[11.5px] font-medium text-theme-muted mt-0.5">
                       총 {r.count}회 완료 · +{r.db} DB 적립
                     </span>
                   </div>

@@ -81,7 +81,7 @@ export function NotificationSheet() {
   const hasUnread = notifications.some((n) => !n.isRead);
 
   return (
-    <div className="w-full min-h-full bg-white flex flex-col select-none relative pb-10">
+    <div className="w-full min-h-full bg-theme-app flex flex-col select-none relative pb-10 txt-brand-ink transition-colors duration-300">
       {/* 1. 전역 공통 헤더 (leftType="back" < 뒤로가기 클릭 시 모달 닫기) */}
       <SubPageHeader
         title="마음 소식함"
@@ -94,8 +94,8 @@ export function NotificationSheet() {
             disabled={!hasUnread}
             className={`text-xs font-bold transition-colors ${
               hasUnread
-                ? "text-[#00C474] hover:underline cursor-pointer"
-                : "text-gray-300 cursor-default"
+                ? "text-theme-accent hover:underline cursor-pointer"
+                : "text-theme-muted/50 cursor-default"
             }`}
           >
             모두 읽음
@@ -104,7 +104,7 @@ export function NotificationSheet() {
       />
 
       {/* 2. 알림 리스트 */}
-      <div className="flex flex-col w-full px-4 divide-y divide-gray-100/90">
+      <div className="flex flex-col w-full px-4 divide-y divide-theme-subtle">
         {notifications.map((item) => (
           <div
             key={item.id}
@@ -114,7 +114,7 @@ export function NotificationSheet() {
             {/* 좌측 안읽음 미니 점 */}
             <div className="w-2 flex items-center justify-center shrink-0 self-center">
               {!item.isRead && (
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00C474] shadow-2xs animate-pulse" />
+                <span className="w-1.5 h-1.5 rounded-full bg-theme-accent shadow-2xs animate-pulse" />
               )}
             </div>
 
@@ -122,17 +122,17 @@ export function NotificationSheet() {
             <div className="flex flex-col flex-1 text-left">
               <div className="flex items-center gap-1.5">
                 {getIcon(item.type)}
-                <h2 className="txt-body-main text-gray-900">
+                <h2 className="txt-body-main txt-brand-ink font-bold">
                   {item.title}
                 </h2>
               </div>
-              <p className="txt-caption-main font-medium text-gray-700 tracking-tight leading-relaxed mt-1">
+              <p className="txt-caption-main font-medium text-theme-muted tracking-tight leading-relaxed mt-1">
                 {item.desc}
               </p>
             </div>
 
             {/* 우측 시간 메타 */}
-            <span className="txt-micro-main font-medium text-gray-400 shrink-0 pt-0.5 tabular-nums">
+            <span className="txt-micro-main font-medium text-theme-muted shrink-0 pt-0.5 tabular-nums">
               {item.time}
             </span>
           </div>

@@ -106,7 +106,7 @@ export function DumbbellProgressSheet() {
   };
 
   return (
-    <div className="w-full min-h-full bg-white flex flex-col select-none relative pb-12 text-gray-900 overflow-y-auto">
+    <div className="w-full min-h-full bg-theme-app flex flex-col select-none relative pb-12 txt-brand-ink overflow-y-auto transition-colors duration-300">
       {/* 1. 서브 헤더 (✕ 닫기 터치 시 밑으로 슬라이딩 아웃) */}
       <SubPageHeader
         title="나의 마음덤벨"
@@ -116,11 +116,11 @@ export function DumbbellProgressSheet() {
 
       <div className="flex flex-col w-full px-5 pt-3 gap-6 text-left max-w-lg mx-auto">
         {/* 2. 현재 덤벨 등급 키비주얼 메인 카드 (디자인 가이드 공통 금빛 카드 규격) */}
-        <div className="w-full bg-[#F9FAFB] border border-amber-200/80 rounded-3xl p-5 text-gray-900 flex flex-col items-center justify-center text-center relative shadow-2xs">
+        <div className="w-full bg-theme-card border border-theme-card rounded-3xl p-5 txt-brand-ink flex flex-col items-center justify-center text-center relative shadow-2xs">
           <div className="mb-2.5">
-            <span className="text-[11.5px] font-extrabold text-amber-900 bg-amber-100/90 px-3 py-1 rounded-full border border-amber-300/60 inline-flex items-center gap-1.5 shadow-2xs">
+            <span className="text-[11.5px] font-extrabold text-amber-900 dark:text-amber-300 bg-amber-100/90 dark:bg-amber-950/60 px-3 py-1 rounded-full border border-amber-300/60 dark:border-amber-700/60 inline-flex items-center gap-1.5 shadow-2xs">
               <Sparkle size={13} weight="fill" className="text-amber-500 animate-pulse" />
-              Lv.{currentLevelNum} {currentLevelName} · <span className="font-black text-amber-700">마인드 리더</span>
+              Lv.{currentLevelNum} {currentLevelName} · <span className="font-black text-amber-700 dark:text-amber-400">마인드 리더</span>
             </span>
           </div>
 
@@ -129,10 +129,10 @@ export function DumbbellProgressSheet() {
             <AnimatedDumbbell level="gold" size={160} />
           </div>
 
-          <h3 className="text-xl font-black text-gray-900 tracking-tight mt-1">
+          <h3 className="text-xl font-black txt-brand-ink tracking-tight mt-1">
             마음을 지키는 힘이 자리잡았어요
           </h3>
-          <p className="text-xs font-semibold text-gray-500 mt-1 mb-3">
+          <p className="text-xs font-semibold text-theme-muted mt-1 mb-3">
             마음건강 최고 덤벨 등급 달성! ✨
           </p>
 
@@ -144,14 +144,14 @@ export function DumbbellProgressSheet() {
                 className={`h-2 flex-1 rounded-full transition-all duration-700 ease-out ${
                   isProgressAnimated && active
                     ? "bg-amber-500 shadow-2xs scale-100 opacity-100"
-                    : "bg-gray-200 opacity-50 scale-95"
+                    : "bg-theme-card-subtle opacity-50 scale-95"
                 }`}
                 style={{ transitionDelay: `${idx * 80}ms` }}
               />
             ))}
           </div>
 
-          <div className="w-full flex justify-between items-center text-[11px] font-extrabold text-gray-500 mt-3 pt-2 border-t border-gray-200/60 px-1">
+          <div className="w-full flex justify-between items-center text-[11px] font-extrabold text-theme-muted mt-3 pt-2 border-t border-theme-subtle px-1">
             <span>현재 {displayDumbbells} DB</span>
             <span>최고 등급 달성</span>
           </div>
@@ -160,7 +160,7 @@ export function DumbbellProgressSheet() {
         {/* 3. 7대 덤벨 등급 성장의 길 수평 스크롤 가로 카루셀 로드맵 */}
         <div className="w-full flex flex-col gap-3">
           <div className="flex items-center justify-between px-1">
-            <h3 className="text-base font-extrabold text-gray-900 tracking-tight">
+            <h3 className="text-base font-extrabold txt-brand-ink tracking-tight">
               덤벨 성장 단계
             </h3>
           </div>
@@ -189,17 +189,17 @@ export function DumbbellProgressSheet() {
                   ref={isCurrent ? currentCardRef : null}
                   className={`min-w-[104px] max-w-[104px] rounded-2xl p-2.5 flex flex-col items-center justify-between text-center transition-all shrink-0 shadow-2xs ${
                     isCurrent
-                      ? "bg-amber-50/90 border-2 border-amber-400/90 shadow-xs ring-2 ring-amber-300/40"
+                      ? "bg-amber-50/90 dark:bg-amber-950/40 border-2 border-amber-400/90 shadow-xs ring-2 ring-amber-300/40"
                       : isAchieved
-                      ? "bg-[#F8FAFC] border border-gray-200/80"
-                      : "bg-gray-50/70 border border-gray-100 opacity-60"
+                      ? "bg-theme-card border border-theme-card"
+                      : "bg-theme-card-subtle border border-theme-subtle opacity-60"
                   }`}
                 >
                   <div className="w-full flex items-center justify-between mb-1">
                     <span className={`text-[9.5px] font-extrabold px-1.5 py-0.5 rounded-full ${
                       isCurrent
                         ? "bg-amber-500 text-white shadow-2xs"
-                        : "bg-gray-200/80 text-gray-700"
+                        : "bg-theme-card-subtle text-theme-muted"
                     }`}>
                       Lv.{item.level}
                     </span>
@@ -207,7 +207,7 @@ export function DumbbellProgressSheet() {
                     {isCurrent || isAchieved ? (
                       <CheckCircle size={14} weight="fill" className="text-[#00C474]" />
                     ) : (
-                      <Lock size={13} weight="bold" className="text-gray-300" />
+                      <Lock size={13} weight="bold" className="text-theme-muted" />
                     )}
                   </div>
 
@@ -217,16 +217,16 @@ export function DumbbellProgressSheet() {
                   </div>
 
                   <div className="flex flex-col items-center mt-0.5">
-                    <h4 className="text-[12px] font-extrabold text-gray-900 tracking-tight leading-tight">
+                    <h4 className="text-[12px] font-extrabold txt-brand-ink tracking-tight leading-tight">
                       {item.name}
                     </h4>
-                    <span className="text-[9.5px] font-bold text-gray-500 mt-0.5">
+                    <span className="text-[9.5px] font-bold text-theme-muted mt-0.5">
                       {item.minDumbbells} DB ~
                     </span>
                   </div>
 
                   {isCurrent && (
-                    <span className="text-[9px] font-black text-amber-800 bg-amber-100 px-1.5 py-0.5 rounded-full mt-1.5 border border-amber-200">
+                    <span className="text-[9px] font-black text-amber-800 dark:text-amber-300 bg-amber-100 dark:bg-amber-950/70 px-1.5 py-0.5 rounded-full mt-1.5 border border-amber-200 dark:border-amber-800/60">
                       착용 중 🌟
                     </span>
                   )}
@@ -236,49 +236,49 @@ export function DumbbellProgressSheet() {
           </div>
         </div>
 
-        {/* 4. 덤벨 모으기 안내 가이드 카드 (감싸기 외곽 박스 제거 & 서피스 bg-[#F8FAFC] 4열 카드) */}
+        {/* 4. 덤벨 모으기 안내 가이드 카드 (감싸기 외곽 박스 제거 & 서피스 4열 카드) */}
         <div className="w-full flex flex-col gap-3 px-1 text-left">
-          <h3 className="text-base font-extrabold text-gray-900 tracking-tight">
+          <h3 className="text-base font-extrabold txt-brand-ink tracking-tight">
             덤벨 강화 기준
           </h3>
 
           <div className="grid grid-cols-2 gap-2.5 pt-0.5">
-            <div className="bg-[#F8FAFC] rounded-2xl p-3.5 flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-white text-[#00C474] flex items-center justify-center shrink-0 shadow-2xs border border-gray-100">
+            <div className="bg-theme-card border border-theme-card rounded-2xl p-3.5 flex items-center gap-3 shadow-2xs">
+              <div className="w-9 h-9 rounded-xl bg-theme-card-subtle text-theme-accent flex items-center justify-center shrink-0 shadow-2xs border border-theme-subtle">
                 <Barbell size={20} weight="bold" />
               </div>
               <div className="flex flex-col text-left">
-                <span className="text-xs font-extrabold text-gray-600 tracking-tight">리추얼 완수</span>
-                <span className="text-xs font-extrabold text-[#00C474]">+3 DB</span>
+                <span className="text-xs font-extrabold text-theme-muted tracking-tight">리추얼 완수</span>
+                <span className="text-xs font-extrabold text-theme-accent">+3 DB</span>
               </div>
             </div>
 
-            <div className="bg-[#F8FAFC] rounded-2xl p-3.5 flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-white text-amber-600 flex items-center justify-center shrink-0 shadow-2xs border border-gray-100">
+            <div className="bg-theme-card border border-theme-card rounded-2xl p-3.5 flex items-center gap-3 shadow-2xs">
+              <div className="w-9 h-9 rounded-xl bg-theme-card-subtle text-amber-600 flex items-center justify-center shrink-0 shadow-2xs border border-theme-subtle">
                 <BookOpen size={20} weight="bold" />
               </div>
               <div className="flex flex-col text-left">
-                <span className="text-xs font-extrabold text-gray-600 tracking-tight">매거진 완독</span>
+                <span className="text-xs font-extrabold text-theme-muted tracking-tight">매거진 완독</span>
                 <span className="text-xs font-extrabold text-amber-600">+10 DB</span>
               </div>
             </div>
 
-            <div className="bg-[#F8FAFC] rounded-2xl p-3.5 flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-white text-indigo-600 flex items-center justify-center shrink-0 shadow-2xs border border-gray-100">
+            <div className="bg-theme-card border border-theme-card rounded-2xl p-3.5 flex items-center gap-3 shadow-2xs">
+              <div className="w-9 h-9 rounded-xl bg-theme-card-subtle text-indigo-600 flex items-center justify-center shrink-0 shadow-2xs border border-theme-subtle">
                 <Sparkle size={20} weight="bold" />
               </div>
               <div className="flex flex-col text-left">
-                <span className="text-xs font-extrabold text-gray-600 tracking-tight">KOSS 직무진단</span>
+                <span className="text-xs font-extrabold text-theme-muted tracking-tight">KOSS 직무진단</span>
                 <span className="text-xs font-extrabold text-indigo-600">+5 DB</span>
               </div>
             </div>
 
-            <div className="bg-[#F8FAFC] rounded-2xl p-3.5 flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-white text-rose-600 flex items-center justify-center shrink-0 shadow-2xs border border-gray-100">
+            <div className="bg-theme-card border border-theme-card rounded-2xl p-3.5 flex items-center gap-3 shadow-2xs">
+              <div className="w-9 h-9 rounded-xl bg-theme-card-subtle text-rose-600 flex items-center justify-center shrink-0 shadow-2xs border border-theme-subtle">
                 <CalendarCheck size={20} weight="bold" />
               </div>
               <div className="flex flex-col text-left">
-                <span className="text-xs font-extrabold text-gray-600 tracking-tight">30일 마스터</span>
+                <span className="text-xs font-extrabold text-theme-muted tracking-tight">30일 마스터</span>
                 <span className="text-xs font-extrabold text-rose-600">+30 DB</span>
               </div>
             </div>

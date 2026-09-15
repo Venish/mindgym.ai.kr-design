@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Barbell, Pulse, CalendarCheck } from "@phosphor-icons/react";
 import { AuroraText } from "@/components/godui/AuroraText";
@@ -187,11 +188,14 @@ export function OnboardingSlidesView({
             slideIndex === slides.length - 1 ? "invisible opacity-0" : "visible opacity-100"
           }`}
         >
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-theme-muted">
             이미 계정이 있으신가요?{" "}
-            <a href="/login" className="font-bold text-[#00C474] hover:underline ml-1">
+            <Link
+              href="/login"
+              className="font-bold text-theme-accent hover:underline ml-1 cursor-pointer inline-block active:scale-[0.96] transition-transform"
+            >
               로그인
-            </a>
+            </Link>
           </p>
         </div>
       </div>

@@ -4,6 +4,7 @@ import "./globals.css";
 import { MindGymProvider } from "@/context/MindGymContext";
 import { GlobalOverlayProvider } from "@/components/providers/GlobalOverlayProvider";
 import { GlobalPopupProvider } from "@/components/providers/GlobalPopupProvider";
+import { GlobalSplashProvider } from "@/components/providers/GlobalSplashProvider";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -149,13 +150,34 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" suppressHydrationWarning className={`${nanumSquareRound.variable} ${pretendard.variable}`}>
-      <body className={`${nanumSquareRound.className} bg-gray-100 min-h-screen flex justify-center text-gray-900 antialiased font-sans no-scrollbar`}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var savedTheme = localStorage.getItem('mg_theme_mode') || 'warm-ivory';
+                  document.documentElement.setAttribute('data-theme', savedTheme);
+                  if (savedTheme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body className={`${nanumSquareRound.className} min-h-screen flex justify-center txt-brand-ink antialiased font-sans no-scrollbar`}>
         <MindGymProvider>
-          <div className="w-full max-w-[430px] mx-auto bg-white min-h-screen flex flex-col shadow-2xl relative no-scrollbar">
-            {children}
-            <GlobalOverlayProvider />
-            <GlobalPopupProvider />
-          </div>
+          <GlobalSplashProvider>
+            <div className="w-full max-w-[430px] mx-auto bg-theme-app min-h-screen flex flex-col shadow-2xl relative no-scrollbar transition-colors duration-200">
+              {children}
+              <GlobalOverlayProvider />
+              <GlobalPopupProvider />
+            </div>
+          </GlobalSplashProvider>
         </MindGymProvider>
       </body>
     </html>

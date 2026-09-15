@@ -4,7 +4,11 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useMindGym } from "@/context/MindGymContext";
 import { useModalStore } from "@/store/useModalStore";
 import { motion, AnimatePresence } from "framer-motion";
-import { SoundSynth } from "./SoundSynth";
+import {
+  SoundSynth,
+  SOUND_THEMES,
+  ShredSoundTheme,
+} from "./SoundSynth";
 import { PaperCanvas, StripParticle } from "./PaperCanvas";
 import { ShredderView } from "./ShredderView";
 import { saveShredItem } from "./StressShredHistorySheet";
@@ -45,6 +49,7 @@ export function RT018_StressShredder({
   const [worryText, setWorryText] = useState("");
   const [selectedSpeed, setSelectedSpeed] = useState<SpeedFactor>(1.0);
   const [selectedPresetLabel, setSelectedPresetLabel] = useState<string | null>(null);
+  const [selectedSoundTheme, setSelectedSoundTheme] = useState<ShredSoundTheme>("fast_compact");
   const [isCompleted, setIsCompleted] = useState(false);
 
   // 상위 헤더에 현재 상태 전달
@@ -187,7 +192,7 @@ export function RT018_StressShredder({
       shredderViewRef.current.isOperating = true;
     }
     if (soundSynthRef.current) {
-      soundSynthRef.current.startShreddingSound();
+      soundSynthRef.current.startShreddingSound(selectedSpeed);
     }
 
     if (
@@ -591,19 +596,33 @@ export function RT018_StressShredder({
   }, [updatePrinting, renderPrinting, updateShredding, renderShredding]);
 
   // Event Handlers
-  const handlePresetSelect = (label: string, text: string) => {
-    if (soundSynthRef.current) soundSynthRef.current.playPaperFeedSound();
+  const handlePresetSelect = (
+    label: string,
+    text: string,
+    soundTheme: ShredSoundTheme
+  ) => {
     setSelectedPresetLabel(label);
     setWorryText(text);
+    setSelectedSoundTheme(soundTheme);
+    if (soundSynthRef.current) {
+      soundSynthRef.current.setTheme(soundTheme);
+      soundSynthRef.current.playPaperFeedSound();
+    }
   };
 
   const handleSpeedSelect = (speed: SpeedFactor) => {
-    if (soundSynthRef.current) soundSynthRef.current.playPaperFeedSound();
+    if (soundSynthRef.current) {
+      soundSynthRef.current.playPaperFeedSound();
+      soundSynthRef.current.setSpeed(speed);
+    }
     setSelectedSpeed(speed);
   };
 
   const handleStartShredClick = () => {
-    if (soundSynthRef.current) soundSynthRef.current.initCtx();
+    if (soundSynthRef.current) {
+      soundSynthRef.current.initCtx();
+      soundSynthRef.current.setTheme(selectedSoundTheme);
+    }
 
     // 작성한 스트레스 내역을 파쇄 기록 보관함에 자동 보관
     const levels = [0.2, 0.38, 0.55, 0.75, 1.0, 1.35, 1.7, 2.05, 2.4, 2.8];
@@ -626,10 +645,12 @@ export function RT018_StressShredder({
   const handleResetClick = useCallback(() => {
     if (soundSynthRef.current) {
       soundSynthRef.current.stopAll(); // 파쇄 진행 중 뒤로가기 시 진행 중인 사운드 즉시 완전 정지!
+      soundSynthRef.current.setTheme("fast_compact");
       soundSynthRef.current.playPaperFeedSound();
     }
     setCurrentState("TYPING");
     setSelectedPresetLabel(null);
+    setSelectedSoundTheme("fast_compact");
     setWorryText("");
     stateTimerRef.current = 0;
     particlesRef.current = [];
@@ -652,9 +673,10 @@ export function RT018_StressShredder({
 
   return (
     <div
-      className={`relative w-full h-full flex-1 flex flex-col justify-between transition-colors duration-300 ${
+      data-ritual-sheet
+      className={`relative w-full h-full flex-1 flex flex-col justify-between border-none shadow-none ${
         currentState === "TYPING"
-          ? "bg-white"
+          ? "bg-transparent"
           : "bg-gradient-to-t from-[#E2F1EB] via-[#F0F7F4] to-[#FFFFFF]"
       }`}
     >
@@ -663,8 +685,8 @@ export function RT018_StressShredder({
         ref={canvasRef}
         width={SCREEN_W}
         height={SCREEN_H}
-        className={`absolute inset-0 w-full h-full object-contain pointer-events-none transition-opacity duration-300 ${
-          currentState === "TYPING" ? "opacity-0" : "opacity-100 z-10"
+        className={`absolute inset-0 w-full h-full object-contain pointer-events-none ${
+          currentState === "TYPING" ? "hidden" : "block z-10"
         }`}
       />
 
@@ -681,30 +703,34 @@ export function RT018_StressShredder({
               hideMetaChips={true}
             />
 
-            {/* Preset Chips (상황별 감성 워딩 4색 매칭 칩) */}
-            <div className="flex flex-wrap justify-center items-center gap-2 w-full mt-1">
+            {/* Preset Chips (상황별 감성 워딩 4색 매칭 칩 & 감성별 고유 파쇄 사운드 자동 매핑) */}
+            <div className="flex flex-wrap justify-center items-center gap-2 w-full py-2.5 my-0.5">
               {[
                 {
                   label: "직장 상사 스트레스",
                   text: "오늘 직장에서 받았던 답답하고 억울했던 스트레스를 파쇄기에 모두 넣어 날려버립니다.",
+                  soundTheme: "heavy_industrial" as ShredSoundTheme, // 분노/답답함 -> 묵직한 대형 파쇄기
                   normalStyle: "bg-rose-50 hover:bg-rose-100/80 text-rose-800 border-rose-200/60",
                   activeStyle: "bg-rose-500 text-white font-extrabold border-rose-600 shadow-sm shadow-rose-500/30",
                 },
                 {
                   label: "끝없는 과제 & 야근",
                   text: "끝없이 쏟아지는 과제와 쌓여가는 업무 스트레스를 깨끗하게 비워냅니다.",
+                  soundTheme: "crisp_office" as ShredSoundTheme, // 업무/과제 -> 깔끔한 오피스 세단기
                   normalStyle: "bg-amber-50 hover:bg-amber-100/80 text-amber-900 border-amber-200/60",
                   activeStyle: "bg-amber-500 text-white font-extrabold border-amber-600 shadow-sm shadow-amber-500/30",
                 },
                 {
                   label: "불안한 미래 걱정",
                   text: "다가오지 않은 미래에 대한 막연한 불안과 걱정을 내려놓습니다.",
+                  soundTheme: "soft_asmr" as ShredSoundTheme, // 불안/마음진정 -> 부드러운 소프트 ASMR
                   normalStyle: "bg-indigo-50 hover:bg-indigo-100/80 text-indigo-900 border-indigo-200/60",
                   activeStyle: "bg-indigo-600 text-white font-extrabold border-indigo-700 shadow-sm shadow-indigo-500/30",
                 },
                 {
                   label: "인간관계의 상처",
                   text: "타인의 말 한마디에 상처받았던 서운한 마음을 가볍게 비워냅니다.",
+                  soundTheme: "gentle_crunch" as ShredSoundTheme, // 상처/다독임 -> 순수 종이 크런치
                   normalStyle: "bg-sky-50 hover:bg-sky-100/80 text-sky-900 border-sky-200/60",
                   activeStyle: "bg-sky-500 text-white font-extrabold border-sky-600 shadow-sm shadow-sky-500/30",
                 },
@@ -714,7 +740,9 @@ export function RT018_StressShredder({
                   <button
                     key={idx}
                     type="button"
-                    onClick={() => handlePresetSelect(chip.label, chip.text)}
+                    onClick={() =>
+                      handlePresetSelect(chip.label, chip.text, chip.soundTheme)
+                    }
                     className={`py-2.5 px-4 rounded-full transition-colors duration-150 text-center cursor-pointer active:scale-95 flex items-center justify-center shrink-0 border-1.5 ${
                       isSelected ? chip.activeStyle : chip.normalStyle
                     }`}

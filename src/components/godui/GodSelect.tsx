@@ -71,7 +71,7 @@ export function GodSelect({
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "relative flex items-center justify-between w-full px-4 py-3.5 bg-white border border-gray-200/90 rounded-2xl shadow-2xs font-extrabold text-sm text-gray-900 transition-all duration-200 active:scale-[0.98]",
+          "relative flex items-center justify-between w-full px-4 py-3.5 bg-theme-card border border-theme-subtle rounded-2xl shadow-2xs font-extrabold text-sm txt-brand-ink transition-all duration-200",
           isOpen && "border-[var(--color-brand-green)]",
           triggerClassName
         )}
@@ -84,7 +84,7 @@ export function GodSelect({
         <motion.span
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.2 }}
-          className="text-gray-400 shrink-0 ml-2"
+          className="text-theme-muted shrink-0 ml-2"
         >
           <CaretDown size={18} weight="bold" />
         </motion.span>
@@ -98,7 +98,7 @@ export function GodSelect({
             animate={{ opacity: 1, y: 4, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.96 }}
             transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute left-0 right-0 z-50 mt-1.5 p-1.5 bg-white border border-gray-200/90 rounded-2xl shadow-xl overflow-hidden max-h-60 overflow-y-auto"
+            className="absolute left-0 right-0 z-50 mt-1.5 p-1.5 bg-theme-card border border-theme-subtle rounded-2xl shadow-xl overflow-hidden max-h-60 overflow-y-auto"
           >
             {normalizedOptions.map((opt) => {
               const isSelected = opt.value === currentValue;
@@ -110,8 +110,8 @@ export function GodSelect({
                   className={cn(
                     "flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-colors text-left",
                     isSelected
-                      ? "bg-emerald-50 text-[var(--color-brand-green)] font-black"
-                      : "text-gray-700 hover:bg-gray-100/80 active:bg-gray-200/80"
+                      ? "bg-emerald-50 dark:bg-emerald-950/60 text-[var(--color-brand-green)] font-black"
+                      : "txt-brand-ink hover:bg-theme-card-subtle"
                   )}
                 >
                   <span className="truncate">{opt.label}</span>

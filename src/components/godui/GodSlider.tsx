@@ -44,13 +44,13 @@ export function GodSlider<T extends number>({
   };
 
   return (
-    <div className={`w-full flex flex-col gap-1.5 bg-[#F2F8F5] p-3 px-4 rounded-none ${className}`}>
+    <div className={`w-full flex flex-col gap-1.5 bg-theme-card-subtle/40 p-3 px-4 rounded-xl border border-theme-subtle/40 ${className}`}>
       {/* 1. 상단 라벨 및 현재 값 표시 */}
       <div className="flex items-center justify-between select-none">
-        <span className="text-xs font-bold text-gray-700">
+        <span className="text-xs font-bold txt-brand-ink">
           {title}
         </span>
-        <span className="text-xs font-black text-[#008A50] bg-emerald-100/90 px-2.5 py-0.5 rounded-full font-mono">
+        <span className="text-xs font-black txt-brand-green bg-emerald-100/90 px-2.5 py-0.5 rounded-full font-mono">
           {currentOption?.label}
         </span>
       </div>

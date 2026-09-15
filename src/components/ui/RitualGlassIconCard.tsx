@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { getIconPath } from "@/utils/iconMap";
 import { LockedOverlay } from "@/components/ui/LockedOverlay";
+import { useThemeStore } from "@/store/useThemeStore";
 
 export type GlassIconBorderOption = "1" | "2" | "3" | "4"; 
 // 1: Soft Mint Rim, 2: Refined Slate Rim, 3: Ice Frost Rim, 4: Rainbow Aurora Rim (컬러풀 예전 버전)
@@ -19,7 +20,7 @@ export interface RitualGlassIconCardProps {
   borderOption?: GlassIconBorderOption;
   /** 카드 및 아이콘 규격 사이즈 ("sm": 3.6rem 푸터전용, "md": 5rem 기본, "lg": 6rem 대형) */
   size?: "sm" | "md" | "lg";
-  /** 테마 ("light" | "dark") */
+  /** 테마 ("light" | "dark") - 지정하지 않으면 전역 테마 스토어 연동 */
   theme?: "light" | "dark";
   /** 옵션 라벨 뱃지 노출 여부 (디자인 가이드 쇼케이스용) */
   showOptionBadge?: boolean;
@@ -40,12 +41,14 @@ export function RitualGlassIconCard({
   tag,
   borderOption = "1",
   size = "md",
-  theme = "light",
+  theme: explicitTheme,
   showOptionBadge = false,
   isLocked = false,
   onClick,
   className = "",
 }: RitualGlassIconCardProps) {
+  const { theme: storeTheme } = useThemeStore();
+  const isDark = explicitTheme ? explicitTheme === "dark" : storeTheme === "dark";
   const [isHovered, setIsHovered] = useState(false);
 
   const iconSrc = getIconPath(icon);
@@ -54,7 +57,7 @@ export function RitualGlassIconCard({
   const defaultRimColor =
     borderOption === "4"
       ? "var(--glass-rainbow-conic)"
-      : theme === "dark"
+      : isDark
       ? borderOption === "1"
         ? "var(--glass-rim-dark-mint)"
         : borderOption === "2"
@@ -135,7 +138,7 @@ export function RitualGlassIconCard({
           {/* Main Flat Base */}
           <div
             className={`relative ${boxSizeStyle} flex items-center justify-center overflow-hidden ${
-              theme === "dark" ? "glass-base-dark" : "glass-base-light"
+              isDark ? "glass-base-dark" : "glass-base-light"
             }`}
           >
             {/* Rim Mask (호버 시 또는 Rainbow Aurora일 때 3.5px로 확대, 평상시 일반 림은 1.75px) */}
@@ -162,7 +165,7 @@ export function RitualGlassIconCard({
             {/* Specular Light Reflection */}
             <div
               className={`absolute top-[0.25rem] left-[0.5rem] right-[0.5rem] h-[38%] rounded-t-full pointer-events-none z-10 ${
-                theme === "dark" ? "glass-specular-dark" : "glass-specular-light"
+                isDark ? "glass-specular-dark" : "glass-specular-light"
               }`}
             />
 
@@ -185,9 +188,9 @@ export function RitualGlassIconCard({
         <span
           className={`${textSizeStyle} font-bold transition-colors mt-[0.25rem] text-center truncate w-full ${
             isLocked
-              ? "text-gray-400"
-              : theme === "dark"
-              ? "text-slate-300 group-hover:text-cyan-300"
+              ? "text-gray-400 dark:text-slate-500"
+              : isDark
+              ? "text-slate-200 group-hover:text-cyan-300"
               : "text-gray-700 group-hover:text-[#00C474]"
           }`}
         >
@@ -200,8 +203,8 @@ export function RitualGlassIconCard({
         <span
           className={`text-[0.625rem] font-bold mt-[0.25rem] px-[0.625rem] py-[0.125rem] rounded-full ${
             isLocked
-              ? "text-gray-400 bg-gray-100 border border-gray-200"
-              : theme === "dark"
+              ? "text-gray-400 bg-gray-100 dark:bg-slate-800 dark:border-slate-700 border border-gray-200"
+              : isDark
               ? "text-cyan-300 bg-cyan-950/80 border border-cyan-500/40"
               : "text-indigo-700 bg-indigo-50 border border-indigo-200"
           }`}

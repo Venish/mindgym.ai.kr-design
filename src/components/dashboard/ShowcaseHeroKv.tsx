@@ -49,18 +49,18 @@ export function ShowcaseHeroKv({
 
   const getDynamicEmotionColor = (emotion: string, level: number) => {
     if (emotion === "차분함") return "txt-brand-ink";
-    if (emotion === "상쾌함") return "text-emerald-700";
-    if (emotion === "설렘") return "text-amber-700";
-    if (emotion === "불안함") return "text-indigo-700";
+    if (emotion === "상쾌함") return "text-emerald-700 dark:text-emerald-400";
+    if (emotion === "설렘") return "text-amber-700 dark:text-amber-400";
+    if (emotion === "불안함") return "text-indigo-700 dark:text-indigo-400";
     
     const levelColors = [
       "txt-brand-ink",
-      "text-emerald-800",
-      "text-amber-800",
-      "text-indigo-800",
-      "text-teal-800",
-      "text-rose-800",
-      "text-purple-800",
+      "text-emerald-800 dark:text-emerald-300",
+      "text-amber-800 dark:text-amber-300",
+      "text-indigo-800 dark:text-indigo-300",
+      "text-teal-800 dark:text-teal-300",
+      "text-rose-800 dark:text-rose-300",
+      "text-purple-800 dark:text-purple-300",
     ];
     return levelColors[(level - 1) % levelColors.length];
   };
@@ -69,7 +69,12 @@ export function ShowcaseHeroKv({
 
   return (
     <div className="flex flex-col gap-2.5 w-full">
-      <div className="relative bg-gradient-to-b from-emerald-100/85 via-teal-50/65 to-emerald-50/45 rounded-3xl pt-4 px-5 pb-6 shadow-2xs transition-all duration-300 overflow-hidden flex flex-col items-center justify-center text-center gap-3 min-h-[220px]">
+      <div
+        style={{
+          background: "linear-gradient(180deg, var(--theme-bg-hero-from) 0%, var(--theme-bg-hero-via) 50%, var(--theme-bg-hero-to) 100%)",
+        }}
+        className="relative rounded-3xl pt-4 px-5 pb-6 shadow-2xs transition-all duration-300 overflow-hidden flex flex-col items-center justify-center text-center gap-3 min-h-[220px]"
+      >
         {/* 메인 히어로 상단: 아침 & 저녁 루틴 팝업 활성화 칩 바 */}
         <div className="flex items-center justify-between w-full z-20">
           <div className="flex items-center gap-2">
@@ -82,12 +87,12 @@ export function ShowcaseHeroKv({
                   content: <TodayMindSelectionWizard />,
                 })
               }
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 hover:bg-white text-emerald-950 border border-emerald-200/80 shadow-2xs transition-all active:scale-95 cursor-pointer text-xs font-bold"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-theme-card/90 hover:bg-theme-card text-emerald-950 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800/50 shadow-2xs transition-all cursor-pointer text-xs font-bold"
               title="오늘의 마음가짐 선택 (낮 체크인)"
             >
               <AnimatedMorningSun size={18} />
               <span>아침 루틴</span>
-              <span className="text-[10px] font-extrabold text-[#00C474] bg-emerald-50 px-1.5 py-0.5 rounded-md">07:00</span>
+              <span className="text-[10px] font-extrabold text-[#00C474] dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-1.5 py-0.5 rounded-md">07:00</span>
             </button>
 
             {/* 저녁 루틴 팝업 버튼 -> 밤 체크인 (EveningReflectionWizard) 실행 */}
@@ -99,12 +104,12 @@ export function ShowcaseHeroKv({
                   content: <EveningReflectionWizard />,
                 })
               }
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 hover:bg-white text-indigo-950 border border-indigo-200/80 shadow-2xs transition-all active:scale-95 cursor-pointer text-xs font-bold"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-theme-card/90 hover:bg-theme-card text-indigo-950 dark:text-indigo-300 border border-indigo-200/80 dark:border-indigo-800/50 shadow-2xs transition-all cursor-pointer text-xs font-bold"
               title="오늘 저녁 회고 (밤 체크인)"
             >
               <AnimatedEveningMoon size={18} />
               <span>저녁 루틴</span>
-              <span className="text-[10px] font-extrabold text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded-md">23:00</span>
+              <span className="text-[10px] font-extrabold text-indigo-600 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/60 px-1.5 py-0.5 rounded-md">23:00</span>
             </button>
           </div>
 
@@ -117,7 +122,7 @@ export function ShowcaseHeroKv({
                 content: <RoutineSetupSheet />,
               })
             }
-            className="p-1.5 rounded-full text-gray-500/80 hover:text-emerald-700 hover:bg-white/80 transition-all active:scale-95 outline-none cursor-pointer"
+            className="p-1.5 rounded-full text-theme-muted hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-theme-card/80 transition-all outline-none cursor-pointer"
             title="아침 · 저녁 루틴 설정 (밑에서 위로 스르륵)"
           >
             <Gear size={19} weight="bold" />
@@ -139,12 +144,12 @@ export function ShowcaseHeroKv({
             <AuroraText className="font-extrabold inline-block">{contextUserName}</AuroraText>님의 오늘 마음,
           </h1>
 
-          <div className={`text-3xl font-extrabold tracking-tight leading-none ${emotionColorClass} transition-colors duration-300 group-hover:scale-105 transition-transform my-1`}>
+          <div className={`text-3xl font-extrabold tracking-tight leading-none ${emotionColorClass} transition-colors duration-300 my-1`}>
             {morningEmotion}
           </div>
 
           {/* 오늘 메모 */}
-          <p className="text-[0.9375rem] font-bold text-emerald-950/80 tracking-tight leading-relaxed max-w-[95%] mx-auto mt-1 group-hover:text-emerald-900 transition-colors">
+          <p className="text-[0.9375rem] font-bold text-emerald-950/80 dark:text-emerald-200/90 tracking-tight leading-relaxed max-w-[95%] mx-auto mt-1 group-hover:text-emerald-900 dark:group-hover:text-emerald-100 transition-colors">
             {todayQuote}
           </p>
         </div>
@@ -152,7 +157,7 @@ export function ShowcaseHeroKv({
         {/* 3. 이번 주 마음 이정표 (월~일 스탬프 칩은 클릭 비활성화, 우측 달력 아이콘만 클릭 허용) */}
         <div className="w-full flex flex-col items-center gap-2 z-10 mt-1.5 pt-1.5 pb-0.5">
           <div className="flex items-center justify-start w-full px-1">
-            <span className="text-xs font-medium text-gray-500/90 tracking-tight">
+            <span className="text-xs font-medium text-theme-muted tracking-tight">
               주간 리추얼 기록
             </span>
           </div>
@@ -164,7 +169,7 @@ export function ShowcaseHeroKv({
                 className="flex flex-col items-center justify-center text-center relative py-0.5 select-none cursor-default"
               >
                 {item.isDone && item.icon ? (
-                  <div className="w-9 h-9 rounded-full bg-white/95 shadow-2xs flex items-center justify-center shrink-0 p-1 border-0">
+                  <div className="w-9 h-9 rounded-full bg-theme-card/95 shadow-2xs flex items-center justify-center shrink-0 p-1 border-0">
                     <img
                       src={item.icon}
                       alt={item.title}
@@ -173,12 +178,12 @@ export function ShowcaseHeroKv({
                   </div>
                 ) : item.isSkipped ? (
                   <div className="w-9 h-9 flex items-center justify-center shrink-0">
-                    <Coffee size={22} weight="fill" className="text-gray-400/85" />
+                    <Coffee size={22} weight="fill" className="text-theme-muted" />
                   </div>
                 ) : (
-                  <div className="w-9 h-9 rounded-full bg-white/95 shadow-2xs flex items-center justify-center shrink-0 p-1 border-0">
+                  <div className="w-9 h-9 rounded-full bg-theme-card/95 shadow-2xs flex items-center justify-center shrink-0 p-1 border-0">
                     <span className={`text-sm font-semibold leading-none ${
-                      item.isDone ? "text-gray-700" : "text-gray-400/80"
+                      item.isDone ? "txt-brand-ink" : "text-theme-muted"
                     }`}>
                       {item.label}
                     </span>
@@ -201,7 +206,7 @@ export function ShowcaseHeroKv({
                     content: <CalendarSheet />,
                   })
                 }
-                className="w-9 h-9 rounded-full bg-white/95 hover:bg-emerald-50/80 shadow-2xs flex items-center justify-center shrink-0 p-1 text-gray-600 hover:text-[#00C474] transition-all active:scale-95 border-0 outline-none cursor-pointer"
+                className="w-9 h-9 rounded-full bg-theme-card/95 hover:bg-emerald-50/80 dark:hover:bg-emerald-950/40 shadow-2xs flex items-center justify-center shrink-0 p-1 text-theme-muted hover:text-[#00C474] transition-all border-0 outline-none cursor-pointer"
                 title="전체 월간 달력 보기 (오른쪽에서 왼쪽으로 스르륵)"
               >
                 <CalendarBlank size={18} weight="bold" className="text-[#00C474]" />

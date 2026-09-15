@@ -89,7 +89,7 @@ export function TodayMindSelectionWizard({
   };
 
   return (
-    <div className="w-full h-full min-h-screen sm:min-h-0 bg-white flex flex-col select-none relative text-gray-900 overflow-hidden">
+    <div className="w-full h-full min-h-screen sm:min-h-0 bg-theme-app flex flex-col select-none relative txt-brand-ink overflow-hidden transition-colors duration-300">
       {/* 서브 헤더: 상단 완전 고정 */}
       {showSubHeader && (
         <SubPageHeader
@@ -104,7 +104,7 @@ export function TodayMindSelectionWizard({
         {/* 1. 최상단 고정 2분할 세그먼트 스텝 라인 바 */}
         <div className="w-full flex gap-2 shrink-0 pt-1 pb-3">
           {[1, 2].map((i) => (
-            <div key={i} className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+            <div key={i} className="flex-1 h-1.5 bg-theme-card-subtle rounded-full overflow-hidden">
               <motion.div
                 className="h-full bg-[#00C474] rounded-full"
                 initial={{ width: i === 1 ? "100%" : "0%" }}
@@ -152,7 +152,7 @@ export function TodayMindSelectionWizard({
                     나에게 보내는 <br />
                     <AuroraText>오늘의 한 문장</AuroraText>
                   </h1>
-                  <p className="text-xs text-gray-500 font-semibold mt-1.5 leading-relaxed">
+                  <p className="text-xs text-theme-muted font-semibold mt-1.5 leading-relaxed">
                     오늘 하루를 지탱해 줄 문장을 하나 골라보세요
                   </p>
                 </motion.div>
@@ -173,11 +173,11 @@ export function TodayMindSelectionWizard({
                   className="flex flex-col gap-2 h-full justify-start items-center"
                 >
                   <div className="flex items-center gap-3 w-full pt-4 pb-2">
-                    <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-gray-200 to-gray-300" />
-                    <span className="text-base font-bold text-gray-700 shrink-0 text-center">
+                    <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-theme-subtle to-theme-subtle" />
+                    <span className="text-base font-bold txt-brand-ink shrink-0 text-center">
                       지금의 마음 한 단어
                     </span>
-                    <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-gray-200 to-gray-300" />
+                    <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-theme-subtle to-theme-subtle" />
                   </div>
 
                   <div className="flex flex-wrap justify-center gap-2.5 max-w-sm">
@@ -203,11 +203,11 @@ export function TodayMindSelectionWizard({
                   className="flex flex-col gap-2.5 h-full justify-start items-center w-full pb-2"
                 >
                   <div className="flex items-center gap-3 w-full pt-2 pb-1">
-                    <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-gray-200 to-gray-300" />
-                    <span className="text-base font-bold text-gray-700 shrink-0 text-center">
+                    <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-theme-subtle to-theme-subtle" />
+                    <span className="text-base font-bold txt-brand-ink shrink-0 text-center">
                       다짐 문구 선택 또는 작성
                     </span>
-                    <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-gray-200 to-gray-300" />
+                    <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-theme-subtle to-theme-subtle" />
                   </div>
 
                   <div className="flex flex-col gap-2 w-full">
@@ -216,10 +216,10 @@ export function TodayMindSelectionWizard({
                         key={q}
                         type="button"
                         onClick={() => handleSelectQuote(q)}
-                        className={`w-full py-3 px-3.5 rounded-2xl text-[14px] font-bold text-left transition-all cursor-pointer active:scale-98 shadow-2xs ${
+                        className={`w-full py-3 px-3.5 rounded-2xl text-[14px] font-bold text-left transition-all cursor-pointer shadow-2xs ${
                           selectedQuote === q && !customInputQuote
                             ? "bg-[#00C474] text-white shadow-xs"
-                            : "bg-[#F8FAFC] text-gray-800 hover:bg-gray-100 border border-gray-100"
+                            : "bg-theme-card-subtle txt-brand-ink hover:brightness-95 border border-theme-subtle"
                         }`}
                       >
                         "{q}"
@@ -230,12 +230,12 @@ export function TodayMindSelectionWizard({
                     <div
                       className={`w-full rounded-2xl border transition-all mt-1 ${
                         customInputQuote
-                          ? "border-[#00C474] bg-emerald-50/50 ring-2 ring-[#00C474]/20 shadow-xs"
-                          : "border-gray-200 bg-[#F8FAFC] focus-within:border-[#00C474] focus-within:bg-white focus-within:ring-2 focus-within:ring-[#00C474]/20"
+                          ? "border-[#00C474] bg-emerald-50/50 dark:bg-emerald-950/40 ring-2 ring-[#00C474]/20 shadow-xs"
+                          : "border-theme-subtle bg-theme-card-subtle focus-within:border-[#00C474] focus-within:bg-theme-card focus-within:ring-2 focus-within:ring-[#00C474]/20"
                       }`}
                     >
                       <div className="flex items-center px-3.5 py-1 gap-2.5">
-                        <span className="text-[11px] font-extrabold text-[#00C474] bg-emerald-100/90 px-2.5 py-0.5 rounded-full shrink-0">
+                        <span className="text-[11px] font-extrabold text-[#00C474] dark:text-emerald-400 bg-emerald-100/90 dark:bg-emerald-950/70 px-2.5 py-0.5 rounded-full shrink-0">
                           직접 입력
                         </span>
                         <input
@@ -243,7 +243,7 @@ export function TodayMindSelectionWizard({
                           value={customInputQuote}
                           onChange={(e) => setCustomInputQuote(e.target.value)}
                           placeholder="나만의 다짐 문장을 직접 작성해 보세요..."
-                          className="w-full bg-transparent py-2.5 text-[14px] font-bold text-gray-900 placeholder:text-gray-400 outline-none"
+                          className="w-full bg-transparent py-2.5 text-[14px] font-bold txt-brand-ink placeholder:text-theme-muted outline-none"
                         />
                       </div>
                     </div>
@@ -261,7 +261,7 @@ export function TodayMindSelectionWizard({
               <button
                 type="button"
                 onClick={handleHeaderBack}
-                className="px-5 py-4 bg-gray-100 hover:bg-gray-200 text-gray-800 text-base font-extrabold rounded-2xl transition-colors shrink-0 cursor-pointer active:scale-95"
+                className="px-5 py-4 bg-theme-card-subtle hover:brightness-95 txt-brand-ink text-base font-extrabold rounded-2xl transition-colors shrink-0 cursor-pointer"
               >
                 이전
               </button>

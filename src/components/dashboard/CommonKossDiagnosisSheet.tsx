@@ -96,7 +96,7 @@ export function CommonKossDiagnosisSheet() {
   }, [step, addDumbbells, triggerDashboardRefresh]);
 
   return (
-    <div className="w-full min-h-full bg-white flex flex-col select-none relative text-gray-900 overflow-y-auto">
+    <div className="w-full min-h-full bg-theme-app flex flex-col select-none relative txt-brand-ink overflow-y-auto transition-colors duration-300">
       {/* 1. 서브 헤더 (고정 56px 규격, 좌측 X 닫기 버튼 표출) */}
       <SubPageHeader
         title="30초 마음진단"

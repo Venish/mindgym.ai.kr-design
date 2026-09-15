@@ -54,7 +54,7 @@ export function CalendarSheet() {
   const currentRecord = AUGUST_2026_RECORDS[selectedDay];
 
   return (
-    <div className="w-full min-h-full bg-white flex flex-col select-none relative pb-12 text-gray-900 overflow-y-auto">
+    <div className="w-full min-h-full bg-theme-app flex flex-col select-none relative pb-12 txt-brand-ink overflow-y-auto transition-colors duration-300">
       {/* 1. 상단 서브 헤더 (X 닫기 또는 ← 클릭 시 슬라이딩 아웃) */}
       <SubPageHeader
         title="월간 출석 달력"
@@ -66,7 +66,7 @@ export function CalendarSheet() {
         {/* 2. 이번 달 마음 단련 3대 출석 스탯 */}
         <div className="w-full flex flex-col gap-3">
           <div className="flex items-center justify-between px-1">
-            <h2 className="text-[0.9375rem] font-bold text-gray-900 tracking-tight">
+            <h2 className="text-[0.9375rem] font-bold txt-brand-ink tracking-tight">
               {userName}님의 8월 출석 현황
             </h2>
             <Badge variant="mint" size="md">
@@ -75,29 +75,29 @@ export function CalendarSheet() {
           </div>
 
           <div className="grid grid-cols-3 gap-2.5">
-            <div className="bg-[#F0FDF4] rounded-2xl p-3 flex flex-col items-center justify-center text-center shadow-2xs">
-              <span className="text-[11.5px] font-extrabold text-emerald-800 mb-0.5">
+            <div className="bg-theme-card-subtle rounded-2xl p-3 flex flex-col items-center justify-center text-center shadow-2xs">
+              <span className="text-[11.5px] font-extrabold text-theme-muted mb-0.5">
                 연속 출석
               </span>
-              <span className="text-xl font-black text-[#00C474] tabular-nums mt-0.5">
+              <span className="text-xl font-black text-theme-accent tabular-nums mt-0.5">
                 7일째
               </span>
             </div>
 
-            <div className="bg-[#F8FAFC] rounded-2xl p-3 flex flex-col items-center justify-center text-center shadow-2xs">
-              <span className="text-[11.5px] font-extrabold text-gray-600 mb-0.5">
+            <div className="bg-theme-card border border-theme-card rounded-2xl p-3 flex flex-col items-center justify-center text-center shadow-2xs">
+              <span className="text-[11.5px] font-extrabold text-theme-muted mb-0.5">
                 8월 실천
               </span>
-              <span className="text-xl font-black text-gray-900 tabular-nums mt-0.5">
+              <span className="text-xl font-black txt-brand-ink tabular-nums mt-0.5">
                 14일
               </span>
             </div>
 
-            <div className="bg-[#F8FAFC] rounded-2xl p-3 flex flex-col items-center justify-center text-center shadow-2xs">
-              <span className="text-[11.5px] font-extrabold text-gray-600 mb-0.5">
+            <div className="bg-theme-card border border-theme-card rounded-2xl p-3 flex flex-col items-center justify-center text-center shadow-2xs">
+              <span className="text-[11.5px] font-extrabold text-theme-muted mb-0.5">
                 누적 출석
               </span>
-              <span className="text-xl font-black text-gray-900 tabular-nums mt-0.5">
+              <span className="text-xl font-black txt-brand-ink tabular-nums mt-0.5">
                 28일
               </span>
             </div>
@@ -105,47 +105,47 @@ export function CalendarSheet() {
         </div>
 
         {/* 3. 2026년 8월 달력 그리드 */}
-        <div className="w-full bg-[#F8FAFC] rounded-3xl p-4 flex flex-col gap-3.5 shadow-2xs">
+        <div className="w-full bg-theme-card border border-theme-card rounded-3xl p-4 flex flex-col gap-3.5 shadow-2xs">
           {/* 달력 상단 월 컨트롤 */}
-          <div className="flex items-center justify-between px-2 pt-1 border-b border-gray-200/60 pb-3">
+          <div className="flex items-center justify-between px-2 pt-1 border-b border-theme-subtle pb-3">
             <button
               type="button"
-              className="p-1 text-gray-400 hover:text-gray-700 transition-colors cursor-pointer"
+              className="p-1 text-theme-muted hover:txt-brand-ink transition-colors cursor-pointer"
               title="이전 달"
             >
               <CaretLeft size={20} weight="bold" />
             </button>
             <div className="flex items-center gap-2">
-              <CalendarBlank size={20} weight="bold" className="text-[#00C474]" />
-              <h3 className="text-base font-extrabold text-gray-900 tracking-tight">
+              <CalendarBlank size={20} weight="bold" className="text-theme-accent" />
+              <h3 className="text-base font-extrabold txt-brand-ink tracking-tight">
                 2026년 8월
               </h3>
             </div>
             <button
               type="button"
-              className="p-1 text-gray-400 hover:text-gray-700 transition-colors cursor-pointer"
+              className="p-1 text-theme-muted hover:txt-brand-ink transition-colors cursor-pointer"
               title="다음 달"
             >
               <CaretRight size={20} weight="bold" />
             </button>
           </div>
 
-          {/* 7열 요일 헤더 */}
-          <div className="grid grid-cols-7 text-center text-xs font-bold text-gray-400 py-1">
-            <span className="text-rose-500">일</span>
+          {/* 7열 요일 헤더 (OKLCH 파스텔 로즈/스카이 매칭) */}
+          <div className="grid grid-cols-7 text-center text-xs font-bold text-theme-muted py-1">
+            <span className="text-[var(--color-pastel-rose-text)] font-extrabold">일</span>
             <span>월</span>
             <span>화</span>
             <span>수</span>
             <span>목</span>
             <span>금</span>
-            <span className="text-indigo-500">토</span>
+            <span className="text-[var(--color-pastel-sky-text)] font-extrabold">토</span>
           </div>
 
           {/* 일자 그리드 */}
           <div className="grid grid-cols-7 gap-1.5 text-center">
             {/* 8월 1일 이전 6개 빈 날짜 셀 */}
             {Array.from({ length: emptyPrefixCount }).map((_, i) => (
-              <div key={`empty-${i}`} className="h-10 rounded-xl" />
+              <div key={`empty-${i}`} className="h-11 rounded-2xl" />
             ))}
 
             {/* 1일 ~ 31일 실천 날짜 셀 */}
@@ -161,28 +161,28 @@ export function CalendarSheet() {
                   key={dayNum}
                   type="button"
                   onClick={() => setSelectedDay(dayNum)}
-                  className={`h-11 rounded-2xl flex flex-col items-center justify-center relative transition-all cursor-pointer active:scale-95 ${
+                  className={`h-11 rounded-2xl flex flex-col items-center justify-center relative transition-all cursor-pointer ${
                     isSelected
-                      ? "bg-[#00C474] text-white shadow-xs font-extrabold ring-2 ring-emerald-300/80"
+                      ? "bg-theme-accent text-white shadow-xs font-extrabold ring-2 ring-[var(--color-brand-green)]/40"
                       : isDone
-                      ? "bg-emerald-100/70 text-emerald-950 font-bold hover:bg-emerald-200/60"
-                      : "bg-white text-gray-700 hover:bg-gray-100 font-medium"
+                      ? "bg-theme-card-subtle txt-brand-ink font-bold hover:brightness-95"
+                      : "bg-theme-card-subtle/50 text-theme-muted hover:bg-theme-card-subtle font-medium"
                   }`}
                 >
-                  <span className={`text-[13px] ${isToday && !isSelected ? "text-[#00C474] font-black" : ""}`}>
+                  <span className={`text-[13px] ${isToday && !isSelected ? "text-theme-accent font-black" : ""}`}>
                     {dayNum}
                   </span>
 
                   {/* 출석 도장 점 표시 */}
                   {isDone && (
                     <span className={`w-1.5 h-1.5 rounded-full mt-0.5 ${
-                      isSelected ? "bg-white" : "bg-[#00C474]"
+                      isSelected ? "bg-white" : "bg-theme-accent"
                     }`} />
                   )}
 
                   {/* 오늘 표시 링 */}
                   {isToday && !isSelected && (
-                    <span className="absolute inset-0 rounded-2xl border-2 border-[#00C474] pointer-events-none" />
+                    <span className="absolute inset-0 rounded-2xl border-2 border-theme-accent pointer-events-none" />
                   )}
                 </button>
               );
@@ -193,53 +193,53 @@ export function CalendarSheet() {
         {/* 4. 선택 일자 단련 기록 카드 */}
         <div className="w-full flex flex-col gap-3">
           <div className="flex items-center justify-between px-1">
-            <h3 className="text-[0.9375rem] font-bold text-gray-900 tracking-tight flex items-center gap-1.5">
+            <h3 className="text-[0.9375rem] font-bold txt-brand-ink tracking-tight flex items-center gap-1.5">
               <span>8월 {selectedDay}일 리추얼 기록</span>
               {selectedDay === todayNum && (
-                <span className="text-[11px] font-extrabold text-[#00C474] bg-emerald-50 px-2 py-0.5 rounded-full">
+                <span className="text-[11px] font-extrabold text-theme-accent bg-theme-card-subtle px-2 py-0.5 rounded-full">
                   오늘
                 </span>
               )}
             </h3>
             {currentRecord && (
-              <span className="text-xs font-bold text-[#00C474]">
+              <span className="text-xs font-bold text-theme-accent">
                 +{currentRecord.db} DB 적립
               </span>
             )}
           </div>
 
           {currentRecord ? (
-            <div className="w-full bg-[#F8FAFC] rounded-3xl p-4 flex flex-col gap-3 shadow-2xs text-left">
+            <div className="w-full bg-theme-card border border-theme-card rounded-3xl p-4 flex flex-col gap-3 shadow-2xs text-left">
               {/* 완수한 리추얼 목록 */}
               <div className="flex flex-col gap-2">
-                <span className="text-xs font-extrabold text-gray-500 tracking-tight">완료한 리추얼</span>
+                <span className="text-xs font-extrabold text-theme-muted tracking-tight">완료한 리추얼</span>
                 {currentRecord.rituals?.map((rit, idx) => (
-                  <div key={idx} className="flex items-center gap-2 bg-white rounded-xl p-3 shadow-2xs">
-                    <CheckCircle size={20} weight="fill" className="text-[#00C474] shrink-0" />
-                    <span className="text-[14px] font-extrabold text-gray-900 tracking-tight">{rit}</span>
+                  <div key={idx} className="flex items-center gap-2 bg-theme-card-subtle rounded-xl p-3 shadow-2xs">
+                    <CheckCircle size={20} weight="fill" className="text-theme-accent shrink-0" />
+                    <span className="text-[14px] font-extrabold txt-brand-ink tracking-tight">{rit}</span>
                   </div>
                 ))}
               </div>
 
               {/* 감정 & 실천 메모 */}
-              <div className="flex flex-col gap-1.5 pt-2 border-t border-gray-200/60">
+              <div className="flex flex-col gap-1.5 pt-2 border-t border-theme-subtle">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-extrabold text-gray-500 tracking-tight">오늘의 마음 상태</span>
-                  <span className="text-xs font-extrabold text-[#00C474] bg-emerald-100/80 px-2.5 py-0.5 rounded-full">
+                  <span className="text-xs font-extrabold text-theme-muted tracking-tight">오늘의 마음 상태</span>
+                  <span className="text-xs font-extrabold text-theme-accent bg-theme-card-subtle px-2.5 py-0.5 rounded-full">
                     {currentRecord.emotion}
                   </span>
                 </div>
                 {currentRecord.memo && (
-                  <p className="text-xs font-bold text-gray-700 leading-relaxed bg-white rounded-xl p-3 shadow-2xs mt-1 tracking-tight">
+                  <p className="text-xs font-bold txt-brand-ink leading-relaxed bg-theme-card-subtle rounded-xl p-3 shadow-2xs mt-1 tracking-tight">
                     "{currentRecord.memo}"
                   </p>
                 )}
               </div>
             </div>
           ) : (
-            <div className="w-full bg-[#F8FAFC] rounded-3xl p-6 flex flex-col items-center justify-center text-center gap-2 shadow-2xs">
-              <CalendarBlank size={36} weight="duotone" className="text-gray-300" />
-              <span className="text-sm font-extrabold text-gray-500 tracking-tight">
+            <div className="w-full bg-theme-card border border-theme-card rounded-3xl p-6 flex flex-col items-center justify-center text-center gap-2 shadow-2xs">
+              <CalendarBlank size={36} weight="duotone" className="text-theme-muted" />
+              <span className="text-sm font-extrabold text-theme-muted tracking-tight">
                 8월 {selectedDay}일에는 출석 기록이 없어요.
               </span>
             </div>

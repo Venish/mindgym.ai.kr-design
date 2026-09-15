@@ -61,7 +61,7 @@ export function RT001_SmileMeditation({ onComplete }: RT001SmileMeditationProps)
   };
 
   return (
-    <div className="w-full flex flex-col items-center justify-between flex-1 min-h-[460px] py-4 text-center">
+    <div data-ritual-sheet className="w-full flex flex-col items-center justify-between flex-1 min-h-[460px] py-4 text-center border-none shadow-none">
       {/* Step 1: 미소 준비 */}
       {currentStep === 1 && (
         <div className="flex flex-col items-center gap-4 my-auto w-full max-w-sm">
@@ -73,15 +73,15 @@ export function RT001_SmileMeditation({ onComplete }: RT001SmileMeditationProps)
             1단계 · 미소 호흡 준비
           </span>
 
-          <h2 className="text-2xl font-black text-gray-900 tracking-tight">
+          <h2 className="text-2xl font-black txt-brand-ink tracking-tight">
             아침 미소 명상 (3분)
           </h2>
 
-          <p className="text-sm font-medium text-gray-600 leading-relaxed text-center px-2">
+          <p className="text-sm font-medium text-theme-muted leading-relaxed text-center px-2">
             입가에 옅은 미소를 지으며 얼굴 80여 개 근육의 긴장을 해소하고 한달 동안 긍정 정서를 누적하세요.
           </p>
 
-          <div className="w-full bg-amber-50/60 rounded-2xl p-4 border border-amber-100/80 text-left text-xs font-semibold text-gray-700 flex flex-col gap-2 my-2">
+          <div className="w-full bg-theme-subtle rounded-2xl p-4 border border-theme-subtle text-left text-xs font-semibold text-theme-muted flex flex-col gap-2 my-2">
             <div className="flex items-center gap-2">
               <span className="w-4 h-4 rounded-full bg-amber-200 text-amber-900 font-bold text-[10px] flex items-center justify-center shrink-0">1</span>
               <span>양 어깨와 이마의 주름을 가볍게 이완하기</span>
@@ -119,7 +119,7 @@ export function RT001_SmileMeditation({ onComplete }: RT001SmileMeditationProps)
             </span>
           </div>
 
-          <p className="text-sm font-semibold text-gray-600 leading-snug">
+          <p className="text-sm font-semibold text-theme-muted leading-snug">
             얼굴 근육이 풀리고 내면에 평온한 에너지가 차오릅니다.
           </p>
 
@@ -127,7 +127,7 @@ export function RT001_SmileMeditation({ onComplete }: RT001SmileMeditationProps)
             <button
               type="button"
               onClick={() => setIsRunning(!isRunning)}
-              className="flex-1 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold rounded-xl text-sm transition-all"
+              className="flex-1 py-3 bg-theme-card-subtle hover:brightness-95 txt-brand-ink font-bold rounded-xl text-sm transition-all"
             >
               {isRunning ? "일시정지" : "다시 시작"}
             </button>
@@ -150,11 +150,11 @@ export function RT001_SmileMeditation({ onComplete }: RT001SmileMeditationProps)
             <Sparkle size={36} weight="fill" />
           </div>
 
-          <h2 className="text-2xl font-black text-gray-900 tracking-tight">
+          <h2 className="text-2xl font-black txt-brand-ink tracking-tight">
             미소 명상 완수!
           </h2>
 
-          <p className="text-sm font-medium text-gray-600 leading-relaxed text-center px-4">
+          <p className="text-sm font-medium text-theme-muted leading-relaxed text-center px-4">
             오늘 아침 미소 습관을 가슴에 새겼습니다. 매일 아침 온화한 미소와 함께 하루를 밝혀주세요.
           </p>
 

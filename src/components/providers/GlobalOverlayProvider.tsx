@@ -47,7 +47,7 @@ export function GlobalOverlayProvider() {
               animate={isSlideUp ? { y: 0 } : { x: 0 }}
               exit={isSlideUp ? { y: "100%" } : { x: "100%" }}
               transition={{ type: "spring", stiffness: 380, damping: 36, mass: 0.9 }}
-              className="w-full h-full bg-white flex flex-col relative overflow-y-auto no-scrollbar pointer-events-auto shadow-2xl z-10"
+              className="w-full h-full bg-theme-app [&:has([data-ritual-sheet])]:bg-transparent transition-colors duration-300 flex flex-col relative overflow-y-auto no-scrollbar pointer-events-auto shadow-2xl z-10"
             >
               {modal.content}
             </motion.div>

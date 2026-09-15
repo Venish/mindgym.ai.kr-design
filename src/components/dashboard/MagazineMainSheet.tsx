@@ -303,7 +303,7 @@ export function MagazineMainSheet({ initialVolId }: MagazineMainSheetProps) {
   const visibleArticles = cleanArticles;
 
   return (
-    <div className="w-full min-h-full bg-white flex flex-col select-none relative pb-12 text-gray-900 overflow-y-auto overflow-x-hidden">
+    <div className="w-full min-h-full bg-theme-app flex flex-col select-none relative pb-12 txt-brand-ink overflow-y-auto overflow-x-hidden transition-colors duration-300">
       {/* 상단 헤더 */}
       <SubPageHeader
         title="월간 마음건강 매거진"
@@ -313,12 +313,12 @@ export function MagazineMainSheet({ initialVolId }: MagazineMainSheetProps) {
           <button
             type="button"
             onClick={() => setIsFavSheetOpen(true)}
-            className="p-1.5 text-gray-500 hover:text-gray-900 rounded-full hover:bg-gray-100 transition-colors active:scale-95 outline-none cursor-pointer flex items-center justify-center relative"
+            className="p-1.5 text-theme-muted hover:txt-brand-ink rounded-full hover:bg-theme-card-subtle transition-colors outline-none cursor-pointer flex items-center justify-center relative"
             title="내가 찜한 리스트 모아보기"
           >
-            <ListBullets size={22} weight="bold" className={showFavoritesOnly ? "text-amber-500" : "text-gray-500"} />
+            <ListBullets size={22} weight="bold" className={showFavoritesOnly ? "text-amber-500" : "text-theme-muted"} />
             {favoritedTitles.length > 0 && (
-              <span className="w-[0.4375rem] h-[0.4375rem] bg-amber-500 rounded-full absolute top-[0.1875rem] right-[0.1875rem] ring-2 ring-white" />
+              <span className="w-[0.4375rem] h-[0.4375rem] bg-amber-500 rounded-full absolute top-[0.1875rem] right-[0.1875rem] ring-2 ring-white dark:ring-slate-900" />
             )}
           </button>
         }
@@ -487,13 +487,13 @@ export function MagazineMainSheet({ initialVolId }: MagazineMainSheetProps) {
                 </span>
 
                 {/* VOL.XX 제목 표기 */}
-                <h3 className="text-[1.375rem] font-bold text-gray-900 truncate max-w-full mt-[0.125rem]">
+                <h3 className="text-[1.375rem] font-bold txt-brand-ink truncate max-w-full mt-[0.125rem]">
                   {formatVolTitle(activeMagazine.id, activeMagazine.title)}
                 </h3>
 
                 {/* 발행년월 (Publish Date) */}
                 {activeMagazine.publishDate && (
-                  <span className="text-[0.8125rem] font-medium text-gray-400 mt-[0.0625rem] tabular-nums">
+                  <span className="text-[0.8125rem] font-medium text-theme-muted mt-[0.0625rem] tabular-nums">
                     {activeMagazine.publishDate}
                   </span>
                 )}
@@ -503,10 +503,10 @@ export function MagazineMainSheet({ initialVolId }: MagazineMainSheetProps) {
               <div className="w-full flex flex-col transition-all gap-[0.5rem]">
                 {/* ★ 목차 상단 타이틀 바 (제목 좌측, 숫자 우측 분리 배치) ★ */}
                 <div className="flex items-center justify-between px-[0.25rem] py-[0.125rem] w-full">
-                  <span className="text-[0.9375rem] font-bold text-gray-900">
+                  <span className="text-[0.9375rem] font-bold txt-brand-ink">
                     수록 코너 및 칼럼 목차
                   </span>
-                  <span className="text-[0.8125rem] font-medium text-gray-400 tabular-nums">
+                  <span className="text-[0.8125rem] font-medium text-theme-muted tabular-nums">
                     {cleanArticles.length}
                   </span>
                 </div>
@@ -519,7 +519,7 @@ export function MagazineMainSheet({ initialVolId }: MagazineMainSheetProps) {
                       return (
                         <div
                           key={aIdx}
-                          className="p-[0.75rem] bg-[#F9FAFB] rounded-[0.875rem] border border-gray-100/80 flex items-center justify-between gap-[0.5rem] transition-all shadow-2xs hover:border-[#00C474]/40"
+                          className="p-[0.75rem] bg-theme-card rounded-[0.875rem] border border-theme-subtle flex items-center justify-between gap-[0.5rem] transition-all shadow-2xs hover:border-[#00C474]/40"
                         >
                           {/* ★ 좌측: [즐겨찾기 맨 왼쪽 원형 핀] + [코너 뱃지 & 제목 소제목 배치] ★ */}
                           <div className="flex items-center gap-[0.5rem] min-w-0 flex-1 pr-[0.25rem]">
@@ -530,10 +530,10 @@ export function MagazineMainSheet({ initialVolId }: MagazineMainSheetProps) {
                                 e.stopPropagation();
                                 toggleFavoriteArticle(art.title);
                               }}
-                              className={`p-[0.25rem] transition-all active:scale-90 cursor-pointer shrink-0 ${
+                              className={`p-[0.25rem] transition-all cursor-pointer shrink-0 ${
                                 isFav
                                   ? "text-amber-400"
-                                  : "text-gray-200 hover:text-amber-300"
+                                  : "text-theme-muted/40 hover:text-amber-400"
                               }`}
                               title={isFav ? "즐겨찾기 해제" : "즐겨찾기 추가"}
                             >
@@ -552,7 +552,7 @@ export function MagazineMainSheet({ initialVolId }: MagazineMainSheetProps) {
                                   </span>
                                 )}
                               </div>
-                              <h4 className="text-[0.8125rem] font-bold text-gray-900 truncate mt-[0.125rem] tracking-normal w-full">
+                              <h4 className="text-[0.8125rem] font-bold txt-brand-ink truncate mt-[0.125rem] tracking-normal w-full">
                                 {art.title}
                               </h4>
                             </div>
@@ -565,7 +565,7 @@ export function MagazineMainSheet({ initialVolId }: MagazineMainSheetProps) {
                               e.stopPropagation();
                               handleOpenEbookReader(activeMagazine, art.title);
                             }}
-                            className="p-[0.25rem] text-gray-400 hover:text-gray-900 transition-colors cursor-pointer active:scale-90 shrink-0 ml-[0.25rem]"
+                            className="p-[0.25rem] text-theme-muted hover:txt-brand-ink transition-colors cursor-pointer shrink-0 ml-[0.25rem]"
                             title="E-Book 읽기"
                           >
                             <CaretRight size={16} weight="bold" />

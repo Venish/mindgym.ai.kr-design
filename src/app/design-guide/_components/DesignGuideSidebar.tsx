@@ -23,6 +23,13 @@ interface SidebarProps {
 export function DesignGuideSidebar({ activeSection, onSelectSection }: SidebarProps) {
   const menuGroups = [
     {
+      title: "🎨 THEME COLOR LAB",
+      items: [
+        { id: "theme-color-lab", label: "웰니스 컬러 랩 (실시간 프리뷰)", icon: Palette },
+        { id: "diverse-styles", label: "⚡ 스타일 다변화 (보더 & 장르)", icon: Lightning },
+      ],
+    },
+    {
       title: "📖 MAGAZINE & E-BOOK",
       items: [
         { id: "magazine-system", label: "월간 마음건강 매거진 스펙", icon: Sparkle },
@@ -71,15 +78,15 @@ export function DesignGuideSidebar({ activeSection, onSelectSection }: SidebarPr
   ];
 
   return (
-    <aside className="w-64 bg-white border-r border-gray-200 flex flex-col shrink-0 h-[calc(100vh-61px)] sticky top-[61px] overflow-y-auto p-4 select-none">
+    <aside className="w-64 bg-theme-app border-r border-theme-subtle flex flex-col shrink-0 h-[calc(100vh-61px)] sticky top-[61px] overflow-y-auto p-4 select-none transition-colors duration-200">
       {/* 70:20:10 비율 시각화 카드 요약 */}
-      <div className="bg-white border border-gray-200/80 p-3.5 rounded-2xl mb-5 shadow-2xs">
+      <div className="bg-theme-card border border-theme-subtle p-3.5 rounded-2xl mb-5 shadow-2xs">
         <div className="flex items-center justify-between mb-2">
           <span className="txt-caption-sub font-black txt-brand-ink">Identity Ratio</span>
           <Badge variant="mint" size="sm" className="txt-nano-main px-1.5">v1.1</Badge>
         </div>
-        <div className="w-full h-3.5 rounded-full border border-gray-200 overflow-hidden flex shadow-2xs">
-          <div className="w-[70%] bg-white border-r border-gray-200" title="White 70%" />
+        <div className="w-full h-3.5 rounded-full border border-theme-subtle overflow-hidden flex shadow-2xs">
+          <div className="w-[70%] bg-theme-card border-r border-theme-subtle" title="White 70%" />
           <div className="w-[20%] bg-[var(--color-pastel-mint-bg)] border-r border-[#00C473]/30" title="Mint Tint 20%" />
           <div className="w-[10%] bg-[#00C473]" title="Signature Green 10%" />
         </div>

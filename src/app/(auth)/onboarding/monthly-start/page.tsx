@@ -30,8 +30,6 @@ function MonthlyStartContent() {
       <MonthlyRitualStartView
         nickname={nickname}
         selectedKeyword={selectedKeyword}
-        initialStep={parsedStep}
-        onSelectKeyword={(kw) => setSelectedKeyword(kw)}
         onNext={() => router.push("/dashboard?execute_ritual=true")}
       />
     </div>

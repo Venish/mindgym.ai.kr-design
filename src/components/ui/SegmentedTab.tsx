@@ -34,13 +34,13 @@ export function SegmentedTab({
 
   return (
     <div
-      className={`bg-[#F1F5F9] p-1 rounded-2xl flex items-center relative select-none ${
+      className={`bg-theme-card-subtle p-1 rounded-2xl flex items-center relative select-none ${
         fullWidth ? "w-full" : "inline-flex"
       } ${className}`}
     >
       {/* 1D 수평(X축) 전용 슬라이딩 백그라운드 캡슐 */}
       <motion.div
-        className="absolute top-1 bottom-1 bg-white rounded-xl shadow-xs z-0"
+        className="absolute top-1 bottom-1 bg-theme-card rounded-xl shadow-xs z-0"
         style={{
           width: `calc((100% - 0.5rem - ${(itemCount - 1) * 0.25}rem) / ${itemCount})`,
         }}
@@ -52,15 +52,15 @@ export function SegmentedTab({
 
       {items.map((item) => {
         const isActive = item.id === activeId;
-        const defaultActiveBadge = item.badgeActiveColor || "bg-emerald-100 text-[#00C474]";
+        const defaultActiveBadge = item.badgeActiveColor || "bg-emerald-100 dark:bg-emerald-950/60 text-[#00C474] dark:text-emerald-400";
 
         return (
           <button
             key={item.id}
             type="button"
             onClick={() => onChange(item.id)}
-            className={`relative py-2.5 px-3.5 text-[13.5px] rounded-xl transition-colors duration-200 cursor-pointer active:scale-95 z-10 flex-1 text-center font-bold ${
-              isActive ? "text-gray-900" : "text-gray-500 hover:text-gray-800 font-medium"
+            className={`relative py-2.5 px-3.5 text-[13.5px] rounded-xl transition-colors duration-200 cursor-pointer z-10 flex-1 text-center font-bold ${
+              isActive ? "txt-brand-ink" : "text-theme-muted hover:txt-brand-ink font-medium"
             }`}
           >
             <span className="flex items-center justify-center gap-1.5">
@@ -68,7 +68,7 @@ export function SegmentedTab({
               {typeof item.count === "number" && (
                 <span
                   className={`px-1.5 py-0.5 rounded-full text-[10px] font-black ${
-                    isActive ? defaultActiveBadge : "bg-gray-200 text-gray-500"
+                    isActive ? defaultActiveBadge : "bg-theme-card-subtle text-theme-muted"
                   }`}
                 >
                   {item.count}

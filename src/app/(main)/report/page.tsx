@@ -1,17 +1,25 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { ChartBar, CalendarCheck, Sparkle, Trophy, ArrowRight, Gear, Info } from "@phosphor-icons/react";
 import { NeumorphCard } from "@/components/godui/NeumorphCard";
 import { SpotlightCard } from "@/components/godui/SpotlightCard";
 import { NumberTicker } from "@/components/godui/NumberTicker";
 import { AnimatedTooltip } from "@/components/godui/AnimatedTooltip";
-import { IntentionWizardModal } from "@/components/modals/IntentionWizardModal";
+import { MonthlyIntentionWizard } from "@/components/common/MonthlyIntentionWizard";
 import { useMindGym } from "@/context/MindGymContext";
+import { useModalStore } from "@/store/useModalStore";
 
 export function ReportPage() {
   const { userName, totalDumbbells, completedDays, restDays, currentIntention, getLevelName, getLevelNumber } = useMindGym();
-  const [isWizardOpen, setIsWizardOpen] = useState(false);
+  const { openModal } = useModalStore();
+
+  const handleOpenIntentionWizard = () => {
+    openModal({
+      type: "slide-left",
+      content: <MonthlyIntentionWizard />,
+    });
+  };
 
   const levelName = getLevelName();
   const levelNum = getLevelNumber();
@@ -28,16 +36,16 @@ export function ReportPage() {
   ];
 
   return (
-    <div className="flex-1 flex flex-col gap-5 p-5 bg-white">
+    <div className="flex-1 flex flex-col gap-5 p-5 bg-theme-app txt-brand-ink transition-colors duration-300">
       {/* Header */}
       <div>
-        <span className="text-[10px] font-bold text-[#00C474] bg-emerald-50 px-2.5 py-1 rounded-full">
+        <span className="text-[10px] font-bold text-theme-accent bg-theme-card-subtle px-2.5 py-1 rounded-full">
           진단 및 누적 아카이브
         </span>
-        <h2 className="text-xl font-black text-gray-900 mt-1">
+        <h2 className="text-xl font-black txt-brand-ink mt-1">
           KOSS 리포트 & 아카이브 📊
         </h2>
-        <p className="text-xs font-medium text-gray-500 mt-0.5">
+        <p className="text-xs font-medium text-theme-muted mt-0.5">
           내 직무 스트레스 8대 영역 진단 수치와 지난 정원 수집 기록입니다.
         </p>
       </div>
@@ -45,7 +53,7 @@ export function ReportPage() {
       {/* 종합 명예 서재 스탯 카드 (SpotlightCard 적용) */}
       <SpotlightCard
         spotlightColor="rgba(255, 255, 255, 0.25)"
-        className="bg-gradient-to-r from-emerald-600 to-teal-700 text-white flex flex-col gap-3 p-5 rounded-3xl"
+        className="bg-gradient-to-r from-emerald-600 to-teal-700 text-white flex flex-col gap-3 p-5 rounded-3xl border-theme-card shadow-2xs"
       >
         <div className="flex justify-between items-center text-xs font-bold opacity-90">
           <span>{userName}님의 마음 명예 트로피</span>
@@ -80,14 +88,14 @@ export function ReportPage() {
       </SpotlightCard>
 
       {/* 이달의 나 지향 감정어 관리 */}
-      <NeumorphCard className="flex items-center justify-between border border-emerald-100">
+      <NeumorphCard className="flex items-center justify-between bg-theme-card border-theme-card shadow-2xs">
         <div>
-          <span className="text-[10px] font-bold text-gray-400">현재 선언된 지향점</span>
-          <h4 className="text-sm font-extrabold text-gray-900 mt-0.5">"{currentIntention}"</h4>
+          <span className="text-[10px] font-bold text-theme-muted">현재 선언된 지향점</span>
+          <h4 className="text-sm font-extrabold txt-brand-ink mt-0.5">"{currentIntention}"</h4>
         </div>
         <button
-          onClick={() => setIsWizardOpen(true)}
-          className="py-2 px-3 bg-emerald-50 text-[var(--color-brand-green)] font-bold text-xs rounded-xl flex items-center gap-1 hover:bg-emerald-100 active:scale-[0.96] transition-all"
+          onClick={handleOpenIntentionWizard}
+          className="py-2 px-3 bg-theme-card-subtle text-theme-accent font-bold text-xs rounded-xl flex items-center gap-1 hover:brightness-95 active:scale-[0.96] transition-all cursor-pointer border-theme-subtle"
         >
           <Gear size={14} />
           <span>지향점 변경</span>
@@ -96,25 +104,25 @@ export function ReportPage() {
 
       {/* KOSS 8대 영역 수치 바 */}
       <div className="flex flex-col gap-3">
-        <h3 className="text-sm font-extrabold text-gray-900 flex items-center gap-1.5">
+        <h3 className="text-sm font-extrabold txt-brand-ink flex items-center gap-1.5">
           <span>🎯 KOSS 8대 영역 정밀 진단</span>
           <AnimatedTooltip content="한국인 직무 스트레스 측정 도구 8개 하부 요인 점수">
-            <Info size={16} className="text-gray-400 cursor-pointer hover:text-gray-600" />
+            <Info size={16} className="text-theme-muted cursor-pointer hover:txt-brand-ink" />
           </AnimatedTooltip>
         </h3>
 
         <div className="grid grid-cols-1 gap-2.5">
           {domainScores.map((d) => (
-            <div key={d.name} className="bg-gray-50 p-3 rounded-2xl flex flex-col gap-1.5">
+            <div key={d.name} className="bg-theme-card border-theme-card p-3 rounded-2xl flex flex-col gap-1.5 shadow-2xs">
               <div className="flex justify-between items-center text-xs font-bold">
-                <span className="text-gray-800 flex items-center gap-1">
+                <span className="txt-brand-ink flex items-center gap-1">
                   {d.name}
                   <AnimatedTooltip content={`${d.name} 평가 지수: ${d.score}점 (${d.status})`}>
-                    <Info size={12} className="text-gray-400 cursor-pointer" />
+                    <Info size={12} className="text-theme-muted cursor-pointer" />
                   </AnimatedTooltip>
                 </span>
                 <div className="flex items-center gap-2">
-                  <span className="text-gray-500 tabular-nums flex items-center gap-0.5">
+                  <span className="text-theme-muted tabular-nums flex items-center gap-0.5">
                     <NumberTicker value={d.score} />점
                   </span>
                   <span
@@ -125,7 +133,7 @@ export function ReportPage() {
                   </span>
                 </div>
               </div>
-              <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div className="w-full h-2 bg-theme-card-subtle rounded-full overflow-hidden">
                 <div
                   className="h-full rounded-full transition-all duration-500"
                   style={{ width: `${d.score}%`, backgroundColor: d.color }}
@@ -138,26 +146,23 @@ export function ReportPage() {
 
       {/* 과거 마음 정원 월간 컬렉션 (P-19) */}
       <div className="flex flex-col gap-3 pt-2">
-        <h3 className="text-sm font-extrabold text-gray-900">🗓️ 지난 월간 정원 아카이브 컬렉션</h3>
+        <h3 className="text-sm font-extrabold txt-brand-ink">🗓️ 지난 월간 정원 아카이브 컬렉션</h3>
 
         <div className="grid grid-cols-2 gap-3">
           {[
             { month: "2026년 7월 정원", count: 28, badge: "🏆 7월 완성자" },
             { month: "2026년 6월 정원", count: 25, badge: "🌱 초록 마스터" },
           ].map((item) => (
-            <NeumorphCard key={item.month} className="p-4 flex flex-col gap-2 border border-gray-50">
-              <span className="text-[10px] font-bold text-gray-400">{item.month}</span>
-              <h4 className="text-xs font-extrabold text-gray-900">실천 완료: {item.count}일</h4>
-              <span className="text-[10px] font-bold text-[#00C474] bg-emerald-50 px-2 py-0.5 rounded self-start">
+            <NeumorphCard key={item.month} className="p-4 flex flex-col gap-2 bg-theme-card border-theme-card shadow-2xs">
+              <span className="text-[10px] font-bold text-theme-muted">{item.month}</span>
+              <h4 className="text-xs font-extrabold txt-brand-ink">실천 완료: {item.count}일</h4>
+              <span className="text-[10px] font-bold text-theme-accent bg-theme-card-subtle px-2 py-0.5 rounded self-start">
                 {item.badge}
               </span>
             </NeumorphCard>
           ))}
         </div>
       </div>
-
-      {/* Intention Wizard Modal */}
-      <IntentionWizardModal isOpen={isWizardOpen} onClose={() => setIsWizardOpen(false)} />
     </div>
   );
 }

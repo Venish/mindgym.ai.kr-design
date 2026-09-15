@@ -68,7 +68,7 @@ export function ShowcaseFixedBottomBar() {
   return (
     <div
       style={{ height: currentHeightStyle }}
-      className="fixed bottom-0 left-0 right-0 max-w-[430px] w-full mx-auto z-40 bg-white/95 backdrop-blur-md border-t border-gray-200/80 shadow-2xl rounded-t-3xl transition-all duration-300 ease-out select-none flex flex-col justify-between px-3 py-2.5 overflow-hidden gap-2"
+      className="fixed bottom-0 left-0 right-0 max-w-[430px] w-full mx-auto z-40 bg-theme-card/95 backdrop-blur-md border-t border-theme-subtle shadow-2xl rounded-t-3xl transition-all duration-300 ease-out select-none flex flex-col justify-between px-3 py-2.5 overflow-hidden gap-2"
     >
       <div className="flex flex-col gap-3 w-full shrink-0">
         {/* ================= 1st Row (항상 5개 슬롯 충진: 1버튼 + 4아이콘) ================= */}
@@ -80,14 +80,14 @@ export function ShowcaseFixedBottomBar() {
             className="flex flex-col items-center justify-center shrink-0 group outline-none cursor-pointer"
             title={isExpanded ? "푸터 접기" : "푸터 12개 아이콘 전체 펼치기"}
           >
-            <div className="flex flex-col items-center justify-center w-[3.6rem] h-[3.6rem] rounded-2xl bg-white group-hover:bg-emerald-50/50 group-hover:border-emerald-300 border border-gray-200 shadow-2xs transition-colors">
+            <div className="flex flex-col items-center justify-center w-[3.6rem] h-[3.6rem] rounded-2xl bg-white dark:bg-slate-800/90 group-hover:bg-emerald-50/50 dark:group-hover:bg-emerald-950/40 group-hover:border-emerald-300 dark:group-hover:border-emerald-500/50 border border-gray-200 dark:border-slate-700/80 shadow-2xs transition-colors">
               <img
                 src="/images/logo_icon.svg"
                 alt="MindGym Logo"
                 className="w-6 h-6 object-contain"
               />
             </div>
-            <span className="text-[10px] font-bold text-gray-700 tracking-tight mt-1 group-hover:text-[#00C474] transition-colors leading-tight">
+            <span className="text-[10px] font-bold text-gray-700 dark:text-slate-300 tracking-tight mt-1 group-hover:text-[#00C474] dark:group-hover:text-emerald-400 transition-colors leading-tight">
               {isExpanded ? "접기" : "더보기"}
             </span>
           </button>
@@ -121,15 +121,12 @@ export function ShowcaseFixedBottomBar() {
             <button
               key={`empty-1st-${idx}`}
               type="button"
-              onClick={() => {
-                clearModals();
-                router.push("/ritual");
-              }}
+              onClick={handleOpenFullLibrary}
               className="flex flex-col items-center justify-center shrink-0 group outline-none cursor-pointer"
               title="리추얼 추가하기 (빈 슬롯)"
             >
-              <div className="flex items-center justify-center w-[3.6rem] h-[3.6rem] rounded-2xl border-2 border-dashed border-gray-300 group-hover:border-emerald-300 bg-gray-50/50 group-hover:bg-emerald-50/50 text-gray-400 group-hover:text-[#00C474] transition-all">
-                <Plus size={22} weight="bold" className="text-gray-400 group-hover:text-[#00C474] transition-colors" />
+              <div className="flex items-center justify-center w-[3.6rem] h-[3.6rem] rounded-2xl border-2 border-dashed border-gray-300 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800/40 group-hover:border-emerald-300 dark:group-hover:border-emerald-500 group-hover:bg-emerald-50/50 dark:group-hover:bg-emerald-950/30 text-gray-400 dark:text-slate-400 group-hover:text-[#00C474] dark:group-hover:text-emerald-400 transition-all">
+                <Plus size={22} weight="bold" className="text-gray-400 dark:text-slate-400 group-hover:text-[#00C474] dark:group-hover:text-emerald-400 transition-colors" />
               </div>
               <span className="h-[14px] mt-1 block" aria-hidden="true" />
             </button>
@@ -163,7 +160,7 @@ export function ShowcaseFixedBottomBar() {
           <button
             type="button"
             onClick={handleOpenFullLibrary}
-            className="px-6 py-2.5 bg-emerald-50 hover:bg-emerald-100/90 text-emerald-800 font-extrabold text-xs rounded-full transition-all cursor-pointer text-center active:scale-95 border-none shadow-none"
+            className="px-6 py-2.5 bg-emerald-50 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 hover:bg-emerald-100/90 dark:hover:bg-emerald-900/90 font-extrabold text-xs rounded-full transition-all cursor-pointer text-center border-none shadow-none"
           >
             전체 리추얼 보기
           </button>

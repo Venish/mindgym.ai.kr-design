@@ -9,17 +9,40 @@ import { NumberTicker } from "@/components/godui/NumberTicker";
 import { SpotlightCard } from "@/components/godui/SpotlightCard";
 
 interface AnalyzingBridgeViewProps {
-  analysisStep: number;
+  analysisStep?: number;
+  onComplete?: () => void;
 }
 
-export function AnalyzingBridgeView({ analysisStep }: AnalyzingBridgeViewProps) {
+export function AnalyzingBridgeView({
+  analysisStep: externalStep,
+  onComplete,
+}: AnalyzingBridgeViewProps) {
+  const [internalStep, setInternalStep] = React.useState(1);
+  const analysisStep = externalStep ?? internalStep;
+
+  React.useEffect(() => {
+    const t1 = setTimeout(() => setInternalStep(2), 500);
+    const t2 = setTimeout(() => setInternalStep(3), 1000);
+    const t3 = setTimeout(() => setInternalStep(4), 1500);
+    const t4 = setTimeout(() => {
+      if (onComplete) onComplete();
+    }, 2200);
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      clearTimeout(t4);
+    };
+  }, [onComplete]);
+
   return (
     <motion.div
       key="analyzing"
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      className="flex-1 flex flex-col items-center justify-center text-center px-4 my-auto z-10 gap-6"
+      className="flex-1 flex flex-col items-center justify-center text-center w-full my-auto z-10 gap-5 min-h-[520px] pb-20"
     >
       {/* MindGym 심볼 & godui NumberTicker 진행률 수치 */}
       <div className="flex flex-col items-center justify-center gap-1.5 my-2">
@@ -49,7 +72,8 @@ export function AnalyzingBridgeView({ analysisStep }: AnalyzingBridgeViewProps) 
       {/* godui SpotlightCard 스포트라이트 체크리스트 박스 */}
       <SpotlightCard
         spotlightColor="rgba(0, 196, 116, 0.16)"
-        className="w-full flex flex-col gap-2.5 text-left p-4 bg-white/90 border border-gray-100 rounded-3xl shadow-soft"
+        className="w-full text-left p-4 bg-white/90 border border-gray-100 rounded-3xl shadow-soft"
+        contentClassName="gap-3"
       >
         {[
           "직무 요구 · 업무량 패턴 분석 완료",

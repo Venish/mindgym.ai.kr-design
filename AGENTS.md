@@ -56,8 +56,12 @@ Skills live in `.agents/skills/`. Read the relevant `SKILL.md` **before** starti
   3) `z-60` : 최상위 레벨업/골든가든 축하 팝업 & 시스템 모달 (`GlobalPopupProvider`)
 - **Non-White Container Borderless Principle (★필수 지침★)**: 배경색이 흰색(`bg-white`)이 아닌 박스/컨테이너/패널 (`bg-gray-50`, `bg-emerald-50`, `bg-indigo-50`, `bg-[var(--color-pastel-mint-bg)]`, `bg-[#F9FAFB]` 등)에는 테두리(`border border-...`)를 절대 적용하지 않고 100% 무경계(Borderless)로 제작합니다. 테두리는 순수 `bg-white` 카드에만 섬세한 헤어라인으로 허용합니다.
 - **App-Like Global Overlay Navigation Principle (★0ms 네이티브 오버레이 아키텍처★)**: 서브 페이지/알림/체크인/리추얼 상세 등 팝업 바텀시트 모달은 라우트 전체를 바꾸지 않고 대시보드가 100% 렌더링된 채로 유지되는 Framer Motion 전역 Overlay 방식 (`useModalStore` / `GlobalOverlayProvider`)을 사용합니다. 닫을 때도 `AnimatePresence` `exit={{ y: '100%' }}` / `exit={{ x: '100%' }}` 아웃 모션으로 끊김 없이 내려가도록 보장합니다.
-- **Silent Background Data Refresh Principle (★무로딩 즉각 백그라운드 갱신 수칙★)**: 모달 창 닫힘 시 대시보드가 갱신될 때 중간 로딩 스피너/화면이나 "데이터를 불러오는 중입니다" 텍스트 노출 없이 0ms로 조용하고 매끄럽게 상태만 즉각 갱신합니다.
-- **Package Manager Principle (★pnpm 전용 원칙★)**: 본 프로젝트의 모든 의존성 관리 및 스크립트 실행은 반드시 **`pnpm`**(`pnpm install`, `pnpm add`, `pnpm run dev`, `pnpm dlx` 등)만을 사용합니다. `npm` 또는 `yarn` 명령어는 사용하지 않습니다.
+- **Strict Theme Tokenization & Dark Mode Principle (★전역 테마 및 다크모드 100% 무결성 수칙★)**:
+  1) **하드코딩 색상 단독 사용 절대 금지**: `bg-white`, `bg-gray-50/100`, `text-gray-800/900`, `text-gray-500` 등의 하드코딩 유틸리티를 단독으로 작성하지 않습니다. 반드시 전역 테마 시맨틱 토큰(`bg-theme-app`, `bg-theme-card`, `bg-theme-card-subtle`, `txt-brand-ink`, `text-theme-muted`, `border-theme-subtle`)을 사용하거나, `bg-white dark:bg-slate-900`, `bg-emerald-50 dark:bg-emerald-950/40`와 같이 `dark:*` 페어링을 100% 적용합니다.
+  2) **다크모드 고명도 번쩍거림 방지**: `bg-emerald-50`, `bg-indigo-50`, `bg-rose-50`, `bg-amber-50` 등의 파스텔 틴트 박스에는 반드시 `dark:bg-emerald-950/40`, `dark:bg-indigo-950/40`, `dark:bg-rose-950/40`, `dark:bg-amber-950/40`를 함께 지정하여 다크모드에서 밝은 흰색/연색 박스로 번쩍거리는 결함을 원천 차단합니다.
+  3) **72종 리추얼 독립 캔버스 스코프 (`[data-ritual-sheet]`)**: 72종 리추얼 내부 컨테이너에는 반드시 `data-ritual-sheet` 속성을 유지하여, 전역 다크모드/테마 변경에 영향받지 않고 고유의 6대 카테고리 수채화 파스텔 캔버스와 딥 잉크 폰트(`txt-brand-ink` -> `#0F172A`)가 완벽히 보존되도록 합니다.
+  4) **5대 웰니스 테마 연동**: 모든 대시보드 및 모달 뷰는 `fresh-mint`, `warm-ivory`, `soft-sage`, `lavender-calm`, `classic`의 5개 웰니스 테마 CSS 변수에 즉각 유기적으로 반응해야 합니다.
+
 
 
 

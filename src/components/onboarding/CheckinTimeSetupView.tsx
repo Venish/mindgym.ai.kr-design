@@ -14,6 +14,7 @@ interface CheckinTimeSetupViewProps {
   onSelectMorningTime: (t: string) => void;
   onSelectEveningTime: (t: string) => void;
   onComplete: () => void;
+  onSkip?: () => void;
 }
 
 export function CheckinTimeSetupView({
@@ -22,6 +23,7 @@ export function CheckinTimeSetupView({
   onSelectMorningTime,
   onSelectEveningTime,
   onComplete,
+  onSkip,
 }: CheckinTimeSetupViewProps) {
   const [isMorningEnabled, setIsMorningEnabled] = React.useState(true);
   const [isEveningEnabled, setIsEveningEnabled] = React.useState(true);
@@ -135,22 +137,17 @@ export function CheckinTimeSetupView({
 
       {/* 3. 하단 탐색 버튼 그룹 & 다음에 하기 고스트 버튼 */}
       <div className="flex flex-col gap-2 mt-auto pt-2 shrink-0">
-        <div className="flex gap-2.5">
-          <MagicButton onClick={onComplete} className="flex-1 py-4" rightIcon={<AnimatedArrowRightIcon size={18} />}>
-            <span className="text-sm font-bold">다음 단계로 (이달의 나 설정)</span>
-          </MagicButton>
-        </div>
+        <MagicButton onClick={onComplete} className="w-full" rightIcon={<AnimatedArrowRightIcon size={18} />}>
+          <span>다음 단계로 (이달의 나 설정)</span>
+        </MagicButton>
 
-        {/* 메인 CTA 버튼과 X축 위치 1:1 완벽 수평 정렬 */}
-        <div className="flex gap-2.5">
-          <MagicButton
-            onClick={onComplete}
-            variant="ghost"
-            className="flex-1 text-gray-400 hover:text-gray-600 font-medium py-3 text-sm"
-          >
-            <span>다음에 하기</span>
-          </MagicButton>
-        </div>
+        <MagicButton
+          onClick={onSkip || onComplete}
+          variant="ghost"
+          className="w-full"
+        >
+          <span>다음에 하기</span>
+        </MagicButton>
       </div>
     </motion.div>
   );

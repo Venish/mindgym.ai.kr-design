@@ -38,34 +38,34 @@ export function AnimatedLogoText({ className = "", height = 28 }: AnimatedLogoTe
           }
         }
 
-        /* m-i-n-d-g-y-m 7자 순차 솟구침 (1번 잎사귀가 착 꽂히는 1.00s 시점과 즉시 연결) */
+        /* m-i-n-d-g-y-m 7자 순차 솟구침 (0.35s ~ 0.93s 고속 피어남) */
         .char-m1 {
-          animation: charRiseUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-          animation-delay: 1.00s;
+          animation: charRiseUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation-delay: 0.35s;
         }
         .char-i {
-          animation: charRiseUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-          animation-delay: 1.08s;
+          animation: charRiseUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation-delay: 0.40s;
         }
         .char-n {
-          animation: charRiseUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-          animation-delay: 1.16s;
+          animation: charRiseUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation-delay: 0.45s;
         }
         .char-d {
-          animation: charRiseUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-          animation-delay: 1.24s;
+          animation: charRiseUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation-delay: 0.50s;
         }
         .char-g {
-          animation: charRiseUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-          animation-delay: 1.32s;
+          animation: charRiseUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation-delay: 0.55s;
         }
         .char-y {
-          animation: charRiseUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-          animation-delay: 1.40s;
+          animation: charRiseUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation-delay: 0.60s;
         }
         .char-m2 {
-          animation: charRiseUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-          animation-delay: 1.48s;
+          animation: charRiseUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation-delay: 0.65s;
         }
       `}</style>
       <svg

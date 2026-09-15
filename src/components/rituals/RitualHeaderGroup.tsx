@@ -1,4 +1,5 @@
 import React from "react";
+import { getRitualCategoryTheme } from "@/utils/ritualCategoryTheme";
 
 interface RitualHeaderGroupProps {
   category: string;
@@ -30,17 +31,19 @@ export function RitualHeaderGroup({
   hideMetaChips = false,
   className = "",
 }: RitualHeaderGroupProps) {
+  const catTheme = getRitualCategoryTheme(category);
+
   return (
     <div className={`flex flex-col items-center gap-1.5 text-center max-w-sm w-full mx-auto pb-2.5 ${className}`}>
       {/* 1. 카테고리 뱃지 */}
       <div className="flex items-center justify-center mb-0.5">
-        <span className="text-xs font-extrabold text-[#00C474] bg-emerald-50 px-3.5 py-1 rounded-full">
+        <span className={`text-xs font-extrabold px-3.5 py-1 rounded-full ${catTheme.badgeBg} ${catTheme.badgeText}`}>
           {category}
         </span>
       </div>
 
       {/* 2. 대형 리추얼 타이틀 */}
-      <h1 className="text-3xl font-black text-gray-900 tracking-tight leading-tight text-center">
+      <h1 className="text-3xl font-black txt-brand-ink tracking-tight leading-tight text-center">
         {title}
       </h1>
 
@@ -63,7 +66,7 @@ export function RitualHeaderGroup({
       )}
 
       {/* 4. 본문 설명 문구 (위쪽 패딩 줄이고 아래쪽 패딩 늘림) */}
-      <p className="text-sm font-medium text-gray-600 leading-relaxed tracking-normal text-center pt-0.5 pb-2.5">
+      <p className="text-sm font-medium text-theme-muted leading-relaxed tracking-normal text-center pt-0.5 pb-2.5">
         {description}
       </p>
     </div>

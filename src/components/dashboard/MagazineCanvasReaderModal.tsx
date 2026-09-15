@@ -592,7 +592,7 @@ export function MagazineCanvasReaderModal({
           className="fixed inset-0 z-[9999] flex justify-center pointer-events-none"
         >
           {/* 모바일 430px 앱 프레임 고정 래퍼 */}
-          <div className="relative w-full max-w-[430px] h-full bg-[#FDFBF7] flex flex-col overflow-hidden text-gray-900 shadow-2xl pointer-events-auto select-none">
+          <div className="relative w-full max-w-[430px] h-full bg-[#FDFBF7] dark:bg-slate-900 flex flex-col overflow-hidden text-gray-900 dark:text-slate-100 shadow-2xl pointer-events-auto select-none">
             {/* ★ 상단 좌측: 아티클 제목 영역 바로 좌측 플로팅 책갈피(Bookmark) 버튼 (미세 업 top-[1.125rem]) ★ */}
             <div className="absolute top-[1.125rem] left-[0.75rem] z-40">
               <button
@@ -601,7 +601,7 @@ export function MagazineCanvasReaderModal({
                 className={`w-[2.5rem] h-[2.5rem] rounded-full flex items-center justify-center transition-all active:scale-90 cursor-pointer ${
                   isBookmarked
                     ? "text-amber-500 hover:text-amber-600 drop-shadow-xs"
-                    : "text-gray-300 hover:text-gray-400"
+                    : "text-gray-300 dark:text-slate-600 hover:text-gray-400 dark:hover:text-slate-400"
                 }`}
                 title={isBookmarked ? "책갈피 해제" : "책갈피 추가 (즐겨찾기)"}
               >
@@ -614,7 +614,7 @@ export function MagazineCanvasReaderModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="w-[2.25rem] h-[2.25rem] rounded-full text-gray-600 hover:text-gray-900 flex items-center justify-center transition-all active:scale-90 cursor-pointer"
+                className="w-[2.25rem] h-[2.25rem] rounded-full text-gray-600 dark:text-slate-300 hover:text-gray-900 dark:hover:text-white flex items-center justify-center transition-all active:scale-90 cursor-pointer"
                 title="매거진 뷰어 닫기"
               >
                 <X size={20} weight="bold" />
@@ -633,7 +633,7 @@ export function MagazineCanvasReaderModal({
             </div>
 
             {/* ★ 상단 실시간 읽기 진행률 프로그레스 바 (Canvas와 컨트롤 바 사이에 정밀 밀착) ★ */}
-            <div className="absolute bottom-[3.75rem] left-0 right-0 h-[0.25rem] bg-gray-200/80 z-40 overflow-hidden">
+            <div className="absolute bottom-[3.75rem] left-0 right-0 h-[0.25rem] bg-gray-200/80 dark:bg-slate-800 z-40 overflow-hidden">
               <div
                 className="h-full bg-gradient-to-r from-emerald-400 to-[#00C474] transition-all duration-300 rounded-r-full shadow-2xs"
                 style={{
@@ -647,30 +647,30 @@ export function MagazineCanvasReaderModal({
             </div>
 
             {/* ★ 하단 고정 플로팅 컨트롤 바 (Play & 화살표 콤보 정중앙 absolute left-1/2 -translate-x-1/2 정렬) ★ */}
-            <div className="absolute bottom-0 left-0 right-0 h-[3.75rem] bg-white/95 backdrop-blur-md border-t border-gray-200/60 px-[0.75rem] flex items-center justify-between z-40 shadow-lg select-none">
+            <div className="absolute bottom-0 left-0 right-0 h-[3.75rem] bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-gray-200/60 dark:border-slate-800 px-[0.75rem] flex items-center justify-between z-40 shadow-lg select-none">
               {/* [맨 좌측 그룹]: 시원하게 확대된 페이지 인디케이터 & 수동 넘김 네비게이터 */}
               <div className="flex items-center gap-[0.25rem] shrink-0">
-                <div className="flex items-center gap-1.5 text-xs font-extrabold text-gray-800 tabular-nums bg-gray-100/90 rounded-full p-1 border border-gray-200/60 shadow-2xs">
+                <div className="flex items-center gap-1.5 text-xs font-extrabold text-gray-800 dark:text-slate-200 tabular-nums bg-gray-100/90 dark:bg-slate-800 rounded-full p-1 border border-gray-200/60 dark:border-slate-700 shadow-2xs">
                   <button
                     type="button"
                     disabled={currentPage <= 1}
                     onClick={() => changePage(currentPage - 1)}
-                    className="w-7 h-7 rounded-full bg-white hover:bg-gray-200 text-gray-800 flex items-center justify-center transition-all disabled:opacity-30 disabled:pointer-events-none cursor-pointer active:scale-90 shadow-2xs"
+                    className="w-7 h-7 rounded-full bg-white dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 text-gray-800 dark:text-slate-100 flex items-center justify-center transition-all disabled:opacity-30 disabled:pointer-events-none cursor-pointer active:scale-90 shadow-2xs"
                     title="이전 페이지"
                   >
-                    <CaretLeft size={16} weight="bold" />
+                    <CaretLeft size={16} weight="bold" className="text-gray-800 dark:text-slate-100" />
                   </button>
-                  <span className="px-1 text-[13px] font-black text-gray-900 select-none">
+                  <span className="px-1 text-[13px] font-black text-gray-900 dark:text-slate-100 select-none">
                     {currentPage}/{totalPages}
                   </span>
                   <button
                     type="button"
                     disabled={currentPage >= totalPages}
                     onClick={() => changePage(currentPage + 1)}
-                    className="w-7 h-7 rounded-full bg-white hover:bg-gray-200 text-gray-800 flex items-center justify-center transition-all disabled:opacity-30 disabled:pointer-events-none cursor-pointer active:scale-90 shadow-2xs"
+                    className="w-7 h-7 rounded-full bg-white dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 text-gray-800 dark:text-slate-100 flex items-center justify-center transition-all disabled:opacity-30 disabled:pointer-events-none cursor-pointer active:scale-90 shadow-2xs"
                     title="다음 페이지"
                   >
-                    <CaretRight size={16} weight="bold" />
+                    <CaretRight size={16} weight="bold" className="text-gray-800 dark:text-slate-100" />
                   </button>
                 </div>
               </div>
@@ -680,10 +680,10 @@ export function MagazineCanvasReaderModal({
                 <button
                   type="button"
                   onClick={() => handleSkipParagraph("prev")}
-                  className="w-[2.125rem] h-[2.125rem] rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 flex items-center justify-center transition-all cursor-pointer active:scale-90"
+                  className="w-[2.125rem] h-[2.125rem] rounded-full bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-200 hover:bg-gray-200 dark:hover:bg-slate-700 flex items-center justify-center transition-all cursor-pointer active:scale-90"
                   title="이전 단락 스킵"
                 >
-                  <CaretLeft size={16} weight="fill" />
+                  <CaretLeft size={16} weight="fill" className="text-gray-700 dark:text-slate-200" />
                 </button>
 
                 <button
@@ -692,7 +692,7 @@ export function MagazineCanvasReaderModal({
                   className={`w-[2.5rem] h-[2.5rem] rounded-full flex items-center justify-center transition-all cursor-pointer shrink-0 active:scale-90 shadow-sm ${
                     playerStatus === "PLAYING"
                       ? "bg-[#00C474] text-white shadow-emerald-500/20"
-                      : "bg-gray-900 text-white hover:bg-black"
+                      : "bg-gray-900 dark:bg-slate-700 text-white hover:bg-black dark:hover:bg-slate-600"
                   }`}
                   title={playerStatus === "PLAYING" ? "일시정지" : "자동 독서 시작 (Play)"}
                 >
@@ -706,10 +706,10 @@ export function MagazineCanvasReaderModal({
                 <button
                   type="button"
                   onClick={() => handleSkipParagraph("next")}
-                  className="w-[2.125rem] h-[2.125rem] rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 flex items-center justify-center transition-all cursor-pointer active:scale-90"
+                  className="w-[2.125rem] h-[2.125rem] rounded-full bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-200 hover:bg-gray-200 dark:hover:bg-slate-700 flex items-center justify-center transition-all cursor-pointer active:scale-90"
                   title="다음 단락 스킵"
                 >
-                  <CaretRight size={16} weight="fill" />
+                  <CaretRight size={16} weight="fill" className="text-gray-700 dark:text-slate-200" />
                 </button>
               </div>
 
@@ -719,7 +719,7 @@ export function MagazineCanvasReaderModal({
                 <button
                   type="button"
                   onClick={handleCycleTtsRate}
-                  className="w-[2.125rem] h-[2.125rem] rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 text-[0.6875rem] font-extrabold tracking-tighter flex items-center justify-center transition-all cursor-pointer shrink-0 tabular-nums active:scale-90"
+                  className="w-[2.125rem] h-[2.125rem] rounded-full bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 text-gray-700 dark:text-slate-200 text-[0.6875rem] font-extrabold tracking-tighter flex items-center justify-center transition-all cursor-pointer shrink-0 tabular-nums active:scale-90"
                   title="낭독/독서 속도 변경 (1.0 -> 2.0 -> 3.0 -> 0.5)"
                 >
                   {ttsRate.toFixed(1)}
@@ -733,7 +733,7 @@ export function MagazineCanvasReaderModal({
                     else if (fontSize === 17) setFontSize(20);
                     else setFontSize(15);
                   }}
-                  className="w-[2.125rem] h-[2.125rem] rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center transition-all cursor-pointer shrink-0 active:scale-90"
+                  className="w-[2.125rem] h-[2.125rem] rounded-full bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 text-gray-700 dark:text-slate-200 flex items-center justify-center transition-all cursor-pointer shrink-0 active:scale-90"
                   title="글자 크기 변경 (15px -> 17px -> 20px)"
                 >
                   <TextT size={15} weight="bold" />
@@ -745,10 +745,10 @@ export function MagazineCanvasReaderModal({
                   onClick={handleCyclePaperTheme}
                   className={`w-[2.125rem] h-[2.125rem] rounded-full flex items-center justify-center transition-all cursor-pointer shrink-0 active:scale-90 ${
                     paperTheme === "warm"
-                      ? "bg-amber-100 text-amber-800"
+                      ? "bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-200"
                       : paperTheme === "dark"
-                      ? "bg-gray-800 text-gray-100"
-                      : "bg-emerald-100 text-emerald-800"
+                      ? "bg-gray-800 dark:bg-slate-700 text-gray-100 dark:text-slate-100"
+                      : "bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-200"
                   }`}
                   title={`배경 종이 테마 변경 (현재: ${paperTheme.toUpperCase()})`}
                 >
