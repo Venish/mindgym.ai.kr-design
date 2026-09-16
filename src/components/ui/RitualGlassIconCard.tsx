@@ -170,7 +170,7 @@ export function RitualGlassIconCard({
             />
 
             {/* Core Icon Image */}
-            <div className={`relative ${iconSizeStyle} z-20 ${isLocked ? "opacity-60 grayscale-[20%]" : ""} ${borderOption === "4" ? "animate-pulse" : ""}`}>
+            <div className={`relative ${iconSizeStyle} z-20 ${isLocked ? "opacity-60 grayscale-[20%]" : ""}`}>
               <Image
                 src={iconSrc}
                 alt={name}
