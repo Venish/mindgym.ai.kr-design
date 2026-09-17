@@ -7,9 +7,17 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    // 최초 진입 시 온보딩(스플래시 슬라이드)으로 즉시 라우팅 연계
-    // 스플래시 로고 표시는 최상위 GlobalSplashProvider가 단일 전담
-    router.replace("/onboarding");
+    if (typeof window !== "undefined") {
+      const hasOnboarded =
+        localStorage.getItem("mindgym_has_onboarded") === "true" ||
+        Boolean(localStorage.getItem("mg_user_name"));
+
+      if (hasOnboarded) {
+        router.replace("/dashboard");
+      } else {
+        router.replace("/onboarding");
+      }
+    }
   }, [router]);
 
   return null;
