@@ -51,11 +51,11 @@ export function CommonErrorTemplate({
 
   const badgeBgClass =
     badgeColor === "rose"
-      ? "text-rose-600 bg-rose-50/80"
-      : "text-amber-600 bg-amber-50/80";
+      ? "text-rose-600 dark:text-rose-400 bg-rose-50/90 dark:bg-rose-950/60 border border-rose-200/60 dark:border-rose-900/40"
+      : "text-amber-600 dark:text-amber-400 bg-amber-50/90 dark:bg-amber-950/60 border border-amber-200/60 dark:border-amber-900/40";
 
   return (
-    <div className="min-h-screen w-full bg-white flex flex-col items-center justify-center p-6 text-center select-none">
+    <div className="min-h-screen w-full bg-theme-app flex flex-col items-center justify-between p-6 text-center select-none txt-brand-ink transition-colors duration-200">
       <div className="w-full max-w-sm flex flex-col items-center gap-5 my-auto">
         {/* 메인 푸터 미소 명상과 100% 동일한 RitualRainbowIconCard 대형 랜덤 아이콘 & 실제 제목 바인딩 */}
         <div className="my-2">
@@ -74,12 +74,12 @@ export function CommonErrorTemplate({
         </span>
 
         {/* 타이틀 */}
-        <h1 className="text-2xl font-black text-gray-900 tracking-tight leading-snug">
+        <h1 className="text-2xl font-black txt-brand-ink tracking-tight leading-snug">
           {title}
         </h1>
 
         {/* 본문 설명 */}
-        <div className="text-sm font-medium text-gray-600 leading-relaxed text-center font-sans">
+        <div className="text-sm font-medium text-theme-muted leading-relaxed text-center font-sans">
           {description}
         </div>
 
@@ -90,11 +90,11 @@ export function CommonErrorTemplate({
             <button
               type="button"
               onClick={onMainButtonClick}
-              className="w-full"
+              className="w-full cursor-pointer"
             >
               <MagicButton
                 type="button"
-                className="w-full bg-[#00C474] hover:bg-[#00B068] text-white font-extrabold py-3.5 rounded-2xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full"
               >
                 {mainButtonIcon}
                 <span>{mainButtonLabel}</span>
@@ -106,7 +106,7 @@ export function CommonErrorTemplate({
           <Link href="/dashboard" className="w-full">
             <MagicButton
               type="button"
-              className="w-full bg-[#00C474] hover:bg-[#00B068] text-white font-extrabold py-3.5 rounded-2xl shadow-md transition-all flex items-center justify-center cursor-pointer"
+              className="w-full"
             >
               <span>홈으로</span>
             </MagicButton>
@@ -117,7 +117,7 @@ export function CommonErrorTemplate({
             <button
               type="button"
               onClick={() => window.history.back()}
-              className="w-full py-2.5 bg-transparent hover:bg-gray-50 text-gray-500 hover:text-gray-900 font-bold text-xs transition-all flex items-center justify-center cursor-pointer"
+              className="w-full py-2.5 bg-transparent hover:bg-theme-card-subtle text-theme-muted hover:txt-brand-ink font-bold text-xs transition-all flex items-center justify-center rounded-xl cursor-pointer active:scale-[0.96]"
             >
               <span>이전 페이지로</span>
             </button>
@@ -126,7 +126,7 @@ export function CommonErrorTemplate({
       </div>
 
       {/* 대시보드 푸터와 100% 동일한 Copyright */}
-      <p className="text-[11px] text-slate-400 font-sans tracking-tight mt-6">
+      <p className="text-[11px] text-theme-muted opacity-70 font-sans tracking-tight mt-6">
         Copyright ⓒ WELLBI Inc. All rights reserved.
       </p>
     </div>
