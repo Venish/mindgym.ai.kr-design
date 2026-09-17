@@ -33,6 +33,7 @@ const RITUAL_FILTER_CATEGORIES = [
   { id: "감정 정돈", name: "감정 정돈", bg: "#F3E8FF", text: "#6B21A8", activeBg: "#A855F7", activeText: "#FFFFFF" },
   { id: "몰입과 집중", name: "몰입과 집중", bg: "#FFFBEB", text: "#B45309", activeBg: "#F59E0B", activeText: "#FFFFFF" },
   { id: "관계와 경계", name: "관계와 경계", bg: "#F0FDFA", text: "#0F766E", activeBg: "#14B8A6", activeText: "#FFFFFF" },
+  { id: "몸 챙김", name: "몸 챙김", bg: "#E0F2FE", text: "#0369A1", activeBg: "#0284C7", activeText: "#FFFFFF" },
 ];
 
 const RITUAL_CATEGORIES = [
@@ -42,6 +43,7 @@ const RITUAL_CATEGORIES = [
   "감정 정돈",
   "몰입과 집중",
   "관계와 경계",
+  "몸 챙김",
 ];
 
 // 카테고리별 고유한 리추얼 타이틀 명칭 샘플 데이터베이스
@@ -94,9 +96,17 @@ const SAMPLE_RITUAL_NAMES_BY_CAT: Record<string, string[]> = {
     "따뜻한 시선 되돌려주기",
     "소중한 사람과의 마음 경계",
   ],
+  "몸 챙김": [
+    "시선맑음",
+    "목·어깨 다독임",
+    "바디스캔 이완",
+    "손바닥 온기",
+    "바른자세 정렬",
+    "호흡 리셋",
+  ],
 };
 
-// 12_RECURRING_개발_우선순위.md 27개 표준 우선순위 리추얼 데이터셋 (27개 항목 100% 잠금 해제 오픈)
+// 12_RECURRING_개발_우선순위.md 표준 우선순위 리추얼 데이터셋
 const RECURRING_26_RITUALS: RitualData[] = [
   { id: "RT-001", title: "미소 명상", category: "휴식과 충전", time: "3분", level: "중급", duration: "한달", reward: "+30", iconNum: 1, isLocked: false, desc: "얼굴 근육의 긴장을 풀고 평온한 활력을 채우는 아침 명상입니다." },
   { id: "RT-002", title: "바디스캔 명상", category: "휴식과 충전", time: "5분", level: "중급", duration: "한달", reward: "+30", iconNum: 46, isLocked: false, desc: "불안·통증·수면에 효과적인 머리부터 발끝까지 관찰하는 이완 명상입니다." },
@@ -125,6 +135,7 @@ const RECURRING_26_RITUALS: RitualData[] = [
   { id: "RT-025", title: "화해 상상 드로잉", category: "관계와 경계", time: "3분", level: "중급", duration: "한달", reward: "+20", iconNum: 37, isLocked: false, desc: "시각화 기법으로 관계의 앙금을 푸는 드로잉 세션입니다." },
   { id: "RT-026", title: "긴장 해소 스트레칭", category: "스트레스 비우기", time: "3분", level: "초급", duration: "매일", reward: "+10", iconNum: 4, isLocked: false, desc: "굳어있는 뭉친 근육을 풀어내는 스트레칭 세션입니다." },
   { id: "RT-027", title: "스트레칭 루틴", category: "스트레스 비우기", time: "5분", level: "중급", duration: "한달", reward: "+20", iconNum: 50, isLocked: false, desc: "몸과 마음의 긴장을 부드럽게 이완하는 루틴입니다." },
+  { id: "RT-073", title: "시선맑음", category: "몸 챙김", time: "4분", level: "중급", duration: "매일", reward: "+20", iconNum: 73, isLocked: false, desc: "흐려진 시야와 흩어진 마음을 정돈하는 4단계 시지각 동체시력 리추얼입니다." },
 ];
 
 const GENERATED_72_RITUALS = RECURRING_26_RITUALS;
@@ -356,7 +367,7 @@ export function FooterMoreSheet() {
                 </h2>
               </div>
               <span className="text-xs font-bold text-theme-muted font-mono">
-                {filtered72Rituals.length} / 72
+                {filtered72Rituals.length} / 73
               </span>
             </div>
             <p className="text-xs font-semibold text-theme-muted pt-0.5">

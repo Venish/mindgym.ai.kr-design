@@ -15,10 +15,13 @@ import {
 } from "@phosphor-icons/react";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { useThemeStore } from "@/store/useThemeStore";
+import { useModalStore } from "@/store/useModalStore";
 import { soundEffects } from "@/utils/soundEffects";
+import { CommonRitualSheet } from "@/components/dashboard/CommonRitualSheet";
 
 export function ShowcaseMindSwitchBar() {
   const { theme, setTheme } = useThemeStore();
+  const { openModal } = useModalStore();
   const [activeSwitches, setActiveSwitches] = useState<Record<string, boolean>>({});
   const [rewardToast, setRewardToast] = useState<{ show: boolean; title: string } | null>(null);
 
@@ -130,59 +133,70 @@ export function ShowcaseMindSwitchBar() {
     } catch (err) {}
   };
 
+  // 시선 맑음 (RT-073) 실행 핸들러
+  const handleOpenEyeFocus = () => {
+    openModal({
+      type: "slide-left",
+      content: (
+        <CommonRitualSheet
+          ritualId="RT-073"
+          ritualTitle="시선맑음"
+          ritualCategory="몸 챙김"
+          ritualTime="4분"
+          description="장시간 화면 응시로 경직된 안구 근육을 이완하고, 신경안과학 기반 DVA 4단계 시지각 트레이닝으로 맑은 시야를 되찾는 회복 리추얼입니다."
+        />
+      ),
+    });
+  };
+
   const isDarkModeOn = theme === "dark" || activeSwitches["switch-mode"];
   // 스크린 OFF 팝업이 열려있거나 activeSwitches가 켜져 있을 때 ON, 팝업 닫히면 무조건 OFF
   const isDetoxOn = screenOffSeconds !== null && !!activeSwitches["switch-detox"];
 
   return (
     <div className="flex flex-col gap-2.5 w-full relative select-none">
-      {/* 1. 중제 (Section Title) */}
-      <SectionTitle title="마음 스위치" />
+      {/* 1. 중제 (Section Title: '스위치') */}
+      <SectionTitle title="스위치" />
 
-      {/* 2. 한 라인 2열 그리드 (좌: 비스듬한 순수 CSS 키보드 키캡 / 우: 스크린 OFF 카드) */}
-      <div className="grid grid-cols-2 gap-3.5 w-full items-stretch">
+      {/* 2. 한 라인 3열 그리드 (모드 전환 / 스크린 OFF / 시선 맑음) */}
+      <div className="grid grid-cols-3 gap-2.5 w-full items-stretch">
         
-        {/* [왼쪽] 모드 전환: 배경 박스 없이 순수 CSS로 비스듬하게 깎인 3D 기계식 키보드 키캡 */}
+        {/* [1열] 모드 전환: 배경 박스 없이 순수 3D 키보드 키캡 노출 */}
         <div
-          className="relative flex flex-col justify-between p-3 select-none"
+          className="relative flex flex-col justify-between p-2 select-none min-h-[128px]"
           style={{ perspective: "800px" }}
         >
-          {/* 상단 텍스트 라벨 (배경 카드 없이 깔끔하게 표시) */}
-          <div className="flex items-center justify-between z-10">
-            <div className="flex flex-col">
-              <span className="text-xs font-black tracking-tight txt-brand-ink">
-                모드 전환
-              </span>
-              <span className="text-[10px] font-bold text-theme-muted">
-                {isDarkModeOn ? "DARK" : "LIGHT"}
-              </span>
-            </div>
+          {/* 상단 텍스트 라벨 */}
+          <div className="flex flex-col text-left">
+            <span className="text-xs font-black tracking-tight txt-brand-ink truncate">
+              모드 전환
+            </span>
             <span
-              className={`text-[9px] font-mono font-black px-1.5 py-0.5 rounded transition-colors ${
+              className={`text-[9px] font-bold mt-1 px-1.5 py-0.5 rounded-md inline-block w-fit transition-colors ${
                 isDarkModeOn
-                  ? "bg-indigo-500/20 text-indigo-300 border border-indigo-400/30"
-                  : "bg-theme-card-subtle text-theme-muted"
+                  ? "bg-indigo-500/20 text-indigo-300 font-extrabold"
+                  : "bg-theme-card-subtle text-theme-muted font-bold"
               }`}
             >
-              KEY
+              {isDarkModeOn ? "DARK" : "LIGHT"}
             </span>
           </div>
 
-          {/* 중앙~하단: 순수 3D 아이소메트릭 솟아오른 기계식 키캡 (Keycap) */}
-          <div className="mt-0.5 mb-2.5 flex items-center justify-center pt-0 pb-1.5 h-13 relative">
+          {/* 중앙~하단: 3D 아이소메트릭 키캡 */}
+          <div className="my-auto flex items-center justify-center pt-1">
             <motion.div
               onPointerDown={handleKeyDown}
               onPointerUp={handleKeyUp}
               onPointerLeave={handleKeyLeave}
               animate={{
-                y: isKeyPressed ? 4 : isDarkModeOn ? 2 : 0,
+                y: isKeyPressed ? 3 : isDarkModeOn ? 2 : 0,
                 boxShadow: isKeyPressed
                   ? isDarkModeOn
                     ? "0 1px 0 #1E1B4B, 0 2px 4px rgba(30,27,75,0.4)"
                     : "0 1px 0 #CBD5E1, 0 2px 4px rgba(148,163,184,0.2)"
                   : isDarkModeOn
-                  ? "0 4px 0 #1E1B4B, 0 8px 16px rgba(30,27,75,0.6)"
-                  : "0 5px 0 #CBD5E1, 0 8px 16px rgba(100,116,139,0.25)",
+                  ? "0 3px 0 #1E1B4B, 0 6px 12px rgba(30,27,75,0.6)"
+                  : "0 4px 0 #CBD5E1, 0 6px 12px rgba(100,116,139,0.25)",
               }}
               transition={{
                 type: "spring",
@@ -194,67 +208,56 @@ export function ShowcaseMindSwitchBar() {
                 transform: "rotateX(14deg) rotateY(-8deg) rotateZ(1deg)",
                 transformStyle: "preserve-3d",
               }}
-              className={`w-24 h-11 rounded-xl flex items-center justify-between px-3 cursor-pointer border select-none transition-colors duration-200 ${
+              className={`w-full h-10 rounded-xl flex items-center justify-between px-2.5 cursor-pointer border select-none transition-colors duration-200 ${
                 isDarkModeOn
                   ? "bg-gradient-to-b from-[#4338CA] via-[#3730A3] to-[#312E81] border-indigo-400/40 text-white"
                   : "bg-gradient-to-b from-[#FFFFFF] via-[#F8FAFC] to-[#F1F5F9] border-slate-300 text-slate-800"
               }`}
             >
-              {/* 키캡 좌상단 미니 각인 */}
-              <div className="flex flex-col items-start leading-none">
-                <span
-                  className={`text-[8px] font-black font-mono tracking-tighter ${
-                    isDarkModeOn ? "text-indigo-200" : "text-slate-400"
-                  }`}
-                >
-                  MODE
-                </span>
-                <span
-                  className={`text-[10px] font-black font-mono tracking-tight mt-0.5 ${
-                    isDarkModeOn ? "text-amber-300" : "text-slate-800"
-                  }`}
-                >
-                  {isDarkModeOn ? "NIGHT" : "DAY"}
-                </span>
-              </div>
+              <span
+                className={`text-[9px] font-black font-mono tracking-tight ${
+                  isDarkModeOn ? "text-amber-300" : "text-slate-800"
+                }`}
+              >
+                {isDarkModeOn ? "NIGHT" : "DAY"}
+              </span>
 
-              {/* 키캡 우측 아이콘 (점 제거 후 단독 심볼 배치) */}
               <div className="flex items-center justify-center">
                 {isDarkModeOn ? (
-                  <Moon size={20} weight="fill" className="text-amber-300 drop-shadow-sm" />
+                  <Moon size={16} weight="fill" className="text-amber-300 drop-shadow-sm" />
                 ) : (
-                  <Sun size={20} weight="fill" className="text-amber-500 drop-shadow-sm" />
+                  <Sun size={16} weight="fill" className="text-amber-500 drop-shadow-sm" />
                 )}
               </div>
             </motion.div>
           </div>
         </div>
 
-        {/* [오른쪽] 스크린 OFF 카드: 작은 서브 박스 없이 큰 핸드폰 아이콘 단독 노출 */}
+        {/* [2열] 스크린 OFF: 오프먼트 1분 디톡스 */}
         <div
           onClick={handleToggleDetox}
-          className={`flex items-center justify-between p-3.5 rounded-2xl transition-all cursor-pointer group border ${
+          className={`flex flex-col justify-between p-2.5 rounded-2xl transition-all cursor-pointer group border min-h-[128px] ${
             isDetoxOn
               ? "bg-sky-50/80 dark:bg-sky-950/40 border-sky-300 dark:border-sky-800 shadow-2xs"
-              : "bg-theme-card border-theme-subtle hover:border-gray-300 dark:hover:border-slate-700 shadow-2xs"
+              : "bg-theme-card border-theme-subtle hover:border-sky-300 dark:hover:border-sky-700 shadow-2xs"
           }`}
         >
-          {/* 좌측 텍스트 라벨 */}
+          {/* 상단 텍스트 라벨 */}
           <div className="flex flex-col text-left">
-            <span className="text-xs font-black tracking-tight leading-tight txt-brand-ink">
+            <span className="text-xs font-black tracking-tight txt-brand-ink truncate">
               스크린 OFF
             </span>
             <span
-              className={`text-[10px] font-bold mt-1.5 px-1.5 py-0.5 rounded-md inline-block w-fit transition-colors ${
+              className={`text-[9px] font-bold mt-1 px-1.5 py-0.5 rounded-md inline-block w-fit transition-colors ${
                 isDetoxOn ? "bg-sky-500 text-white font-extrabold" : "bg-theme-card-subtle text-theme-muted font-bold"
               }`}
             >
-              {isDetoxOn ? "ON" : "오프먼트"}
+              {isDetoxOn ? "ON" : "1분 쉼"}
             </span>
           </div>
 
-          {/* 우측: 원래 해당 리추얼(RT-051 오프먼트) 전용 3D 아이콘 대형 노출 */}
-          <div className="flex items-center justify-center -my-2 -mr-1 shrink-0">
+          {/* 중앙~하단: 3D 오프먼트 아이콘 */}
+          <div className="my-auto flex items-center justify-center pt-0.5">
             <motion.div
               whileTap={{ scale: 0.92 }}
               animate={{
@@ -262,14 +265,48 @@ export function ShowcaseMindSwitchBar() {
                 rotate: isDetoxOn ? [0, -4, 4, 0] : 0,
               }}
               transition={{ duration: 0.3 }}
-              className="relative w-16 h-16 flex items-center justify-center"
+              className="relative w-12 h-12 flex items-center justify-center"
             >
               <Image
                 src="/images/icons/051_오프먼트.png"
                 alt="오프먼트 리추얼"
-                width={64}
-                height={64}
-                className="w-16 h-16 object-contain drop-shadow-md select-none pointer-events-none"
+                width={48}
+                height={48}
+                className="w-12 h-12 object-contain drop-shadow-md select-none pointer-events-none"
+                priority
+              />
+            </motion.div>
+          </div>
+        </div>
+
+        {/* [3열] 시선 맑음: RT-073 시지각 회복 리추얼 */}
+        <div
+          onClick={handleOpenEyeFocus}
+          className="flex flex-col justify-between p-2.5 rounded-2xl bg-theme-card border border-theme-subtle hover:border-[#0284C7] dark:hover:border-sky-500 shadow-2xs transition-all cursor-pointer group active:scale-[0.98] min-h-[128px]"
+        >
+          {/* 상단 텍스트 라벨 */}
+          <div className="flex flex-col text-left">
+            <span className="text-xs font-black tracking-tight txt-brand-ink truncate">
+              시선 맑음
+            </span>
+            <span className="text-[9px] font-bold text-sky-800 dark:text-sky-300 bg-sky-100/80 dark:bg-sky-950/60 mt-1 px-1.5 py-0.5 rounded-md inline-block w-fit">
+              눈 피로
+            </span>
+          </div>
+
+          {/* 중앙~하단: 3D 시선맑음 아이콘 */}
+          <div className="my-auto flex items-center justify-center pt-0.5">
+            <motion.div
+              whileHover={{ scale: 1.06 }}
+              whileTap={{ scale: 0.92 }}
+              className="relative w-12 h-12 flex items-center justify-center"
+            >
+              <Image
+                src="/images/icons/073_시선맑음.png"
+                alt="시선맑음 리추얼"
+                width={48}
+                height={48}
+                className="w-12 h-12 object-contain drop-shadow-md select-none pointer-events-none"
                 priority
               />
             </motion.div>

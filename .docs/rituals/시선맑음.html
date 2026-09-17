@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>맑은 시선 - 마음을 맑게 하는 4분 시선 리추얼</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter & Pretendard fallback -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;800;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background-color: #060a12;
+      color: #f1f5f9;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    
+    /* Light Mode Overrides */
+    body.light-theme {
+      background-color: #f1f5f9;
+      color: #0f172a;
+    }
+    body.light-theme .glass-card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(203, 213, 225, 0.85);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    }
+    body.light-theme #trainCanvas {
+      background-color: #f8fafc;
+    }
+    body.light-theme .text-white {
+      color: #0f172a !important;
+    }
+    body.light-theme .text-slate-300 {
+      color: #334155 !important;
+    }
+    body.light-theme .text-slate-400 {
+      color: #64748b !important;
+    }
+    body.light-theme .bg-slate-950 {
+      background-color: #f8fafc !important;
+    }
+    body.light-theme .bg-slate-900\/60,
+    body.light-theme .bg-slate-900\/80,
+    body.light-theme .bg-slate-900\/90,
+    body.light-theme .bg-slate-900 {
+      background-color: #ffffff !important;
+      border-color: #e2e8f0 !important;
+    }
+    body.light-theme .border-slate-800,
+    body.light-theme .border-slate-700 {
+      border-color: #e2e8f0 !important;
+    }
+    body.light-theme #startOverlay,
+    body.light-theme #answerPadOverlay {
+      background-color: rgba(248, 250, 252, 0.94) !important;
+    }
+    body.light-theme .num-btn {
+      background-color: #f1f5f9 !important;
+      color: #0f172a !important;
+      border-color: #cbd5e1 !important;
+    }
+    body.light-theme .num-btn:hover {
+      background-color: #4f46e5 !important;
+      color: #ffffff !important;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    canvas {
+      touch-action: none;
+      user-select: none;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col font-sans antialiased overflow-x-hidden">
+
+  <!-- Header -->
+  <header class="w-full glass-card sticky top-0 z-50 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-2">
+            <span>맑은 시선</span>
+            <span class="text-xs bg-indigo-500/20 text-indigo-300 font-semibold px-2 py-0.5 rounded-full border border-indigo-500/30">마인드 리추얼</span>
+          </h1>
+          <p class="text-xs text-slate-400 hidden sm:block">흐려진 시야와 흩어진 마음을 정돈하는 4분 시선 리추얼</p>
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="flex items-center space-x-2">
+        <!-- Theme Mode Toggle Button (Smart Sensing & Professional Wording) -->
+        <button id="themeToggleBtn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700 transition text-xs font-semibold" title="배경 디스플레이 환경 전환">
+          <span id="themeIcon">☀️</span>
+          <span id="themeLabel" class="hidden sm:inline">자연 조도 모드</span>
+        </button>
+        <!-- Sound Toggle -->
+        <button id="soundToggleBtn" class="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700 transition" title="소리 켜기/끄기">
+          <svg id="soundIconOn" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+          </svg>
+          <svg id="soundIconOff" class="w-4 h-4 hidden text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path>
+          </svg>
+        </button>
+        <!-- Scientific Principle Modal Trigger -->
+        <button id="theoryModalBtn" class="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 hover:bg-indigo-500/30 transition">
+          <span>🧠</span>
+          <span>의학적 원리</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-4 flex-1 flex flex-col gap-4 sm:gap-6">
+    
+    <!-- Routine or Custom Mode Indicator / Selector Header -->
+    <div class="glass-card rounded-2xl p-3 sm:p-4 flex flex-wrap items-center justify-between gap-3 border border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center font-bold text-lg" id="sessionTypeBadge">
+          ✨
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30" id="trainingModeBadge">오늘의 4분 리추얼</span>
+            <span class="text-xs text-slate-400" id="routineStepBadge">세트 1/4 준비 중</span>
+          </div>
+          <div class="text-xs sm:text-sm font-semibold text-white mt-0.5" id="sessionMainTitle">잡념을 비우고 시선에 몰입하는 4단계 시지각 코스 (약 4분 소요)</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="switchRoutineBtn" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-indigo-600 text-white shadow">
+          오늘의 4분 리추얼
+        </button>
+        <button id="switchCustomBtn" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-slate-800 text-slate-300 hover:text-white border border-slate-700">
+          개별 모드 선택
+        </button>
+      </div>
+    </div>
+
+    <!-- Mode Selection Tabs (Shown when in Custom Individual Mode) -->
+    <div id="individualTabsContainer" class="grid grid-cols-2 md:grid-cols-4 gap-2 transition duration-200">
+      <button data-mode="transit" class="mode-tab active-mode p-3 rounded-xl text-left border transition flex flex-col justify-between bg-indigo-600/20 border-indigo-500 text-white shadow-md shadow-indigo-500/10">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-indigo-300">Mode 1</span>
+          <span class="text-base">🏎️</span>
+        </div>
+        <div class="font-bold text-sm">고속 횡단 추적</div>
+        <div class="text-[11px] text-slate-400 mt-0.5">질주하는 타깃 시선 추적</div>
+      </button>
+
+      <button data-mode="flash" class="mode-tab p-3 rounded-xl text-left border border-slate-800 bg-slate-900/60 hover:bg-slate-800/50 text-slate-300 transition flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-cyan-300">Mode 2</span>
+          <span class="text-base">⚡</span>
+        </div>
+        <div class="font-bold text-sm">순간 플래시 인지</div>
+        <div class="text-[11px] text-slate-400 mt-0.5">초단시간 노출 기호 포착</div>
+      </button>
+
+      <button data-mode="saccade" class="mode-tab p-3 rounded-xl text-left border border-slate-800 bg-slate-900/60 hover:bg-slate-800/50 text-slate-300 transition flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-300">Mode 3</span>
+          <span class="text-base">🎯</span>
+        </div>
+        <div class="font-bold text-sm">급속 안구 도약</div>
+        <div class="text-[11px] text-slate-400 mt-0.5">돌발 타깃 즉각 클릭/터치</div>
+      </button>
+
+      <button data-mode="peripheral" class="mode-tab p-3 rounded-xl text-left border border-slate-800 bg-slate-900/60 hover:bg-slate-800/50 text-slate-300 transition flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-amber-300">Mode 4</span>
+          <span class="text-base">👁️</span>
+        </div>
+        <div class="font-bold text-sm">주변시야 확장</div>
+        <div class="text-[11px] text-slate-400 mt-0.5">중심 고정 & 주변 자극 인지</div>
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 flex-1 items-start">
+      
+      <!-- Interactive Canvas Area (Left 8 cols) -->
+      <div class="lg:col-span-8 flex flex-col gap-3">
+        <div id="canvasWrapper" class="relative w-full rounded-2xl overflow-hidden glass-card border border-slate-800 shadow-2xl flex flex-col items-center justify-center min-h-[380px] sm:min-h-[440px] bg-slate-950">
+          
+          <!-- Interactive Canvas -->
+          <canvas id="trainCanvas" class="w-full h-full block cursor-crosshair"></canvas>
+
+          <!-- Start Overlay Screen -->
+          <div id="startOverlay" class="absolute inset-0 bg-slate-950/85 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center z-10 transition-opacity">
+            <div id="modeBadgeIcon" class="w-16 h-16 rounded-2xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center text-3xl mb-4 shadow-lg shadow-indigo-500/20 animate-bounce">
+              🌿
+            </div>
+            <h2 id="overlayTitle" class="text-2xl sm:text-3xl font-extrabold text-white mb-2">오늘의 맑은 시선 시작</h2>
+            <p id="overlayDesc" class="text-slate-300 text-xs sm:text-sm max-w-md mb-6 leading-relaxed">
+              [1단계: 고속 횡단 추적] → [2단계: 순간 플래시] → [3단계: 급속 도약] → [4단계: 주변시야 확장]을 각 10회씩 편안한 호흡과 함께 진행합니다.
+            </p>
+            <div class="flex flex-wrap items-center justify-center gap-3">
+              <button id="startBtn" class="px-8 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-cyan-500 hover:from-indigo-600 hover:to-cyan-600 font-bold text-white shadow-lg shadow-indigo-500/30 hover:scale-[1.02] active:scale-[0.98] transition flex items-center gap-2 text-sm sm:text-base">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span id="startBtnText">4분 리추얼 시작하기</span>
+              </button>
+            </div>
+            <div class="text-[11px] text-slate-500 mt-4">
+              💡 팁: 어깨의 힘을 빼고 눈동자만 부드럽게 움직여 보세요. 잡념이 걷히고 시야가 맑아집니다.
+            </div>
+          </div>
+
+          <!-- Eye Rest Interval Overlay (Between Routine Sets) -->
+          <div id="restIntervalOverlay" class="absolute inset-0 bg-slate-950/95 backdrop-blur-md hidden flex flex-col items-center justify-center p-6 text-center z-25">
+            <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-3xl mb-3 animate-pulse">
+              🍵
+            </div>
+            <h3 class="text-xl sm:text-2xl font-black text-white mb-1">한 세트 완료, 맑은 쉼의 시간</h3>
+            <p class="text-xs sm:text-sm text-slate-300 max-w-sm mb-4 leading-relaxed">
+              화면에서 시선을 떼고 <b>먼 곳(창밖 6m 이상)을 편안히 바라보며 깊게 숨을 들이마시고 내쉬어보세요.</b> 눈과 마음의 긴장이 함께 내려앉습니다.
+            </p>
+            <div class="text-4xl font-black text-emerald-400 mb-4 tracking-wider" id="restTimerCount">
+              15
+            </div>
+            <button id="skipRestBtn" class="px-5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 text-xs font-semibold transition">
+              충분히 쉬었어요, 다음 단계로 ⏩
+            </button>
+          </div>
+
+          <!-- Answer Keypad Overlay -->
+          <div id="answerPadOverlay" class="absolute inset-0 bg-slate-950/90 backdrop-blur-md hidden flex flex-col items-center justify-center p-4 z-20 transition">
+            <h3 class="text-base sm:text-lg font-bold text-slate-200 mb-1">포착한 번호 또는 방향을 누르세요</h3>
+            <p class="text-xs text-slate-400 mb-4" id="answerPadHint">가장 먼저 떠오른 잔상을 선택하세요</p>
+            
+            <!-- Number keypad container -->
+            <div id="numberPad" class="grid grid-cols-3 gap-2 sm:gap-2.5 w-60 max-w-full mb-3">
+              <!-- Buttons 1 to 9 generated via JS -->
+            </div>
+
+            <!-- Direction arrow keypad container -->
+            <div id="directionPad" class="hidden grid-cols-3 gap-2 sm:gap-2.5 w-56 max-w-full mb-3">
+              <div></div>
+              <button data-val="UP" class="dir-btn p-3.5 rounded-xl bg-slate-800 hover:bg-indigo-600 text-xl font-bold flex items-center justify-center border border-slate-700 active:scale-95 transition text-white">⬆️</button>
+              <div></div>
+              <button data-val="LEFT" class="dir-btn p-3.5 rounded-xl bg-slate-800 hover:bg-indigo-600 text-xl font-bold flex items-center justify-center border border-slate-700 active:scale-95 transition text-white">⬅️</button>
+              <div class="p-2 flex items-center justify-center text-slate-500 text-xs font-semibold">방향</div>
+              <button data-val="RIGHT" class="dir-btn p-3.5 rounded-xl bg-slate-800 hover:bg-indigo-600 text-xl font-bold flex items-center justify-center border border-slate-700 active:scale-95 transition text-white">➡️</button>
+              <div></div>
+              <button data-val="DOWN" class="dir-btn p-3.5 rounded-xl bg-slate-800 hover:bg-indigo-600 text-xl font-bold flex items-center justify-center border border-slate-700 active:scale-95 transition text-white">⬇️</button>
+              <div></div>
+            </div>
+
+            <div class="text-[11px] text-slate-500">PC 사용자는 키보드 숫자키(1~9) 또는 방향키를 누르셔도 됩니다.</div>
+          </div>
+
+          <!-- Feedback Toast Notification -->
+          <div id="feedbackToast" class="absolute top-4 pointer-events-none px-4 py-2 rounded-full font-bold text-xs sm:text-sm tracking-wide transform -translate-y-10 opacity-0 transition duration-300 z-30 shadow-lg"></div>
+
+        </div>
+
+        <!-- Session Progress and Controls Bar -->
+        <div class="glass-card rounded-xl p-3 flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm">
+          <div class="flex items-center gap-3 sm:gap-4">
+            <span class="text-slate-400">진행: <b id="currentRoundText" class="text-white font-bold">0 / 10</b></span>
+            <span class="text-slate-400">정답률: <b id="accuracyRateText" class="text-cyan-400 font-bold">0%</b></span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="resetSessionBtn" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-300 transition">
+              다시 시작
+            </button>
+            <button id="stopSessionBtn" class="px-3 py-1.5 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 text-xs font-semibold transition hidden">
+              일시정지
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sidebar Control & Live Metrics (Right 4 cols) -->
+      <div class="lg:col-span-4 flex flex-col gap-3 sm:gap-4">
+        
+        <!-- Live Performance Metrics -->
+        <div class="glass-card rounded-2xl p-4 sm:p-5 border border-slate-800 flex flex-col gap-3">
+          <h3 class="text-xs font-bold tracking-wider uppercase text-slate-400 flex items-center justify-between">
+            <span>실시간 측정 지표</span>
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          </h3>
+
+          <div class="grid grid-cols-2 gap-2.5">
+            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+              <div class="text-[11px] text-slate-400 mb-0.5">최근 반응 시간</div>
+              <div class="text-xl sm:text-2xl font-black text-indigo-300"><span id="metricReactionTime">0</span><span class="text-xs font-normal text-slate-500 ml-1">ms</span></div>
+            </div>
+            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+              <div class="text-[11px] text-slate-400 mb-0.5">평균 반응 시간</div>
+              <div class="text-xl sm:text-2xl font-black text-cyan-300"><span id="metricAvgReaction">0</span><span class="text-xs font-normal text-slate-500 ml-1">ms</span></div>
+            </div>
+            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+              <div class="text-[11px] text-slate-400 mb-0.5">적중 / 오답</div>
+              <div class="text-lg sm:text-xl font-bold text-white"><span id="metricHits" class="text-emerald-400">0</span> / <span id="metricMisses" class="text-rose-400">0</span></div>
+            </div>
+            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+              <div class="text-[11px] text-slate-400 mb-0.5">종합 인지 점수</div>
+              <div class="text-xl sm:text-2xl font-black text-amber-300" id="metricScore">0</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Custom Parameter Adjustment -->
+        <div class="glass-card rounded-2xl p-4 sm:p-5 border border-slate-800 flex flex-col gap-3">
+          <h3 class="text-xs font-bold tracking-wider uppercase text-slate-400">난이도 및 속도 튜닝</h3>
+
+          <!-- Difficulty Preset buttons -->
+          <div class="grid grid-cols-3 gap-1.5 p-1 bg-slate-900/90 rounded-xl border border-slate-800 text-xs font-bold">
+            <button class="diff-btn py-1.5 rounded-lg text-slate-400 hover:text-white transition" data-diff="easy">초급</button>
+            <button class="diff-btn py-1.5 rounded-lg active-diff bg-indigo-600 text-white transition shadow" data-diff="normal">표준</button>
+            <button class="diff-btn py-1.5 rounded-lg text-slate-400 hover:text-white transition" data-diff="hard">엘리트</button>
+          </div>
+
+          <!-- Speed slider -->
+          <div>
+            <div class="flex justify-between text-xs font-semibold mb-1">
+              <span class="text-slate-300">타깃 이동 속도</span>
+              <span id="speedValueLabel" class="text-indigo-400">보통 (1.0x)</span>
+            </div>
+            <input id="speedSlider" type="range" min="0.5" max="2.4" step="0.1" value="1.0" class="w-full accent-indigo-500 bg-slate-800 rounded-lg cursor-pointer h-1.5">
+          </div>
+
+          <!-- Flash exposure slider (Flash Mode) -->
+          <div id="exposureContainer" class="hidden">
+            <div class="flex justify-between text-xs font-semibold mb-1">
+              <span class="text-slate-300">플래시 노출 시간</span>
+              <span id="exposureValueLabel" class="text-cyan-400">180 ms</span>
+            </div>
+            <input id="exposureSlider" type="range" min="40" max="450" step="10" value="180" class="w-full accent-cyan-400 bg-slate-800 rounded-lg cursor-pointer h-1.5">
+          </div>
+
+          <!-- Target Symbol Type -->
+          <div>
+            <span class="text-xs font-semibold text-slate-300 block mb-1.5">타깃 유형</span>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <button id="targetTypeNumber" class="p-2 rounded-lg bg-indigo-600/30 text-indigo-200 border border-indigo-500 font-semibold text-center transition">숫자 (1~9)</button>
+              <button id="targetTypeArrow" class="p-2 rounded-lg bg-slate-900 text-slate-400 border border-slate-800 hover:bg-slate-800 font-semibold text-center transition">화살표 방향</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Scientific Educational Section -->
+    <section class="glass-card rounded-2xl p-5 sm:p-7 border border-slate-800">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-5 pb-5 border-b border-slate-800">
+        <div>
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-1.5">
+            <span>🔬 신경안과학 및 스포츠 비전 검증</span>
+          </div>
+          <h2 class="text-lg sm:text-xl font-bold text-white">동체시력(DVA)이 훈련을 통해 향상되는 의학적 이유</h2>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1">
+            정지시력(안과 시력검사표 1.0)과 달리, 동체시력은 <b>외안근 신경근 조절</b>과 <b>뇌 시각 피질의 정보 압축 신경망</b>이 결정하므로 후천적 트레이닝으로 뚜렷하게 발달합니다.
+          </p>
+        </div>
+      </div>
+
+      <!-- Dark Mode & Eye Health Clinical Clarification -->
+      <div class="mb-5 p-4 rounded-xl bg-indigo-950/40 border border-indigo-500/30 text-xs sm:text-sm text-slate-300 leading-relaxed">
+        <div class="flex items-center gap-2 mb-2 font-bold text-indigo-300 text-xs sm:text-sm">
+          <span>💡 의학 상식: "다크 모드와 시력의 진실"</span>
+        </div>
+        <ul class="list-disc pl-5 space-y-1.5 text-xs text-slate-300">
+          <li><b>긴 글 독서 시 다크모드의 단점:</b> 어두운 배경에서는 동공이 확대되어 카메라 조리개가 열린 것처럼 <b>초점 심도가 얕아지고, 난시가 있는 경우 글자 주변으로 빛 번짐(Halation)</b>이 심해져 모양체근 피로가 높아집니다.</li>
+          <li><b>동체시력 훈련에서 어두운 배경을 쓰는 이유:</b> 고정된 텍스트를 읽는 것과 달리, 찰나의 순간(40~200ms)에 움직임을 포착할 때는 <b>망막의 거대세포(M-cell) 경로를 자극하는 강한 휘도 대비(Luminance Contrast)</b>가 운동신경 반응을 가장 빠르게 촉발하기 때문입니다.</li>
+          <li><b>맞춤 권장:</b> 난시가 있거나 환한 실내에서는 상단의 <b>[☀️ 라이트 모드]</b>로 전환하여 훈련하세요. 동공이 수축되어 기호가 더 또렷하게 맺힙니다.</li>
+        </ul>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+        
+        <!-- Pillar 1 -->
+        <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800/80">
+          <div class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-sm mb-3">
+            01
+          </div>
+          <h3 class="text-sm font-bold text-white mb-1.5">6개 외안근의 협응 및 지연시간(Lag) 단축</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            눈을 움직이는 6개의 외안근(직근 4개, 사근 2개)의 수축·이완 속도가 개선되어, 물체를 미끄러지듯 따라가는 <b>원활추구안구운동(Smooth Pursuit)</b>과 시선을 즉각 도약시키는 <b>도약안구운동(Saccade)</b>의 지연 시간이 획기적으로 줄어듭니다.
+          </p>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800/80">
+          <div class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-sm mb-3">
+            02
+          </div>
+          <h3 class="text-sm font-bold text-white mb-1.5">뇌 시각피질(MT/V5)의 신경가소성</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            망막을 거쳐 후두엽 V1 및 운동시각중추(MT/V5)로 이어지는 신경망이 고속 훈련에 적응합니다. 적은 프레임 정보만 들어와도 뇌가 형태를 즉시 재구성하는 <b>신경가소성(Neuroplasticity)</b>이 일어나 "공이 멈춘 것처럼 또렷하게 보이는 현상"을 경험하게 됩니다.
+          </p>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800/80">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm mb-3">
+            03
+          </div>
+          <h3 class="text-sm font-bold text-white mb-1.5">전정안구반사(VOR)와 주변시 확장</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            고개가 흔들리거나 몸이 이동하는 순간에도 망막 중심와(Fovea)에 상을 안정적으로 맺히게 하는 전정안구반사가 조율됩니다. 또한 120° 이상의 <b>주변시야(Peripheral Vision)</b> 감지력이 발달해 운전 및 구기 스포츠 반응성이 직결 상승합니다.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Theoretical Science Modal -->
+  <div id="theoryModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="glass-card max-w-2xl w-full rounded-2xl border border-slate-700 max-h-[90vh] overflow-y-auto no-scrollbar flex flex-col p-5 sm:p-6">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="p-1.5 rounded-lg bg-indigo-500/20 text-indigo-400">🧠</span>
+          <h3 class="text-base sm:text-lg font-bold text-white">동체시력(DVA)의 과학적 작동 메커니즘</h3>
+        </div>
+        <button id="closeTheoryModal" class="text-slate-400 hover:text-white p-1 rounded-lg">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <div class="py-4 space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed">
+        <div>
+          <h4 class="font-bold text-white mb-1">1. 정지시력 vs 동체시력의 본질적 차이</h4>
+          <p>
+            정지시력(Static Visual Acuity)은 가만히 고정된 대상의 디테일을 보는 능력으로, 안구 각막과 수정체의 굴절력(디옵터)에 의해 결정됩니다. 반면 <b>동체시력(Dynamic Visual Acuity)</b>은 빠르게 이동하는 대상의 궤적을 안구가 추종하며, 뇌가 짧은 시간 동안 유입된 망막 신호를 얼마나 신속히 처리하느냐에 따른 <b>'신경근 인지 속도'</b>의 문제입니다.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-white mb-1">2. 스포츠 및 의학적 재활 적용</h4>
+          <p>
+            이비인후과 및 신경과에서는 어지럼증이나 뇌진탕 환자의 시각 안정화를 위해 <b>전정안구반사(VOR) 적응 운동</b>을 처방합니다. 또한 메이저리그 야구 선수, F1 레이서, 프로 배구·테니스 선수들은 시속 150km가 넘는 공의 솔기나 회전을 순간적으로 읽기 위해 이와 같은 플래시·도약 훈련을 일상 루틴으로 수행합니다.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-white mb-1">3. 올바른 훈련 루틴 권장사항</h4>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>1회 훈련 시간은 5분~10분 정도로 짧고 집중도 있게 진행하십시오.</li>
+            <li>훈련 후에는 손바닥을 비벼 온기를 만들어 눈 위에 가볍게 얹는 '파밍(Palming)'을 하거나 먼 곳(6m 이상)을 20초간 바라보며 외안근의 긴장을 풀어주십시오.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-slate-800 flex justify-end">
+        <button id="closeTheoryModalBottom" class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-bold text-white text-xs transition">
+          확인 완료
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * Web Audio API Synthesizer (Zero External Dependencies)
+     */
+    class SoundFX {
+      constructor() {
+        this.audioCtx = null;
+        this.enabled = true;
+      }
+
+      init() {
+        if (!this.audioCtx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) {
+            try {
+              this.audioCtx = new AudioContext();
+            } catch (e) {
+              console.warn("AudioContext init error", e);
+            }
+          }
+        }
+        if (this.audioCtx && this.audioCtx.state === 'suspended') {
+          this.audioCtx.resume().catch(() => {});
+        }
+      }
+
+      playTone(freq, type, duration, gainValue = 0.12) {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.audioCtx) return;
+
+        try {
+          const osc = this.audioCtx.createOscillator();
+          const gainNode = this.audioCtx.createGain();
+
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, this.audioCtx.currentTime);
+
+          gainNode.gain.setValueAtTime(gainValue, this.audioCtx.currentTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.0001, this.audioCtx.currentTime + duration);
+
+          osc.connect(gainNode);
+          gainNode.connect(this.audioCtx.destination);
+
+          osc.start();
+          osc.stop(this.audioCtx.currentTime + duration);
+        } catch (e) {
+          // Ignore audio errors gracefully
+        }
+      }
+
+      playCorrect() {
+        if (!this.enabled) return;
+        this.playTone(523.25, 'sine', 0.08, 0.1);
+        setTimeout(() => this.playTone(659.25, 'sine', 0.12, 0.12), 70);
+        setTimeout(() => this.playTone(783.99, 'sine', 0.18, 0.15), 140);
+      }
+
+      playMiss() {
+        if (!this.enabled) return;
+        this.playTone(240, 'sawtooth', 0.12, 0.09);
+        setTimeout(() => this.playTone(170, 'sawtooth', 0.22, 0.1), 90);
+      }
+
+      playTick() {
+        this.playTone(880, 'triangle', 0.03, 0.04);
+      }
+
+      playStart() {
+        this.playTone(440, 'sine', 0.08, 0.08);
+        setTimeout(() => this.playTone(880, 'sine', 0.16, 0.12), 100);
+      }
+    }
+
+    const sound = new SoundFX();
+
+    const state = {
+      sessionType: 'routine', // 'routine' (4-set sequential), 'individual' (custom single mode)
+      routineStep: 0, // 0: transit, 1: flash, 2: saccade, 3: peripheral
+      routineStepsList: ['transit', 'flash', 'saccade', 'peripheral'],
+      mode: 'transit', // 'transit', 'flash', 'saccade', 'peripheral'
+      targetType: 'number', // 'number', 'arrow'
+      speedMultiplier: 1.0,
+      flashExposureMs: 180,
+      difficulty: 'normal',
+      activeSession: false,
+      isLightMode: false,
+      isRoundResolving: false, // Prevents duplicate clicks/state race condition
+      round: 0,
+      maxRounds: 10,
+      hits: 0,
+      misses: 0,
+      reactionTimes: [],
+      score: 0,
+      
+      // Cumulative metrics for 4-set routine
+      routineSummary: {
+        totalHits: 0,
+        totalMisses: 0,
+        totalScore: 0,
+        allReactionTimes: []
+      },
+
+      // Target Entity Properties
+      target: {
+        x: 0,
+        y: 0,
+        vx: 0,
+        vy: 0,
+        radius: 28,
+        value: 1,
+        visible: false,
+        birthTime: 0,
+        color: '#38bdf8',
+        label: '7',
+        isPeripheralFlashed: false
+      },
+      
+      peripheralX: 0,
+      peripheralY: 0,
+      centerFocusPulse: 0,
+      animationId: null,
+      activeTimeouts: [],
+      restIntervalTimer: null
+    };
+
+    const ARROW_MAP = {
+      'UP': { symbol: '↑', label: '위' },
+      'DOWN': { symbol: '↓', label: '아래' },
+      'LEFT': { symbol: '←', label: '왼쪽' },
+      'RIGHT': { symbol: '→', label: '오른쪽' }
+    };
+    const DIRECTIONS = ['UP', 'DOWN', 'LEFT', 'RIGHT'];
+
+    // DOM Elements
+    const canvas = document.getElementById('trainCanvas');
+    const ctx = canvas.getContext('2d');
+    const canvasWrapper = document.getElementById('canvasWrapper');
+    const startOverlay = document.getElementById('startOverlay');
+    const startBtn = document.getElementById('startBtn');
+    const startBtnText = document.getElementById('startBtnText');
+    const restIntervalOverlay = document.getElementById('restIntervalOverlay');
+    const restTimerCount = document.getElementById('restTimerCount');
+    const skipRestBtn = document.getElementById('skipRestBtn');
+    const answerPadOverlay = document.getElementById('answerPadOverlay');
+    const numberPad = document.getElementById('numberPad');
+    const directionPad = document.getElementById('directionPad');
+    const feedbackToast = document.getElementById('feedbackToast');
+    const currentRoundText = document.getElementById('currentRoundText');
+    const accuracyRateText = document.getElementById('accuracyRateText');
+    const metricReactionTime = document.getElementById('metricReactionTime');
+    const metricAvgReaction = document.getElementById('metricAvgReaction');
+    const metricHits = document.getElementById('metricHits');
+    const metricMisses = document.getElementById('metricMisses');
+    const metricScore = document.getElementById('metricScore');
+    const speedSlider = document.getElementById('speedSlider');
+    const speedValueLabel = document.getElementById('speedValueLabel');
+    const exposureSlider = document.getElementById('exposureSlider');
+    const exposureValueLabel = document.getElementById('exposureValueLabel');
+    const exposureContainer = document.getElementById('exposureContainer');
+    const resetSessionBtn = document.getElementById('resetSessionBtn');
+    const stopSessionBtn = document.getElementById('stopSessionBtn');
+    const soundToggleBtn = document.getElementById('soundToggleBtn');
+    const soundIconOn = document.getElementById('soundIconOn');
+    const soundIconOff = document.getElementById('soundIconOff');
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeLabel = document.getElementById('themeLabel');
+    const theoryModal = document.getElementById('theoryModal');
+    const theoryModalBtn = document.getElementById('theoryModalBtn');
+    const closeTheoryModal = document.getElementById('closeTheoryModal');
+    const closeTheoryModalBottom = document.getElementById('closeTheoryModalBottom');
+    const targetTypeNumber = document.getElementById('targetTypeNumber');
+    const targetTypeArrow = document.getElementById('targetTypeArrow');
+    const switchRoutineBtn = document.getElementById('switchRoutineBtn');
+    const switchCustomBtn = document.getElementById('switchCustomBtn');
+    const individualTabsContainer = document.getElementById('individualTabsContainer');
+    const trainingModeBadge = document.getElementById('trainingModeBadge');
+    const routineStepBadge = document.getElementById('routineStepBadge');
+    const sessionMainTitle = document.getElementById('sessionMainTitle');
+
+    // System Environment Theme Sensor (Dark / Light automatic initial detect)
+    function initSystemTheme() {
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      // Default to user's system state without awkward wording
+      setVisualTheme(!prefersDark); // if system is light, set light; if dark, set false (contrast focus)
+    }
+
+    function setVisualTheme(isLight) {
+      state.isLightMode = isLight;
+      if (state.isLightMode) {
+        document.body.classList.add('light-theme');
+        themeIcon.textContent = '🌙';
+        themeLabel.textContent = '고대비 집중 모드';
+      } else {
+        document.body.classList.remove('light-theme');
+        themeIcon.textContent = '☀️';
+        themeLabel.textContent = '자연 조도 모드';
+      }
+      renderStaticBackground();
+    }
+
+    function resizeCanvas() {
+      if (!canvas || !canvasWrapper) return;
+      const rect = canvasWrapper.getBoundingClientRect();
+      const w = Math.floor(rect.width) || 320;
+      const h = Math.floor(rect.height) || 400;
+      
+      canvas.width = w;
+      canvas.height = h;
+      renderStaticBackground();
+    }
+
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+    });
+
+    function registerTimeout(fn, ms) {
+      const id = setTimeout(() => {
+        state.activeTimeouts = state.activeTimeouts.filter(t => t !== id);
+        fn();
+      }, ms);
+      state.activeTimeouts.push(id);
+      return id;
+    }
+
+    function clearAllTimeouts() {
+      state.activeTimeouts.forEach(id => clearTimeout(id));
+      state.activeTimeouts = [];
+    }
+
+    function buildKeypads() {
+      numberPad.innerHTML = '';
+      for (let i = 1; i <= 9; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        btn.className = 'num-btn py-3 rounded-xl bg-slate-800/90 hover:bg-indigo-600 text-white font-bold text-lg border border-slate-700 active:scale-95 transition flex items-center justify-center shadow-sm';
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          handleUserAnswer(i);
+        });
+        numberPad.appendChild(btn);
+      }
+
+      document.querySelectorAll('.dir-btn').forEach(btn => {
+        btn.onclick = (e) => {
+          e.stopPropagation();
+          const val = btn.getAttribute('data-val');
+          handleUserAnswer(val);
+        };
+      });
+    }
+    buildKeypads();
+
+    function getRandomTargetValue() {
+      if (state.targetType === 'number') {
+        const num = Math.floor(Math.random() * 9) + 1;
+        return { value: num, label: num.toString() };
+      } else {
+        const dir = DIRECTIONS[Math.floor(Math.random() * DIRECTIONS.length)];
+        return { value: dir, label: ARROW_MAP[dir].symbol };
+      }
+    }
+
+    function spawnTargetForMode() {
+      if (!state.activeSession) return;
+      const rect = canvasWrapper.getBoundingClientRect();
+      const w = Math.max(rect.width, 300);
+      const h = Math.max(rect.height, 360);
+      const valObj = getRandomTargetValue();
+
+      state.target.value = valObj.value;
+      state.target.label = valObj.label;
+      state.target.birthTime = performance.now();
+      state.target.visible = true;
+      state.isRoundResolving = false;
+      state.target.radius = state.difficulty === 'hard' ? 22 : (state.difficulty === 'easy' ? 32 : 26);
+
+      if (state.mode === 'transit') {
+        const fromLeft = Math.random() > 0.5;
+        const startY = Math.random() * (h - 140) + 70;
+        const endY = Math.random() * (h - 140) + 70;
+        const durationSec = (state.difficulty === 'hard' ? 0.6 : (state.difficulty === 'easy' ? 1.3 : 0.85)) / state.speedMultiplier;
+        
+        state.target.x = fromLeft ? -40 : w + 40;
+        state.target.y = startY;
+        const targetEndX = fromLeft ? w + 40 : -40;
+        
+        state.target.vx = (targetEndX - state.target.x) / (durationSec * 60);
+        state.target.vy = (endY - startY) / (durationSec * 60);
+        state.target.color = '#38bdf8';
+      }
+      else if (state.mode === 'flash') {
+        const margin = 80;
+        state.target.x = Math.random() * (w - margin * 2) + margin;
+        state.target.y = Math.random() * (h - margin * 2) + margin;
+        state.target.vx = 0;
+        state.target.vy = 0;
+        state.target.color = '#a855f7';
+
+        const exposure = state.flashExposureMs / state.speedMultiplier;
+        registerTimeout(() => {
+          if (state.activeSession && state.target.visible) {
+            state.target.visible = false;
+            showAnswerKeypad();
+          }
+        }, exposure);
+      }
+      else if (state.mode === 'saccade') {
+        const margin = 60;
+        state.target.x = Math.random() * (w - margin * 2) + margin;
+        state.target.y = Math.random() * (h - margin * 2) + margin;
+        state.target.vx = 0;
+        state.target.vy = 0;
+        state.target.color = '#10b981';
+      }
+      else if (state.mode === 'peripheral') {
+        state.target.x = w / 2;
+        state.target.y = h / 2;
+        state.target.vx = 0;
+        state.target.vy = 0;
+        state.target.isPeripheralFlashed = false;
+
+        registerTimeout(() => {
+          if (!state.activeSession) return;
+          const angle = Math.random() * Math.PI * 2;
+          const dist = Math.min(w, h) * (0.28 + Math.random() * 0.16);
+          state.peripheralX = w / 2 + Math.cos(angle) * dist;
+          state.peripheralY = h / 2 + Math.sin(angle) * dist;
+          state.target.isPeripheralFlashed = true;
+          sound.playTick();
+
+          registerTimeout(() => {
+            state.target.isPeripheralFlashed = false;
+            state.target.visible = false;
+            showAnswerKeypad();
+          }, Math.max(70, 240 / state.speedMultiplier));
+        }, 550);
+      }
+    }
+
+    function renderStaticBackground() {
+      const rect = canvasWrapper.getBoundingClientRect();
+      const w = Math.max(rect.width, 300);
+      const h = Math.max(rect.height, 360);
+
+      if (state.isLightMode) {
+        ctx.fillStyle = '#f8fafc';
+        ctx.fillRect(0, 0, w, h);
+        ctx.strokeStyle = 'rgba(0, 0, 0, 0.04)';
+      } else {
+        ctx.fillStyle = '#060a12';
+        ctx.fillRect(0, 0, w, h);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+      }
+
+      ctx.lineWidth = 1;
+      const step = 40;
+      for (let x = 0; x < w; x += step) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+      }
+      for (let y = 0; y < h; y += step) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+      }
+    }
+
+    function animate() {
+      if (!state.activeSession) return;
+      const rect = canvasWrapper.getBoundingClientRect();
+      const w = Math.max(rect.width, 300);
+      const h = Math.max(rect.height, 360);
+
+      renderStaticBackground();
+
+      // Mode 4: Peripheral gaze anchor
+      if (state.mode === 'peripheral') {
+        const cx = w / 2;
+        const cy = h / 2;
+        state.centerFocusPulse += 0.05;
+        const pulseRadius = 5 + Math.sin(state.centerFocusPulse) * 2;
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, 30, 0, Math.PI * 2);
+        ctx.strokeStyle = state.isLightMode ? 'rgba(99, 102, 241, 0.4)' : 'rgba(99, 102, 241, 0.25)';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([4, 4]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.strokeStyle = state.isLightMode ? '#4338ca' : '#6366f1';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(cx - 12, cy); ctx.lineTo(cx + 12, cy);
+        ctx.moveTo(cx, cy - 12); ctx.lineTo(cx, cy + 12);
+        ctx.stroke();
+
+        ctx.fillStyle = state.isLightMode ? '#0284c7' : '#38bdf8';
+        ctx.beginPath();
+        ctx.arc(cx, cy, pulseRadius, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = state.isLightMode ? '#475569' : '#64748b';
+        ctx.font = '11px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('중앙 십자선에 시선을 고정하세요', cx, cy + 50);
+
+        if (state.target.isPeripheralFlashed) {
+          drawTargetBubble(state.peripheralX, state.peripheralY, state.target.radius, state.target.label, '#f59e0b');
+        }
+      }
+
+      // Mode 1: Transit motion
+      if (state.mode === 'transit' && state.target.visible) {
+        state.target.x += state.target.vx;
+        state.target.y += state.target.vy;
+
+        drawTargetBubble(state.target.x, state.target.y, state.target.radius, state.target.label, state.target.color);
+
+        if (state.target.x < -60 || state.target.x > w + 60) {
+          state.target.visible = false;
+          showAnswerKeypad();
+        }
+      }
+
+      // Mode 2 & Mode 3 Target
+      if ((state.mode === 'flash' || state.mode === 'saccade') && state.target.visible) {
+        drawTargetBubble(state.target.x, state.target.y, state.target.radius, state.target.label, state.target.color);
+
+        if (state.mode === 'saccade') {
+          ctx.beginPath();
+          ctx.arc(state.target.x, state.target.y, state.target.radius + 10, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(16, 185, 129, 0.4)';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        }
+      }
+
+      state.animationId = requestAnimationFrame(animate);
+    }
+
+    function drawTargetBubble(x, y, radius, text, color) {
+      ctx.save();
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 16;
+
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.shadowBlur = 0;
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = '#ffffff';
+      ctx.stroke();
+
+      ctx.fillStyle = '#0f172a';
+      ctx.font = `bold ${radius * 1.05}px sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(text, x, y + 1);
+
+      ctx.restore();
+    }
+
+    function startNextRound() {
+      if (state.round >= state.maxRounds) {
+        completeSession();
+        return;
+      }
+
+      state.round++;
+      currentRoundText.textContent = `${state.round} / ${state.maxRounds}`;
+      answerPadOverlay.classList.add('hidden');
+      sound.playTick();
+
+      registerTimeout(() => {
+        if (state.activeSession) {
+          spawnTargetForMode();
+        }
+      }, 500);
+    }
+
+    function showAnswerKeypad() {
+      if (state.mode === 'saccade') return;
+      answerPadOverlay.classList.remove('hidden');
+      if (state.targetType === 'number') {
+        numberPad.classList.remove('hidden');
+        directionPad.classList.add('hidden');
+      } else {
+        numberPad.classList.add('hidden');
+        directionPad.classList.remove('hidden');
+        directionPad.classList.add('grid');
+      }
+    }
+
+    function handleUserAnswer(userValue) {
+      if (!state.activeSession || state.isRoundResolving) return;
+      state.isRoundResolving = true;
+
+      const reactionTime = Math.round(performance.now() - state.target.birthTime);
+      state.reactionTimes.push(reactionTime);
+      metricReactionTime.textContent = reactionTime;
+
+      const isCorrect = (userValue.toString().toUpperCase() === state.target.value.toString().toUpperCase());
+
+      if (isCorrect) {
+        state.hits++;
+        state.score += Math.max(10, Math.round(10000 / (reactionTime + 100)));
+        sound.playCorrect();
+        showToast('🎯 정확한 식별!', 'bg-emerald-500 text-white shadow-emerald-500/40');
+      } else {
+        state.misses++;
+        sound.playMiss();
+        showToast(`❌ 오답 (정답: ${state.target.label})`, 'bg-rose-500 text-white shadow-rose-500/40');
+      }
+
+      updateMetrics();
+      answerPadOverlay.classList.add('hidden');
+
+      registerTimeout(() => {
+        if (state.activeSession) {
+          startNextRound();
+        }
+      }, 600);
+    }
+
+    canvas.addEventListener('pointerdown', (e) => {
+      if (!state.activeSession || state.mode !== 'saccade' || !state.target.visible || state.isRoundResolving) return;
+
+      const rect = canvas.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const clickY = e.clientY - rect.top;
+
+      const dist = Math.hypot(clickX - state.target.x, clickY - state.target.y);
+      if (dist <= state.target.radius + 18) {
+        state.target.visible = false;
+        handleUserAnswer(state.target.value);
+      } else {
+        sound.playMiss();
+        showToast('빗나감! 타깃을 직접 터치하세요', 'bg-amber-600 text-white shadow-amber-600/40');
+      }
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (!state.activeSession || answerPadOverlay.classList.contains('hidden')) return;
+
+      if (state.targetType === 'number') {
+        const num = parseInt(e.key, 10);
+        if (num >= 1 && num <= 9) {
+          handleUserAnswer(num);
+        }
+      } else if (state.targetType === 'arrow') {
+        const map = {
+          'ArrowUp': 'UP',
+          'ArrowDown': 'DOWN',
+          'ArrowLeft': 'LEFT',
+          'ArrowRight': 'RIGHT'
+        };
+        if (map[e.key]) {
+          e.preventDefault();
+          handleUserAnswer(map[e.key]);
+        }
+      }
+    });
+
+    function showToast(text, colorClasses) {
+      feedbackToast.textContent = text;
+      feedbackToast.className = `absolute top-4 pointer-events-none px-4 py-2 rounded-full font-bold text-xs sm:text-sm tracking-wide transform transition duration-300 z-30 shadow-lg ${colorClasses} opacity-100 translate-y-0`;
+      
+      setTimeout(() => {
+        feedbackToast.className = 'absolute top-4 pointer-events-none px-4 py-2 rounded-full font-bold text-xs sm:text-sm tracking-wide transform -translate-y-8 opacity-0 transition duration-300 z-30 shadow-lg';
+      }, 900);
+    }
+
+    function updateMetrics() {
+      metricHits.textContent = state.hits;
+      metricMisses.textContent = state.misses;
+      metricScore.textContent = state.score;
+
+      const total = state.hits + state.misses;
+      const accuracy = total > 0 ? Math.round((state.hits / total) * 100) : 0;
+      accuracyRateText.textContent = `${accuracy}%`;
+
+      if (state.reactionTimes.length > 0) {
+        const avg = Math.round(state.reactionTimes.reduce((a, b) => a + b, 0) / state.reactionTimes.length);
+        metricAvgReaction.textContent = avg;
+      }
+    }
+
+    function resetSessionMetrics() {
+      state.round = 0;
+      state.hits = 0;
+      state.misses = 0;
+      state.score = 0;
+      state.reactionTimes = [];
+      state.isRoundResolving = false;
+      currentRoundText.textContent = `0 / ${state.maxRounds}`;
+      accuracyRateText.textContent = '0%';
+      metricReactionTime.textContent = '0';
+      metricAvgReaction.textContent = '0';
+      metricHits.textContent = '0';
+      metricMisses.textContent = '0';
+      metricScore.textContent = '0';
+    }
+
+    function completeSession() {
+      state.activeSession = false;
+      cancelAnimationFrame(state.animationId);
+      clearAllTimeouts();
+      stopSessionBtn.classList.add('hidden');
+      answerPadOverlay.classList.add('hidden');
+
+      const setTotal = state.hits + state.misses;
+      const setAccuracy = setTotal > 0 ? Math.round((state.hits / setTotal) * 100) : 0;
+      const setAvgMs = state.reactionTimes.length ? Math.round(state.reactionTimes.reduce((a, b) => a + b, 0) / state.reactionTimes.length) : 0;
+
+      // Accumulate into routineSummary
+      state.routineSummary.totalHits += state.hits;
+      state.routineSummary.totalMisses += state.misses;
+      state.routineSummary.totalScore += state.score;
+      state.routineSummary.allReactionTimes.push(...state.reactionTimes);
+
+      // If in 4-set routine and more sets remain
+      if (state.sessionType === 'routine' && state.routineStep < state.routineStepsList.length - 1) {
+        startRestInterval();
+        return;
+      }
+
+      // If entire routine is finished OR individual session complete
+      if (state.sessionType === 'routine') {
+        const grandTotal = state.routineSummary.totalHits + state.routineSummary.totalMisses;
+        const grandAccuracy = grandTotal > 0 ? Math.round((state.routineSummary.totalHits / grandTotal) * 100) : 0;
+        const grandAvgMs = state.routineSummary.allReactionTimes.length ? 
+          Math.round(state.routineSummary.allReactionTimes.reduce((a, b) => a + b, 0) / state.routineSummary.allReactionTimes.length) : 0;
+
+        document.getElementById('overlayTitle').textContent = '🌿 오늘의 맑은 시선 리추얼 완료!';
+        document.getElementById('overlayDesc').innerHTML = `
+          <div class="py-2.5 text-left bg-slate-900/90 p-4 rounded-xl border border-indigo-500/30 space-y-1.5 text-xs">
+            <div class="text-indigo-300 font-bold text-sm mb-1">오늘의 시지각 & 몰입 기록</div>
+            <div class="flex justify-between"><span>전체 적중률:</span> <b class="text-emerald-400 font-bold">${grandAccuracy}% (${state.routineSummary.totalHits}/${grandTotal})</b></div>
+            <div class="flex justify-between"><span>평균 반응 속도:</span> <b class="text-cyan-400 font-bold">${grandAvgMs} ms</b></div>
+            <div class="flex justify-between"><span>시선 집중 점수:</span> <b class="text-amber-400 font-bold">${state.routineSummary.totalScore} 점</b></div>
+          </div>
+          <p class="mt-2.5 text-slate-300 text-xs leading-relaxed">흩어졌던 시선과 복잡했던 머릿속이 한결 정돈되었습니다. 맑아진 눈과 함께 편안하고 명료한 하루를 시작해 보세요!</p>
+        `;
+        startBtnText.textContent = '리추얼 다시 시작하기';
+      } else {
+        document.getElementById('overlayTitle').textContent = '세션 완료! 🌿';
+        document.getElementById('overlayDesc').innerHTML = `
+          <div class="py-2 text-left bg-slate-900/90 p-3.5 rounded-xl border border-slate-800 space-y-1 text-xs">
+            <div class="flex justify-between"><span>정답률:</span> <b class="text-emerald-400 font-bold">${setAccuracy}% (${state.hits}/${setTotal})</b></div>
+            <div class="flex justify-between"><span>평균 반응 시간:</span> <b class="text-cyan-400 font-bold">${setAvgMs} ms</b></div>
+            <div class="flex justify-between"><span>획득 점수:</span> <b class="text-amber-400 font-bold">${state.score} 점</b></div>
+          </div>
+          <p class="mt-2 text-slate-400 text-xs">선택 모드가 완료되었습니다. 가볍게 눈을 쉬어주세요.</p>
+        `;
+        startBtnText.textContent = '동일 모드 다시 하기';
+      }
+
+      startOverlay.classList.remove('hidden');
+      sound.playCorrect();
+    }
+
+    function startRestInterval() {
+      restIntervalOverlay.classList.remove('hidden');
+      sound.playCorrect();
+      let timeLeft = 15;
+      restTimerCount.textContent = timeLeft;
+
+      if (state.restIntervalTimer) clearInterval(state.restIntervalTimer);
+      state.restIntervalTimer = setInterval(() => {
+        timeLeft--;
+        restTimerCount.textContent = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(state.restIntervalTimer);
+          state.restIntervalTimer = null;
+          proceedToNextRoutineSet();
+        }
+      }, 1000);
+    }
+
+    function proceedToNextRoutineSet() {
+      if (state.restIntervalTimer) {
+        clearInterval(state.restIntervalTimer);
+        state.restIntervalTimer = null;
+      }
+      restIntervalOverlay.classList.add('hidden');
+      state.routineStep++;
+      const nextMode = state.routineStepsList[state.routineStep];
+      applyMode(nextMode);
+
+      routineStepBadge.textContent = `세트 ${state.routineStep + 1}/4 진행`;
+      resetSessionMetrics();
+      state.activeSession = true;
+      stopSessionBtn.classList.remove('hidden');
+      sound.playStart();
+      resizeCanvas();
+      animate();
+      startNextRound();
+    }
+
+    skipRestBtn.onclick = () => {
+      proceedToNextRoutineSet();
+    };
+
+    function applyMode(modeName) {
+      state.mode = modeName;
+      const meta = modeMeta[modeName];
+      document.getElementById('modeBadgeIcon').textContent = meta.icon;
+      document.getElementById('overlayTitle').textContent = meta.title;
+      document.getElementById('overlayDesc').textContent = meta.desc;
+
+      if (meta.showExposure) {
+        exposureContainer.classList.remove('hidden');
+      } else {
+        exposureContainer.classList.add('hidden');
+      }
+
+      // Update Individual Tab highlights
+      modeTabs.forEach(t => {
+        if (t.getAttribute('data-mode') === modeName) {
+          t.classList.add('active-mode', 'bg-indigo-600/20', 'border-indigo-500', 'text-white');
+          t.classList.remove('border-slate-800', 'bg-slate-900/60', 'text-slate-300');
+        } else {
+          t.classList.remove('active-mode', 'bg-indigo-600/20', 'border-indigo-500', 'text-white');
+          t.classList.add('border-slate-800', 'bg-slate-900/60', 'text-slate-300');
+        }
+      });
+    }
+
+    // Switch between Routine Mode and Individual Mode
+    switchRoutineBtn.onclick = () => {
+      state.sessionType = 'routine';
+      state.routineStep = 0;
+      state.routineSummary = { totalHits: 0, totalMisses: 0, totalScore: 0, allReactionTimes: [] };
+
+      switchRoutineBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-indigo-600 text-white shadow';
+      switchCustomBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-slate-800 text-slate-300 hover:text-white border border-slate-700';
+
+      trainingModeBadge.textContent = '오늘의 4분 리추얼';
+      routineStepBadge.textContent = '세트 1/4 준비 중';
+      sessionMainTitle.textContent = '잡념을 비우고 시선에 몰입하는 4단계 시지각 코스 (약 4분 소요)';
+      startBtnText.textContent = '4분 리추얼 시작하기';
+      
+      applyMode('transit');
+      resetSessionBtn.click();
+    };
+
+    switchCustomBtn.onclick = () => {
+      state.sessionType = 'individual';
+      
+      switchCustomBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-indigo-600 text-white shadow';
+      switchRoutineBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-slate-800 text-slate-300 hover:text-white border border-slate-700';
+
+      trainingModeBadge.textContent = '개별 단일 선택 모드';
+      routineStepBadge.textContent = '자유 연습 모드';
+      sessionMainTitle.textContent = '원하는 단계를 선택하여 나만의 페이스로 연습하세요';
+      startBtnText.textContent = '선택 모드 시작';
+
+      resetSessionBtn.click();
+    };
+
+    startBtn.onclick = () => {
+      sound.init();
+      sound.playStart();
+      clearAllTimeouts();
+      cancelAnimationFrame(state.animationId);
+
+      if (state.sessionType === 'routine') {
+        state.routineStep = 0;
+        state.routineSummary = { totalHits: 0, totalMisses: 0, totalScore: 0, allReactionTimes: [] };
+        routineStepBadge.textContent = '세트 1/4 진행';
+        applyMode('transit');
+      }
+
+      resetSessionMetrics();
+      state.activeSession = true;
+      startOverlay.classList.add('hidden');
+      restIntervalOverlay.classList.add('hidden');
+      stopSessionBtn.classList.remove('hidden');
+      resizeCanvas();
+      animate();
+      startNextRound();
+    };
+
+    resetSessionBtn.onclick = () => {
+      state.activeSession = false;
+      cancelAnimationFrame(state.animationId);
+      clearAllTimeouts();
+      if (state.restIntervalTimer) clearInterval(state.restIntervalTimer);
+      resetSessionMetrics();
+      startOverlay.classList.remove('hidden');
+      restIntervalOverlay.classList.add('hidden');
+      stopSessionBtn.classList.add('hidden');
+      answerPadOverlay.classList.add('hidden');
+      renderStaticBackground();
+    };
+
+    stopSessionBtn.onclick = () => {
+      state.activeSession = false;
+      cancelAnimationFrame(state.animationId);
+      clearAllTimeouts();
+      stopSessionBtn.classList.add('hidden');
+      startOverlay.classList.remove('hidden');
+      document.getElementById('overlayTitle').textContent = '훈련 일시정지';
+      document.getElementById('overlayDesc').textContent = '준비가 완료되면 계속하기를 누르세요.';
+      document.getElementById('startBtn').innerHTML = '<span>훈련 재개하기</span>';
+    };
+
+    const modeTabs = document.querySelectorAll('.mode-tab');
+    const modeMeta = {
+      transit: {
+        icon: '🏎️',
+        title: '고속 횡단 추적 훈련',
+        desc: '화면을 가로지르는 타깃 속 숫자나 방향을 시선으로 끝까지 추적한 후 맞히십시오.',
+        showExposure: false
+      },
+      flash: {
+        icon: '⚡',
+        title: '순간 플래시 인지 훈련',
+        desc: '찰나의 순간(수십~수백 ms) 동안 나타났다 사라지는 기호를 잔상으로 포착하십시오.',
+        showExposure: true
+      },
+      saccade: {
+        icon: '🎯',
+        title: '급속 안구 도약 훈련',
+        desc: '화면 임의 위치에 갑자기 나타나는 타깃을 눈으로 찾아 즉시 터치/클릭하십시오.',
+        showExposure: false
+      },
+      peripheral: {
+        icon: '👁️',
+        title: '주변시야 확장 훈련',
+        desc: '중앙 십자선에 초점을 고정한 채, 시야 가장자리에 깜빡이는 기호를 감지하십시오.',
+        showExposure: false
+      }
+    };
+
+    modeTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // If clicking a mode tab, auto switch to individual mode for intuitive UX
+        if (state.sessionType === 'routine') {
+          switchCustomBtn.click();
+        }
+        const selectedMode = tab.getAttribute('data-mode');
+        applyMode(selectedMode);
+        resetSessionBtn.click();
+      });
+    });
+
+    // Theme Toggle (Smart sensing & professional wording)
+    themeToggleBtn.onclick = () => {
+      setVisualTheme(!state.isLightMode);
+    };
+
+    // Sound Toggle
+    soundToggleBtn.onclick = () => {
+      sound.enabled = !sound.enabled;
+      if (sound.enabled) {
+        soundIconOn.classList.remove('hidden');
+        soundIconOff.classList.add('hidden');
+      } else {
+        soundIconOn.classList.add('hidden');
+        soundIconOff.classList.remove('hidden');
+      }
+    };
+
+    // Scientific Principle Modal Handlers
+    theoryModalBtn.onclick = () => theoryModal.classList.remove('hidden');
+    closeTheoryModal.onclick = () => theoryModal.classList.add('hidden');
+    closeTheoryModalBottom.onclick = () => theoryModal.classList.add('hidden');
+    theoryModal.onclick = (e) => {
+      if (e.target === theoryModal) theoryModal.classList.add('hidden');
+    };
+
+    // Difficulty Presets
+    document.querySelectorAll('.diff-btn').forEach(btn => {
+      btn.onclick = () => {
+        document.querySelectorAll('.diff-btn').forEach(b => {
+          b.className = 'diff-btn py-1.5 rounded-lg text-slate-400 hover:text-white transition';
+        });
+        btn.className = 'diff-btn py-1.5 rounded-lg active-diff bg-indigo-600 text-white transition shadow';
+        state.difficulty = btn.getAttribute('data-diff');
+      };
+    });
+
+    // Speed Slider
+    speedSlider.addEventListener('input', (e) => {
+      const val = parseFloat(e.target.value);
+      state.speedMultiplier = val;
+      speedValueLabel.textContent = `${val.toFixed(1)}x`;
+    });
+
+    // Flash Exposure Slider
+    exposureSlider.addEventListener('input', (e) => {
+      const val = parseInt(e.target.value, 10);
+      state.flashExposureMs = val;
+      exposureValueLabel.textContent = `${val} ms`;
+    });
+
+    // Target Type Toggles
+    targetTypeNumber.onclick = () => {
+      state.targetType = 'number';
+      targetTypeNumber.className = 'p-2 rounded-lg bg-indigo-600/30 text-indigo-200 border border-indigo-500 font-semibold text-center transition';
+      targetTypeArrow.className = 'p-2 rounded-lg bg-slate-900 text-slate-400 border border-slate-800 hover:bg-slate-800 font-semibold text-center transition';
+    };
+
+    targetTypeArrow.onclick = () => {
+      state.targetType = 'arrow';
+      targetTypeArrow.className = 'p-2 rounded-lg bg-indigo-600/30 text-indigo-200 border border-indigo-500 font-semibold text-center transition';
+      targetTypeNumber.className = 'p-2 rounded-lg bg-slate-900 text-slate-400 border border-slate-800 hover:bg-slate-800 font-semibold text-center transition';
+    };
+
+    window.addEventListener('load', () => {
+      initSystemTheme();
+      resizeCanvas();
+      renderStaticBackground();
+    });
+  </script>
+</body>
+</html>

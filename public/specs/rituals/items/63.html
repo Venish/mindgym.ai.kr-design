@@ -10,25 +10,23 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Pretendard", sans-serif; }
     body { background-color: #f8faf9; color: #111827; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
 
-    /* Clean White Mobile Frame (design-guide standard) */
     .mobile-frame {
-      width: 100%; max-width: 410px; height: 780px; background: #ffffff; color: #111827;
-      border-radius: 40px; border: 8px solid #e2e8f0; box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+      width: 100%; max-width: 410px; height: 780px; background: #020617; color: #fff;
+      border-radius: 40px; border: 8px solid #1e293b; box-shadow: 0 25px 50px rgba(0,0,0,0.3);
       position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; padding: 28px 22px 22px;
     }
-    .top-bar { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 12px; }
-    .back-btn { text-decoration: none; background: #f1f5f9; color: #475569; padding: 6px 14px; border-radius: 20px; font-weight: 600; font-size: 13px; }
+    .top-bar { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 12px; }
+    .back-btn { text-decoration: none; background: rgba(255,255,255,0.1); color: #fff; padding: 6px 14px; border-radius: 20px; font-weight: 600; font-size: 13px; }
     
-    .card-box { background: #f8fafc; border-radius: 20px; padding: 20px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; gap: 12px; margin-top: 14px; }
+    .card-box { background: #0f172a; border-radius: 20px; padding: 20px; border: 1px solid #1e293b; display: flex; flex-direction: column; gap: 12px; margin-top: 14px; }
     .badge { display: inline-block; padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: 700; color: #fff; background: #7c3aed; width: fit-content; }
-    .title { font-size: 22px; font-weight: 900; color: #111827; display:flex; align-items:center; gap:8px; }
+    .title { font-size: 22px; font-weight: 900; color: #fff; display:flex; align-items:center; gap:8px; }
     .sec-title { font-size: 13px; font-weight: 700; color: #00C474; margin-top: 4px; }
-    .sec-desc { font-size: 13px; color: #475569; line-height: 1.5; }
+    .sec-desc { font-size: 13px; color: #cbd5e1; line-height: 1.5; }
 
-    .exec-area { background: #ffffff; border-radius: 20px; padding: 20px; border: 1px solid #e2e8f0; margin-top: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+    .exec-area { background: #1e293b; border-radius: 20px; padding: 20px; border: 1px solid #334155; margin-top: 14px; }
 
-    .action-btn { width: 100%; padding: 14px; background: #00C474; color: #fff; border: none; border-radius: 18px; font-weight: 800; font-size: 14px; cursor: pointer; transition: transform 0.2s; }
-    .action-btn:active { transform: scale(0.96); }
+    .action-btn { width: 100%; padding: 14px; background: #00C474; color: #fff; border: none; border-radius: 18px; font-weight: 800; font-size: 14px; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -40,7 +38,7 @@
     <div class="top-bar">
       <a href="../index.html" class="back-btn">← 전체 72개 목록</a>
       <span style="font-size: 13px; font-weight: 800; color: #00C474;">NO.063</span>
-      <span style="font-size: 12px; color: #00C474; font-weight:700;">+3 덤벨</span>
+      <span style="font-size: 12px; color: #cbd5e1;">+3 덤벨</span>
     </div>
 
     <div style="flex:1; overflow-y:auto; padding-right:2px;">
@@ -64,7 +62,7 @@
       <!-- Exec UI -->
       <div class="exec-area">
         <div style="font-size:12px; font-weight:700; color:#00C474; margin-bottom:8px;">💻 [고유 웹 실행 모듈]</div>
-        <div style="padding:16px; background:#f8fafc; color:#d97706; border-radius:12px; text-align:center; border:1px solid #e2e8f0;">🙏 소중한 사람들 호명 오라 촛불</div>
+        <div style="padding:16px; background:#1e293b; color:#fbbf24; border-radius:12px; text-align:center;">🙏 소중한 사람들 호명 오라 촛불</div>
       </div>
     </div>
 

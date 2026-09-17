@@ -142,6 +142,7 @@ export function IconShowcaseSection() {
     "몰입과 집중",
     "휴식과 충전",
     "관계와 경계",
+    "몸 챙김",
   ];
 
   // 72개 리추얼 기준 필터링

@@ -875,6 +875,17 @@ export const ALL_72_RITUALS: Ritual72Item[] = [
     "iconNum": 72,
     "isLocked": false,
     "desc": "하고 싶은 일 한 줄 넣기"
+  },
+  {
+    "id": "RT-073",
+    "title": "시선 맑음",
+    "category": "몸 챙김",
+    "time": "4분",
+    "level": "중급",
+    "duration": "매일",
+    "reward": "+20",
+    "iconNum": 73,
+    "isLocked": false,
+    "desc": "4분 시선 동체시력 리추얼"
   }
 ];
-

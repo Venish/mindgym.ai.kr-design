@@ -30,5 +30,6 @@ export const ritualsData: Ritual[] = [
   { id: "RT-019", title: "셀프 하이파이브", category: "자책", time: "1분", type: "SHORT", dumbbell: 5, description: "액정이나 거울 속 내 눈을 정면으로 마주하고 시원하게 짝! 손뼉을 맞부딪치며 에너지를 나눕니다." },
   { id: "RT-020", title: "원라인드로잉", category: "자책", time: "2분", type: "LONG", dumbbell: 12, description: "화면 위에 떼지 않고 연속되는 아름다운 선 하나를 집중해 그리며 복잡해진 머리를 비워냅니다." },
   { id: "RT-023", title: "감정개명", category: "감정", time: "2분", type: "SHORT", dumbbell: 5, description: "추상적이고 무서운 감정 코드들에 '귀여운 아기 몬스터' 등의 애칭을 붙여 두려움을 낮춥니다." },
-  { id: "RT-024", title: "마음날씨 기록", category: "감정", time: "3분", type: "LONG", dumbbell: 12, description: "외부에서 불어온 사건과 나의 고유 기온을 완전히 분리해 오늘의 날씨 카드로 남깁니다." }
+  { id: "RT-024", title: "마음날씨 기록", category: "감정", time: "3분", type: "LONG", dumbbell: 12, description: "외부에서 불어온 사건과 나의 고유 기온을 완전히 분리해 오늘의 날씨 카드로 남깁니다." },
+  { id: "RT-073", title: "시선맑음", category: "몸 챙김", time: "4분", type: "HYBRID", dumbbell: 8, description: "흐려진 시야와 흩어진 마음을 정돈하는 4단계 시지각 동체시력 리추얼입니다." }
 ];

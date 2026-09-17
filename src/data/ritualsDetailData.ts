@@ -1,5 +1,11 @@
 import { getIconPath } from "@/utils/iconMap";
 
+export interface MedicalPrincipleItem {
+  number?: string;
+  title: string;
+  desc: string;
+}
+
 export interface RitualDetail {
   id: string;
   title: string;
@@ -12,6 +18,7 @@ export interface RitualDetail {
   iconPath: string;
   desc: string;
   steps: [string, string, string]; // 3단계 실천 요약 가이드
+  medicalPrinciples?: MedicalPrincipleItem[]; // 의학적 원리 및 신경과학 메커니즘
   isLocked?: boolean;
 }
 
@@ -34,6 +41,18 @@ export const RITUALS_DETAIL_MAP: Record<string, RitualDetail> = {
       "입가에 옅은 미소를 지으며 얼굴 80여 개 근육의 긴장을 풉니다.",
       "3분간 깊은 호흡을 유지하며 내면의 온전한 평온에 몰입합니다.",
     ],
+    medicalPrinciples: [
+      {
+        number: "01",
+        title: "안면 피드백 가설 (Facial Feedback Hypothesis)",
+        desc: "입꼬리를 올리는 근육(대협골근)의 수축 신호가 삼차신경을 통해 뇌로 전달되면, 뇌는 이를 긍정 정서로 인지하여 도파민 및 엔도르핀 분비를 촉진합니다.",
+      },
+      {
+        number: "02",
+        title: "부교감신경 활성화 및 코르티솔 억제",
+        desc: "미소와 함께 서서히 호흡 속도를 낮추면 미주신경(Vagus Nerve)이 자극되어 심박 변이도(HRV)가 안정되고 스트레스 호르몬 수치가 감소합니다.",
+      },
+    ],
   },
   "RT-002": {
     id: "RT-002",
@@ -50,6 +69,18 @@ export const RITUALS_DETAIL_MAP: Record<string, RitualDetail> = {
       "편안한 자세로 누워 깊은 호흡을 3회 반복합니다.",
       "정수리부터 발끝까지 신체 부위별 긴장을 순서대로 관찰합니다.",
       "숨을 내쉬며 굳어있는 긴장을 무겁게 비워냅니다.",
+    ],
+    medicalPrinciples: [
+      {
+        number: "01",
+        title: "신체 내부 수용 감각(Interoception) 정밀화",
+        desc: "뇌 섬엽(Insula) 피질의 신체 감각 인식 경로를 활성화하여 만성 긴장과 통증 신호를 객관화하고 편도체의 과잉 반응을 완화합니다.",
+      },
+      {
+        number: "02",
+        title: "점진적 근이완(PMR) 효과",
+        desc: "신체 각 부위에 집중적으로 주의를 기울인 뒤 이완함으로써 골격근의 무의식적 긴장 수축을 풀고 수면 유도 델타파를 증진합니다.",
+      },
     ],
   },
   "RT-003": {
@@ -207,6 +238,45 @@ export const RITUALS_DETAIL_MAP: Record<string, RitualDetail> = {
       "나의 편이 되어주는 내편 일기를 완성합니다.",
     ],
   },
+  "RT-073": {
+    id: "RT-073",
+    title: "시선맑음",
+    category: "몸 챙김",
+    time: "4분",
+    level: "중급",
+    duration: "매일",
+    reward: "+20",
+    iconNum: 73,
+    iconPath: getIconPath(73),
+    desc: "흐려진 시야와 흩어진 마음을 정돈하는 4단계 시지각 동체시력(DVA) 리추얼입니다.",
+    steps: [
+      "화면을 가로지르거나 깜빡이는 타깃 속 번호/방향을 눈으로 추적합니다.",
+      "잔상과 주변 시야를 활용해 떠오르는 숫자를 키패드로 입력합니다.",
+      "세트 사이 15초간 먼 곳을 바라보며 외안근의 긴장을 부드럽게 이완합니다.",
+    ],
+    medicalPrinciples: [
+      {
+        number: "01",
+        title: "원활추구안구운동(Smooth Pursuit) 및 외안근 협응",
+        desc: "정상 안구가 시각도 30°~50°/s 속도로 움직이는 물체를 추종(Gain≈1.0)할 때 6개 외안근(직근 4개, 사근 2개)의 협응 속도가 향상되어 일상 및 화면 응시 시 안구 피로도가 현저히 감소합니다.",
+      },
+      {
+        number: "02",
+        title: "타키스토스코프(Tachistoscope) 순간 플래시 인지 임계치",
+        desc: "뇌 시각피질(V1, MT/V5)의 형태 재구성 시간(임상 정상치 100~200ms, 엘리트 <80ms)에 맞춘 순간 자극 훈련을 통해 시지각 정보 처리 속도와 뇌 신경가소성을 극대화합니다.",
+      },
+      {
+        number: "03",
+        title: "도약안구운동(Saccade Latency) 및 시각-운동 반응 속도",
+        desc: "정상 성인의 사카드 안구운동 잠복기(200~250ms)와 손가락 모터 반사 회로를 자극하여, 찰나의 순간 시야 내 타깃을 포착하고 반응하는 신경근 전달 속도를 단축합니다.",
+      },
+      {
+        number: "04",
+        title: "UFOV® (유용한 시야 영역) 및 전정안구반사(VOR)",
+        desc: "임상 인지 검사 표준인 UFOV® 프로토콜(100~240ms)을 적용하여, 중심 시선 고정 상태에서 120° 이상 주변 시야의 정보 감지력과 주의 분할(Divided Attention) 능력을 확장합니다.",
+      },
+    ],
+  },
 };
 
 // 72개 폴백 매핑 생성기
@@ -251,6 +321,18 @@ export function getRitualDetail(input?: string | number): RitualDetail {
         "편안한 장소에서 유연한 호흡으로 준비합니다.",
         "리추얼의 안내 문구에 따라 마음의 감각에 몰입합니다.",
         "달라진 정서 온도를 확인하며 리추얼을 완료합니다.",
+      ],
+      medicalPrinciples: [
+        {
+          number: "01",
+          title: "자율신경계 밸런스 회복",
+          desc: "의도적인 주의 집중과 호흡 조절을 통해 교감신경의 과도한 각성을 진정시키고 부교감신경계를 활성화하여 심신 안정 상태를 유도합니다.",
+        },
+        {
+          number: "02",
+          title: "전두엽-편도체 감정 조절 회로 강화",
+          desc: "매일 반복되는 마이크로 리추얼 훈련이 뇌의 전전두엽(PFC) 활성도를 높여 스트레스 상황에서도 편도체의 충동적 불안 반응을 신속하게 제어합니다.",
+        },
       ],
     };
   }
@@ -333,6 +415,7 @@ const RITUAL_TITLE_MAP_72: Record<number, string> = {
   70: "조용한 묵상",
   71: "안부 메시지 보내기",
   72: "온화한 미소 유지",
+  73: "시선맑음",
 };
 
 export function getRitualTitleByIconNum(iconNum: number): string {

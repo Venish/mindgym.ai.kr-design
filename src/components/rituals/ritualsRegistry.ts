@@ -1,6 +1,7 @@
 import React from "react";
 import { RT018_StressShredder } from "./RT018_StressShredder";
 import { RT001_SmileMeditation } from "./RT001_SmileMeditation";
+import { RT073_EyeFocus } from "./RT073_EyeFocus";
 
 export interface RitualExecutionComponentProps {
   onComplete?: () => void;
@@ -26,6 +27,11 @@ const RITUAL_REGISTRY_MAP: Record<string, RitualMetaConfig> = {
   // RT-018: 스트레스 분쇄 (개별 시작하기 직행 모드 -> hasIntroCover: false)
   "RT-018": { component: RT018_StressShredder, hasIntroCover: false },
   "스트레스 분쇄": { component: RT018_StressShredder, hasIntroCover: false },
+
+  // RT-073: 시선맑음 (공통 소개 커버 없이 즉시 실행 페이지로 0ms 직행 -> hasIntroCover: false)
+  "RT-073": { component: RT073_EyeFocus, hasIntroCover: false },
+  "시선맑음": { component: RT073_EyeFocus, hasIntroCover: false },
+  "시선 맑음": { component: RT073_EyeFocus, hasIntroCover: false },
 };
 
 /**

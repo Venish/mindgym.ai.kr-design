@@ -40,6 +40,14 @@ module.exports = {
           gray200: "#EDEFF2",
           surface: "#F9FAFB",
         },
+        theme: {
+          app: "var(--theme-bg-app, #ffffff)",
+          card: "var(--theme-bg-card, #ffffff)",
+          "card-subtle": "var(--theme-bg-card-subtle, #F1F5F9)",
+          subtle: "var(--theme-border-subtle, #E2E8F0)",
+          accent: "var(--color-brand-green, #00C474)",
+          muted: "var(--color-neutral-gray-500, #78716C)",
+        },
       },
       letterSpacing: {
         tightest: "-0.56px",

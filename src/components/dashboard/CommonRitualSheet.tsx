@@ -13,6 +13,8 @@ import {
   shouldShowRitualIntroCover,
 } from "@/components/rituals/ritualsRegistry";
 import { StressShredHistorySheet } from "@/components/rituals/RT018_StressShredder/StressShredHistorySheet";
+import { EyeFocusHistorySheet } from "@/components/rituals/RT073_EyeFocus/EyeFocusHistorySheet";
+import { RitualGuideSheet } from "@/components/rituals/RitualGuideSheet";
 import { getRitualCategoryTheme } from "@/utils/ritualCategoryTheme";
 import {
   Star,
@@ -88,22 +90,29 @@ export function CommonRitualSheet({
   };
 
   // 파쇄 진행/결과 상태(not TYPING)일 때만 '<' 화살표 노출 및 이전 "스트레스 분쇄 (작성 화면)"으로 리셋 되돌아가기
-  // intro 단계이거나 execution의 첫 작성(TYPING) 단계일 때는 '✕' 닫기 버튼 노출 및 모달 전체 닫기
-  const isExecutionMode = step === "execution";
-  const isTypingState = shredderState === "TYPING";
-  const leftType = isExecutionMode && !isTypingState ? "back" : "close";
+  // intro 단계이거나 시선맑음 등 직행 리추얼 / TYPING 단계일 때는 '✕' 닫기 버튼 노출 및 모달 전체 닫기
+  // 파쇄 진행/결과 상태(not TYPING) 및 시선 맑음 게임 진행 상태(PLAYING/REST/SUMMARY) 체크
+  const isStressShredding = displayTitle === "스트레스 분쇄" && step === "execution" && shredderState !== "TYPING";
+  const isEyeFocusRitual = 
+    displayTitle === "시선 맑음" || 
+    displayTitle === "시선맑음" || 
+    ritualTitle === "시선 맑음" || 
+    ritualTitle === "시선맑음" || 
+    effectiveId === "RT-073" || 
+    effectiveId === "RT073";
+  const isEyeFocusPlaying = isEyeFocusRitual && step === "execution" && shredderState !== "SETUP" && Boolean(shredderState);
+  const leftType = isStressShredding ? "back" : "close";
 
   const handleLeftClick = () => {
-    if (isExecutionMode && !isTypingState && resetHandlerRef.current) {
+    if (isStressShredding && resetHandlerRef.current) {
       resetHandlerRef.current(); // 파쇄 결과 화면에서 뒤로가기 클릭 시 -> 이전 "스트레스 분쇄 작성 화면"으로 되돌아가기!
     } else {
       closeModal(); // 작성 화면 및 인트로 화면에서는 모달 닫기!
     }
   };
 
-  // 시작하기 화면 여부 (공통 시작하기 커버이거나 개별 시작하기 폼 화면인 경우)
-  const isStartScreen =
-    step === "intro" || (step === "execution" && shredderState === "TYPING");
+  // 상단 3개 메뉴(⭐, 📋, ℹ️) 노출 여부 (파쇄 애니메이션 및 시선 맑음 게임 플레이 중에는 숨김)
+  const showHeaderRightMenu = !isStressShredding && !isEyeFocusPlaying;
 
   // 카테고리별 고유 테마 (대표 메인 컬러 + 무지개 뉘앙스 수채화 그라디언트)
   const catTheme = getRitualCategoryTheme(displayCategory);
@@ -112,13 +121,13 @@ export function CommonRitualSheet({
     <div
       data-ritual-sheet
       className={`w-full h-full flex flex-col select-none relative txt-brand-ink overflow-hidden border-none shadow-none ${
-        isStartScreen ? catTheme.bgGradient : "bg-white"
+        step === "intro" ? catTheme.bgGradient : "bg-white"
       }`}
     >
-      {/* 몽환적인 수채화/오로라 블러 번짐 배경 레이어 (4중 다채색 Watercolor Mesh Orbs - 파쇄 실행 화면에서는 100% 즉시 숨김) */}
+      {/* 몽환적인 수채화/오로라 블러 번짐 배경 레이어 (4중 다채색 Watercolor Mesh Orbs - 인트로 화면에서만 렌더) */}
       <div
         className={`absolute inset-0 pointer-events-none overflow-hidden z-0 ${
-          isStartScreen ? "block" : "hidden"
+          step === "intro" ? "block" : "hidden"
         }`}
       >
         {/* Orb 1: 우측 상단 메인 리추얼 컬러 */}
@@ -139,10 +148,11 @@ export function CommonRitualSheet({
         />
       </div>
 
-      {/* 1. 상단 헤더 제어 (투명 글래스 헤더로 수채화 그라디언트가 헤더까지 100% 투영) */}
-      <div className="shrink-0 z-20">
-        {isStartScreen ? (
-          /* A. [공통 시작하기 & 개별 시작하기] 헤더: ✕ 닫기 버튼 + 3개 우측 메뉴 (⭐ 즐겨찾기, 📋 리스트, ℹ️ 상세설명) */
+      {/* 1. 상단 헤더 제어 (게임 플레이 중에는 완전 숨김) */}
+      {!isEyeFocusPlaying && (
+        <div className="shrink-0 z-20">
+        {showHeaderRightMenu ? (
+          /* A. 상단 풀 메뉴 헤더: ✕ 닫기 버튼 + 3개 우측 메뉴 (⭐ 즐겨찾기, 📋 리스트, ℹ️ 상세설명) */
           <SubPageHeader
             title=""
             leftType="close"
@@ -167,7 +177,7 @@ export function CommonRitualSheet({
                   />
                 </button>
 
-                {/* 리추얼 목록 / 스트레스 분쇄 전용 기록 보관함 */}
+                {/* 리추얼 전용 기록 보관함 (스트레스 분쇄 -> 나의 스트레스 목록, 시선 맑음 -> 시선 맑음 기록) */}
                 <button
                   type="button"
                   onClick={() => {
@@ -175,6 +185,15 @@ export function CommonRitualSheet({
                       openModal({
                         type: "slide-up",
                         content: <StressShredHistorySheet onClose={closeModal} />,
+                      });
+                    } else if (
+                      displayTitle === "시선맑음" ||
+                      displayTitle === "시선 맑음" ||
+                      effectiveId === "RT-073"
+                    ) {
+                      openModal({
+                        type: "slide-up",
+                        content: <EyeFocusHistorySheet onClose={closeModal} />,
                       });
                     } else {
                       closeModal();
@@ -184,6 +203,8 @@ export function CommonRitualSheet({
                   title={
                     displayTitle === "스트레스 분쇄"
                       ? "나의 스트레스 목록"
+                      : displayTitle === "시선맑음" || displayTitle === "시선 맑음" || effectiveId === "RT-073"
+                      ? "나의 시선 맑음"
                       : "전체 리추얼 목록 보기"
                   }
                 >
@@ -197,33 +218,19 @@ export function CommonRitualSheet({
                     openModal({
                       type: "slide-up",
                       content: (
-                        <div
-                          data-ritual-sheet
-                          className="w-full bg-theme-app p-6 rounded-t-3xl flex flex-col gap-4 max-w-lg mx-auto txt-brand-ink border-t border-theme-subtle"
-                        >
-                          <div className="flex justify-between items-center pb-2 border-b border-theme-subtle">
-                            <h3 className="text-lg font-bold txt-brand-ink">
-                              {displayTitle} 가이드
-                            </h3>
-                            <button
-                              type="button"
-                              onClick={closeModal}
-                              className="text-theme-muted hover:txt-brand-ink font-bold text-sm cursor-pointer"
-                            >
-                              ✕ 닫기
-                            </button>
-                          </div>
-                          <p className="text-sm text-theme-muted leading-relaxed whitespace-pre-line">
-                            {displayTitle === "스트레스 분쇄"
-                              ? "답답하고 억울했던 스트레스를 파쇄기에 넣고 비워내는 실천 리추얼입니다.\n속도 조절 노브를 사용해 자신에게 편안한 비움의 템포를 조절할 수 있습니다."
-                              : `${displayTitle} 실천을 통해 마음의 평온과 긍정 에너지를 채워보세요.`}
-                          </p>
-                        </div>
+                        <RitualGuideSheet
+                          ritualId={effectiveId}
+                          ritualTitle={displayTitle}
+                          onClose={closeModal}
+                          onStart={() => {
+                            setStep("execution");
+                          }}
+                        />
                       ),
                     });
                   }}
                   className="p-2 rounded-full text-gray-500 hover:text-gray-800 hover:bg-white/40 transition-all cursor-pointer"
-                  title="리추얼 상세 가이드"
+                  title="리추얼 가이드"
                 >
                   <Info size={20} weight="bold" />
                 </button>
@@ -231,18 +238,14 @@ export function CommonRitualSheet({
             }
           />
         ) : (
-          /* B. [실제 파쇄 연출 및 결과 완수] 실행 헤더: 오직 < 뒤로가기 버튼만 표출 (우측 메뉴 100% 제거) */
+          /* B. 스트레스 분쇄 파쇄 연출 실행 헤더: 오직 < 뒤로가기 버튼만 표출 */
           <SubPageHeader
             title=""
             leftType="back"
             className="bg-transparent"
             onLeftClick={() => {
-              if (shredderState !== "TYPING" && resetHandlerRef.current) {
-                // 개별 리추얼 파쇄 연출/결과 화면에서 뒤로가기 클릭 시 -> 개별 시작하기(작성 폼) 화면으로 되돌아가기!
+              if (resetHandlerRef.current) {
                 resetHandlerRef.current();
-              } else if (showIntro) {
-                // 공통 시작하기 커버가 존재하던 경우 -> 공통 시작하기(Intro) 페이지로 되돌아가기
-                setStep("intro");
               } else {
                 closeModal();
               }
@@ -251,6 +254,7 @@ export function CommonRitualSheet({
           />
         )}
       </div>
+      )}
 
       <div className={`flex flex-col w-full max-w-lg mx-auto flex-1 overflow-hidden justify-between z-10 ${step === "intro" ? "px-5 pt-3" : "px-0 pt-0"}`}>
         {step === "intro" ? (

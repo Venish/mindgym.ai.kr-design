@@ -310,7 +310,7 @@ html {
  * 🎨 5가지 웰니스 프리미엄 테마 프리셋 토큰 (CSS Data-Theme System)
  * ------------------------------------------------------------- */
 
-/* 1) 🌿 프레시 클리어 민트 (기본 추천): 맑은 아침이슬 + 비비드 웰니스 민트 (칙칙함 0%) */
+/* 1) 🌿 프레시 클리어 민트: 맑은 아침이슬 + 비비드 웰니스 민트 (기본값) */
 :root,
 [data-theme="fresh-mint"] {
   --theme-bg-body: #E8F2EC;
@@ -417,11 +417,11 @@ html {
   --theme-bg-body: #F3F4F6;
   --theme-bg-app: #FFFFFF;
   --theme-bg-card: #FFFFFF;
-  --theme-bg-card-subtle: #F9FAFB;
+  --theme-bg-card-subtle: #F1F5F9;
   --theme-bg-hero-from: rgba(209, 250, 229, 0.85);
   --theme-bg-hero-via: rgba(240, 253, 250, 0.65);
   --theme-bg-hero-to: rgba(236, 253, 245, 0.45);
-  --theme-border-subtle: rgba(229, 231, 235, 0.9);
+  --theme-border-subtle: #E2E8F0;
   --theme-border-card: #E5E7EB;
 
   --color-signature-green: oklch(0.72 0.19 155);
@@ -807,8 +807,12 @@ textarea {
     background-color: var(--theme-bg-card, #ffffff);
   }
 
+  .bg-theme-card-subtle {
+    background-color: var(--theme-bg-card-subtle, #F1F5F9);
+  }
+
   .bg-theme-subtle {
-    background-color: var(--theme-bg-card-subtle, #F9FAFB);
+    background-color: var(--theme-bg-card-subtle, #F1F5F9);
   }
 
   .text-theme-accent {

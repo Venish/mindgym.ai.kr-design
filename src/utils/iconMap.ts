@@ -71,6 +71,7 @@ export const ICON_FILES = [
   "070_오늘의색깔.png",
   "071_3-2-1그라운딩.png",
   "072_위시플래너.png",
+  "073_시선맑음.png",
 ];
 
 export function getIconPath(input: string | number): string {

@@ -23,15 +23,6 @@ export interface ThemePresetInfo {
 
 export const THEME_PRESETS: ThemePresetInfo[] = [
   {
-    id: "dark",
-    name: "슬레이트 다크 나이트",
-    badge: "야간 집중 · 다크",
-    desc: "눈이 편안한 딥 차콜/슬레이트 배경과 산뜻한 네온 에메랄드 텍스트",
-    bgHex: "#0F172A",
-    accentHex: "#34D399",
-    cardSubtleHex: "#334155",
-  },
-  {
     id: "fresh-mint",
     name: "프레시 클리어 민트",
     badge: "추천 · 생기 맑음",
@@ -48,15 +39,6 @@ export const THEME_PRESETS: ThemePresetInfo[] = [
     bgHex: "#FAF7F2",
     accentHex: "#00C474",
     cardSubtleHex: "#F2ECE2",
-  },
-  {
-    id: "brutal-brand",
-    name: "네오 브루탈리즘 (브랜드 그린)",
-    badge: "★ 인더스트리얼 힙",
-    desc: "크림 옐로우 멀티컬러와 2px 블랙 보더, 하드 섀도우 위에 브랜드 그린이 포인트로 튀는 스트리트 감성",
-    bgHex: "#FFFBEB",
-    accentHex: "#00C474",
-    cardSubtleHex: "#FEF08A",
   },
   {
     id: "soft-sage",
@@ -83,7 +65,25 @@ export const THEME_PRESETS: ThemePresetInfo[] = [
     desc: "화사하고 선명한 순백색(#FFFFFF) 바탕과 네온 에메랄드의 오리지널 스타일",
     bgHex: "#FFFFFF",
     accentHex: "#00C474",
-    cardSubtleHex: "#F9FAFB",
+    cardSubtleHex: "#F1F5F9",
+  },
+  {
+    id: "brutal-brand",
+    name: "네오 브루탈리즘 (브랜드 그린)",
+    badge: "★ 인더스트리얼 힙",
+    desc: "크림 옐로우 멀티컬러와 2px 블랙 보더, 하드 섀도우 위에 브랜드 그린이 포인트로 튀는 스트리트 감성",
+    bgHex: "#FFFBEB",
+    accentHex: "#00C474",
+    cardSubtleHex: "#FEF08A",
+  },
+  {
+    id: "dark",
+    name: "슬레이트 다크 나이트",
+    badge: "야간 집중 · 다크",
+    desc: "눈이 편안한 딥 차콜/슬레이트 배경과 산뜻한 네온 에메랄드 텍스트",
+    bgHex: "#0F172A",
+    accentHex: "#34D399",
+    cardSubtleHex: "#334155",
   },
 ];
 
@@ -94,7 +94,7 @@ interface ThemeState {
 }
 
 export const useThemeStore = create<ThemeState>((set) => ({
-  theme: "warm-ivory", // 유저 요청으로 '웜 밀크 아이보리'를 기본 적용!
+  theme: "fresh-mint", // 기본 적용: 프레시 클리어 민트
   setTheme: (theme) => {
     if (typeof document !== "undefined") {
       document.documentElement.setAttribute("data-theme", theme);
@@ -105,7 +105,7 @@ export const useThemeStore = create<ThemeState>((set) => ({
   },
   toggleTheme: () => {
     set((state) => {
-      const order: ThemeMode[] = ["fresh-mint", "warm-ivory", "brutal-brand", "soft-sage", "lavender-calm", "classic", "dark"];
+      const order: ThemeMode[] = ["fresh-mint", "warm-ivory", "soft-sage", "lavender-calm", "classic", "brutal-brand", "dark"];
       const nextIdx = (order.indexOf(state.theme) + 1) % order.length;
       const nextTheme = order[nextIdx];
       if (typeof document !== "undefined") {

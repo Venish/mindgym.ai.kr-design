@@ -1,8 +1,34 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Trash, CheckCircle } from "@phosphor-icons/react";
+import { Trash, CheckCircle, Clock } from "@phosphor-icons/react";
 import { SubPageHeader } from "@/components/ui/SubPageHeader";
+
+export function formatTimeAgo(dateStr: string): string {
+  try {
+    const parts = dateStr.split(" ");
+    if (parts.length < 2) return dateStr;
+    const [y, m, d] = parts[0].split(".").map(Number);
+    const [hh, mm] = parts[1].split(":").map(Number);
+    const targetDate = new Date(y, m - 1, d, hh, mm);
+    const now = new Date();
+    const diffSec = Math.floor((now.getTime() - targetDate.getTime()) / 1000);
+
+    if (diffSec < 60) return "방금 전";
+    const diffMin = Math.floor(diffSec / 60);
+    if (diffMin < 60) return `${diffMin}분 전`;
+    const diffHours = Math.floor(diffMin / 60);
+    if (diffHours < 24) return `${diffHours}시간 전`;
+    const diffDays = Math.floor(diffHours / 24);
+    if (diffDays === 1) return "1일 전";
+    if (diffDays < 7) return `${diffDays}일 전`;
+    if (diffDays < 30) return `${Math.floor(diffDays / 7)}주 전`;
+    if (diffDays < 365) return `${Math.floor(diffDays / 30)}달 전`;
+    return parts[0];
+  } catch {
+    return dateStr;
+  }
+}
 
 export interface ShredHistoryItem {
   id: string;
@@ -133,9 +159,10 @@ export function StressShredHistorySheet({ onClose }: StressShredHistorySheetProp
                     </span>
                   )}
                 </div>
-                <span className="text-theme-muted font-medium text-[11px]">
-                  {item.createdAt}
-                </span>
+                <div className="flex items-center gap-1 text-[11px] font-bold text-theme-muted shrink-0">
+                  <Clock size={12} weight="bold" />
+                  <span>{formatTimeAgo(item.createdAt)}</span>
+                </div>
               </div>
 
               {/* 작성 내용 */}

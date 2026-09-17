@@ -156,7 +156,7 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
-                  var savedTheme = localStorage.getItem('mg_theme_mode') || 'warm-ivory';
+                  var savedTheme = localStorage.getItem('mg_theme_mode') || 'fresh-mint';
                   document.documentElement.setAttribute('data-theme', savedTheme);
                   if (savedTheme === 'dark') {
                     document.documentElement.classList.add('dark');
