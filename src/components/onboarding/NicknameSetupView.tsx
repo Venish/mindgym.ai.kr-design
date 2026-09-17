@@ -40,11 +40,11 @@ export function NicknameSetupView({
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="txt-caption-main txt-brand-clay font-medium flex items-center justify-between">
+          <label className="txt-caption-main text-theme-muted font-medium flex items-center justify-between">
             <span>닉네임</span>
-            <span className="txt-micro-main text-gray-400">최대 10자</span>
+            <span className="txt-micro-main text-theme-muted opacity-70">최대 10자</span>
           </label>
-          <div className="flex items-center gap-2.5 bg-gray-50 border border-gray-200/80 rounded-2xl px-4 py-3.5 focus-within:border-[var(--color-brand-green)] focus-within:ring-2 focus-within:ring-[#00C474]/20 transition-all duration-200">
+          <div className="flex items-center gap-2.5 bg-theme-card-subtle border border-theme-subtle rounded-2xl px-4 py-3.5 focus-within:border-[var(--color-brand-green)] focus-within:ring-2 focus-within:ring-[#00C474]/20 transition-all duration-200">
             <input
               type="text"
               value={nickname}

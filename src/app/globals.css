@@ -298,6 +298,7 @@ html {
   --color-forest-green: oklch(0.42 0.12 155);
   --color-mint-tint: oklch(0.97 0.03 155);
 
+  --color-brand-ink: #0F172A;
   --color-neutral-ink: oklch(0.22 0.02 260);
   --color-neutral-gray-700: oklch(0.42 0.03 260);
   --color-neutral-gray-500: oklch(0.64 0.03 260);
@@ -466,6 +467,7 @@ html {
 html.dark,
 [data-theme="dark"],
 html[data-theme="dark"] {
+  color-scheme: dark;
   --theme-bg-body: #080B10;
   --theme-bg-app: #0F172A;
   --theme-bg-card: #1E293B;
@@ -510,6 +512,35 @@ html.dark .txt-brand-ink,
 html.dark .text-theme-muted,
 [data-theme="dark"] .text-theme-muted {
   color: #94A3B8 !important;
+}
+
+.dark input,
+.dark textarea,
+.dark select,
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+  color: #F8FAFC !important;
+  caret-color: #34D399;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder,
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+  color: #64748B !important;
+}
+
+.dark input:-webkit-autofill,
+.dark input:-webkit-autofill:hover,
+.dark input:-webkit-autofill:focus,
+[data-theme="dark"] input:-webkit-autofill,
+[data-theme="dark"] input:-webkit-autofill:hover,
+[data-theme="dark"] input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #F8FAFC !important;
+  -webkit-box-shadow: 0 0 0px 1000px #1E293B inset !important;
+  box-shadow: 0 0 0px 1000px #1E293B inset !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 /* -------------------------------------------------------------

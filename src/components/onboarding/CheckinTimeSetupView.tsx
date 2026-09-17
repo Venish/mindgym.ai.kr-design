@@ -50,39 +50,39 @@ export function CheckinTimeSetupView({
         <div className="flex flex-col gap-1.5 shrink-0 pt-2 text-center">
           {/* 상단 태그 뱃지 */}
           <div className="flex justify-center items-center gap-2">
-            <span className="text-xs font-bold text-[#00C474] bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200/60">
+            <span className="text-xs font-bold text-[#00C474] bg-emerald-50 dark:bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-200/60 dark:border-emerald-800/40">
               거의 다 왔어요 · 마지막 단계
             </span>
           </div>
 
           {/* 메인 타이틀 */}
-          <h1 className="text-2xl font-black text-gray-900 tracking-tight text-center mt-1">
+          <h1 className="text-2xl font-black txt-brand-ink tracking-tight text-center mt-1">
             체크인 알림은 언제 받을까요?
           </h1>
 
           {/* 서브 타이틀 */}
           <div className="flex items-center justify-center gap-3 mt-1.5 mb-4">
-            <div className="h-[1px] w-5 bg-gradient-to-r from-transparent to-gray-300" />
-            <span className="text-xs font-semibold text-gray-500 tracking-tight">
+            <div className="h-[1px] w-5 bg-gradient-to-r from-transparent to-gray-300 dark:to-slate-700" />
+            <span className="text-xs font-semibold text-theme-muted tracking-tight">
               원하는 시간에 알림을 드려요. 설정은 언제든 바꿀 수 있어요.
             </span>
-            <div className="h-[1px] w-5 bg-gradient-to-l from-transparent to-gray-300" />
+            <div className="h-[1px] w-5 bg-gradient-to-l from-transparent to-gray-300 dark:to-slate-700" />
           </div>
         </div>
 
         {/* 일어나는 시간 설정 카드 */}
-        <div className="p-4 bg-[#F8FAF9] rounded-2xl flex flex-col gap-3">
+        <div className="p-4 bg-theme-card-subtle rounded-2xl flex flex-col gap-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <Sun size={24} weight="fill" className="text-amber-500 shrink-0" />
-              <span className="text-[0.9375rem] font-bold text-gray-900 tracking-tight">일어나는 시간</span>
+              <span className="text-[0.9375rem] font-bold txt-brand-ink tracking-tight">일어나는 시간</span>
             </div>
 
             <button
               type="button"
               onClick={() => setIsMorningEnabled(!isMorningEnabled)}
               className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                isMorningEnabled ? "bg-[#00C474]" : "bg-gray-300"
+                isMorningEnabled ? "bg-[#00C474]" : "bg-gray-300 dark:bg-slate-700"
               }`}
             >
               <span
@@ -103,18 +103,18 @@ export function CheckinTimeSetupView({
         </div>
 
         {/* 자는 시간 설정 카드 */}
-        <div className="p-4 bg-[#F8FAF9] rounded-2xl flex flex-col gap-3">
+        <div className="p-4 bg-theme-card-subtle rounded-2xl flex flex-col gap-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <Moon size={24} weight="fill" className="text-indigo-500 shrink-0" />
-              <span className="text-[0.9375rem] font-bold text-gray-900 tracking-tight">자는 시간</span>
+              <span className="text-[0.9375rem] font-bold txt-brand-ink tracking-tight">자는 시간</span>
             </div>
 
             <button
               type="button"
               onClick={() => setIsEveningEnabled(!isEveningEnabled)}
               className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                isEveningEnabled ? "bg-[#00C474]" : "bg-gray-300"
+                isEveningEnabled ? "bg-[#00C474]" : "bg-gray-300 dark:bg-slate-700"
               }`}
             >
               <span
